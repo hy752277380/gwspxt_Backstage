@@ -7,4 +7,5 @@ import java.util.List;
 public interface MyService {
 
     List<manage> myTest();
+    manage getOne();
 }

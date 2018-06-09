@@ -18,4 +18,9 @@ public class MyServiceImpl implements MyService {
     public List<manage> myTest(){
         return MyMapper.getAll();
     }
+
+    @Override
+    public manage getOne() {
+        return MyMapper.getOne();
+    }
 }

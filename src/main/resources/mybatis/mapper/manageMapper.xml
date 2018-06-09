@@ -17,5 +17,11 @@
         <include refid="Base_Column_List"/>
         FROM manager
     </select>
+    <select id="getOne" parameterType="int" resultType="manage">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM manager
+        WHERE managerId = #{managerId}
+    </select>
 
 </mapper>

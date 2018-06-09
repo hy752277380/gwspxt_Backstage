@@ -18,4 +18,9 @@ public class MyController {
     public List<manage> myTest(){
       return  myService.myTest();
     }
+
+    @RequestMapping("/index2")
+    public manage getId(){
+        return myService.getOne();
+    }
 }

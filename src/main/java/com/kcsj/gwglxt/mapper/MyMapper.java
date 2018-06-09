@@ -9,4 +9,5 @@ import java.util.List;
 public interface MyMapper {
 
     List<manage> getAll();
+    manage getOne();
 }

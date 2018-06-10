@@ -19,6 +19,7 @@ public class GuserController {
     //根据id查询用户基本信息
     @RequestMapping("/index4")
     public loginCustom loginInfo(){
+
         return guserService.loginInfo("15478012");
     }
 }

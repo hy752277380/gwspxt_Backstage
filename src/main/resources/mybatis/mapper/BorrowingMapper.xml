@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kcsj.gwglxt.mapper.BorrowingMapper" >
+
+    <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Borrowing" >
+        <id column="borrowing_id" property="borrowingId" jdbcType="CHAR" />
+        <result column="borrowing_borrow_user" property="borrowingBorrowUser" jdbcType="CHAR" />
+        <result column="borrowing_lend_user" property="borrowingLendUser" jdbcType="CHAR" />
+        <result column="borrowing_document" property="borrowingDocument" jdbcType="CHAR" />
+        <result column="borrowing_applicationdate" property="borrowingApplicationdate" jdbcType="CHAR" />
+        <result column="borrowing_state" property="borrowingState" jdbcType="INTEGER" />
+        <result column="borrowing_begintime" property="borrowingBegintime" jdbcType="CHAR" />
+        <result column="borrowing_overtime" property="borrowingOvertime" jdbcType="CHAR" />
+        <result column="borrowing_reason" property="borrowingReason" jdbcType="VARCHAR" />
+        <result column="borrowing_isdelete" property="borrowingIsdelete" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        borrowing_id, borrowing_borrow_user, borrowing_lend_user, borrowing_document, borrowing_applicationdate, 
+        borrowing_state, borrowing_begintime, borrowing_overtime, borrowing_reason, borrowing_isdelete
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.BorrowingExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from borrowing
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from borrowing
+        where borrowing_id = #{borrowingId,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from borrowing
+        where borrowing_id = #{borrowingId,jdbcType=CHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.kcsj.gwglxt.entity.BorrowingExample" >
+        delete from borrowing
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Borrowing" >
+        insert into borrowing (borrowing_id, borrowing_borrow_user, borrowing_lend_user, 
+            borrowing_document, borrowing_applicationdate, 
+            borrowing_state, borrowing_begintime, borrowing_overtime, 
+            borrowing_reason, borrowing_isdelete)
+        values (#{borrowingId,jdbcType=CHAR}, #{borrowingBorrowUser,jdbcType=CHAR}, #{borrowingLendUser,jdbcType=CHAR}, 
+            #{borrowingDocument,jdbcType=CHAR}, #{borrowingApplicationdate,jdbcType=CHAR}, 
+            #{borrowingState,jdbcType=INTEGER}, #{borrowingBegintime,jdbcType=CHAR}, #{borrowingOvertime,jdbcType=CHAR}, 
+            #{borrowingReason,jdbcType=VARCHAR}, #{borrowingIsdelete,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.kcsj.gwglxt.entity.Borrowing" >
+        insert into borrowing
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="borrowingId != null" >
+                borrowing_id,
+            </if>
+            <if test="borrowingBorrowUser != null" >
+                borrowing_borrow_user,
+            </if>
+            <if test="borrowingLendUser != null" >
+                borrowing_lend_user,
+            </if>
+            <if test="borrowingDocument != null" >
+                borrowing_document,
+            </if>
+            <if test="borrowingApplicationdate != null" >
+                borrowing_applicationdate,
+            </if>
+            <if test="borrowingState != null" >
+                borrowing_state,
+            </if>
+            <if test="borrowingBegintime != null" >
+                borrowing_begintime,
+            </if>
+            <if test="borrowingOvertime != null" >
+                borrowing_overtime,
+            </if>
+            <if test="borrowingReason != null" >
+                borrowing_reason,
+            </if>
+            <if test="borrowingIsdelete != null" >
+                borrowing_isdelete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="borrowingId != null" >
+                #{borrowingId,jdbcType=CHAR},
+            </if>
+            <if test="borrowingBorrowUser != null" >
+                #{borrowingBorrowUser,jdbcType=CHAR},
+            </if>
+            <if test="borrowingLendUser != null" >
+                #{borrowingLendUser,jdbcType=CHAR},
+            </if>
+            <if test="borrowingDocument != null" >
+                #{borrowingDocument,jdbcType=CHAR},
+            </if>
+            <if test="borrowingApplicationdate != null" >
+                #{borrowingApplicationdate,jdbcType=CHAR},
+            </if>
+            <if test="borrowingState != null" >
+                #{borrowingState,jdbcType=INTEGER},
+            </if>
+            <if test="borrowingBegintime != null" >
+                #{borrowingBegintime,jdbcType=CHAR},
+            </if>
+            <if test="borrowingOvertime != null" >
+                #{borrowingOvertime,jdbcType=CHAR},
+            </if>
+            <if test="borrowingReason != null" >
+                #{borrowingReason,jdbcType=VARCHAR},
+            </if>
+            <if test="borrowingIsdelete != null" >
+                #{borrowingIsdelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.kcsj.gwglxt.entity.BorrowingExample" resultType="java.lang.Integer" >
+        select count(*) from borrowing
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update borrowing
+        <set >
+            <if test="record.borrowingId != null" >
+                borrowing_id = #{record.borrowingId,jdbcType=CHAR},
+            </if>
+            <if test="record.borrowingBorrowUser != null" >
+                borrowing_borrow_user = #{record.borrowingBorrowUser,jdbcType=CHAR},
+            </if>
+            <if test="record.borrowingLendUser != null" >
+                borrowing_lend_user = #{record.borrowingLendUser,jdbcType=CHAR},
+            </if>
+            <if test="record.borrowingDocument != null" >
+                borrowing_document = #{record.borrowingDocument,jdbcType=CHAR},
+            </if>
+            <if test="record.borrowingApplicationdate != null" >
+                borrowing_applicationdate = #{record.borrowingApplicationdate,jdbcType=CHAR},
+            </if>
+            <if test="record.borrowingState != null" >
+                borrowing_state = #{record.borrowingState,jdbcType=INTEGER},
+            </if>
+            <if test="record.borrowingBegintime != null" >
+                borrowing_begintime = #{record.borrowingBegintime,jdbcType=CHAR},
+            </if>
+            <if test="record.borrowingOvertime != null" >
+                borrowing_overtime = #{record.borrowingOvertime,jdbcType=CHAR},
+            </if>
+            <if test="record.borrowingReason != null" >
+                borrowing_reason = #{record.borrowingReason,jdbcType=VARCHAR},
+            </if>
+            <if test="record.borrowingIsdelete != null" >
+                borrowing_isdelete = #{record.borrowingIsdelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update borrowing
+        set borrowing_id = #{record.borrowingId,jdbcType=CHAR},
+            borrowing_borrow_user = #{record.borrowingBorrowUser,jdbcType=CHAR},
+            borrowing_lend_user = #{record.borrowingLendUser,jdbcType=CHAR},
+            borrowing_document = #{record.borrowingDocument,jdbcType=CHAR},
+            borrowing_applicationdate = #{record.borrowingApplicationdate,jdbcType=CHAR},
+            borrowing_state = #{record.borrowingState,jdbcType=INTEGER},
+            borrowing_begintime = #{record.borrowingBegintime,jdbcType=CHAR},
+            borrowing_overtime = #{record.borrowingOvertime,jdbcType=CHAR},
+            borrowing_reason = #{record.borrowingReason,jdbcType=VARCHAR},
+            borrowing_isdelete = #{record.borrowingIsdelete,jdbcType=INTEGER}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.kcsj.gwglxt.entity.Borrowing" >
+        update borrowing
+        <set >
+            <if test="borrowingBorrowUser != null" >
+                borrowing_borrow_user = #{borrowingBorrowUser,jdbcType=CHAR},
+            </if>
+            <if test="borrowingLendUser != null" >
+                borrowing_lend_user = #{borrowingLendUser,jdbcType=CHAR},
+            </if>
+            <if test="borrowingDocument != null" >
+                borrowing_document = #{borrowingDocument,jdbcType=CHAR},
+            </if>
+            <if test="borrowingApplicationdate != null" >
+                borrowing_applicationdate = #{borrowingApplicationdate,jdbcType=CHAR},
+            </if>
+            <if test="borrowingState != null" >
+                borrowing_state = #{borrowingState,jdbcType=INTEGER},
+            </if>
+            <if test="borrowingBegintime != null" >
+                borrowing_begintime = #{borrowingBegintime,jdbcType=CHAR},
+            </if>
+            <if test="borrowingOvertime != null" >
+                borrowing_overtime = #{borrowingOvertime,jdbcType=CHAR},
+            </if>
+            <if test="borrowingReason != null" >
+                borrowing_reason = #{borrowingReason,jdbcType=VARCHAR},
+            </if>
+            <if test="borrowingIsdelete != null" >
+                borrowing_isdelete = #{borrowingIsdelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where borrowing_id = #{borrowingId,jdbcType=CHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.kcsj.gwglxt.entity.Borrowing" >
+        update borrowing
+        set borrowing_borrow_user = #{borrowingBorrowUser,jdbcType=CHAR},
+            borrowing_lend_user = #{borrowingLendUser,jdbcType=CHAR},
+            borrowing_document = #{borrowingDocument,jdbcType=CHAR},
+            borrowing_applicationdate = #{borrowingApplicationdate,jdbcType=CHAR},
+            borrowing_state = #{borrowingState,jdbcType=INTEGER},
+            borrowing_begintime = #{borrowingBegintime,jdbcType=CHAR},
+            borrowing_overtime = #{borrowingOvertime,jdbcType=CHAR},
+            borrowing_reason = #{borrowingReason,jdbcType=VARCHAR},
+            borrowing_isdelete = #{borrowingIsdelete,jdbcType=INTEGER}
+        where borrowing_id = #{borrowingId,jdbcType=CHAR}
+    </update>
+</mapper>

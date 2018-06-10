@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kcsj.gwglxt.mapper.DocumentMapper" >
+
+    <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Document" >
+        <id column="document_id" property="documentId" jdbcType="CHAR" />
+        <result column="document_title" property="documentTitle" jdbcType="VARCHAR" />
+        <result column="document_type" property="documentType" jdbcType="CHAR" />
+        <result column="document_no" property="documentNo" jdbcType="VARCHAR" />
+        <result column="document_dept" property="documentDept" jdbcType="CHAR" />
+        <result column="document_user" property="documentUser" jdbcType="CHAR" />
+        <result column="document_confidential" property="documentConfidential" jdbcType="INTEGER" />
+        <result column="doucment_content" property="doucmentContent" jdbcType="LONGVARCHAR" />
+        <result column="document_remark" property="documentRemark" jdbcType="VARCHAR" />
+        <result column="document_process" property="documentProcess" jdbcType="CHAR" />
+        <result column="document_process_begin" property="documentProcessBegin" jdbcType="CHAR" />
+        <result column="document_process_finish" property="documentProcessFinish" jdbcType="CHAR" />
+        <result column="document_state" property="documentState" jdbcType="INTEGER" />
+        <result column="document_speed" property="documentSpeed" jdbcType="INTEGER" />
+        <result column="creation_time" property="creationTime" jdbcType="CHAR" />
+        <result column="document_isdelete" property="documentIsdelete" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        document_id, document_title, document_type, document_no, document_dept, document_user, 
+        document_confidential, doucment_content, document_remark, document_process, document_process_begin, 
+        document_process_finish, document_state, document_speed, creation_time, document_isdelete
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.DocumentExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from document
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from document
+        where document_id = #{documentId,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from document
+        where document_id = #{documentId,jdbcType=CHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.kcsj.gwglxt.entity.DocumentExample" >
+        delete from document
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Document" >
+        insert into document (document_id, document_title, document_type, 
+            document_no, document_dept, document_user, 
+            document_confidential, doucment_content, 
+            document_remark, document_process, document_process_begin, 
+            document_process_finish, document_state, document_speed, 
+            creation_time, document_isdelete)
+        values (#{documentId,jdbcType=CHAR}, #{documentTitle,jdbcType=VARCHAR}, #{documentType,jdbcType=CHAR}, 
+            #{documentNo,jdbcType=VARCHAR}, #{documentDept,jdbcType=CHAR}, #{documentUser,jdbcType=CHAR}, 
+            #{documentConfidential,jdbcType=INTEGER}, #{doucmentContent,jdbcType=LONGVARCHAR}, 
+            #{documentRemark,jdbcType=VARCHAR}, #{documentProcess,jdbcType=CHAR}, #{documentProcessBegin,jdbcType=CHAR}, 
+            #{documentProcessFinish,jdbcType=CHAR}, #{documentState,jdbcType=INTEGER}, #{documentSpeed,jdbcType=INTEGER}, 
+            #{creationTime,jdbcType=CHAR}, #{documentIsdelete,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.kcsj.gwglxt.entity.Document" >
+        insert into document
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="documentId != null" >
+                document_id,
+            </if>
+            <if test="documentTitle != null" >
+                document_title,
+            </if>
+            <if test="documentType != null" >
+                document_type,
+            </if>
+            <if test="documentNo != null" >
+                document_no,
+            </if>
+            <if test="documentDept != null" >
+                document_dept,
+            </if>
+            <if test="documentUser != null" >
+                document_user,
+            </if>
+            <if test="documentConfidential != null" >
+                document_confidential,
+            </if>
+            <if test="doucmentContent != null" >
+                doucment_content,
+            </if>
+            <if test="documentRemark != null" >
+                document_remark,
+            </if>
+            <if test="documentProcess != null" >
+                document_process,
+            </if>
+            <if test="documentProcessBegin != null" >
+                document_process_begin,
+            </if>
+            <if test="documentProcessFinish != null" >
+                document_process_finish,
+            </if>
+            <if test="documentState != null" >
+                document_state,
+            </if>
+            <if test="documentSpeed != null" >
+                document_speed,
+            </if>
+            <if test="creationTime != null" >
+                creation_time,
+            </if>
+            <if test="documentIsdelete != null" >
+                document_isdelete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="documentId != null" >
+                #{documentId,jdbcType=CHAR},
+            </if>
+            <if test="documentTitle != null" >
+                #{documentTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="documentType != null" >
+                #{documentType,jdbcType=CHAR},
+            </if>
+            <if test="documentNo != null" >
+                #{documentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="documentDept != null" >
+                #{documentDept,jdbcType=CHAR},
+            </if>
+            <if test="documentUser != null" >
+                #{documentUser,jdbcType=CHAR},
+            </if>
+            <if test="documentConfidential != null" >
+                #{documentConfidential,jdbcType=INTEGER},
+            </if>
+            <if test="doucmentContent != null" >
+                #{doucmentContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="documentRemark != null" >
+                #{documentRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="documentProcess != null" >
+                #{documentProcess,jdbcType=CHAR},
+            </if>
+            <if test="documentProcessBegin != null" >
+                #{documentProcessBegin,jdbcType=CHAR},
+            </if>
+            <if test="documentProcessFinish != null" >
+                #{documentProcessFinish,jdbcType=CHAR},
+            </if>
+            <if test="documentState != null" >
+                #{documentState,jdbcType=INTEGER},
+            </if>
+            <if test="documentSpeed != null" >
+                #{documentSpeed,jdbcType=INTEGER},
+            </if>
+            <if test="creationTime != null" >
+                #{creationTime,jdbcType=CHAR},
+            </if>
+            <if test="documentIsdelete != null" >
+                #{documentIsdelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.kcsj.gwglxt.entity.DocumentExample" resultType="java.lang.Integer" >
+        select count(*) from document
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update document
+        <set >
+            <if test="record.documentId != null" >
+                document_id = #{record.documentId,jdbcType=CHAR},
+            </if>
+            <if test="record.documentTitle != null" >
+                document_title = #{record.documentTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.documentType != null" >
+                document_type = #{record.documentType,jdbcType=CHAR},
+            </if>
+            <if test="record.documentNo != null" >
+                document_no = #{record.documentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.documentDept != null" >
+                document_dept = #{record.documentDept,jdbcType=CHAR},
+            </if>
+            <if test="record.documentUser != null" >
+                document_user = #{record.documentUser,jdbcType=CHAR},
+            </if>
+            <if test="record.documentConfidential != null" >
+                document_confidential = #{record.documentConfidential,jdbcType=INTEGER},
+            </if>
+            <if test="record.doucmentContent != null" >
+                doucment_content = #{record.doucmentContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.documentRemark != null" >
+                document_remark = #{record.documentRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.documentProcess != null" >
+                document_process = #{record.documentProcess,jdbcType=CHAR},
+            </if>
+            <if test="record.documentProcessBegin != null" >
+                document_process_begin = #{record.documentProcessBegin,jdbcType=CHAR},
+            </if>
+            <if test="record.documentProcessFinish != null" >
+                document_process_finish = #{record.documentProcessFinish,jdbcType=CHAR},
+            </if>
+            <if test="record.documentState != null" >
+                document_state = #{record.documentState,jdbcType=INTEGER},
+            </if>
+            <if test="record.documentSpeed != null" >
+                document_speed = #{record.documentSpeed,jdbcType=INTEGER},
+            </if>
+            <if test="record.creationTime != null" >
+                creation_time = #{record.creationTime,jdbcType=CHAR},
+            </if>
+            <if test="record.documentIsdelete != null" >
+                document_isdelete = #{record.documentIsdelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update document
+        set document_id = #{record.documentId,jdbcType=CHAR},
+            document_title = #{record.documentTitle,jdbcType=VARCHAR},
+            document_type = #{record.documentType,jdbcType=CHAR},
+            document_no = #{record.documentNo,jdbcType=VARCHAR},
+            document_dept = #{record.documentDept,jdbcType=CHAR},
+            document_user = #{record.documentUser,jdbcType=CHAR},
+            document_confidential = #{record.documentConfidential,jdbcType=INTEGER},
+            doucment_content = #{record.doucmentContent,jdbcType=LONGVARCHAR},
+            document_remark = #{record.documentRemark,jdbcType=VARCHAR},
+            document_process = #{record.documentProcess,jdbcType=CHAR},
+            document_process_begin = #{record.documentProcessBegin,jdbcType=CHAR},
+            document_process_finish = #{record.documentProcessFinish,jdbcType=CHAR},
+            document_state = #{record.documentState,jdbcType=INTEGER},
+            document_speed = #{record.documentSpeed,jdbcType=INTEGER},
+            creation_time = #{record.creationTime,jdbcType=CHAR},
+            document_isdelete = #{record.documentIsdelete,jdbcType=INTEGER}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.kcsj.gwglxt.entity.Document" >
+        update document
+        <set >
+            <if test="documentTitle != null" >
+                document_title = #{documentTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="documentType != null" >
+                document_type = #{documentType,jdbcType=CHAR},
+            </if>
+            <if test="documentNo != null" >
+                document_no = #{documentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="documentDept != null" >
+                document_dept = #{documentDept,jdbcType=CHAR},
+            </if>
+            <if test="documentUser != null" >
+                document_user = #{documentUser,jdbcType=CHAR},
+            </if>
+            <if test="documentConfidential != null" >
+                document_confidential = #{documentConfidential,jdbcType=INTEGER},
+            </if>
+            <if test="doucmentContent != null" >
+                doucment_content = #{doucmentContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="documentRemark != null" >
+                document_remark = #{documentRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="documentProcess != null" >
+                document_process = #{documentProcess,jdbcType=CHAR},
+            </if>
+            <if test="documentProcessBegin != null" >
+                document_process_begin = #{documentProcessBegin,jdbcType=CHAR},
+            </if>
+            <if test="documentProcessFinish != null" >
+                document_process_finish = #{documentProcessFinish,jdbcType=CHAR},
+            </if>
+            <if test="documentState != null" >
+                document_state = #{documentState,jdbcType=INTEGER},
+            </if>
+            <if test="documentSpeed != null" >
+                document_speed = #{documentSpeed,jdbcType=INTEGER},
+            </if>
+            <if test="creationTime != null" >
+                creation_time = #{creationTime,jdbcType=CHAR},
+            </if>
+            <if test="documentIsdelete != null" >
+                document_isdelete = #{documentIsdelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where document_id = #{documentId,jdbcType=CHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.kcsj.gwglxt.entity.Document" >
+        update document
+        set document_title = #{documentTitle,jdbcType=VARCHAR},
+            document_type = #{documentType,jdbcType=CHAR},
+            document_no = #{documentNo,jdbcType=VARCHAR},
+            document_dept = #{documentDept,jdbcType=CHAR},
+            document_user = #{documentUser,jdbcType=CHAR},
+            document_confidential = #{documentConfidential,jdbcType=INTEGER},
+            doucment_content = #{doucmentContent,jdbcType=LONGVARCHAR},
+            document_remark = #{documentRemark,jdbcType=VARCHAR},
+            document_process = #{documentProcess,jdbcType=CHAR},
+            document_process_begin = #{documentProcessBegin,jdbcType=CHAR},
+            document_process_finish = #{documentProcessFinish,jdbcType=CHAR},
+            document_state = #{documentState,jdbcType=INTEGER},
+            document_speed = #{documentSpeed,jdbcType=INTEGER},
+            creation_time = #{creationTime,jdbcType=CHAR},
+            document_isdelete = #{documentIsdelete,jdbcType=INTEGER}
+        where document_id = #{documentId,jdbcType=CHAR}
+    </update>
+</mapper>

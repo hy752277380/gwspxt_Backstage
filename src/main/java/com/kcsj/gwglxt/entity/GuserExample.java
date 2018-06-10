@@ -4,11 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuserExample {
-    //升序还是降序：字段+空格+asc(desc)
+    /*//升序还是降序：字段+空格+asc(desc)
     protected String orderByClause;
     //去重复：true选择不重复记录
     protected boolean distinct;
     //自定义查询条件
+    protected List<Criteria> oredCriteria;*/
+
+    protected String orderByClause;
+
+    protected boolean distinct;
+
     protected List<Criteria> oredCriteria;
 
     public GuserExample() {
@@ -65,11 +71,11 @@ public class GuserExample {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @author wcyong
-     * 
-     * @date 2018-06-08
+     *
+     * @date 2018-06-09
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -179,6 +185,76 @@ public class GuserExample {
 
         public Criteria andUserIdNotBetween(String value1, String value2) {
             addCriterion("user_id not between", value1, value2, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountIsNull() {
+            addCriterion("user_account is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountIsNotNull() {
+            addCriterion("user_account is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountEqualTo(String value) {
+            addCriterion("user_account =", value, "userAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountNotEqualTo(String value) {
+            addCriterion("user_account <>", value, "userAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountGreaterThan(String value) {
+            addCriterion("user_account >", value, "userAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountGreaterThanOrEqualTo(String value) {
+            addCriterion("user_account >=", value, "userAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountLessThan(String value) {
+            addCriterion("user_account <", value, "userAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountLessThanOrEqualTo(String value) {
+            addCriterion("user_account <=", value, "userAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountLike(String value) {
+            addCriterion("user_account like", value, "userAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountNotLike(String value) {
+            addCriterion("user_account not like", value, "userAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountIn(List<String> values) {
+            addCriterion("user_account in", values, "userAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountNotIn(List<String> values) {
+            addCriterion("user_account not in", values, "userAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountBetween(String value1, String value2) {
+            addCriterion("user_account between", value1, value2, "userAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAccountNotBetween(String value1, String value2) {
+            addCriterion("user_account not between", value1, value2, "userAccount");
             return (Criteria) this;
         }
 
@@ -881,11 +957,11 @@ public class GuserExample {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @author wcyong
-     * 
-     * @date 2018-06-08
+     *
+     * @date 2018-06-09
      */
     public static class Criterion {
         private String condition;

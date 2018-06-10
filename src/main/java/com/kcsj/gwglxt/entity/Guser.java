@@ -10,6 +10,8 @@ package com.kcsj.gwglxt.entity;
 public class Guser {
     private String userId;
 
+    private String userAccount;
+
     private String userPassword;
 
     private String userName;
@@ -36,6 +38,14 @@ public class Guser {
 
     public void setUserId(String userId) {
         this.userId = userId == null ? null : userId.trim();
+    }
+
+    public String getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount == null ? null : userAccount.trim();
     }
 
     public String getUserPassword() {

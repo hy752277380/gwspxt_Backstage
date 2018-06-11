@@ -8,7 +8,7 @@
         <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
         <result column="user_name" property="userName" jdbcType="VARCHAR" />
         <result column="user_sex" property="userSex" jdbcType="CHAR" />
-        <result column="user_department" property="userDepartment" jdbcType="INTEGER" />
+        <result column="user_department" property="userDepartment" jdbcType="CHAR" />
         <result column="user_position" property="userPosition" jdbcType="CHAR" />
         <result column="user_phonenumber" property="userPhonenumber" jdbcType="VARCHAR" />
         <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
@@ -17,7 +17,7 @@
         <result column="creation_time" property="creationTime" jdbcType="VARCHAR" />
     </resultMap>
 
-    <resultMap id="loginResultMap" type="com.kcsj.gwglxt.entity.loginCustom">
+    <resultMap id="loginResultMap" type="com.kcsj.gwglxt.entity.LoginCustom">
         <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
             <id column="user_id" property="userId" jdbcType="CHAR" />
             <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
@@ -153,7 +153,7 @@
             user_introduction, user_picture, creation_time
             )
         values (#{userId,jdbcType=CHAR}, #{userAccount,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
-            #{userName,jdbcType=VARCHAR}, #{userSex,jdbcType=CHAR}, #{userDepartment,jdbcType=INTEGER},
+            #{userName,jdbcType=VARCHAR}, #{userSex,jdbcType=CHAR}, #{userDepartment,jdbcType=CHAR},
             #{userPosition,jdbcType=CHAR}, #{userPhonenumber,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},
             #{userIntroduction,jdbcType=VARCHAR}, #{userPicture,jdbcType=VARCHAR}, #{creationTime,jdbcType=VARCHAR}
             )
@@ -216,7 +216,7 @@
                 #{userSex,jdbcType=CHAR},
             </if>
             <if test="userDepartment != null" >
-                #{userDepartment,jdbcType=INTEGER},
+                #{userDepartment,jdbcType=CHAR},
             </if>
             <if test="userPosition != null" >
                 #{userPosition,jdbcType=CHAR},
@@ -265,7 +265,7 @@
                 user_sex = #{record.userSex,jdbcType=CHAR},
             </if>
             <if test="record.userDepartment != null" >
-                user_department = #{record.userDepartment,jdbcType=INTEGER},
+                user_department = #{record.userDepartment,jdbcType=CHAR},
             </if>
             <if test="record.userPosition != null" >
                 user_position = #{record.userPosition,jdbcType=CHAR},
@@ -298,7 +298,7 @@
         user_password = #{record.userPassword,jdbcType=VARCHAR},
         user_name = #{record.userName,jdbcType=VARCHAR},
         user_sex = #{record.userSex,jdbcType=CHAR},
-        user_department = #{record.userDepartment,jdbcType=INTEGER},
+        user_department = #{record.userDepartment,jdbcType=CHAR},
         user_position = #{record.userPosition,jdbcType=CHAR},
         user_phonenumber = #{record.userPhonenumber,jdbcType=VARCHAR},
         user_email = #{record.userEmail,jdbcType=VARCHAR},
@@ -326,7 +326,7 @@
                 user_sex = #{userSex,jdbcType=CHAR},
             </if>
             <if test="userDepartment != null" >
-                user_department = #{userDepartment,jdbcType=INTEGER},
+                user_department = #{userDepartment,jdbcType=CHAR},
             </if>
             <if test="userPosition != null" >
                 user_position = #{userPosition,jdbcType=CHAR},
@@ -356,7 +356,7 @@
             user_password = #{userPassword,jdbcType=VARCHAR},
             user_name = #{userName,jdbcType=VARCHAR},
             user_sex = #{userSex,jdbcType=CHAR},
-            user_department = #{userDepartment,jdbcType=INTEGER},
+            user_department = #{userDepartment,jdbcType=CHAR},
             user_position = #{userPosition,jdbcType=CHAR},
             user_phonenumber = #{userPhonenumber,jdbcType=VARCHAR},
             user_email = #{userEmail,jdbcType=VARCHAR},

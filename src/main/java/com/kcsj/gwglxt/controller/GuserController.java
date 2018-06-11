@@ -1,7 +1,7 @@
 package com.kcsj.gwglxt.controller;
 
 import com.kcsj.gwglxt.entity.Guser;
-import com.kcsj.gwglxt.entity.loginCustom;
+import com.kcsj.gwglxt.entity.LoginCustom;
 import com.kcsj.gwglxt.service.GuserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ public class GuserController {
     }
     //根据id查询用户基本信息
     @RequestMapping("/index4")
-    public loginCustom loginInfo(){
+    public LoginCustom loginInfo(){
 
         return guserService.loginInfo("15478012");
     }

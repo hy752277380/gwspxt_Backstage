@@ -2,7 +2,7 @@ package com.kcsj.gwglxt.serviceImpl;
 
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
-import com.kcsj.gwglxt.entity.loginCustom;
+import com.kcsj.gwglxt.entity.LoginCustom;
 import com.kcsj.gwglxt.mapper.GuserMapper;
 import com.kcsj.gwglxt.service.GuserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +71,7 @@ public class GuserServiceImpl implements GuserService {
     }
 
     @Override
-    public loginCustom loginInfo(String userId) {
+    public LoginCustom loginInfo(String userId) {
         return guserMapper.loginInfo(userId);
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
-import com.kcsj.gwglxt.entity.loginCustom;
+import com.kcsj.gwglxt.entity.LoginCustom;
 import org.apache.ibatis.annotations.Param;
 
 public interface GuserMapper {
@@ -31,5 +31,5 @@ public interface GuserMapper {
 
     int updateByPrimaryKey(Guser record);
 
-    loginCustom loginInfo(String userId);
+    LoginCustom loginInfo(String userId);
 }

@@ -2,7 +2,7 @@ package com.kcsj.gwglxt.service;
 
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
-import com.kcsj.gwglxt.entity.loginCustom;
+import com.kcsj.gwglxt.entity.LoginCustom;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -30,5 +30,5 @@ public interface GuserService {
 
     int updateByPrimaryKey(Guser record);
 
-    loginCustom loginInfo(String userId);
+    LoginCustom loginInfo(String userId);
 }

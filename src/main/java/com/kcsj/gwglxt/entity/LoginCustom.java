@@ -1,6 +1,6 @@
 package com.kcsj.gwglxt.entity;
 
-public class loginCustom {
+public class LoginCustom {
 
     private Guser guser;
 

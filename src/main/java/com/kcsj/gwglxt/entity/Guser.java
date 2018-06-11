@@ -16,9 +16,9 @@ public class Guser {
 
     private String userName;
 
-    private String userSex;
+    private Integer userSex;
 
-    private Integer userDepartment;
+    private String userDepartment;
 
     private String userPosition;
 
@@ -31,6 +31,8 @@ public class Guser {
     private String userPicture;
 
     private String creationTime;
+
+    private Integer userIsdelete;
 
     public String getUserId() {
         return userId;
@@ -64,20 +66,20 @@ public class Guser {
         this.userName = userName == null ? null : userName.trim();
     }
 
-    public String getUserSex() {
+    public Integer getUserSex() {
         return userSex;
     }
 
-    public void setUserSex(String userSex) {
-        this.userSex = userSex == null ? null : userSex.trim();
+    public void setUserSex(Integer userSex) {
+        this.userSex = userSex;
     }
 
-    public Integer getUserDepartment() {
+    public String getUserDepartment() {
         return userDepartment;
     }
 
-    public void setUserDepartment(Integer userDepartment) {
-        this.userDepartment = userDepartment;
+    public void setUserDepartment(String userDepartment) {
+        this.userDepartment = userDepartment == null ? null : userDepartment.trim();
     }
 
     public String getUserPosition() {
@@ -126,5 +128,13 @@ public class Guser {
 
     public void setCreationTime(String creationTime) {
         this.creationTime = creationTime == null ? null : creationTime.trim();
+    }
+
+    public Integer getUserIsdelete() {
+        return userIsdelete;
+    }
+
+    public void setUserIsdelete(Integer userIsdelete) {
+        this.userIsdelete = userIsdelete;
     }
 }

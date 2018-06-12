@@ -20,12 +20,12 @@
     <!--依据用户登录给的user_account user_password信息书写的登录用户loginCustom的映射
     -->
     <resultMap id="loginFunctionMap" type="com.kcsj.gwglxt.entity.LoginCustom">
-        <association property="guser" jdbcType="com.kcsj.gwglxt.entity.Guser">
-            <id column="user_account"  property="userAccount" jdbcType="CHAR"/>
-            <result column="user_id" property="userId" jdbcType="CHAR" />
+        <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
+            <id column="user_id"  property="userId" jdbcType="CHAR"/>
+            <result column="user_account" property="userAccount" jdbcType="CHAR" />
             <result column="user_password" property="userPassword" jdbcType="CHAR"/>
             <result column="user_name" property="userName" jdbcType="VARCHAR"/>
-            <result column="user_sex" property="userSex" jdbcType="Integer"/>
+            <result column="user_sex" property="userSex" jdbcType="INTEGER"/>
             <result column="user_department" property="userDepartment" jdbcType="CHAR"/>
             <result column="user_position" property="userPosition" jdbcType="CHAR"/>
             <result column="user_phonenumber" property="userPhonenumber" jdbcType="VARCHAR"/>
@@ -33,29 +33,38 @@
             <result column="user_introduction" property="userIntroduction" jdbcType="VARCHAR"/>
             <result column="user_picture" property="userPicture" jdbcType="VARCHAR"/>
             <result column="creationTime" property="creationTime" jdbcType="CHAR"/>
-            <result column="user_isdelete" property="userIsdelete" jdbcType="Integer"/>
+            <result column="user_isdelete" property="userIsdelete" jdbcType="INTEGER"/>
         </association>
-        <association property="department" jdbcType="com.kcsj.gwglxt.entity.Department">
-            <id column="user_department" property="departmentId"/>
-            <result column="department_name" property="departmentName"/>
+
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <id column="user_department" property="departmentId" jdbcType="CHAR" />
+            <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
         <!--<result column="department_id" property="departmentId" jdbcType="CHAR"/>-->
         </association>
-        <association property="position" jdbcType="com.kcsj.gwglxt.entity.Position">
-            <result column="position_name" property="positionName" />
+        <association property="position" javaType="com.kcsj.gwglxt.entity.Position">
+            <result column="position_name" property="positionName" jdbcType="VARCHAR"/>
         </association>
         <association property="permission" javaType="com.kcsj.gwglxt.entity.Permission">
-            <result column="permission_level" property="permissionLevel" />
+            <result column="permission_level" property="permissionLevel" jdbcType="INTEGER"/>
         </association>
     </resultMap>
 
 
     <resultMap id="loginResultMap" type="com.kcsj.gwglxt.entity.LoginCustom">
         <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
-            <id column="user_id" property="userId" jdbcType="CHAR" />
-            <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
-            <result column="user_name" property="userName" jdbcType="VARCHAR" />
-            <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
-            <result column="user_picture" property="userPicture" jdbcType="VARCHAR" />
+            <id column="user_id"  property="userId" jdbcType="CHAR"/>
+            <result column="user_account" property="userAccount" jdbcType="CHAR" />
+            <result column="user_password" property="userPassword" jdbcType="CHAR"/>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+            <result column="user_sex" property="userSex" jdbcType="INTEGER"/>
+            <result column="user_department" property="userDepartment" jdbcType="CHAR"/>
+            <result column="user_position" property="userPosition" jdbcType="CHAR"/>
+            <result column="user_phonenumber" property="userPhonenumber" jdbcType="VARCHAR"/>
+            <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+            <result column="user_introduction" property="userIntroduction" jdbcType="VARCHAR"/>
+            <result column="user_picture" property="userPicture" jdbcType="VARCHAR"/>
+            <result column="creationTime" property="creationTime" jdbcType="CHAR"/>
+            <result column="user_isdelete" property="userIsdelete" jdbcType="INTEGER"/>
         </association>
         <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
             <id column="user_department" property="departmentId" jdbcType="CHAR" />
@@ -410,7 +419,8 @@
     </select>
     <select id="loginFunction" parameterType="java.lang.String" resultMap="loginResultMap">
         SELECT
-        *
+        user_id,user_account,user_password,user_name,user_sex,user_department,user_position,user_phonenumber,user_email,
+        user_introduction,user_picture,creation_time,user_isdelete,department_id,department_name,position_permission,position_id,permission_id,position_name
         FROM
         guser g,
         department de,

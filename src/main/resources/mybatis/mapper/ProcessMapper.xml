@@ -3,7 +3,7 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.ProcessMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Process" >
-        <id column="process_id" property="processId" jdbcType="CHAR" />
+        <id column="process_id" property="processId"   />
         <result column="process_introduction" property="processIntroduction" jdbcType="VARCHAR" />
         <result column="process_name" property="processName" jdbcType="VARCHAR" />
     </resultMap>

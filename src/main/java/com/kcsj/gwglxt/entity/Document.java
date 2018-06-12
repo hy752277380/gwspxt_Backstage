@@ -28,6 +28,8 @@ public class Document {
 
     private String documentProcess;
 
+    private Integer documentLocation;
+
     private String documentProcessBegin;
 
     private String documentProcessFinish;
@@ -118,6 +120,14 @@ public class Document {
 
     public void setDocumentProcess(String documentProcess) {
         this.documentProcess = documentProcess == null ? null : documentProcess.trim();
+    }
+
+    public Integer getDocumentLocation() {
+        return documentLocation;
+    }
+
+    public void setDocumentLocation(Integer documentLocation) {
+        this.documentLocation = documentLocation;
     }
 
     public String getDocumentProcessBegin() {

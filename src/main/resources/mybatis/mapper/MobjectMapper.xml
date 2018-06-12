@@ -3,10 +3,10 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.MobjectMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Mobject" >
-        <id column="mobject_id" property="mobjectId" jdbcType="CHAR" />
-        <result column="mobject_user" property="mobjectUser" jdbcType="CHAR" />
-        <result column="mobject_message" property="mobjectMessage" jdbcType="CHAR" />
-        <result column="mobject_isread" property="mobjectIsread" jdbcType="INTEGER" />
+        <id column="mobject_id" property="mobjectId"   />
+        <result column="mobject_user" property="mobjectUser"   />
+        <result column="mobject_message" property="mobjectMessage"   />
+        <result column="mobject_isread" property="mobjectIsread"  />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -110,7 +110,7 @@
     <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Mobject" >
         insert into mobject (mobject_id, mobject_user, mobject_message, 
             mobject_isread)
-        values (#{mobjectId,jdbcType=CHAR}, #{mobjectUser,jdbcType=CHAR}, #{mobjectMessage,jdbcType=CHAR}, 
+        values (#{mobjectId,jdbcType=CHAR}, #{mobjectUser,jdbcType=CHAR}, #{mobjectMessage,jdbcType=CHAR},
             #{mobjectIsread,jdbcType=INTEGER})
     </insert>
 

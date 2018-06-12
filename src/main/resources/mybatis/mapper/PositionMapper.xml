@@ -3,9 +3,9 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.PositionMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Position" >
-        <id column="position_id" property="positionId" jdbcType="CHAR" />
-        <result column="position_dept" property="positionDept" jdbcType="CHAR" />
-        <result column="position_permission" property="positionPermission" jdbcType="CHAR" />
+        <id column="position_id" property="positionId"   />
+        <result column="position_dept" property="positionDept"   />
+        <result column="position_permission" property="positionPermission"   />
         <result column="position_name" property="positionName" jdbcType="VARCHAR" />
     </resultMap>
 
@@ -110,7 +110,7 @@
     <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Position" >
         insert into position (position_id, position_dept, position_permission, 
             position_name)
-        values (#{positionId,jdbcType=CHAR}, #{positionDept,jdbcType=CHAR}, #{positionPermission,jdbcType=CHAR}, 
+        values (#{positionId,jdbcType=CHAR}, #{positionDept,jdbcType=CHAR}, #{positionPermission,jdbcType=CHAR},
             #{positionName,jdbcType=VARCHAR})
     </insert>
 

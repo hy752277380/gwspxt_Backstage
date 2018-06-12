@@ -35,5 +35,20 @@ public class DocumentServiceImpl implements DocumentService {
         return documentMapper.getDocumentName(documentId);
     }
 
+    @Override
+    public Document selectByPrimaryKey(String documentId) {
+        return documentMapper.selectByPrimaryKey(documentId);
+    }
+
+    @Override
+    public int updateDocumentLocation(Integer documentLocation, String documentId) {
+        return documentMapper.updateDocumentLocation(documentLocation,documentId);
+    }
+
+    @Override
+    public int getDocumentLocation(String documentId) {
+        return documentMapper.getDocumentLocation(documentId);
+    }
+
 
 }

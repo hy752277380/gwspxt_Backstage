@@ -3,16 +3,16 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.BorrowingMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Borrowing" >
-        <id column="borrowing_id" property="borrowingId" jdbcType="CHAR" />
-        <result column="borrowing_borrow_user" property="borrowingBorrowUser" jdbcType="CHAR" />
-        <result column="borrowing_lend_user" property="borrowingLendUser" jdbcType="CHAR" />
-        <result column="borrowing_document" property="borrowingDocument" jdbcType="CHAR" />
-        <result column="borrowing_applicationdate" property="borrowingApplicationdate" jdbcType="CHAR" />
-        <result column="borrowing_state" property="borrowingState" jdbcType="INTEGER" />
-        <result column="borrowing_begintime" property="borrowingBegintime" jdbcType="CHAR" />
-        <result column="borrowing_overtime" property="borrowingOvertime" jdbcType="CHAR" />
+        <id column="borrowing_id" property="borrowingId"   />
+        <result column="borrowing_borrow_user" property="borrowingBorrowUser"   />
+        <result column="borrowing_lend_user" property="borrowingLendUser"   />
+        <result column="borrowing_document" property="borrowingDocument"   />
+        <result column="borrowing_applicationdate" property="borrowingApplicationdate"   />
+        <result column="borrowing_state" property="borrowingState"  />
+        <result column="borrowing_begintime" property="borrowingBegintime"   />
+        <result column="borrowing_overtime" property="borrowingOvertime"   />
         <result column="borrowing_reason" property="borrowingReason" jdbcType="VARCHAR" />
-        <result column="borrowing_isdelete" property="borrowingIsdelete" jdbcType="INTEGER" />
+        <result column="borrowing_isdelete" property="borrowingIsdelete"  />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -119,9 +119,9 @@
             borrowing_document, borrowing_applicationdate, 
             borrowing_state, borrowing_begintime, borrowing_overtime, 
             borrowing_reason, borrowing_isdelete)
-        values (#{borrowingId,jdbcType=CHAR}, #{borrowingBorrowUser,jdbcType=CHAR}, #{borrowingLendUser,jdbcType=CHAR}, 
-            #{borrowingDocument,jdbcType=CHAR}, #{borrowingApplicationdate,jdbcType=CHAR}, 
-            #{borrowingState,jdbcType=INTEGER}, #{borrowingBegintime,jdbcType=CHAR}, #{borrowingOvertime,jdbcType=CHAR}, 
+        values (#{borrowingId,jdbcType=CHAR}, #{borrowingBorrowUser,jdbcType=CHAR}, #{borrowingLendUser,jdbcType=CHAR},
+            #{borrowingDocument,jdbcType=CHAR}, #{borrowingApplicationdate,jdbcType=CHAR},
+            #{borrowingState,jdbcType=INTEGER}, #{borrowingBegintime,jdbcType=CHAR}, #{borrowingOvertime,jdbcType=CHAR},
             #{borrowingReason,jdbcType=VARCHAR}, #{borrowingIsdelete,jdbcType=INTEGER})
     </insert>
 

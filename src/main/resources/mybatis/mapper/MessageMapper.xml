@@ -3,12 +3,12 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.MessageMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Message" >
-        <id column="message_id" property="messageId" jdbcType="CHAR" />
-        <result column="mobject_id" property="mobjectId" jdbcType="CHAR" />
+        <id column="message_id" property="messageId"   />
+        <result column="mobject_id" property="mobjectId"   />
         <result column="message_content" property="messageContent" jdbcType="VARCHAR" />
         <result column="message_time" property="messageTime" jdbcType="VARCHAR" />
-        <result column="message_isdelete" property="messageIsdelete" jdbcType="INTEGER" />
-        <result column="message_type" property="messageType" jdbcType="INTEGER" />
+        <result column="message_isdelete" property="messageIsdelete"  />
+        <result column="message_type" property="messageType"  />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -113,7 +113,7 @@
         insert into message (message_id, mobject_id, message_content, 
             message_time, message_isdelete, message_type
             )
-        values (#{messageId,jdbcType=CHAR}, #{mobjectId,jdbcType=CHAR}, #{messageContent,jdbcType=VARCHAR}, 
+        values (#{messageId,jdbcType=CHAR}, #{mobjectId,jdbcType=CHAR}, #{messageContent,jdbcType=VARCHAR},
             #{messageTime,jdbcType=VARCHAR}, #{messageIsdelete,jdbcType=INTEGER}, #{messageType,jdbcType=INTEGER}
             )
     </insert>

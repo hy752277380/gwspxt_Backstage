@@ -3,13 +3,13 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.GuserMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Guser" >
-        <id column="user_id" property="userId" jdbcType="CHAR" />
+        <id column="user_id" property="userId"   />
         <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
         <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
         <result column="user_name" property="userName" jdbcType="VARCHAR" />
-        <result column="user_sex" property="userSex" jdbcType="CHAR" />
-        <result column="user_department" property="userDepartment" jdbcType="CHAR" />
-        <result column="user_position" property="userPosition" jdbcType="CHAR" />
+        <result column="user_sex" property="userSex"   />
+        <result column="user_department" property="userDepartment"   />
+        <result column="user_position" property="userPosition"   />
         <result column="user_phonenumber" property="userPhonenumber" jdbcType="VARCHAR" />
         <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
         <result column="user_introduction" property="userIntroduction" jdbcType="VARCHAR" />
@@ -22,10 +22,10 @@
     <resultMap id="loginFunctionMap" type="com.kcsj.gwglxt.entity.LoginCustom">
         <association property="guser" jdbcType="com.kcsj.gwglxt.entity.Guser">
             <id column="user_account"  property="userAccount" jdbcType="CHAR"/>
-            <result column="user_id" property="userId" jdbcType="CHAR" />
+            <result column="user_id" property="userId"   />
             <result column="user_password" property="userPassword" jdbcType="CHAR"/>
             <result column="user_name" property="userName" jdbcType="VARCHAR"/>
-            <result column="user_sex" property="userSex" jdbcType="Integer"/>
+            <result column="user_sex" property="userSex" />
             <result column="user_department" property="userDepartment" jdbcType="CHAR"/>
             <result column="user_position" property="userPosition" jdbcType="CHAR"/>
             <result column="user_phonenumber" property="userPhonenumber" jdbcType="VARCHAR"/>
@@ -33,7 +33,7 @@
             <result column="user_introduction" property="userIntroduction" jdbcType="VARCHAR"/>
             <result column="user_picture" property="userPicture" jdbcType="VARCHAR"/>
             <result column="creationTime" property="creationTime" jdbcType="CHAR"/>
-            <result column="user_isdelete" property="userIsdelete" jdbcType="Integer"/>
+            <result column="user_isdelete" property="userIsdelete" />
         </association>
         <association property="department" jdbcType="com.kcsj.gwglxt.entity.Department">
             <id column="user_department" property="departmentId"/>
@@ -51,14 +51,14 @@
 
     <resultMap id="loginResultMap" type="com.kcsj.gwglxt.entity.LoginCustom">
         <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
-            <id column="user_id" property="userId" jdbcType="CHAR" />
+            <id column="user_id" property="userId"   />
             <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
             <result column="user_name" property="userName" jdbcType="VARCHAR" />
             <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
             <result column="user_picture" property="userPicture" jdbcType="VARCHAR" />
         </association>
         <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
-            <id column="user_department" property="departmentId" jdbcType="CHAR" />
+            <id column="user_department" property="departmentId"   />
             <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
         </association>
         <association property="permission" javaType="com.kcsj.gwglxt.entity.Permission">

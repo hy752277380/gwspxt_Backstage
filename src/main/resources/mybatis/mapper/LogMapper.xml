@@ -3,10 +3,10 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.LogMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Log" >
-        <id column="log_id" property="logId" jdbcType="CHAR" />
-        <result column="log_user" property="logUser" jdbcType="CHAR" />
+        <id column="log_id" property="logId"   />
+        <result column="log_user" property="logUser"   />
         <result column="log_content" property="logContent" jdbcType="VARCHAR" />
-        <result column="creation_time" property="creationTime" jdbcType="CHAR" />
+        <result column="creation_time" property="creationTime"   />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -110,7 +110,7 @@
     <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Log" >
         insert into log (log_id, log_user, log_content, 
             creation_time)
-        values (#{logId,jdbcType=CHAR}, #{logUser,jdbcType=CHAR}, #{logContent,jdbcType=VARCHAR}, 
+        values (#{logId,jdbcType=CHAR}, #{logUser,jdbcType=CHAR}, #{logContent,jdbcType=VARCHAR},
             #{creationTime,jdbcType=CHAR})
     </insert>
 

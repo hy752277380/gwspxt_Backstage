@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kcsj.gwglxt.mapper.MyMapper">
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.manage">
-        <id column="managerId" property="managerId" jdbcType="INTEGER"/>
+        <id column="managerId" property="managerId" />
         <result column="managerName" property="managerName" jdbcType="VARCHAR"/>
         <result column="managerPassword" property="managerPassword" jdbcType="VARCHAR"/>
         <result column="manageName" property="manageName" jdbcType="VARCHAR"/>

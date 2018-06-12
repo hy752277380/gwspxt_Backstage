@@ -29,6 +29,10 @@ public interface DocumentMapper {
     int updateByPrimaryKey(Document record);
     //根据id更改文档状态
     int updateDocumentState(@Param("documentState") Integer documentState,@Param("documentId") String documentId);
-
+    //根据id查询文档名称
     String getDocumentName(String documentId);
+    //根据id修改流程子节点位置
+    int updateDocumentLocation(@Param("documentLocation")Integer documentLocation,@Param("documentId")String documentId);
+    //根据id查询该文档当前流程子节点位置
+    int getDocumentLocation(String documentId);
 }

@@ -3,22 +3,23 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.DocumentMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Document" >
-        <id column="document_id" property="documentId" jdbcType="CHAR" />
-        <result column="document_title" property="documentTitle" jdbcType="VARCHAR" />
-        <result column="document_type" property="documentType" jdbcType="CHAR" />
-        <result column="document_no" property="documentNo" jdbcType="VARCHAR" />
-        <result column="document_dept" property="documentDept" jdbcType="CHAR" />
-        <result column="document_user" property="documentUser" jdbcType="CHAR" />
-        <result column="document_confidential" property="documentConfidential" jdbcType="INTEGER" />
-        <result column="doucment_content" property="doucmentContent" jdbcType="LONGVARCHAR" />
-        <result column="document_remark" property="documentRemark" jdbcType="VARCHAR" />
-        <result column="document_process" property="documentProcess" jdbcType="CHAR" />
-        <result column="document_process_begin" property="documentProcessBegin" jdbcType="CHAR" />
-        <result column="document_process_finish" property="documentProcessFinish" jdbcType="CHAR" />
-        <result column="document_state" property="documentState" jdbcType="INTEGER" />
-        <result column="document_speed" property="documentSpeed" jdbcType="INTEGER" />
-        <result column="creation_time" property="creationTime" jdbcType="CHAR" />
-        <result column="document_isdelete" property="documentIsdelete" jdbcType="INTEGER" />
+        <id column="document_id" property="documentId"/>
+        <result column="document_title" property="documentTitle"/>
+        <result column="document_type" property="documentType"/>
+        <result column="document_no" property="documentNo"/>
+        <result column="document_dept" property="documentDept"/>
+        <result column="document_user" property="documentUser"/>
+        <result column="document_confidential" property="documentConfidential"/>
+        <result column="doucment_content" property="doucmentContent"/>
+        <result column="document_remark" property="documentRemark"/>
+        <result column="document_process" property="documentProcess"/>
+        <result column="document_location" property="documentLocation"  />
+        <result column="document_process_begin" property="documentProcessBegin"   />
+        <result column="document_process_finish" property="documentProcessFinish"   />
+        <result column="document_state" property="documentState"  />
+        <result column="document_speed" property="documentSpeed"  />
+        <result column="creation_time" property="creationTime"   />
+        <result column="document_isdelete" property="documentIsdelete"  />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -82,9 +83,10 @@
     </sql>
 
     <sql id="Base_Column_List" >
-        document_id, document_title, document_type, document_no, document_dept, document_user, 
-        document_confidential, doucment_content, document_remark, document_process, document_process_begin, 
-        document_process_finish, document_state, document_speed, creation_time, document_isdelete
+        document_id, document_title, document_type, document_no, document_dept, document_user,
+        document_confidential, doucment_content, document_remark, document_process, document_location,
+        document_process_begin, document_process_finish, document_state, document_speed,
+        creation_time, document_isdelete
     </sql>
 
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.DocumentExample" >
@@ -103,7 +105,7 @@
     </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-        select 
+        select
         <include refid="Base_Column_List" />
         from document
         where document_id = #{documentId,jdbcType=CHAR}
@@ -122,18 +124,20 @@
     </delete>
 
     <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Document" >
-        insert into document (document_id, document_title, document_type, 
-            document_no, document_dept, document_user, 
-            document_confidential, doucment_content, 
-            document_remark, document_process, document_process_begin, 
-            document_process_finish, document_state, document_speed, 
-            creation_time, document_isdelete)
-        values (#{documentId,jdbcType=CHAR}, #{documentTitle,jdbcType=VARCHAR}, #{documentType,jdbcType=CHAR}, 
-            #{documentNo,jdbcType=VARCHAR}, #{documentDept,jdbcType=CHAR}, #{documentUser,jdbcType=CHAR}, 
-            #{documentConfidential,jdbcType=INTEGER}, #{doucmentContent,jdbcType=LONGVARCHAR}, 
-            #{documentRemark,jdbcType=VARCHAR}, #{documentProcess,jdbcType=CHAR}, #{documentProcessBegin,jdbcType=CHAR}, 
-            #{documentProcessFinish,jdbcType=CHAR}, #{documentState,jdbcType=INTEGER}, #{documentSpeed,jdbcType=INTEGER}, 
-            #{creationTime,jdbcType=CHAR}, #{documentIsdelete,jdbcType=INTEGER})
+        insert into document (document_id, document_title, document_type,
+            document_no, document_dept, document_user,
+            document_confidential, doucment_content,
+            document_remark, document_process, document_location,
+            document_process_begin, document_process_finish,
+            document_state, document_speed, creation_time,
+            document_isdelete)
+        values (#{documentId,jdbcType=CHAR}, #{documentTitle,jdbcType=VARCHAR}, #{documentType,jdbcType=CHAR},
+            #{documentNo,jdbcType=VARCHAR}, #{documentDept,jdbcType=CHAR}, #{documentUser,jdbcType=CHAR},
+            #{documentConfidential,jdbcType=INTEGER}, #{doucmentContent,jdbcType=LONGVARCHAR},
+            #{documentRemark,jdbcType=VARCHAR}, #{documentProcess,jdbcType=CHAR}, #{documentLocation,jdbcType=INTEGER},
+            #{documentProcessBegin,jdbcType=CHAR}, #{documentProcessFinish,jdbcType=CHAR},
+            #{documentState,jdbcType=INTEGER}, #{documentSpeed,jdbcType=INTEGER}, #{creationTime,jdbcType=CHAR},
+            #{documentIsdelete,jdbcType=INTEGER})
     </insert>
 
     <insert id="insertSelective" parameterType="com.kcsj.gwglxt.entity.Document" >
@@ -168,6 +172,9 @@
             </if>
             <if test="documentProcess != null" >
                 document_process,
+            </if>
+            <if test="documentLocation != null" >
+                document_location,
             </if>
             <if test="documentProcessBegin != null" >
                 document_process_begin,
@@ -218,6 +225,9 @@
             </if>
             <if test="documentProcess != null" >
                 #{documentProcess,jdbcType=CHAR},
+            </if>
+            <if test="documentLocation != null" >
+                #{documentLocation,jdbcType=INTEGER},
             </if>
             <if test="documentProcessBegin != null" >
                 #{documentProcessBegin,jdbcType=CHAR},
@@ -280,6 +290,9 @@
             <if test="record.documentProcess != null" >
                 document_process = #{record.documentProcess,jdbcType=CHAR},
             </if>
+            <if test="record.documentLocation != null" >
+                document_location = #{record.documentLocation,jdbcType=INTEGER},
+            </if>
             <if test="record.documentProcessBegin != null" >
                 document_process_begin = #{record.documentProcessBegin,jdbcType=CHAR},
             </if>
@@ -307,21 +320,22 @@
     <update id="updateByExample" parameterType="map" >
         update document
         set document_id = #{record.documentId,jdbcType=CHAR},
-            document_title = #{record.documentTitle,jdbcType=VARCHAR},
-            document_type = #{record.documentType,jdbcType=CHAR},
-            document_no = #{record.documentNo,jdbcType=VARCHAR},
-            document_dept = #{record.documentDept,jdbcType=CHAR},
-            document_user = #{record.documentUser,jdbcType=CHAR},
-            document_confidential = #{record.documentConfidential,jdbcType=INTEGER},
-            doucment_content = #{record.doucmentContent,jdbcType=LONGVARCHAR},
-            document_remark = #{record.documentRemark,jdbcType=VARCHAR},
-            document_process = #{record.documentProcess,jdbcType=CHAR},
-            document_process_begin = #{record.documentProcessBegin,jdbcType=CHAR},
-            document_process_finish = #{record.documentProcessFinish,jdbcType=CHAR},
-            document_state = #{record.documentState,jdbcType=INTEGER},
-            document_speed = #{record.documentSpeed,jdbcType=INTEGER},
-            creation_time = #{record.creationTime,jdbcType=CHAR},
-            document_isdelete = #{record.documentIsdelete,jdbcType=INTEGER}
+        document_title = #{record.documentTitle,jdbcType=VARCHAR},
+        document_type = #{record.documentType,jdbcType=CHAR},
+        document_no = #{record.documentNo,jdbcType=VARCHAR},
+        document_dept = #{record.documentDept,jdbcType=CHAR},
+        document_user = #{record.documentUser,jdbcType=CHAR},
+        document_confidential = #{record.documentConfidential,jdbcType=INTEGER},
+        doucment_content = #{record.doucmentContent,jdbcType=LONGVARCHAR},
+        document_remark = #{record.documentRemark,jdbcType=VARCHAR},
+        document_process = #{record.documentProcess,jdbcType=CHAR},
+        document_location = #{record.documentLocation,jdbcType=INTEGER},
+        document_process_begin = #{record.documentProcessBegin,jdbcType=CHAR},
+        document_process_finish = #{record.documentProcessFinish,jdbcType=CHAR},
+        document_state = #{record.documentState,jdbcType=INTEGER},
+        document_speed = #{record.documentSpeed,jdbcType=INTEGER},
+        creation_time = #{record.creationTime,jdbcType=CHAR},
+        document_isdelete = #{record.documentIsdelete,jdbcType=INTEGER}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -357,6 +371,9 @@
             <if test="documentProcess != null" >
                 document_process = #{documentProcess,jdbcType=CHAR},
             </if>
+            <if test="documentLocation != null" >
+                document_location = #{documentLocation,jdbcType=INTEGER},
+            </if>
             <if test="documentProcessBegin != null" >
                 document_process_begin = #{documentProcessBegin,jdbcType=CHAR},
             </if>
@@ -390,6 +407,7 @@
             doucment_content = #{doucmentContent,jdbcType=LONGVARCHAR},
             document_remark = #{documentRemark,jdbcType=VARCHAR},
             document_process = #{documentProcess,jdbcType=CHAR},
+            document_location = #{documentLocation,jdbcType=INTEGER},
             document_process_begin = #{documentProcessBegin,jdbcType=CHAR},
             document_process_finish = #{documentProcessFinish,jdbcType=CHAR},
             document_state = #{documentState,jdbcType=INTEGER},
@@ -403,5 +421,11 @@
     </update>
     <select id="getDocumentName" parameterType="java.lang.String" resultType="java.lang.String">
         SELECT document_title FROM document WHERE document_id = #{documentId}
+    </select>
+    <update id="updateDocumentLocation">
+        UPDATE document SET document_location = #{documentLocation} WHERE document_id = #{documentId}'
+    </update>
+    <select id="getDocumentLocation" parameterType="java.lang.String" resultType="int">
+        SELECT document_location FROM document WHERE document_id = #{documentId}
     </select>
 </mapper>

@@ -3,10 +3,10 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.DocumentMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Department" >
-        <id column="department_id" property="departmentId" jdbcType="CHAR" />
+        <id column="department_id" property="departmentId"   />
         <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
         <result column="department_phone" property="departmentPhone" jdbcType="VARCHAR" />
-        <result column="department_isdelete" property="departmentIsdelete" jdbcType="INTEGER" />
+        <result column="department_isdelete" property="departmentIsdelete"  />
     </resultMap>
 
     <sql id="Example_Where_Clause" >

@@ -27,4 +27,8 @@ public interface DocumentMapper {
     int updateByPrimaryKeySelective(Document record);
 
     int updateByPrimaryKey(Document record);
+    //根据id更改文档状态
+    int updateDocumentState(@Param("documentState") Integer documentState,@Param("documentId") String documentId);
+
+    String getDocumentName(String documentId);
 }

@@ -22,4 +22,13 @@ public class GuserController {
 
         return guserService.loginInfo("15478012");
     }
+    @RequestMapping("/index5")
+    public  LoginCustom loginFunction(){
+        return guserService.loginFunction("15478020");
+
+    }
+    @RequestMapping("/testnnn")
+    public String sss(){
+        return "sssssssss";
+    }
 }

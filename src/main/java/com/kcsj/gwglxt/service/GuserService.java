@@ -31,4 +31,5 @@ public interface GuserService {
     int updateByPrimaryKey(Guser record);
 
     LoginCustom loginInfo(String userId);
+    LoginCustom loginFunction(String userAccount);
 }

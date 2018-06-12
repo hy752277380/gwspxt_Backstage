@@ -43,4 +43,13 @@ public class LoginCustom {
         this.permission = permission;
     }
 
+    @Override
+    public String toString() {
+        return "LoginCustom{" +
+                "guser=" + guser +
+                ", department=" + department +
+                ", position=" + position +
+                ", permission=" + permission +
+                '}';
+    }
 }

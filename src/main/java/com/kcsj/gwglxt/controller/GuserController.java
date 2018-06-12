@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 @RestController
 public class GuserController {
     @Autowired
@@ -21,5 +24,26 @@ public class GuserController {
     public LoginCustom loginInfo(){
 
         return guserService.loginInfo("15478012");
+    }
+    @RequestMapping("/index5")
+    public  LoginCustom loginFunction(String userAccount, String userPassword, HttpSession httpSession, HttpServletResponse response ){
+       /* LoginCustom loginCustom=
+
+        if (userPassword.equals(loginCustom.getGuser().setUserPassword()){
+
+        }*/
+
+        return guserService.loginFunction("15478020");
+
+    }
+    /*@RequestMapping()
+    public LoginCustom loginFunction(String userAccount, String userPassword){
+        String return=null;
+
+    }*/
+
+    @RequestMapping("/testnnn")
+    public String sss(){
+        return "sssssssss";
     }
 }

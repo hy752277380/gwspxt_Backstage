@@ -398,4 +398,10 @@
             document_isdelete = #{documentIsdelete,jdbcType=INTEGER}
         where document_id = #{documentId,jdbcType=CHAR}
     </update>
+    <update id="updateDocumentState">
+        UPDATE document SET document_state = #{documentState} WHERE document_id = #{documentId}
+    </update>
+    <select id="getDocumentName" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT document_title FROM document WHERE document_id = #{documentId}
+    </select>
 </mapper>

@@ -14,6 +14,8 @@ public class Department {
 
     private String departmentPhone;
 
+    private Integer departmentIsdelete;
+
     public String getDepartmentId() {
         return departmentId;
     }
@@ -36,5 +38,13 @@ public class Department {
 
     public void setDepartmentPhone(String departmentPhone) {
         this.departmentPhone = departmentPhone == null ? null : departmentPhone.trim();
+    }
+
+    public Integer getDepartmentIsdelete() {
+        return departmentIsdelete;
+    }
+
+    public void setDepartmentIsdelete(Integer departmentIsdelete) {
+        this.departmentIsdelete = departmentIsdelete;
     }
 }

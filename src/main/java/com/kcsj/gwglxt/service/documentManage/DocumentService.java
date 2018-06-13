@@ -2,7 +2,10 @@ package com.kcsj.gwglxt.service.documentManage;
 
 import com.kcsj.gwglxt.entity.Document;
 import com.kcsj.gwglxt.entity.Log;
+import com.kcsj.gwglxt.entity.ProcessNode;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface DocumentService {
 
@@ -23,4 +26,11 @@ public interface DocumentService {
     int updateByPrimaryKey(Document record);
     //根据id获取当前流程最后一步
     int getMaxStep(String processNodeProcess);
+    //生成信息
+    int insertMessage(Document doc);
+
+    List<Document> getDocumentByState(Integer documentState);
+
+    //查询该文档所走流程的每一个流程节点
+    List<ProcessNode> getAllProcessNode(String processNodeProcess);
 }

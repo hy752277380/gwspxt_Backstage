@@ -259,4 +259,12 @@
     <select id="getMaxStep" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT MAX(process_node_step) FROM process_node WHERE process_node_process =#{processNodeProcess}
     </select>
+    <select id="getNextOne" resultType="com.kcsj.gwglxt.entity.ProcessNode">
+        SELECT * FROM process_node WHERE process_node_process = #{processNodeProcess} AND process_node_step = #{processNodeStep}
+    </select>
+    <select id="getAllProcessNode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+         FROM process_node WHERE process_node_process = #{processNodeProcess}
+    </select>
 </mapper>

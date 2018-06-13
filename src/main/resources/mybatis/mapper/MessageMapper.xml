@@ -4,7 +4,6 @@
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Message" >
         <id column="message_id" property="messageId"   />
-        <result column="mobject_id" property="mobjectId"   />
         <result column="message_content" property="messageContent" jdbcType="VARCHAR" />
         <result column="message_time" property="messageTime" jdbcType="VARCHAR" />
         <result column="message_isdelete" property="messageIsdelete"  />
@@ -72,7 +71,7 @@
     </sql>
 
     <sql id="Base_Column_List" >
-        message_id, mobject_id, message_content, message_time, message_isdelete, message_type
+        message_id, message_content, message_time, message_isdelete, message_type
     </sql>
 
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.MessageExample" >
@@ -110,10 +109,10 @@
     </delete>
 
     <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Message" >
-        insert into message (message_id, mobject_id, message_content, 
+        insert into message (message_id, message_content,
             message_time, message_isdelete, message_type
             )
-        values (#{messageId,jdbcType=CHAR}, #{mobjectId,jdbcType=CHAR}, #{messageContent,jdbcType=VARCHAR},
+        values (#{messageId,jdbcType=CHAR}, #{messageContent,jdbcType=VARCHAR},
             #{messageTime,jdbcType=VARCHAR}, #{messageIsdelete,jdbcType=INTEGER}, #{messageType,jdbcType=INTEGER}
             )
     </insert>
@@ -123,9 +122,6 @@
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="messageId != null" >
                 message_id,
-            </if>
-            <if test="mobjectId != null" >
-                mobject_id,
             </if>
             <if test="messageContent != null" >
                 message_content,
@@ -143,9 +139,6 @@
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="messageId != null" >
                 #{messageId,jdbcType=CHAR},
-            </if>
-            <if test="mobjectId != null" >
-                #{mobjectId,jdbcType=CHAR},
             </if>
             <if test="messageContent != null" >
                 #{messageContent,jdbcType=VARCHAR},
@@ -175,9 +168,6 @@
             <if test="record.messageId != null" >
                 message_id = #{record.messageId,jdbcType=CHAR},
             </if>
-            <if test="record.mobjectId != null" >
-                mobject_id = #{record.mobjectId,jdbcType=CHAR},
-            </if>
             <if test="record.messageContent != null" >
                 message_content = #{record.messageContent,jdbcType=VARCHAR},
             </if>
@@ -199,7 +189,6 @@
     <update id="updateByExample" parameterType="map" >
         update message
         set message_id = #{record.messageId,jdbcType=CHAR},
-            mobject_id = #{record.mobjectId,jdbcType=CHAR},
             message_content = #{record.messageContent,jdbcType=VARCHAR},
             message_time = #{record.messageTime,jdbcType=VARCHAR},
             message_isdelete = #{record.messageIsdelete,jdbcType=INTEGER},
@@ -212,9 +201,6 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.kcsj.gwglxt.entity.Message" >
         update message
         <set >
-            <if test="mobjectId != null" >
-                mobject_id = #{mobjectId,jdbcType=CHAR},
-            </if>
             <if test="messageContent != null" >
                 message_content = #{messageContent,jdbcType=VARCHAR},
             </if>
@@ -233,8 +219,7 @@
 
     <update id="updateByPrimaryKey" parameterType="com.kcsj.gwglxt.entity.Message" >
         update message
-        set mobject_id = #{mobjectId,jdbcType=CHAR},
-            message_content = #{messageContent,jdbcType=VARCHAR},
+        set message_content = #{messageContent,jdbcType=VARCHAR},
             message_time = #{messageTime,jdbcType=VARCHAR},
             message_isdelete = #{messageIsdelete,jdbcType=INTEGER},
             message_type = #{messageType,jdbcType=INTEGER}

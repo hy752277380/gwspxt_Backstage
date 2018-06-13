@@ -28,6 +28,10 @@ public interface ProcessNodeMapper {
 
     int updateByPrimaryKey(ProcessNode record);
 
-    //根据id获取当前流程最后一步
+    //获取当前流程最后一步
     int getMaxStep(String processNodeProcess);
+    //利用当前文档所走流程和流程子节点步骤锁定下一个流程节点操作人所在的部门和所需要的职位
+    ProcessNode getNextOne(@Param("processNodeProcess")String processNodeProcess,@Param("processNodeStep")Integer processNodeStep);
+    //查询该文档所走流程的每一个流程节点
+    List<ProcessNode> getAllProcessNode(String processNodeProcess);
 }

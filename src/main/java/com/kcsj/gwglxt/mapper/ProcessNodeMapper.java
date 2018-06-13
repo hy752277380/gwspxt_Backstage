@@ -27,4 +27,7 @@ public interface ProcessNodeMapper {
     int updateByPrimaryKeySelective(ProcessNode record);
 
     int updateByPrimaryKey(ProcessNode record);
+
+    //根据id获取当前流程最后一步
+    int getMaxStep(String processNodeProcess);
 }

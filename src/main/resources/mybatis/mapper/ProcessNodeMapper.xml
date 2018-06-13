@@ -256,4 +256,7 @@
             process_node_isdelete = #{processNodeIsdelete,jdbcType=INTEGER}
         where process_node_id = #{processNodeId,jdbcType=CHAR}
     </update>
+    <select id="getMaxStep" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT MAX(process_node_step) FROM process_node WHERE process_node_process =#{processNodeProcess}
+    </select>
 </mapper>

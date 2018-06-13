@@ -4,6 +4,7 @@ import com.kcsj.gwglxt.entity.Document;
 import com.kcsj.gwglxt.entity.Log;
 import com.kcsj.gwglxt.mapper.DocumentMapper;
 import com.kcsj.gwglxt.mapper.LogMapper;
+import com.kcsj.gwglxt.mapper.ProcessNodeMapper;
 import com.kcsj.gwglxt.service.documentManage.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ public class DocumentServiceImpl implements DocumentService {
     private DocumentMapper documentMapper;
     @Autowired
     private LogMapper logMapper;
+    @Autowired
+    private ProcessNodeMapper processNodeMapper;
 
     @Override
     public int insert(Document record) {
@@ -48,6 +51,22 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public int getDocumentLocation(String documentId) {
         return documentMapper.getDocumentLocation(documentId);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Document record) {
+        String documentId = record.getDocumentId();
+        Document documentOld = documentMapper.selectByPrimaryKey(documentId);
+        documentOld.setDocumentType(record.getDocumentType());
+        documentOld.setDocumentConfidential(record.getDocumentConfidential());
+        documentOld.setDocumentSpeed(record.getDocumentSpeed());
+        documentOld.setDocumentProcess(record.getDocumentProcess());
+        return documentMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public int getMaxStep(String processNodeProcess) {
+        return processNodeMapper.getMaxStep(processNodeProcess);
     }
 
 

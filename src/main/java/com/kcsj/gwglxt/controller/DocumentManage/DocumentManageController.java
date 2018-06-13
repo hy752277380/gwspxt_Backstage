@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:9528")
 public class DocumentManageController {
     @Autowired
     private DocumentService documentService;
@@ -181,7 +182,7 @@ public class DocumentManageController {
                 "  \"data\": {" +
                 "    \"roles\": [\"admin\"]," +
                 "    \"name\": \"admin\"," +
-                "    \"avatar\": \"[图片]https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif\"" +
+                "    \"avatar\": \"https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif\"" +
                 "  }" +
                 "}";
     }

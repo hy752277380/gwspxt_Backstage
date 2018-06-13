@@ -10,8 +10,6 @@ package com.kcsj.gwglxt.entity;
 public class Message {
     private String messageId;
 
-    private String mobjectId;
-
     private String messageContent;
 
     private String messageTime;
@@ -27,15 +25,7 @@ public class Message {
     public void setMessageId(String messageId) {
         this.messageId = messageId == null ? null : messageId.trim();
     }
-
-    public String getMobjectId() {
-        return mobjectId;
-    }
-
-    public void setMobjectId(String mobjectId) {
-        this.mobjectId = mobjectId == null ? null : mobjectId.trim();
-    }
-
+    
     public String getMessageContent() {
         return messageContent;
     }

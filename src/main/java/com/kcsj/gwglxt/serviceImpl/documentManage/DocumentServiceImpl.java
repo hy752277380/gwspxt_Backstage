@@ -1,13 +1,15 @@
 package com.kcsj.gwglxt.serviceImpl.documentManage;
 
-import com.kcsj.gwglxt.entity.Document;
-import com.kcsj.gwglxt.entity.Log;
-import com.kcsj.gwglxt.mapper.DocumentMapper;
-import com.kcsj.gwglxt.mapper.LogMapper;
-import com.kcsj.gwglxt.mapper.ProcessNodeMapper;
+import com.kcsj.gwglxt.entity.*;
+import com.kcsj.gwglxt.mapper.*;
 import com.kcsj.gwglxt.service.documentManage.DocumentService;
+import com.kcsj.gwglxt.util.TeamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -17,6 +19,12 @@ public class DocumentServiceImpl implements DocumentService {
     private LogMapper logMapper;
     @Autowired
     private ProcessNodeMapper processNodeMapper;
+    @Autowired
+    private MessageMapper messageMapper;
+    @Autowired
+    private GuserMapper guserMapper;
+    @Autowired
+    private MobjectMapper mobjectMapper;
 
     @Override
     public int insert(Document record) {
@@ -67,6 +75,45 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public int getMaxStep(String processNodeProcess) {
         return processNodeMapper.getMaxStep(processNodeProcess);
+    }
+    //生成信息
+    @Override
+    public int insertMessage(Document doc) {
+        //根据id查询文档
+        Document document = documentMapper.selectByPrimaryKey(doc.getDocumentId());
+        int loaction = document.getDocumentLocation();
+        int nextLocation = loaction + 1;
+        //利用当前文档所走流程和流程子节点步骤锁定下一个流程节点操作人所在的部门和所需要的职位
+        ProcessNode processNode = processNodeMapper.getNextOne(document.getDocumentProcess(),nextLocation);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        //根据职位查出人员
+        Guser user = guserMapper.getUserByPosition(processNode.getProcessNodePosition());
+        Message message = new Message();
+        String messageId = TeamUtil.getUuid();
+        message.setMessageId(messageId);
+        message.setMessageContent("您有新的公文待审核，请尽快处理！");
+        message.setMessageTime(df.format(new Date()));
+        message.setMessageIsdelete(0);
+        message.setMessageType(3);
+        Mobject mobject = new Mobject();
+        mobject.setMobjectId(TeamUtil.getUuid());
+        mobject.setMobjectUser(user.getUserId());
+        mobject.setMobjectMessage(messageId);
+        mobject.setMobjectIsread(0);
+        mobjectMapper.insert(mobject);
+        return messageMapper.insert(message);
+    }
+
+    @Override
+    public List<Document> getDocumentByState(Integer documentState) {
+        List<Document> list = documentMapper.getDocumentByState(documentState);
+        return list;
+    }
+
+    @Override
+    public List<ProcessNode> getAllProcessNode(String processNodeProcess) {
+        List<ProcessNode> list = processNodeMapper.getAllProcessNode(processNodeProcess);
+        return list;
     }
 
 

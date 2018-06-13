@@ -431,7 +431,9 @@
         AND de.department_id = g.user_department
         AND po.position_id = g.user_position
         AND pe.permission_id = po.position_permission
-
+    </select>
+    <select id="getUserByPosition" parameterType="java.lang.String" resultType="com.kcsj.gwglxt.entity.Guser">
+        SELECT * FROM guser WHERE user_position = #{userPosition}
     </select>
 
 </mapper>

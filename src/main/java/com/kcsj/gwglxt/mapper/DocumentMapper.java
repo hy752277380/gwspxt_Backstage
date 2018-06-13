@@ -35,4 +35,6 @@ public interface DocumentMapper {
     int updateDocumentLocation(@Param("documentLocation")Integer documentLocation,@Param("documentId")String documentId);
     //根据id查询该文档当前流程子节点位置
     int getDocumentLocation(String documentId);
+
+    List<Document> getDocumentByState(Integer documentState);
 }

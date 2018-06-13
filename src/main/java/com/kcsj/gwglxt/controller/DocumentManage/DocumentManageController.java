@@ -7,10 +7,7 @@ import com.kcsj.gwglxt.entity.LoginCustom;
 import com.kcsj.gwglxt.service.documentManage.DocumentService;
 import com.kcsj.gwglxt.util.TeamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,13 +16,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:9528")
 public class DocumentManageController {
     @Autowired
     private DocumentService documentService;
 
     //添加文档
     @RequestMapping("/addDocument")
-    public Document addDocument(Document doc, HttpSession httpSession, HttpServletResponse response){
+    public Document addDocument(@RequestBody Document doc, HttpSession httpSession, HttpServletResponse response){
         //获取session内容
         LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("loginerInfo");
         //初始化resul
@@ -157,7 +155,7 @@ public class DocumentManageController {
                 "  \"data\": {" +
                 "    \"roles\": [\"admin\"]," +
                 "    \"name\": \"admin\"," +
-                "    \"avatar\": \"[图片]https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif\"" +
+                "    \"avatar\": \"https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif\"" +
                 "  }" +
                 "}";
     }

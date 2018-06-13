@@ -140,6 +140,20 @@ public class DocumentManageController {
         }else if (documentLocation==maxStep){
             documentProcessFinish = df.format(new Date());
             documentService.updateDocumentState(4,documentProcessBegin,documentProcessFinish,documentId);
+            Message message = new Message();
+            String messageId = TeamUtil.getUuid();
+            message.setMessageId(messageId);
+            message.setMessageContent("您提交的公文"+document.getDocumentTitle()+"已经全部审核完毕了！");
+            message.setMessageTime(df.format(new Date()));
+            message.setMessageIsdelete(0);
+            message.setMessageType(4);
+            documentService.insertMsg(message);
+            Mobject mobject = new Mobject();
+            mobject.setMobjectId(TeamUtil.getUuid());
+            mobject.setMobjectUser(document.getDocumentUser());
+            mobject.setMobjectMessage(messageId);
+            mobject.setMobjectIsread(0);
+            documentService.insertMbj(mobject);
         }
         int updateLocationResult = documentService.updateDocumentLocation(documentLocation,documentId);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数

@@ -126,5 +126,15 @@ public class DocumentServiceImpl implements DocumentService {
         return documentMapper.documentBaseInfo(documentId);
     }
 
+    @Override
+    public int insertMsg(Message message) {
+        return messageMapper.insertMsg(message);
+    }
+
+    @Override
+    public int insertMbj(Mobject mobject) {
+        return mobjectMapper.insertMbj(mobject);
+    }
+
 
 }

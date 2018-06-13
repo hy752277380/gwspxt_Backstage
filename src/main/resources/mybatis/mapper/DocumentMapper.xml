@@ -21,7 +21,55 @@
         <result column="creation_time" property="creationTime"   />
         <result column="document_isdelete" property="documentIsdelete"  />
     </resultMap>
-
+    <resultMap id="DocumentBaseInfo" type="com.kcsj.gwglxt.entity.DocumentCustom">
+        <association property="document" javaType="com.kcsj.gwglxt.entity.Document">
+            <id column="document_id" property="documentId"/>
+            <result column="document_title" property="documentTitle"/>
+            <result column="document_no" property="documentNo"/>
+            <result column="document_confidential" property="documentConfidential"/>
+            <result column="creation_time" property="creationTime"/>
+        </association>
+        <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
+            <result column="user_name" property="userName"/>
+        </association>
+        <association property="documenttype" javaType="com.kcsj.gwglxt.entity.Documenttype">
+            <result column="documenttype_name" property="documenttypeName"/>
+        </association>
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <result column="department_name" property="departmentName"/>
+        </association>
+        <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
+            <result column="process_name" property="processName"/>
+        </association>
+    </resultMap>
+    <resultMap id="DocumentDetailInfo" type="com.kcsj.gwglxt.entity.DocumentCustom">
+        <association property="document" javaType="com.kcsj.gwglxt.entity.Document">
+            <id column="document_id" property="documentId"/>
+            <result column="document_title" property="documentTitle"/>
+            <result column="document_no" property="documentNo"/>
+            <result column="document_confidential" property="documentConfidential"/>
+            <result column="doucment_content" property="doucmentContent"/>
+            <result column="document_remark" property="documentRemark"/>
+            <result column="document_location" property="documentLocation"  />
+            <result column="document_process_begin" property="documentProcessBegin"   />
+            <result column="document_process_finish" property="documentProcessFinish"   />
+            <result column="document_state" property="documentState"  />
+            <result column="document_speed" property="documentSpeed"  />
+            <result column="creation_time" property="creationTime"/>
+        </association>
+        <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
+            <result column="user_name" property="userName"/>
+        </association>
+        <association property="documenttype" javaType="com.kcsj.gwglxt.entity.Documenttype">
+            <result column="documenttype_name" property="documenttypeName"/>
+        </association>
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <result column="department_name" property="departmentName"/>
+        </association>
+        <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
+            <result column="process_name" property="processName"/>
+        </association>
+    </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
             <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -417,7 +465,13 @@
         where document_id = #{documentId,jdbcType=CHAR}
     </update>
     <update id="updateDocumentState">
-        UPDATE document SET document_state = #{documentState} WHERE document_id = #{documentId}
+        UPDATE document SET document_state = #{documentState},
+        <if test="documentProcessBegin!=null">
+            document_process_begin=#{documentProcessBegin},
+        </if>
+        <if test="documentProcessFinish!=null">
+            document_process_finish=#{documentProcessFinish}
+        </if>WHERE document_id = #{documentId}
     </update>
     <select id="getDocumentName" parameterType="java.lang.String" resultType="java.lang.String">
         SELECT document_title FROM document WHERE document_id = #{documentId}
@@ -428,9 +482,82 @@
     <select id="getDocumentLocation" parameterType="java.lang.String" resultType="int">
         SELECT document_location FROM document WHERE document_id = #{documentId}
     </select>
-    <select id="getDocumentByState" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="getDocumentByState" parameterType="java.lang.Integer" resultMap="DocumentBaseInfo">
+select
+        doc.document_id,
+	doc.document_title,
+	doc.document_no,
+	doc.document_confidential,
+	doc.creation_time,
+	gu.user_name,
+	dt.documenttype_name,
+	de.department_name,
+	pr.process_name
+FROM
+	document doc,
+	documenttype dt,
+	department de,
+	guser gu,
+	process pr
+WHERE
+	doc.document_type = dt.documenttype_id
+AND doc.document_dept = de.department_id
+AND doc.document_user = gu.user_id
+AND doc.document_process = pr.process_id
+AND doc.document_state = #{documentState}
+    </select>
+    <select id="getAllDocument" resultMap="DocumentBaseInfo">
         SELECT
-        <include refid="Base_Column_List"/>
-         FROM document WHERE document_state = #{documentState}
+	doc.document_id,
+	doc.document_title,
+	doc.document_no,
+	doc.document_confidential,
+	doc.creation_time,
+	gu.user_name,
+	dt.documenttype_name,
+	de.department_name,
+	pr.process_name
+FROM
+	document doc,
+	documenttype dt,
+	department de,
+	guser gu,
+	process pr
+WHERE
+	doc.document_type = dt.documenttype_id
+AND doc.document_dept = de.department_id
+AND doc.document_user = gu.user_id
+AND doc.document_process = pr.process_id
+    </select>
+    <select id="documentBaseInfo" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
+        SELECT
+	doc.document_id,
+	doc.document_title,
+	doc.document_no,
+	doc.document_confidential,
+    doc.doucment_content,
+    doc.document_remark,
+    doc.document_location,
+    doc.document_process_begin,
+    doc.document_process_finish,
+    doc.document_state,
+    doc.document_speed,
+	doc.creation_time,
+	gu.user_name,
+	dt.documenttype_name,
+	de.department_name,
+	pr.process_name
+FROM
+	document doc,
+	documenttype dt,
+	department de,
+	guser gu,
+	process pr
+WHERE
+	doc.document_type = dt.documenttype_id
+AND doc.document_dept = de.department_id
+AND doc.document_user = gu.user_id
+AND doc.document_process = pr.process_id
+and doc.document_id = #{documentId,jdbcType=CHAR}
     </select>
 </mapper>

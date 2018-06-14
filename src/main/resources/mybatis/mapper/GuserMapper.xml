@@ -48,7 +48,9 @@
             <result column="permission_level" property="permissionLevel" jdbcType="INTEGER"/>
         </association>
     </resultMap>
+    <!--<resultMap id="userLogin" type="" >
 
+    </resultMap>-->
 
     <resultMap id="loginResultMap" type="com.kcsj.gwglxt.entity.LoginCustom">
         <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
@@ -420,7 +422,7 @@
     <select id="loginFunction" parameterType="java.lang.String" resultMap="loginResultMap">
         SELECT
         user_id,user_account,user_password,user_name,user_sex,user_department,user_position,user_phonenumber,user_email,
-        user_introduction,user_picture,creation_time,user_isdelete,department_id,department_name,position_permission,position_id,permission_id,position_name
+        user_introduction,user_picture,creation_time,user_isdelete,department_id,department_name,position_permission,position_id,permission_id,position_name,permission_level
         FROM
         guser g,
         department de,
@@ -433,5 +435,6 @@
         AND pe.permission_id = po.position_permission
 
     </select>
+    <!--<select id="userLogin" parameterType="java.lang.String" resultMap=""></select>-->
 
 </mapper>

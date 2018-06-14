@@ -3,6 +3,7 @@ package com.kcsj.gwglxt.controller;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.DTO.LoginCustom;
 import com.kcsj.gwglxt.service.GuserService;
+import com.kcsj.gwglxt.util.md5;
 import com.kcsj.gwglxt.vo.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -59,7 +60,8 @@ public class GuserController {
                     "        }";
         }
         LoginCustom loginCustom = guserService.loginFunction(userAccount);
-        if (userPassword.equals(loginCustom.getGuser().getUserPassword())) {
+        //将密码加密比对
+        if ( md5.GetMD5Code(userPassword).equals(loginCustom.getGuser().getUserPassword())) {
                 userLogin.setCode("20000");
                 userLogin.setUserName(loginCustom.getGuser().getUserName());
                 userLogin.setUserId(loginCustom.getGuser().getUserId());

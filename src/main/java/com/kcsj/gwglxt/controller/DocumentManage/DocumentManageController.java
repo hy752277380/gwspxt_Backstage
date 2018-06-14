@@ -1,12 +1,14 @@
 package com.kcsj.gwglxt.controller.DocumentManage;
 
+import com.kcsj.gwglxt.DTO.DocumentCustom;
+import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.DTO.MessageCustom;
 import com.kcsj.gwglxt.entity.*;
 import com.kcsj.gwglxt.service.documentManage.DocumentService;
 import com.kcsj.gwglxt.util.TeamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -196,6 +198,13 @@ public class DocumentManageController {
     public List<DocumentCustom> findCheckDoc(HttpSession httpSession){
         LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
         List<DocumentCustom> list = documentService.findCheckingDoc(loginCustom);
+        return list;
+    }
+    //获取所有本人消息
+    @RequestMapping("/getAllMessage")
+    public List<MessageCustom> getMyAllMessage(HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        List<MessageCustom> list = documentService.getMyAllMessage(loginCustom.getGuser().getUserId());
         return list;
     }
     //登录

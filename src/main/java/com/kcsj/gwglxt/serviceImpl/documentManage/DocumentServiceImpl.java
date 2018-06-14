@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -127,6 +128,19 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public DocumentCustom documentBaseInfo(String documentId) {
         return documentMapper.documentBaseInfo(documentId);
+    }
+
+    @Override
+    public List<DocumentCustom> findCheckingDoc(LoginCustom loginCustom) {
+        List<ProcessNode> list = processNodeMapper.getProcessNodeByUser(loginCustom.getGuser().getUserDepartment(),loginCustom.getGuser().getUserPosition());
+        //定义Documentcustom集合
+        List< DocumentCustom> list_doc = new ArrayList<>();
+        //遍历该人员所需要任的所有流程子节点
+        for (ProcessNode processNode : list){
+            //用每一个processNode里面的流程名和流程位置的前一位查询文档
+            list_doc.add(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(),processNode.getProcessNodeStep()-1));
+        }
+        return list_doc;
     }
 
     @Override

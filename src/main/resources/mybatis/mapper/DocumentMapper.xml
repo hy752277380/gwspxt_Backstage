@@ -560,4 +560,23 @@ AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
 and doc.document_id = #{documentId,jdbcType=CHAR}
     </select>
+    <select id="findCheckingDoc" resultMap="DocumentBaseInfo">
+        SELECT
+         doc.document_id,
+	doc.document_title,
+	doc.document_no,
+	doc.document_confidential,
+	doc.creation_time,
+	gu.user_name,
+	dt.documenttype_name,
+	de.department_name,
+	pr.process_name
+         FROM
+          document doc,
+	documenttype dt,
+	department de,
+	guser gu,
+	process pr
+          WHERE document_process = #{documentProcess} and document_location =#{documentLocation}
+    </select>
 </mapper>

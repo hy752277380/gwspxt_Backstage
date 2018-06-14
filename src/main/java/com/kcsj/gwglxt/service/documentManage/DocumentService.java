@@ -39,4 +39,5 @@ public interface DocumentService {
     DocumentCustom documentBaseInfo(String documentId);
 
 
+    List<DocumentCustom> findCheckingDoc(LoginCustom loginCustom);
 }

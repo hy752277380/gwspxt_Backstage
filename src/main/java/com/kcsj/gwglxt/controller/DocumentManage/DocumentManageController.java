@@ -29,7 +29,7 @@ public class DocumentManageController {
     @RequestMapping("/addDocument")
     public Document addDocument(@RequestBody Document document, HttpSession httpSession, HttpServletResponse response){
         //获取session内容
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("loginerInfo");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
         //初始化resul
         String result =null;
         //从对象中获得文档标题
@@ -79,7 +79,7 @@ public class DocumentManageController {
         //初始化result
         String result =null;
         //获取session中的信息
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("loginerInfo");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
         //根据文档id修改文档状态
         String documentId = document.getDocumentId();
         //定义当前文档类型
@@ -112,7 +112,7 @@ public class DocumentManageController {
         String result =null;
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         //获取session内容
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("loginerInfo");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
         Document document = documentService.selectByPrimaryKey(documentId);
         //生成审核人日志文件
         Log log = new Log();
@@ -190,6 +190,13 @@ public class DocumentManageController {
         Document document = documentService.selectByPrimaryKey(documentId);
         List<ProcessNode> list = documentService.getAllProcessNode(document.getDocumentProcess());
         return  list;
+    }
+    //查询本人需要审核的文档
+    @RequestMapping("/findCheckDoc")
+    public List<DocumentCustom> findCheckDoc(HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        List<DocumentCustom> list = documentService.findCheckingDoc(loginCustom);
+        return list;
     }
     //登录
     @PostMapping("/login")

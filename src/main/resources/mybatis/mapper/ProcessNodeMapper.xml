@@ -267,4 +267,7 @@
         <include refid="Base_Column_List"/>
          FROM process_node WHERE process_node_process = #{processNodeProcess}
     </select>
+    <select id="getProcessNodeByUser" resultMap="BaseResultMap">
+        SELECT * FROM process_node WHERE process_node_department=#{processNodeDepartment} and process_node_position=#{processNodePosition}
+    </select>
 </mapper>

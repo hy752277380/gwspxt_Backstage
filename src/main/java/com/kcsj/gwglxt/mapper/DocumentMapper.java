@@ -42,4 +42,6 @@ public interface DocumentMapper {
     List<DocumentCustom> getAllDocument();
     //联合查询文档信息
     DocumentCustom documentBaseInfo(String documentId);
+
+    DocumentCustom findCheckingDoc(@Param("documentProcess") String documentProcess,@Param("documentLocation") Integer documentLocation);
 }

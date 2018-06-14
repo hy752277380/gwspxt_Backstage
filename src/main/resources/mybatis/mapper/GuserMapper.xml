@@ -434,8 +434,10 @@
         AND po.position_id = g.user_position
         AND pe.permission_id = po.position_permission
     </select>
-    <select id="getUserByPosition" parameterType="java.lang.String" resultType="com.kcsj.gwglxt.entity.Guser">
-        SELECT * FROM guser WHERE user_position = #{userPosition}
+    <select id="getUserByPosition" resultMap="BaseResultMap">
+        SELECT
+         <include refid="Base_Column_List"/>
+         FROM guser WHERE user_position = #{userPosition} and user_department = #{userDepartment}
     </select>
     <!--<select id="userLogin" parameterType="java.lang.String" resultMap=""></select>-->
 

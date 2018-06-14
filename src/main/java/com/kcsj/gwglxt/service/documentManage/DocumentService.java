@@ -32,7 +32,7 @@ public interface DocumentService {
     //生成信息
     int insertMessage(String documentId);
 
-    List<DocumentCustom> getDocumentByState(Integer documentState);
+    List<DocumentCustom> getDocumentByState(Integer documentState,String documentUser);
 
     //查询该文档所走流程的每一个流程节点
     List<ProcessNode> getAllProcessNode(String processNodeProcess);

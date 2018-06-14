@@ -34,5 +34,5 @@ public interface GuserMapper {
     LoginCustom loginInfo(String userId);
     LoginCustom loginFunction(String userAccount);
     //根据职位查询人员
-    Guser getUserByPosition(String userPosition);
+    Guser getUserByPosition(@Param("userPosition") String userPosition,@Param("userDepartment") String userDepartment);
 }

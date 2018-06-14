@@ -165,19 +165,23 @@ public class DocumentManageController {
         return "{\"msg\":\""+result+"\"}";
     }
     //通知下一个节点操作人
-    @RequestMapping("/messageNextOne")
+    @RequestMapping("/messageNextOne/{documentId}")
     public String messageNextOne(@PathVariable("documentId") String documentId){
         String result = null;
         int messageResult = documentService.insertMessage(documentId);
         if (messageResult==0){
             result = "updateFailed";
-        }result = "updateSuccess";
+        }else{
+            result = "updateSuccess";
+        }
         return "{\"msg\":\""+result+"\"}";
     }
     //根据文档状态查询文档
     @RequestMapping("/getDocumentByState/{documentState}")
-    public List<DocumentCustom> getDocumentByState(@PathVariable("documentState") Integer documentState ){
-        List<DocumentCustom> list = documentService.getDocumentByState(documentState);
+    public List<DocumentCustom> getDocumentByState(@PathVariable("documentState") Integer documentState ,HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        List<DocumentCustom> list = documentService.getDocumentByState(documentState,loginCustom.getGuser().getUserId());
         return list;
     }
     //根据id查看文档全部信息

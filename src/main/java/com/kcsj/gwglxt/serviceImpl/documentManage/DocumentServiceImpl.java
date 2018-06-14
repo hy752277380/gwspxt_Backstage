@@ -78,10 +78,13 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //生成信息
     @Override
-    public int insertMessage(Document doc) {
+    public int insertMessage(String documentId) {
         //根据id查询文档
-        Document document = documentMapper.selectByPrimaryKey(doc.getDocumentId());
+        Document document = documentMapper.selectByPrimaryKey(documentId);
         int loaction = document.getDocumentLocation();
+        if(loaction==processNodeMapper.getMaxStep(document.getDocumentProcess())){
+            System.out.println("流程审核完成。");
+        }
         int nextLocation = loaction + 1;
         //利用当前文档所走流程和流程子节点步骤锁定下一个流程节点操作人所在的部门和所需要的职位
         ProcessNode processNode = processNodeMapper.getNextOne(document.getDocumentProcess(),nextLocation);

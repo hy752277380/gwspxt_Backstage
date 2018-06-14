@@ -164,9 +164,9 @@ public class DocumentManageController {
     }
     //通知下一个节点操作人
     @RequestMapping("/messageNextOne")
-    public String messageNextOne(@RequestBody Document document){
+    public String messageNextOne(@PathVariable("documentId") String documentId){
         String result = null;
-        int messageResult = documentService.insertMessage(document);
+        int messageResult = documentService.insertMessage(documentId);
         if (messageResult==0){
             result = "updateFailed";
         }result = "updateSuccess";

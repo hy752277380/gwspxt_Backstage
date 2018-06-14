@@ -27,7 +27,7 @@ public interface DocumentService {
     //根据id获取当前流程最后一步
     int getMaxStep(String processNodeProcess);
     //生成信息
-    int insertMessage(Document doc);
+    int insertMessage(String documentId);
 
     List<DocumentCustom> getDocumentByState(Integer documentState);
 

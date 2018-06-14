@@ -7,6 +7,7 @@ import com.kcsj.gwglxt.util.md5;
 import com.kcsj.gwglxt.vo.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,8 +42,8 @@ public class GuserController {
                 '}';
     }
 
-    @RequestMapping("/index5")
-    public String login( String userAccount, String userPassword, HttpSession httpSession ) {
+    @RequestMapping("/index5/{userAccount}/{userPassword}")
+    public String login(@PathVariable("userAccount") String userAccount,@PathVariable("userPassword") String userPassword, HttpSession httpSession ) {
         String msg;
         UserLogin userLogin = new UserLogin();
         //生成随机数

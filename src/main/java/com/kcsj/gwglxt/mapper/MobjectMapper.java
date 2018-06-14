@@ -27,4 +27,6 @@ public interface MobjectMapper {
     int updateByPrimaryKeySelective(Mobject record);
 
     int updateByPrimaryKey(Mobject record);
+
+    int insertMbj(Mobject mobject);
 }

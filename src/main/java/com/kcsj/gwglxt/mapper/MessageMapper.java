@@ -29,5 +29,5 @@ public interface MessageMapper {
 
     int updateByPrimaryKey(Message record);
 
-
+    int insertMsg(Message message);
 }

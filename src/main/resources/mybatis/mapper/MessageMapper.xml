@@ -225,4 +225,12 @@
             message_type = #{messageType,jdbcType=INTEGER}
         where message_id = #{messageId,jdbcType=CHAR}
     </update>
+    <insert id="insertMsg" parameterType="com.kcsj.gwglxt.entity.Message" >
+        insert into message (message_id, message_content,
+            message_time, message_isdelete, message_type
+            )
+        values (#{messageId,jdbcType=CHAR}, #{messageContent,jdbcType=VARCHAR},
+            #{messageTime,jdbcType=VARCHAR}, #{messageIsdelete,jdbcType=INTEGER}, #{messageType,jdbcType=INTEGER}
+            )
+    </insert>
 </mapper>

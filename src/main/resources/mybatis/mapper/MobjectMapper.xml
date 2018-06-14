@@ -208,4 +208,10 @@
             mobject_isread = #{mobjectIsread,jdbcType=INTEGER}
         where mobject_id = #{mobjectId,jdbcType=CHAR}
     </update>
+    <insert id="insertMbj" parameterType="com.kcsj.gwglxt.entity.Mobject" >
+        insert into mobject (mobject_id, mobject_user, mobject_message,
+            mobject_isread)
+        values (#{mobjectId,jdbcType=CHAR}, #{mobjectUser,jdbcType=CHAR}, #{mobjectMessage,jdbcType=CHAR},
+            #{mobjectIsread,jdbcType=INTEGER})
+    </insert>
 </mapper>

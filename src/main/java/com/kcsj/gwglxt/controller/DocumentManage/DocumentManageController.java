@@ -19,6 +19,12 @@ public class DocumentManageController {
     @Autowired
     private DocumentService documentService;
 
+    //获取全部文档
+    @RequestMapping("/getAllDocument")
+    public List<DocumentCustom> getAllDocument(){
+        List<DocumentCustom> list = documentService.getAllDocument();
+        return list;
+    }
     //添加文档
     @RequestMapping("/addDocument")
     public Document addDocument(@RequestBody Document document, HttpSession httpSession, HttpServletResponse response){
@@ -67,7 +73,7 @@ public class DocumentManageController {
         return "{\"msg\":\""+result+"\"}";
     }
 
-    //更改文档状态
+    //提交文档，更改文档状态
     @RequestMapping("/updateDocumentState")
     public String updateDocumentState(@RequestBody Document document,HttpSession httpSession, HttpServletResponse response){
         //初始化result
@@ -81,7 +87,9 @@ public class DocumentManageController {
         //根据得到的文档id获得文档信息
         Document document1 = documentService.selectByPrimaryKey(documentId);
         //更新文档状态为2
-        int updateResult = documentService.updateDocumentState(documentState,documentId);
+        String documentProcessBegin = null;
+        String documentProcessFinish = null;
+        int updateResult = documentService.updateDocumentState(documentState,documentProcessBegin,documentProcessFinish,documentId);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         Log log = new Log();
         String text = null;
@@ -98,8 +106,8 @@ public class DocumentManageController {
         return "{\"msg\":\""+result+"\"}";
     }
     //更改文档当前所处流程的位置
-    @RequestMapping("/updateDocumentLocation")
-    public String updateDocumentLocation(@PathVariable String documentId,HttpSession httpSession, HttpServletResponse response){
+    @RequestMapping("/updateDocumentLocation/{documentId}")
+    public String updateDocumentLocation(@PathVariable("documentId") String documentId,HttpSession httpSession, HttpServletResponse response){
         //初始化result
         String result =null;
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
@@ -123,11 +131,29 @@ public class DocumentManageController {
         int documentLocation = document.getDocumentLocation() + 1;
         //获取当前所走流程的最大步骤
         int maxStep = documentService.getMaxStep(document.getDocumentProcess());
+        String documentProcessBegin = null;
+        String documentProcessFinish = null;
         //根据流程所处不同节点改变文档状态：当前流程所处节点为1是文档状态改为3，当前流程所处节点位置为最后一位是文档状态改为4
         if(documentLocation==1){
-            documentService.updateDocumentState(3,documentId);
+            documentProcessBegin = df.format(new Date());
+            documentService.updateDocumentState(3,documentProcessBegin,documentProcessFinish,documentId);
         }else if (documentLocation==maxStep){
-            documentService.updateDocumentState(4,documentId);
+            documentProcessFinish = df.format(new Date());
+            documentService.updateDocumentState(4,documentProcessBegin,documentProcessFinish,documentId);
+            Message message = new Message();
+            String messageId = TeamUtil.getUuid();
+            message.setMessageId(messageId);
+            message.setMessageContent("您提交的公文"+document.getDocumentTitle()+"已经全部审核完毕了！");
+            message.setMessageTime(df.format(new Date()));
+            message.setMessageIsdelete(0);
+            message.setMessageType(4);
+            documentService.insertMsg(message);
+            Mobject mobject = new Mobject();
+            mobject.setMobjectId(TeamUtil.getUuid());
+            mobject.setMobjectUser(document.getDocumentUser());
+            mobject.setMobjectMessage(messageId);
+            mobject.setMobjectIsread(0);
+            documentService.insertMbj(mobject);
         }
         int updateLocationResult = documentService.updateDocumentLocation(documentLocation,documentId);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
@@ -138,29 +164,29 @@ public class DocumentManageController {
     }
     //通知下一个节点操作人
     @RequestMapping("/messageNextOne")
-    public String messageNextOne(@RequestBody Document document){
+    public String messageNextOne(@PathVariable("documentId") String documentId){
         String result = null;
-        int messageResult = documentService.insertMessage(document);
+        int messageResult = documentService.insertMessage(documentId);
         if (messageResult==0){
             result = "updateFailed";
         }result = "updateSuccess";
         return "{\"msg\":\""+result+"\"}";
     }
     //根据文档状态查询文档
-    @RequestMapping("/getDocumentByState")
-    public List<Document> getDocumentByState(@PathVariable Integer documentState ){
-        List<Document> list = documentService.getDocumentByState(documentState);
+    @RequestMapping("/getDocumentByState/{documentState}")
+    public List<DocumentCustom> getDocumentByState(@PathVariable("documentState") Integer documentState ){
+        List<DocumentCustom> list = documentService.getDocumentByState(documentState);
         return list;
     }
     //根据id查看文档全部信息
-    @RequestMapping("/selectByPrimaryKey")
-    public Document selectByPrimaryKey(@PathVariable String documentId){
-        Document document = documentService.selectByPrimaryKey(documentId);
-        return  document;
+    @RequestMapping("/documentBaseInfo/{documentId}")
+    public DocumentCustom documentBaseInfo(@PathVariable("documentId") String documentId){
+        DocumentCustom documentCustom = documentService.documentBaseInfo(documentId);
+        return  documentCustom;
     }
     //查看文档的所有流程节点
-    @RequestMapping("/getProcessNode")
-    public List<ProcessNode> getProcessNode(@PathVariable String documentId){
+    @RequestMapping("/getProcessNode/{documentId}")
+    public List<ProcessNode> getProcessNode(@PathVariable("documentId") String documentId){
         Document document = documentService.selectByPrimaryKey(documentId);
         List<ProcessNode> list = documentService.getAllProcessNode(document.getDocumentProcess());
         return  list;

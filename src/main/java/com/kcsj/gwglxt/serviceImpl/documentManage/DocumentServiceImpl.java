@@ -32,8 +32,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public int updateDocumentState(Integer documentState, String documentId) {
-        return documentMapper.updateDocumentState(documentState,documentId);
+    public int updateDocumentState(Integer documentState,String documentProcessBegin,String documentProcessFinish, String documentId) {
+        return documentMapper.updateDocumentState(documentState,documentProcessBegin,documentProcessFinish,documentId);
     }
 
     @Override
@@ -105,8 +105,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<Document> getDocumentByState(Integer documentState) {
-        List<Document> list = documentMapper.getDocumentByState(documentState);
+    public List<DocumentCustom> getDocumentByState(Integer documentState) {
+        List<DocumentCustom> list = documentMapper.getDocumentByState(documentState);
         return list;
     }
 
@@ -114,6 +114,26 @@ public class DocumentServiceImpl implements DocumentService {
     public List<ProcessNode> getAllProcessNode(String processNodeProcess) {
         List<ProcessNode> list = processNodeMapper.getAllProcessNode(processNodeProcess);
         return list;
+    }
+
+    @Override
+    public List<DocumentCustom> getAllDocument() {
+        return documentMapper.getAllDocument();
+    }
+
+    @Override
+    public DocumentCustom documentBaseInfo(String documentId) {
+        return documentMapper.documentBaseInfo(documentId);
+    }
+
+    @Override
+    public int insertMsg(Message message) {
+        return messageMapper.insertMsg(message);
+    }
+
+    @Override
+    public int insertMbj(Mobject mobject) {
+        return mobjectMapper.insertMbj(mobject);
     }
 
 

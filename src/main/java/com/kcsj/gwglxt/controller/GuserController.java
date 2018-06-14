@@ -47,7 +47,7 @@ public class GuserController {
         UserLogin userLogin = new UserLogin();
         //生成随机数
         userLogin.setToken(UUID.randomUUID());
-        if (guserService.loginFunction("154780")==null){
+        if (guserService.loginFunction(userAccount)==null){
             msg = "用户名不存在";
             userLogin.setCode("20001");
             System.out.println(msg);
@@ -68,6 +68,8 @@ public class GuserController {
                 userLogin.setUserPicture(loginCustom.getGuser().getUserPicture());
                 msg = "密码正确";
                 System.out.println(msg);
+                //存入用户信息到session
+                httpSession.setAttribute("LoginInfomation",loginCustom);
                 return "{\n" +
                         "  \"code\": " + userLogin.getCode() + ",\n" +
                         "  \"data\": {\n" +
@@ -94,7 +96,7 @@ public class GuserController {
     //获取用户信息的方法
     @RequestMapping("/index6")
     public String getLoginInfo( HttpSession httpSession, HttpServletResponse response){
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("loginerInfo");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
         UserLogin userLogin = new UserLogin();
         userLogin.setCode("20002");
         userLogin.setUserId(loginCustom.getGuser().getUserId());

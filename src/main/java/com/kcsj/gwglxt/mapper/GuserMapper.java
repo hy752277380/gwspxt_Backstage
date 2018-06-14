@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
-import com.kcsj.gwglxt.entity.LoginCustom;
+import com.kcsj.gwglxt.DTO.LoginCustom;
 import org.apache.ibatis.annotations.Param;
 
 public interface GuserMapper {

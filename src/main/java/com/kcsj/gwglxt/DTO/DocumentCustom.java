@@ -1,11 +1,17 @@
-package com.kcsj.gwglxt.entity;
+package com.kcsj.gwglxt.DTO;
+
+import com.kcsj.gwglxt.entity.Department;
+import com.kcsj.gwglxt.entity.Document;
+import com.kcsj.gwglxt.entity.Documenttype;
+import com.kcsj.gwglxt.entity.Guser;
+import com.kcsj.gwglxt.entity.Process;
 
 public class DocumentCustom {
     private Document document;
     private Documenttype documenttype;
     private Department department;
     private Guser guser;
-    private Process process;
+    private com.kcsj.gwglxt.entity.Process process;
 
     public Document getDocument() {
         return document;
@@ -39,7 +45,7 @@ public class DocumentCustom {
         this.guser = guser;
     }
 
-    public Process getProcess() {
+    public com.kcsj.gwglxt.entity.Process getProcess() {
         return process;
     }
 

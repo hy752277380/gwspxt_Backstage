@@ -1,7 +1,7 @@
 package com.kcsj.gwglxt.mapper;
 
 import com.kcsj.gwglxt.entity.Document;
-import com.kcsj.gwglxt.entity.DocumentCustom;
+import com.kcsj.gwglxt.DTO.DocumentCustom;
 import com.kcsj.gwglxt.entity.DocumentExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

@@ -1,5 +1,8 @@
 package com.kcsj.gwglxt.serviceImpl.documentManage;
 
+import com.kcsj.gwglxt.DTO.DocumentCustom;
+import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.DTO.MessageCustom;
 import com.kcsj.gwglxt.entity.*;
 import com.kcsj.gwglxt.mapper.*;
 import com.kcsj.gwglxt.service.documentManage.DocumentService;
@@ -141,6 +144,11 @@ public class DocumentServiceImpl implements DocumentService {
             list_doc.add(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(),processNode.getProcessNodeStep()-1));
         }
         return list_doc;
+    }
+
+    @Override
+    public List<MessageCustom> getMyAllMessage(String userId) {
+        return mobjectMapper.getMyAllMessage(userId);
     }
 
     @Override

@@ -21,7 +21,7 @@
         <result column="creation_time" property="creationTime"   />
         <result column="document_isdelete" property="documentIsdelete"  />
     </resultMap>
-    <resultMap id="DocumentBaseInfo" type="com.kcsj.gwglxt.entity.DocumentCustom">
+    <resultMap id="DocumentBaseInfo" type="com.kcsj.gwglxt.DTO.DocumentCustom">
         <association property="document" javaType="com.kcsj.gwglxt.entity.Document">
             <id column="document_id" property="documentId"/>
             <result column="document_title" property="documentTitle"/>
@@ -42,7 +42,7 @@
             <result column="process_name" property="processName"/>
         </association>
     </resultMap>
-    <resultMap id="DocumentDetailInfo" type="com.kcsj.gwglxt.entity.DocumentCustom">
+    <resultMap id="DocumentDetailInfo" type="com.kcsj.gwglxt.DTO.DocumentCustom">
         <association property="document" javaType="com.kcsj.gwglxt.entity.Document">
             <id column="document_id" property="documentId"/>
             <result column="document_title" property="documentTitle"/>

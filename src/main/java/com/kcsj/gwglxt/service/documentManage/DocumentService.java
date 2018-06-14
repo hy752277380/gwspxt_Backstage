@@ -1,5 +1,8 @@
 package com.kcsj.gwglxt.service.documentManage;
 
+import com.kcsj.gwglxt.DTO.DocumentCustom;
+import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.DTO.MessageCustom;
 import com.kcsj.gwglxt.entity.*;
 import org.apache.ibatis.annotations.Param;
 
@@ -40,4 +43,6 @@ public interface DocumentService {
 
 
     List<DocumentCustom> findCheckingDoc(LoginCustom loginCustom);
+
+    List<MessageCustom> getMyAllMessage(String userId);
 }

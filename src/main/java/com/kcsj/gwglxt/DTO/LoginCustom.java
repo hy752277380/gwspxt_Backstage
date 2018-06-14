@@ -1,4 +1,9 @@
-package com.kcsj.gwglxt.entity;
+package com.kcsj.gwglxt.DTO;
+
+import com.kcsj.gwglxt.entity.Department;
+import com.kcsj.gwglxt.entity.Guser;
+import com.kcsj.gwglxt.entity.Permission;
+import com.kcsj.gwglxt.entity.Position;
 
 public class LoginCustom {
 
@@ -6,9 +11,9 @@ public class LoginCustom {
 
     private Department department;
 
-    private  Position position;
+    private Position position;
 
-    private  Permission permission;
+    private Permission permission;
 
     public Guser getGuser() {
         return guser;

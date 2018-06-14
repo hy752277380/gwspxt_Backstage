@@ -1,12 +1,11 @@
 package com.kcsj.gwglxt.controller;
 
 import com.kcsj.gwglxt.entity.Guser;
-import com.kcsj.gwglxt.entity.LoginCustom;
+import com.kcsj.gwglxt.DTO.LoginCustom;
 import com.kcsj.gwglxt.service.GuserService;
 import com.kcsj.gwglxt.vo.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

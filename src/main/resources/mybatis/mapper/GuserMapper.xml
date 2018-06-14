@@ -19,7 +19,7 @@
 
     <!--依据用户登录给的user_account user_password信息书写的登录用户loginCustom的映射
     -->
-    <resultMap id="loginFunctionMap" type="com.kcsj.gwglxt.entity.LoginCustom">
+    <resultMap id="loginFunctionMap" type="com.kcsj.gwglxt.DTO.LoginCustom">
         <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
             <id column="user_id"  property="userId" jdbcType="CHAR"/>
             <result column="user_account" property="userAccount" jdbcType="CHAR" />
@@ -52,7 +52,7 @@
 
     </resultMap>-->
 
-    <resultMap id="loginResultMap" type="com.kcsj.gwglxt.entity.LoginCustom">
+    <resultMap id="loginResultMap" type="com.kcsj.gwglxt.DTO.LoginCustom">
         <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
             <id column="user_id"  property="userId" jdbcType="CHAR"/>
             <result column="user_account" property="userAccount" jdbcType="CHAR" />

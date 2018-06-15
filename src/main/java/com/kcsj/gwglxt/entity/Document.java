@@ -200,4 +200,27 @@ public class Document {
     public void setDocumentIsdelete(Integer documentIsdelete) {
         this.documentIsdelete = documentIsdelete;
     }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                "documentId='" + documentId + '\'' +
+                ", documentTitle='" + documentTitle + '\'' +
+                ", documentType='" + documentType + '\'' +
+                ", documentNo='" + documentNo + '\'' +
+                ", documentDept='" + documentDept + '\'' +
+                ", documentUser='" + documentUser + '\'' +
+                ", documentConfidential=" + documentConfidential +
+                ", doucmentContent='" + doucmentContent + '\'' +
+                ", documentRemark='" + documentRemark + '\'' +
+                ", documentProcess='" + documentProcess + '\'' +
+                ", documentLocation=" + documentLocation +
+                ", documentProcessBegin='" + documentProcessBegin + '\'' +
+                ", documentProcessFinish='" + documentProcessFinish + '\'' +
+                ", documentState=" + documentState +
+                ", documentSpeed=" + documentSpeed +
+                ", creationTime='" + creationTime + '\'' +
+                ", documentIsdelete=" + documentIsdelete +
+                '}';
+    }
 }

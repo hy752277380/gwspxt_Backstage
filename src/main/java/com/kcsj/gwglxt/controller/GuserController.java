@@ -48,19 +48,19 @@ public class GuserController {
         UserLogin userLogin = new UserLogin();
         //生成随机数
         userLogin.setToken(UUID.randomUUID());
-        if (guserService.loginFunction(userAccount)==null){
+        LoginCustom loginCustom = guserService.loginFunction(userAccount);
+        if (loginCustom==null){
             msg = "用户名不存在";
             userLogin.setCode("20001");
             System.out.println(msg);
             /*httpSession.setAttribute("Token", userLogin.getToken());
             httpSession.setAttribute("userLogin", userLogin);*/
             return "\n" +
-                    "            \"code\": " + userLogin.getCode() + ",\n" +
-                    "                \"data\": {\n" +
-                    "            \"token\": \"" + userLogin.getToken() + "\"\n" +
-                    "        }";
+                    " \"code\": " + userLogin.getCode() + ",\n" +
+                    " \"data\": {\n" +
+                    " \"token\": \"" + userLogin.getToken() + "\"\n" +
+                    " }";
         }
-        LoginCustom loginCustom = guserService.loginFunction(userAccount);
         //将密码加密比对
         if ( md5.GetMD5Code(userPassword).equals(loginCustom.getGuser().getUserPassword())) {
                 userLogin.setCode("20000");
@@ -71,7 +71,7 @@ public class GuserController {
                 msg = "密码正确";
                 System.out.println(msg);
                 //存入用户信息到session
-                httpSession.setAttribute("LoginInfomation",loginCustom);
+                httpSession.setAttribute("LoginInformation",loginCustom);
                 return "{\n" +
                         "  \"code\": " + userLogin.getCode() + ",\n" +
                         "  \"data\": {\n" +
@@ -98,7 +98,7 @@ public class GuserController {
     //获取用户信息的方法
     @RequestMapping("/index6")
     public String getLoginInfo( HttpSession httpSession, HttpServletResponse response){
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
         UserLogin userLogin = new UserLogin();
         userLogin.setCode("20002");
         userLogin.setUserId(loginCustom.getGuser().getUserId());
@@ -119,7 +119,7 @@ public class GuserController {
     //获取个人信息
     public LoginCustom getPersonalInfo(HttpSession httpSession){
         //获取session内容
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
         LoginCustom personalInfo = guserService.getPersonalInfo(loginCustom.getGuser().getUserId());
         return personalInfo;
     }

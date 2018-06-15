@@ -32,4 +32,6 @@ public interface GuserService {
 
     LoginCustom loginInfo(String userId);
     LoginCustom loginFunction(String userAccount);
+    //查询个人信息
+    LoginCustom getPersonalInfo(String userId);
 }

@@ -116,5 +116,12 @@ public class GuserController {
                 "  }\n" +
                 "}";
     }
+    //获取个人信息
+    public LoginCustom getPersonalInfo(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        LoginCustom personalInfo = guserService.getPersonalInfo(loginCustom.getGuser().getUserId());
+        return personalInfo;
+    }
 }
 

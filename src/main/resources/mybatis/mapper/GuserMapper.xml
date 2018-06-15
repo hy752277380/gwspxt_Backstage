@@ -439,6 +439,15 @@
          <include refid="Base_Column_List"/>
          FROM guser WHERE user_position = #{userPosition} and user_department = #{userDepartment}
     </select>
-    <!--<select id="userLogin" parameterType="java.lang.String" resultMap=""></select>-->
+    <select id="getPersonalInfo" parameterType="java.lang.String" resultMap="loginResultMap">
+        select
+        g.user_id,g.user_account,g.user_password,g.user_name,g.user_phonenumber,g.user_email,g.user_introduction,g.user_picture,d.department_name,po.position_name,pe.permission_level
+        from
+        <include refid="user_login_condition"/>
+        where g.user_department = d.department_id
+        AND g.user_position = po.position_id
+        AND po.position_permission = pe.permission_id
+        AND g.user_id = #{userId}
+    </select>
 
 </mapper>

@@ -160,6 +160,11 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    public List<Log> getAllLog(String userId) {
+        return logMapper.getAllLog(userId);
+    }
+
+    @Override
     public int insertMsg(Message message) {
         return messageMapper.insertMsg(message);
     }

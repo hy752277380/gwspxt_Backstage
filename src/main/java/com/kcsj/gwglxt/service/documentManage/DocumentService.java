@@ -45,4 +45,6 @@ public interface DocumentService {
     List<DocumentCustom> findCheckingDoc(LoginCustom loginCustom);
 
     List<MessageCustom> getMyAllMessage(String userId);
+
+    List<Log> getAllLog(String userId);
 }

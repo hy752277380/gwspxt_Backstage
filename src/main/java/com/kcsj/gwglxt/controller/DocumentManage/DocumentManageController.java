@@ -211,6 +211,12 @@ public class DocumentManageController {
         List<MessageCustom> list = documentService.getMyAllMessage(loginCustom.getGuser().getUserId());
         return list;
     }
+    //查看本人所有日志
+    @RequestMapping("/getAllLog")
+    public void getAllLog(HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        documentService.getAllLog(loginCustom.getGuser().getUserId());
+    }
     //登录
     @PostMapping("/login")
     public String login(){

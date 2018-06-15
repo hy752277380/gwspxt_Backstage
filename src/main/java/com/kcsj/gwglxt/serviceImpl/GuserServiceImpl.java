@@ -83,4 +83,9 @@ public class GuserServiceImpl implements GuserService {
         System.out.println(ll);
         return ll;
 }
+
+    @Override
+    public LoginCustom getPersonalInfo(String userId) {
+        return guserMapper.getPersonalInfo(userId);
+    }
 }

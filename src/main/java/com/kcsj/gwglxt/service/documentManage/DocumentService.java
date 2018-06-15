@@ -1,5 +1,8 @@
 package com.kcsj.gwglxt.service.documentManage;
 
+import com.kcsj.gwglxt.DTO.DocumentCustom;
+import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.DTO.MessageCustom;
 import com.kcsj.gwglxt.entity.*;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,7 +32,7 @@ public interface DocumentService {
     //生成信息
     int insertMessage(String documentId);
 
-    List<DocumentCustom> getDocumentByState(Integer documentState);
+    List<DocumentCustom> getDocumentByState(Integer documentState,String documentUser);
 
     //查询该文档所走流程的每一个流程节点
     List<ProcessNode> getAllProcessNode(String processNodeProcess);
@@ -39,4 +42,9 @@ public interface DocumentService {
     DocumentCustom documentBaseInfo(String documentId);
 
 
+    List<DocumentCustom> findCheckingDoc(LoginCustom loginCustom);
+
+    List<MessageCustom> getMyAllMessage(String userId);
+
+    List<Log> getAllLog(String userId);
 }

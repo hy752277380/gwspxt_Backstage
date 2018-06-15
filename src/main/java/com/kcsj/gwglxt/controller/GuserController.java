@@ -77,5 +77,17 @@ public class GuserController {
         LoginCustom personalInfo = guserService.getPersonalInfo(loginCustom.getGuser().getUserId());
         return personalInfo;
     }
+    //登出
+    public String loginout(){
+        return "";
+    }
+    //登陆检测
+    public String checkLogin(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        if(loginCustom==null){
+            return "";
+        }return "";
+    }
 }
 

@@ -222,6 +222,7 @@ public class DocumentManageController {
         LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
         documentService.getAllLog(loginCustom.getGuser().getUserId());
     }
+    
     //登录
     @PostMapping("/login")
     public String login(){

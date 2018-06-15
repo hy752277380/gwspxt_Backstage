@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:9528")
+@CrossOrigin(origins = "*")
 public class DocumentManageController {
     @Autowired
     private DocumentService documentService;

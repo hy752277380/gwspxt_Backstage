@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:9528")
+@CrossOrigin(origins = "*")
 public class GuserController {
     @Autowired
     private GuserService guserService;

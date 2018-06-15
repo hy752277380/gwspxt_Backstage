@@ -19,15 +19,17 @@ import java.util.UUID;
 public class GuserController {
     @Autowired
     private GuserService guserService;
+
     //根据id查询用户表
     @RequestMapping("/index3")
-    public Guser selectByPrimaryKey(){
+    public Guser selectByPrimaryKey() {
         return guserService.selectByPrimaryKey("15478012");
     }
+
     //根据id查询用户基本信息
     @RequestMapping("/index4")
-    public String loginInfo(){
-        if (guserService.loginInfo("154780")==null){
+    public String loginInfo() {
+        if (guserService.loginInfo("154780") == null) {
             return "没有获取";
         }
         return "qudaole";
@@ -41,84 +43,36 @@ public class GuserController {
                 '}';
     }
 
-    @RequestMapping("/index5/{userAccount}/{userPassword}")
-    public String login(@PathVariable("userAccount") String userAccount,@PathVariable("userPassword") String userPassword, HttpSession httpSession ) {
-        String msg;
-        UserLogin userLogin = new UserLogin();
-        //生成随机数
-        userLogin.setToken(UUID.randomUUID());
-        if (guserService.loginFunction(userAccount)==null){
-            msg = "用户名不存在";
-            userLogin.setCode("20001");
-            System.out.println(msg);
-            /*httpSession.setAttribute("Token", userLogin.getToken());
-            httpSession.setAttribute("userLogin", userLogin);*/
-            return "\n" +
-                    "            \"code\": " + userLogin.getCode() + ",\n" +
-                    "                \"data\": {\n" +
-                    "            \"token\": \"" + userLogin.getToken() + "\"\n" +
-                    "        }";
-        }
+    @RequestMapping("/login/{userAccount}/{userPassword}")
+    public UserLogin login(@PathVariable("userAccount") String userAccount, @PathVariable("userPassword") String userPassword, HttpSession httpSession) {
         LoginCustom loginCustom = guserService.loginFunction(userAccount);
+        if (loginCustom == null) {
+            //"用户名不存在";
+            return new UserLogin("20001", null);
+        }
         //将密码加密比对
-        if ( md5.GetMD5Code(userPassword).equals(loginCustom.getGuser().getUserPassword())) {
-                userLogin.setCode("20000");
-                userLogin.setUserName(loginCustom.getGuser().getUserName());
-                userLogin.setUserId(loginCustom.getGuser().getUserId());
-                userLogin.setPermissionLevel(loginCustom.getPermission().getPermissionLevel());
-                userLogin.setUserPicture(loginCustom.getGuser().getUserPicture());
-                msg = "密码正确";
-                System.out.println(msg);
-                //存入用户信息到session
-                httpSession.setAttribute("LoginInfomation",loginCustom);
-                return "{\n" +
-                        "  \"code\": " + userLogin.getCode() + ",\n" +
-                        "  \"data\": {\n" +
-                        "    \"roles\": [\"" + userLogin.getPermissionLevel() + "\"],\n" +
-                        "    \"name\": \"" + userLogin.getUserId() + "\",\n" +
-                        "    \"avatar\": \"https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif \n" +
-                        "\n" +
-                        "\"\n" +
-                        "  }\n" +
-                        "}";
-            } else {
-                userLogin.setUserId(loginCustom.getGuser().getUserId());
-                userLogin.setCode("20002");
-                msg = "密码错误";
-                System.out.println(msg);
-                return "{\n" +
-                        "  \"code\": "+userLogin.getCode()+",\n" +
-                        "  \"data\": {\n" +
-                        "    \"token\": \""+userLogin.getToken()+"\"\n" +
-                        "  }\n" +
-                        "}";
-            }
+        if (md5.GetMD5Code(userPassword).equals(loginCustom.getGuser().getUserPassword())) {
+            //"密码正确";
+            //存入用户信息到session
+            httpSession.setAttribute("LoginInformation", loginCustom);
+            return new UserLogin("20000", loginCustom);
+        } else {
+            // "密码错误";
+            return new UserLogin("20002", null);
+        }
     }
+
     //获取用户信息的方法
-    @RequestMapping("/index6")
-    public String getLoginInfo( HttpSession httpSession, HttpServletResponse response){
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
-        UserLogin userLogin = new UserLogin();
-        userLogin.setCode("20002");
-        userLogin.setUserId(loginCustom.getGuser().getUserId());
-        userLogin.setPermissionLevel(loginCustom.getPermission().getPermissionLevel());
-        userLogin.setUserPicture(loginCustom.getGuser().getUserPicture());
-        System.out.println(" 111  ");
-        return "{\n" +
-                "  \"code\": " + userLogin.getCode() + ",\n" +
-                "  \"data\": {\n" +
-                "    \"roles\": [\"" + userLogin.getPermissionLevel() + "\"],\n" +
-                "    \"name\": \"" + userLogin.getUserId() + "\",\n" +
-                "    \"avatar\": \"https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif \n" +
-                "\n" +
-                "\"\n" +
-                "  }\n" +
-                "}";
+    @RequestMapping("/getUserInfo")
+    public LoginCustom getLoginInfo(HttpSession httpSession, HttpServletResponse response) {
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        return loginCustom;
     }
+
     //获取个人信息
-    public LoginCustom getPersonalInfo(HttpSession httpSession){
+    public LoginCustom getPersonalInfo(HttpSession httpSession) {
         //获取session内容
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         LoginCustom personalInfo = guserService.getPersonalInfo(loginCustom.getGuser().getUserId());
         return personalInfo;
     }

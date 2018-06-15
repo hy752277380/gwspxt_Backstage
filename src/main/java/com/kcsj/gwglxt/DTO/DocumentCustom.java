@@ -1,9 +1,6 @@
 package com.kcsj.gwglxt.DTO;
 
-import com.kcsj.gwglxt.entity.Department;
-import com.kcsj.gwglxt.entity.Document;
-import com.kcsj.gwglxt.entity.Documenttype;
-import com.kcsj.gwglxt.entity.Guser;
+import com.kcsj.gwglxt.entity.*;
 import com.kcsj.gwglxt.entity.Process;
 
 public class DocumentCustom {
@@ -12,6 +9,7 @@ public class DocumentCustom {
     private Department department;
     private Guser guser;
     private com.kcsj.gwglxt.entity.Process process;
+    private Borrowing borrowing;
 
     public Document getDocument() {
         return document;
@@ -51,6 +49,14 @@ public class DocumentCustom {
 
     public void setProcess(Process process) {
         this.process = process;
+    }
+
+    public Borrowing getBorrowing() {
+        return borrowing;
+    }
+
+    public void setBorrowing(Borrowing borrowing) {
+        this.borrowing = borrowing;
     }
 
 }

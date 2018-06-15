@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.mapper;
 
+import com.kcsj.gwglxt.entity.Borrowing;
 import com.kcsj.gwglxt.entity.Document;
 import com.kcsj.gwglxt.DTO.DocumentCustom;
 import com.kcsj.gwglxt.entity.DocumentExample;
@@ -39,9 +40,10 @@ public interface DocumentMapper {
 
     List<DocumentCustom> getDocumentByState(@Param("documentState") Integer documentState,@Param("documentUser") String documentUser);
     //查询所有文档
-    List<DocumentCustom> getAllDocument();
+    List<DocumentCustom> getAllDocument(String searchInfo);
     //联合查询文档信息
     DocumentCustom documentBaseInfo(String documentId);
 
     DocumentCustom findCheckingDoc(@Param("documentProcess") String documentProcess,@Param("documentLocation") Integer documentLocation);
+
 }

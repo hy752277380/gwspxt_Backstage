@@ -41,6 +41,9 @@
         <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
             <result column="process_name" property="processName"/>
         </association>
+        <association property="borrowing" javaType="com.kcsj.gwglxt.entity.Borrowing">
+            <result column="borrowing_state" property="borrowingState"/>
+        </association>
     </resultMap>
     <resultMap id="DocumentDetailInfo" type="com.kcsj.gwglxt.DTO.DocumentCustom">
         <association property="document" javaType="com.kcsj.gwglxt.entity.Document">
@@ -523,12 +526,16 @@ FROM
 	documenttype dt,
 	department de,
 	guser gu,
-	process pr
+	process pr,
 WHERE
 	doc.document_type = dt.documenttype_id
 AND doc.document_dept = de.department_id
 AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
+and doc.document_state = '5'
+<if test="searchInfo!=null">
+    and (doc.document_title like '${searchInfo}' or doc.document_no like '${searchInfo}' or gu.user_name like '${searchInfo}' or dt.documenttype_name like '${searchInfo}' or de.department_name like '${searchInfo}')
+</if>
     </select>
     <select id="documentBaseInfo" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
         SELECT

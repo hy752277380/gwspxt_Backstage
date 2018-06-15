@@ -7,6 +7,7 @@ import com.kcsj.gwglxt.entity.*;
 import com.kcsj.gwglxt.mapper.*;
 import com.kcsj.gwglxt.service.documentManage.DocumentService;
 import com.kcsj.gwglxt.util.TeamUtil;
+import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,8 @@ public class DocumentServiceImpl implements DocumentService {
     private GuserMapper guserMapper;
     @Autowired
     private MobjectMapper mobjectMapper;
+    @Autowired
+    private BorrowingMapper borrowingMapper;
 
     @Override
     public int insert(Document record) {
@@ -130,10 +133,38 @@ public class DocumentServiceImpl implements DocumentService {
         List<ProcessNode> list = processNodeMapper.getAllProcessNode(processNodeProcess);
         return list;
     }
-
+    //按阅读权限整理出所有文档
     @Override
-    public List<DocumentCustom> getAllDocument() {
-        return documentMapper.getAllDocument();
+    public QueryForPage getAllDocument(String departmentName, String userId,int currentPage,String searchInfo) {
+        List<DocumentCustom> list = documentMapper.getAllDocument(searchInfo);
+        Borrowing borrowing;
+        for (DocumentCustom documentCustom:list){
+            if (documentCustom.getDepartment().getDepartmentName()!=departmentName) {
+                borrowing = borrowingMapper.borrowingState(documentCustom.getDocument().getDocumentId(), userId);
+                documentCustom.setBorrowing(borrowing);
+            }
+        }
+        QueryForPage queryForPage = new QueryForPage();
+        /*//设置总记录数
+        queryForPage1.setAllRow(list.size());
+        //获取当前页
+        queryForPage1.setCurrentPage(queryForPage.getCurrentPage());
+        //设置每页数据为十条
+        queryForPage.setPageSize(10);
+        queryForPage1.setList(list.subList(QueryForPage.countOffset(10,list.size()),10));*/
+        int pagesize = 10;//每页记录数
+        int allRow = list.size();//总记录数
+        int totalPage = QueryForPage.countTotalPage(pagesize,allRow);//总页数
+        int offSet = QueryForPage.countOffset(pagesize,currentPage);//当前页开始记录数
+        int currentPages = QueryForPage.countCurrentPage(currentPage);
+        List<DocumentCustom> list_thisPage = list.subList(offSet,pagesize);
+        queryForPage.setList(list_thisPage);
+        queryForPage.setAllRow(allRow);
+        queryForPage.setCurrentPage(currentPages);
+        queryForPage.setPageSize(pagesize);
+        queryForPage.setTotalPage(totalPage);
+        queryForPage.init();
+        return queryForPage;
     }
 
     @Override

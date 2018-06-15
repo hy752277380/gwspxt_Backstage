@@ -6,6 +6,7 @@ import com.kcsj.gwglxt.DTO.MessageCustom;
 import com.kcsj.gwglxt.entity.*;
 import com.kcsj.gwglxt.service.documentManage.DocumentService;
 import com.kcsj.gwglxt.util.TeamUtil;
+import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,16 +23,20 @@ public class DocumentManageController {
     private DocumentService documentService;
 
     //获取全部文档
-    @RequestMapping("/getAllDocument")
-    public List<DocumentCustom> getAllDocument(){
-        List<DocumentCustom> list = documentService.getAllDocument();
-        return list;
+    @RequestMapping("/getAllDocument{searchInfo}")
+    public QueryForPage getAllDocument(@PathVariable("searchInfo") String searchInfo, int currentPage, HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
+        String departmentName = loginCustom.getDepartment().getDepartmentName();
+        String userId = loginCustom.getGuser().getUserId();
+        QueryForPage queryForPage = documentService.getAllDocument(departmentName,userId,currentPage,searchInfo);
+        return queryForPage;
     }
     //添加文档
     @RequestMapping("/addDocument")
     public Document addDocument(@RequestBody Document document, HttpSession httpSession, HttpServletResponse response){
         //获取session内容
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
         //初始化resul
         String result =null;
         //从对象中获得文档标题
@@ -81,7 +86,7 @@ public class DocumentManageController {
         //初始化result
         String result =null;
         //获取session中的信息
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
         //根据文档id修改文档状态
         String documentId = document.getDocumentId();
         //定义当前文档类型
@@ -114,7 +119,7 @@ public class DocumentManageController {
         String result =null;
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         //获取session内容
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
         Document document = documentService.selectByPrimaryKey(documentId);
         //生成审核人日志文件
         Log log = new Log();
@@ -180,7 +185,7 @@ public class DocumentManageController {
     @RequestMapping("/getDocumentByState/{documentState}")
     public List<DocumentCustom> getDocumentByState(@PathVariable("documentState") Integer documentState ,HttpSession httpSession){
         //获取session内容
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
         List<DocumentCustom> list = documentService.getDocumentByState(documentState,loginCustom.getGuser().getUserId());
         return list;
     }
@@ -200,21 +205,21 @@ public class DocumentManageController {
     //查询本人需要审核的文档
     @RequestMapping("/findCheckDoc")
     public List<DocumentCustom> findCheckDoc(HttpSession httpSession){
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
         List<DocumentCustom> list = documentService.findCheckingDoc(loginCustom);
         return list;
     }
     //获取所有本人消息
     @RequestMapping("/getAllMessage")
     public List<MessageCustom> getMyAllMessage(HttpSession httpSession){
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
         List<MessageCustom> list = documentService.getMyAllMessage(loginCustom.getGuser().getUserId());
         return list;
     }
     //查看本人所有日志
     @RequestMapping("/getAllLog")
     public void getAllLog(HttpSession httpSession){
-        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInfomation");
+        LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
         documentService.getAllLog(loginCustom.getGuser().getUserId());
     }
     //登录

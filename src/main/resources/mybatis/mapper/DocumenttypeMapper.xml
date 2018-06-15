@@ -208,4 +208,8 @@
             documenttype_isdelete = #{documenttypeIsdelete,jdbcType=INTEGER}
         where documenttype_id = #{documenttypeId,jdbcType=CHAR}
     </update>
+    <select id="getAllDocType" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from documenttype
+    </select>
 </mapper>

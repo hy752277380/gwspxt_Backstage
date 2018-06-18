@@ -11,7 +11,7 @@ public String login() {
     return "login.html";
 }
     //个人信息页面
-    @RequestMapping("/infomation")
+    @RequestMapping("/information")
     public String infomation() {
         return "infomation.html";
     }

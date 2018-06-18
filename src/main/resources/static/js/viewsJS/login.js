@@ -19,7 +19,8 @@ function check() {
 			success: function(data) {
 				console.log(data)
 				if(data.code == "20000") {
-					window.location.href = "http://localhost:8080/gwspxt/getUserInfo";
+					sessionStorage.setItem("loginUser",data.loginCustom);
+					window.location.href = "http://localhost:8080/gwspxt/information";
 				} else if(data.code == "20001") {
 					alert("没有该用户");
 

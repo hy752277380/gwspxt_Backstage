@@ -5,9 +5,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class PageController {
-
+//登录页面
+@RequestMapping("/login")
+public String login() {
+    return "login.html";
+}
     //个人信息页面
-    @RequestMapping("/infomation")
+    @RequestMapping("/information")
     public String infomation() {
         return "infomation.html";
     }

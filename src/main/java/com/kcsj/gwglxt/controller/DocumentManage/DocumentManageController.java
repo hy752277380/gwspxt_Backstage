@@ -35,6 +35,7 @@ public class DocumentManageController {
     }
     //添加文档
     @RequestMapping("/addDocument")
+
     public Document addDocument(@RequestBody Document document, HttpSession httpSession, HttpServletResponse response){
         //获取session内容
         LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");

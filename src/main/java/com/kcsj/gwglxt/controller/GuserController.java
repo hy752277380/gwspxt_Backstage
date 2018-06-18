@@ -88,6 +88,7 @@ public class GuserController {
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         if(loginCustom==null){
+
             return false;
         }return true;
     }

@@ -1,19 +1,50 @@
 $(function() {
+
+	var data = {
+		userinfo: '',
+		docData: '', //所有数据
+		showData: '', //显示在页面的数据
+		ready: false,
+		page: {
+			totalCount: 10,
+			totalPage: 3,
+			pageindex: 1,
+			haveNext: false,
+			havePre: false,
+		},
+	}
+
+	var pageUtil = Vue.extend({
+		template: `<ul class="pagination">
+		<li :class="page.havePre?'':'disabled'"><a @click="next('-')"><span aria-hidden="true">&laquo;</span></a></li>
+		<li v-for="index in page.totalPage" :class="{'active' : page.pageindex == index}">
+			<a @click="btnclick(index)" href="javascript:">{{index}}</a>
+		</li>
+		<li :class="page.haveNext?'':'disabled'"><a @click="next('+')"><span aria-hidden="true">&raquo;</span></a></li>
+		</ul>`,
+		methods: {
+			btnclick(index) {
+				data.page.pageindex = index;
+			},
+			next($to) {
+				if($to == "+") {
+					if(data.page.haveNext)
+						data.page.pageindex++;
+				}
+
+				if($to == "-") {
+					if(data.page.havePre)
+						data.page.pageindex--;
+				}
+
+			},
+		},
+		props: ['page'],
+	})
+
 	var reviewDocument = new Vue({
 		el: "#content",
-		data: {
-			userinfo: '',
-			docData: '', //所有数据
-			showData: '', //显示在页面的数据
-			ready: false,
-			page: {
-				lenArr: [10, 20, 40], // 每页显示长度
-				pageLen: 5, // 分页数
-				haveNext: false,
-				havePre: false,
-			},
-
-		},
+		data: data,
 		methods: {
 			checkAll($event) {
 				if($event.target.checked) {
@@ -26,37 +57,28 @@ $(function() {
 					});
 				}
 			},
-
+			getInfo(params) {
+				$.post('http://localhost:8080/gwspxt/getAllDocument', params, function(request) {
+					reviewDocument.docData = request;
+					reviewDocument.ready = true;
+				}, 'json');
+			},
 		},
 		mounted() {
-			$.post('http://localhost:8080/gwspxt/getAllDocument', '', function(request) {
-				reviewDocument.docData = request;
-				reviewDocument.ready = true;
-			}, 'json');
-
+			this.getInfo({
+				page: 1
+			});
 		},
-		watch() {
-
+		watch: {
+			'page.pageindex': function() {
+				this.getInfo({
+					page: this.page.pageindex
+				});
+			},
 		},
 		components: {
-			pageUtil,
+			'page-util': pageUtil,
 		}
 	});
 
-	reviewDocument.component("pageUtil", {
-		template: `
-		<ul class="pagination pagination-sm">
-		<li class="disabled"><a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-		<li class="active"><a>1<span class="sr-only">(current)</span></a></li>
-		<li>
-		<a href="">»</a>
-		/li></ul>`,
-		data() {
-
-		},
-		methods: {
-
-		},
-		props: [],
-	})
 })

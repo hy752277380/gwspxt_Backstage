@@ -7,6 +7,7 @@ import com.kcsj.gwglxt.entity.*;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import org.apache.ibatis.annotations.Param;
 
+import java.lang.Process;
 import java.util.List;
 
 public interface DocumentService {
@@ -48,4 +49,8 @@ public interface DocumentService {
     List<MessageCustom> getMyAllMessage(String userId);
 
     List<Log> getAllLog(String userId);
+
+    List<Documenttype> getAllDocType();
+
+    List<Process> getAllProcess();
 }

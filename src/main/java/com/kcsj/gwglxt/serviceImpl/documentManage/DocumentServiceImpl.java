@@ -11,6 +11,7 @@ import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.Process;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +33,10 @@ public class DocumentServiceImpl implements DocumentService {
     private MobjectMapper mobjectMapper;
     @Autowired
     private BorrowingMapper borrowingMapper;
+    @Autowired
+    private DocumenttypeMapper documenttypeMapper;
+    @Autowired
+    private  ProcessMapper processMapper;
 
     @Override
     public int insert(Document record) {
@@ -193,6 +198,16 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public List<Log> getAllLog(String userId) {
         return logMapper.getAllLog(userId);
+    }
+
+    @Override
+    public List<Documenttype> getAllDocType() {
+        return documenttypeMapper.getAllDocType();
+    }
+
+    @Override
+    public List<Process> getAllProcess() {
+        return processMapper.getAllProcess();
     }
 
     @Override

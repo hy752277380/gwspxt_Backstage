@@ -71,11 +71,25 @@ public class GuserController {
     }
 
     //获取个人信息
+    @RequestMapping("/personalInfo")
     public LoginCustom getPersonalInfo(HttpSession httpSession) {
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         LoginCustom personalInfo = guserService.getPersonalInfo(loginCustom.getGuser().getUserId());
         return personalInfo;
+    }
+    //登出
+    @RequestMapping("/loginout")
+    public String loginout(){
+        return "";
+    }
+    //登陆检测
+    public boolean LoginInterceptor (HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        if(loginCustom==null){
+            return false;
+        }return true;
     }
 }
 

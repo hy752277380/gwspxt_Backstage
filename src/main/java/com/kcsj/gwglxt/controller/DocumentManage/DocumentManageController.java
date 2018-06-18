@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.lang.Process;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -221,6 +222,18 @@ public class DocumentManageController {
     public void getAllLog(HttpSession httpSession){
         LoginCustom loginCustom = (LoginCustom)httpSession.getAttribute("LoginInformation");
         documentService.getAllLog(loginCustom.getGuser().getUserId());
+    }
+    //获取所有公文种类
+    @RequestMapping("/getAllDocType")
+    public List<Documenttype> getAllDocType(){
+        List<Documenttype> list = documentService.getAllDocType();
+        return list;
+    }
+    //获取所有流程
+    @RequestMapping("/getAllProcess")
+    public List<Process> getAllProcess(){
+        List<Process> list = documentService.getAllProcess();
+        return list;
     }
     //登录
     @PostMapping("/login")

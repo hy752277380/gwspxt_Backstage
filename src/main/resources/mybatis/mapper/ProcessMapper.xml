@@ -193,4 +193,8 @@
             process_name = #{processName,jdbcType=VARCHAR}
         where process_id = #{processId,jdbcType=CHAR}
     </update>
+    <select id="getAllProcess" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from process
+    </select>
 </mapper>

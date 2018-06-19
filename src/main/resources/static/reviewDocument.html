@@ -36,6 +36,10 @@
             display: none;
         }
 
+        td {
+            vertical-align: initial !important;
+        }
+
         /* 除去input为number时候的箭头*/
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -282,8 +286,7 @@
                                             <td>{{doc.document.creationTime}}</td>
                                             <td>
                                                 <!-- 本部门文档 -->
-                                                <template
-                                                        v-if="user.department.departmentName == doc.department.departmentName">
+                                                <template v-if="user.department.departmentName == doc.department.departmentName">
                                                     <button type="button" class="btn btn-primary btn-sm">阅读</button>
                                                 </template>
                                                 <!-- 非本部门未借阅文档 -->

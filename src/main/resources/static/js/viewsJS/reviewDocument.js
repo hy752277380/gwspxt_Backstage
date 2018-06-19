@@ -13,6 +13,9 @@ $(function () {
             hasPreviousPage: false,
             hasNextPage: false,
         },
+        docTypeSelect: 0,
+        docConfidential: 0,
+        docDepartment: 0,
     }
 
 
@@ -87,8 +90,19 @@ $(function () {
         props: ['page'],
     })
 
+    var searchUtil = Vue.extend({
+        template: `<span role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{selectData.name}}<span class="caret"></span></a>
+                     <ul class="dropdown-menu">
+                         <li v-for="item in selectData.items"><a href="#" :value="item.key">{{item.value}}</a></li>
+                     </ul>
+                   </span>`,
+        props: ['selectData'],
+    });
+
+
     var reviewDocument = new Vue({
-        el: "#content",
+        el: "#main",
         data: data,
         methods: {
             checkAll($event) {

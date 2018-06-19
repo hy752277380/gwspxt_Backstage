@@ -114,6 +114,18 @@ $(function () {
                     reviewDocument.ready = true;
                 }, 'json');
             },
+            replaceConfidential(documentConfidential) {
+                switch (documentConfidential) {
+                    case 1:
+                        return "<span class=\"label label-danger\">绝密</span>";
+                    case 2:
+                        return "<span class=\"label label-warning\">机密</span>";
+                    case 3:
+                        return "<span class=\"label label-info\">秘密</span>";
+                    case 4:
+                        return "<span class=\"label label-primary\">普通</span>";
+                }
+            }
         },
         mounted() {
             this.getInfo({

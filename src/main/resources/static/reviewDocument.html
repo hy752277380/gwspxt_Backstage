@@ -275,18 +275,17 @@
                                         </thead>
                                         <tbody v-cloak v-if="ready">
                                         <tr v-for="doc in docData">
-                                            <td><input check="self" :doc-id="doc.document.documentId" type="checkbox">
-                                            </td>
+                                            <td><input check="self" :doc-id="doc.document.documentId" type="checkbox"></td>
                                             <td>{{doc.document.documentNo}}</td>
                                             <td>{{doc.document.documentTitle}}</td>
                                             <td>{{doc.documenttype.documenttypeName}}</td>
                                             <td>{{doc.guser.userName}}</td>
-                                            <td>{{doc.document.documentConfidential}}</td>
+                                            <td v-html="replaceConfidential(doc.document.documentConfidential)"></td>
                                             <td>{{doc.department.departmentName}}</td>
                                             <td>{{doc.document.creationTime}}</td>
                                             <td>
                                                 <!-- 本部门文档 -->
-                                                <template v-if="user.department.departmentName == doc.department.departmentName">
+                                                <template v-if="user.department.departmentName==doc.department.departmentName">
                                                     <button type="button" class="btn btn-primary btn-sm">阅读</button>
                                                 </template>
                                                 <!-- 非本部门未借阅文档 -->

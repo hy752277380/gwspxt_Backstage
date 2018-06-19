@@ -507,8 +507,18 @@ WHERE
 AND doc.document_dept = de.department_id
 AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
-AND doc.document_state = #{documentState}
+        <choose>
+            <when test="documentState!=null">
+                and doc.document_state = #{documentState}
+            </when>
+            <otherwise>
+                AND doc.document_state in(1,2,3,4,5)
+            </otherwise>
+        </choose>
 and doc.document_user = #{documentUser}
+        <if test="searchInfo!=null">
+            and (doc.document_title like '${searchInfo}' or doc.document_no like '${searchInfo}' or gu.user_name like '${searchInfo}' or dt.documenttype_name like '${searchInfo}' or de.department_name like '${searchInfo}')
+        </if>
     </select>
     <select id="getAllDocument" resultMap="DocumentBaseInfo">
         SELECT

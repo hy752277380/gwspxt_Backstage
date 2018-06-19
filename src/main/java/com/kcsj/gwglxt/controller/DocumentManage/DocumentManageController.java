@@ -194,11 +194,11 @@ public class DocumentManageController {
 
     //根据文档状态查询文档
     @RequestMapping("/getDocumentByState/{documentState}")
-    public List<DocumentCustom> getDocumentByState(@PathVariable("documentState") Integer documentState, HttpSession httpSession) {
+    public QueryForPage getDocumentByState(@PathVariable("documentState") Integer documentState, int currentPage,String searchInfo, HttpSession httpSession) {
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        List<DocumentCustom> list = documentService.getDocumentByState(documentState, loginCustom.getGuser().getUserId());
-        return list;
+        QueryForPage queryForPage = documentService.getDocumentByState(documentState, loginCustom.getGuser().getUserId(),currentPage,searchInfo);
+        return queryForPage;
     }
 
     //根据id查看文档全部信息

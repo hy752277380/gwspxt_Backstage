@@ -7,8 +7,8 @@ $(function() {
 		ready: false,
 		page: {
 			totalCount: 10,
-			totalPage: 3,
-			pageindex: 1,
+			totalPage: 5,
+			currentPage: 1,
 			haveNext: false,
 			havePre: false,
 		},
@@ -17,24 +17,24 @@ $(function() {
 	var pageUtil = Vue.extend({
 		template: `<ul class="pagination">
 		<li :class="page.havePre?'':'disabled'"><a @click="next('-')"><span aria-hidden="true">&laquo;</span></a></li>
-		<li v-for="index in page.totalPage" :class="{'active' : page.pageindex == index}">
+		<li v-for="index in page.totalPage" :class="{'active' : page.currentPage == index}">
 			<a @click="btnclick(index)" href="javascript:">{{index}}</a>
 		</li>
 		<li :class="page.haveNext?'':'disabled'"><a @click="next('+')"><span aria-hidden="true">&raquo;</span></a></li>
 		</ul>`,
 		methods: {
 			btnclick(index) {
-				data.page.pageindex = index;
+				data.page.currentPage = index;
 			},
 			next($to) {
 				if($to == "+") {
 					if(data.page.haveNext)
-						data.page.pageindex++;
+						data.page.currentPage++;
 				}
 
 				if($to == "-") {
 					if(data.page.havePre)
-						data.page.pageindex--;
+						data.page.currentPage--;
 				}
 
 			},
@@ -66,13 +66,13 @@ $(function() {
 		},
 		mounted() {
 			this.getInfo({
-				page: 1
+				currentPage: 1
 			});
 		},
 		watch: {
-			'page.pageindex': function() {
+			'page.currentPage': function() {
 				this.getInfo({
-					page: this.page.pageindex
+					page: this.page.currentPage
 				});
 			},
 		},

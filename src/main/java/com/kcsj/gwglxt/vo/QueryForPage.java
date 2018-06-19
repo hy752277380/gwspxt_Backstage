@@ -13,13 +13,13 @@ public class QueryForPage {
 
     private int pageSize;//每页记录数
 
-    private boolean isFirstPage;//是否为第一页
+    private Boolean isFirstPage;//是否为第一页
 
-    private boolean isLastPage;//是否为最后一页
+    private Boolean isLastPage;//是否为最后一页
 
-    private boolean hasPreviousPage;//是否有前一页
+    private Boolean hasPreviousPage;//是否有前一页
 
-    private boolean hasNextPage;//是否游下一页
+    private Boolean hasNextPage;//是否有下一页
 
     public List getList() {
         return list;
@@ -61,7 +61,37 @@ public class QueryForPage {
         this.pageSize = pageSize;
     }
 
+    public Boolean getFirstPage() {
+        return isFirstPage;
+    }
 
+    public void setFirstPage(Boolean firstPage) {
+        isFirstPage = firstPage;
+    }
+
+    public Boolean getLastPage() {
+        return isLastPage;
+    }
+
+    public void setLastPage(Boolean lastPage) {
+        isLastPage = lastPage;
+    }
+
+    public Boolean getHasPreviousPage() {
+        return hasPreviousPage;
+    }
+
+    public void setHasPreviousPage(Boolean hasPreviousPage) {
+        this.hasPreviousPage = hasPreviousPage;
+    }
+
+    public Boolean getHasNextPage() {
+        return hasNextPage;
+    }
+
+    public void setHasNextPage(Boolean hasNextPage) {
+        this.hasNextPage = hasNextPage;
+    }
     /*
      * 初始化分页信息
      *
@@ -78,23 +108,19 @@ public class QueryForPage {
      * 以下判断页面信息，只需要getter方法即可
      */
 
-    private boolean isFirstPage() {
-        // TODO Auto-generated method stub
+    private Boolean isFirstPage() {
         return currentPage == 1; // 如是当前页是第1页
     }
 
-    private boolean isLastPage() {
-        // TODO Auto-generated method stub
+    private Boolean isLastPage() {
         return currentPage == totalPage; // 如果当前页是最后一页
     }
 
-    private boolean isHasPreviousPage() {
-        // TODO Auto-generated method stub
+    private Boolean isHasPreviousPage() {
         return currentPage != 1;// 只要当前页不是第1页
     }
 
-    private boolean isHasNextPage() {
-        // TODO Auto-generated method stub
+    private Boolean isHasNextPage() {
         return currentPage != totalPage; // 只要当前页不是最后1页
     }
 
@@ -108,7 +134,7 @@ public class QueryForPage {
     */
     public static int countTotalPage(final int pageSize, final int allRow) {
         //int	totalPage = allRow % pageSize == 0 ? allRow / pageSize : allRow / pageSize + 1;
-        int totalPage = (allRow-1)/pageSize + 1;
+        int totalPage = (allRow - 1) / pageSize + 1;
         return totalPage;
     }
 
@@ -133,8 +159,16 @@ public class QueryForPage {
 
     @Override
     public String toString() {
-        return "findPoliceByPageVO [list=" + list + ", allRow=" + allRow + ", totalPage=" + totalPage + ", currentPage="
-                + currentPage + ", pageSize=" + pageSize + "]";
+        return "QueryForPage{" +
+                "list=" + list +
+                ", allRow=" + allRow +
+                ", totalPage=" + totalPage +
+                ", currentPage=" + currentPage +
+                ", pageSize=" + pageSize +
+                ", isFirstPage='" + isFirstPage + '\'' +
+                ", isLastPage='" + isLastPage + '\'' +
+                ", hasPreviousPage='" + hasPreviousPage + '\'' +
+                ", hasNextPage='" + hasNextPage + '\'' +
+                '}';
     }
-
 }

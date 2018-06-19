@@ -526,7 +526,7 @@ FROM
 	documenttype dt,
 	department de,
 	guser gu,
-	process pr,
+	process pr
 WHERE
 	doc.document_type = dt.documenttype_id
 AND doc.document_dept = de.department_id

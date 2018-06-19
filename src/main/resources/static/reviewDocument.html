@@ -254,46 +254,46 @@
 													<div class="input-group-btn">
 														<button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
                                                 </button>
-													</div>
-												</div>
-											</div>
-											<table class="table table-hover">
-												<thead>
-													<tr>
-														<th><input @click="checkAll($event)" type="checkbox"></th>
-														<th>文档编号</th>
-														<th>文档标题</th>
-														<th>文档类型</th>
-														<th>拟稿人</th>
-														<th>文档密级</th>
-														<th>拟稿部门</th>
-														<th>发布时间</th>
-														<th>操作</th>
-													</tr>
-												</thead>
-												<tbody v-cloak v-if="ready">
-													<tr v-for="doc in docData">
-														<td><input check="self" :doc-id="doc.document.documentId" type="checkbox">
-														</td>
-														<td>{{doc.document.documentNo}}</td>
-														<td>{{doc.document.documentTitle}}</td>
-														<td>{{doc.documenttype.documenttypeName}}</td>
-														<td>{{doc.guser.userName}}</td>
-														<td>{{doc.document.documentConfidential}}</td>
-														<td>{{doc.department.departmentName}}</td>
-														<td>{{doc.document.creationTime}}</td>
-														<td>
-															<!-- 本部门文档 -->
-															<template v-if="user.department.departmentName == doc.department.departmentName">
-																<button type="button" class="btn btn-primary btn-sm">阅读</button>
-															</template>
-															<!-- 非本部门未借阅文档 -->
-															<template v-else-if="doc.borrowing == null">
-																<button type="button" class="btn btn-primary btn-sm">申请查看</button>
-															</template>
-															<!-- 非本部门已有借阅文档 -->
-															<template v-else>
-																<button v-if="doc.borrowing.borrowingState==2" type="button" class="btn btn-primary btn-sm">阅读
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th><input @click="checkAll($event)" type="checkbox"></th>
+                                            <th>文档编号</th>
+                                            <th>文档标题</th>
+                                            <th>文档类型</th>
+                                            <th>拟稿人</th>
+                                            <th>文档密级</th>
+                                            <th>拟稿部门</th>
+                                            <th>发布时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody v-cloak v-if="ready">
+                                        <tr v-for="doc in docData">
+                                            <td><input check="self" :doc-id="doc.document.documentId" type="checkbox"></td>
+                                            <td>{{doc.document.documentNo}}</td>
+                                            <td>{{doc.document.documentTitle}}</td>
+                                            <td>{{doc.documenttype.documenttypeName}}</td>
+                                            <td>{{doc.guser.userName}}</td>
+                                            <td v-html="replaceConfidential(doc.document.documentConfidential)"></td>
+                                            <td>{{doc.department.departmentName}}</td>
+                                            <td>{{doc.document.creationTime}}</td>
+                                            <td>
+                                                <!-- 本部门文档 -->
+                                                <template v-if="user.department.departmentName==doc.department.departmentName">
+                                                    <button type="button" class="btn btn-primary btn-sm">阅读</button>
+                                                </template>
+                                                <!-- 非本部门未借阅文档 -->
+                                                <template v-else-if="doc.borrowing == null">
+                                                    <button type="button" class="btn btn-primary btn-sm">申请查看</button>
+                                                </template>
+                                                <!-- 非本部门已有借阅文档 -->
+                                                <template v-else>
+                                                    <button v-if="doc.borrowing.borrowingState==2" type="button"
+                                                            class="btn btn-primary btn-sm">阅读
                                                     </button>
 															</template>
 														</td>

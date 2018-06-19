@@ -3511,6 +3511,9 @@ body>.header .logo .icon {
 
 /* skin-black navbar */
 
+.skin-black{
+	height: 100%;
+}
 .skin-black .navbar {
 	background-color: #ffffff;
 	border-bottom: 1px solid #eee;

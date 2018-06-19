@@ -39,16 +39,7 @@
           <![endif]-->
 
 		<style type="text/css">
-			.textarea {
-		
-				BORDER-TOP: #7F9DB9 1px solid;
-				BORDER-LEFT: #7F9DB9 1px solid;
-				BORDER-RIGHT: #7F9DB9 1px solid;
-				BORDER-BOTTOM: #7F9DB9 1px solid;
-				FONT-FAMILY: "宋体", "Verdana", "Arial", "Helvetica";
-				FONT-SIZE: 12px;
-				TEXT-ALIGN: LIFT;
-			}
+
 		</style>
 	</head>
 
@@ -265,7 +256,7 @@
 												<label class="control-label col-lg-2">文本类型</label>
 												<div class="col-md-2">
 													<select class="form-control m-b-10" id="documentType">
-														<option selected>-请选择公文类型-</option>
+															<option selected>-请选择公文类型-</option>
 														<option value="1">命令</option>
 														<option value="2">决定</option>
 														<option value="3">公告</option>
@@ -346,14 +337,14 @@
 												<div class="form-group" style="margin-top:5%;margin-left: 1px;">
 													<label class="control-label col-lg-2">文本内容</label>
 													<div class="col-lg-10">
-														<textarea rows="10" cols="100" id="doucmentContent" class="textarea"></textarea>
+														<textarea rows="5" cols="80" id="doucmentContent"></textarea>
 													</div>
 
 												</div>
 												<div class="form-group" style="margin-left: 1px;">
 													<label class="control-label col-lg-2">备注</label>
 													<div class="col-lg-10">
-														<textarea rows="2" cols="100" id="documentRemark" class="textarea"></textarea>
+														<textarea rows="2" cols="80" id="documentRemark"></textarea>
 													</div>
 
 												</div>
@@ -363,19 +354,18 @@
 											<div class="form-group" style="margin-left: 1px;">
 												<label class="control-label col-lg-2" for="inputSuccess">选择流程</label>
 												<div class="col-lg-3">
-													<select class="form-control m-b-10" id="documentDept">
-														<option selected="">-请选择流程-</option>
-														<option value="1">流程一</option>
-														<option value="2">流程二</option>
-														<option value="3">流程三</option>
-														<option value="4">流程四</option>
+													<select class="form-control m-b-10">
+														<option>流程一</option>
+														<option>流程二</option>
+														<option>流程三</option>
+														<option>流程四</option>
 													</select>
 
 												</div>
-												<div class="form-group" style="float:right;margin-right: 25%;">
+												<div class="form-group" style="float:right;">
 													<div>
 														<button type="button" class="btn btn-success" id="addDoc">确认</button>
-														<button type="button" class="btn btn-warning" style="margin-left: 10px;">草稿</button>
+														<button type="button" class="btn btn-default" style="margin-left: 10px;">返回</button>
 													</div>
 												</div>
 											</div>

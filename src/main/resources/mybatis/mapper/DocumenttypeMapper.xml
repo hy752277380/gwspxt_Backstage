@@ -3,10 +3,10 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.DocumenttypeMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Documenttype" >
-        <id column="documenttype_id" property="documenttypeId" jdbcType="CHAR" />
+        <id column="documenttype_id" property="documenttypeId"   />
         <result column="documenttype_name" property="documenttypeName" jdbcType="VARCHAR" />
         <result column="documenttype_remark" property="documenttypeRemark" jdbcType="VARCHAR" />
-        <result column="documenttype_isdelete" property="documenttypeIsdelete" jdbcType="INTEGER" />
+        <result column="documenttype_isdelete" property="documenttypeIsdelete"  />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -110,7 +110,7 @@
     <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Documenttype" >
         insert into documenttype (documenttype_id, documenttype_name, documenttype_remark, 
             documenttype_isdelete)
-        values (#{documenttypeId,jdbcType=CHAR}, #{documenttypeName,jdbcType=VARCHAR}, #{documenttypeRemark,jdbcType=VARCHAR}, 
+        values (#{documenttypeId,jdbcType=CHAR}, #{documenttypeName,jdbcType=VARCHAR}, #{documenttypeRemark,jdbcType=VARCHAR},
             #{documenttypeIsdelete,jdbcType=INTEGER})
     </insert>
 
@@ -208,4 +208,8 @@
             documenttype_isdelete = #{documenttypeIsdelete,jdbcType=INTEGER}
         where documenttype_id = #{documenttypeId,jdbcType=CHAR}
     </update>
+    <select id="getAllDocType" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from documenttype
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.mapper;
 
+import com.kcsj.gwglxt.entity.Document;
 import com.kcsj.gwglxt.entity.Message;
 import com.kcsj.gwglxt.entity.MessageExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface MessageMapper {
     int updateByPrimaryKeySelective(Message record);
 
     int updateByPrimaryKey(Message record);
+
+    int insertMsg(Message message);
 }

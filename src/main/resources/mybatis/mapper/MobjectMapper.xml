@@ -3,10 +3,23 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.MobjectMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Mobject" >
-        <id column="mobject_id" property="mobjectId" jdbcType="CHAR" />
-        <result column="mobject_user" property="mobjectUser" jdbcType="CHAR" />
-        <result column="mobject_message" property="mobjectMessage" jdbcType="CHAR" />
-        <result column="mobject_isread" property="mobjectIsread" jdbcType="INTEGER" />
+        <id column="mobject_id" property="mobjectId"   />
+        <result column="mobject_user" property="mobjectUser"   />
+        <result column="mobject_message" property="mobjectMessage"   />
+        <result column="mobject_isread" property="mobjectIsread"  />
+    </resultMap>
+    <resultMap id="messageInfo" type="com.kcsj.gwglxt.DTO.MessageCustom">
+        <association property="mobject" javaType="com.kcsj.gwglxt.entity.Mobject">
+            <id column="mobject_id" property="mobjectId"   />
+            <result column="mobject_user" property="mobjectUser"   />
+            <result column="mobject_message" property="mobjectMessage"   />
+            <result column="mobject_isread" property="mobjectIsread"  />
+        </association>
+        <association property="message" javaType="com.kcsj.gwglxt.entity.Message">
+            <result column="message_content" property="messageContent" jdbcType="VARCHAR" />
+            <result column="message_time" property="messageTime" jdbcType="VARCHAR" />
+            <result column="message_type" property="messageType"  />
+        </association>
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -110,7 +123,7 @@
     <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Mobject" >
         insert into mobject (mobject_id, mobject_user, mobject_message, 
             mobject_isread)
-        values (#{mobjectId,jdbcType=CHAR}, #{mobjectUser,jdbcType=CHAR}, #{mobjectMessage,jdbcType=CHAR}, 
+        values (#{mobjectId,jdbcType=CHAR}, #{mobjectUser,jdbcType=CHAR}, #{mobjectMessage,jdbcType=CHAR},
             #{mobjectIsread,jdbcType=INTEGER})
     </insert>
 
@@ -208,4 +221,26 @@
             mobject_isread = #{mobjectIsread,jdbcType=INTEGER}
         where mobject_id = #{mobjectId,jdbcType=CHAR}
     </update>
+    <insert id="insertMbj" parameterType="com.kcsj.gwglxt.entity.Mobject" >
+        insert into mobject (mobject_id, mobject_user, mobject_message,
+            mobject_isread)
+        values (#{mobjectId,jdbcType=CHAR}, #{mobjectUser,jdbcType=CHAR}, #{mobjectMessage,jdbcType=CHAR},
+            #{mobjectIsread,jdbcType=INTEGER})
+    </insert>
+    <select id="getMyAllMessage" parameterType="java.lang.String" resultMap="messageInfo">
+        SELECT
+	mo.mobject_id,
+	mo.mobject_user,
+	mo.mobject_message,
+	mo.mobject_isread,
+	me.message_content,
+	me.message_time,
+	me.message_type
+FROM
+	mobject mo,
+	message me
+WHERE
+	mo.mobject_message = me.message_id
+AND mo.mobject_user = #{mobjectUser}
+    </select>
 </mapper>

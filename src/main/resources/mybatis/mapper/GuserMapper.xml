@@ -3,13 +3,13 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.GuserMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Guser" >
-        <id column="user_id" property="userId" jdbcType="CHAR" />
+        <id column="user_id" property="userId"   />
         <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
         <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
         <result column="user_name" property="userName" jdbcType="VARCHAR" />
-        <result column="user_sex" property="userSex" jdbcType="CHAR" />
-        <result column="user_department" property="userDepartment" jdbcType="CHAR" />
-        <result column="user_position" property="userPosition" jdbcType="CHAR" />
+        <result column="user_sex" property="userSex"   />
+        <result column="user_department" property="userDepartment"   />
+        <result column="user_position" property="userPosition"   />
         <result column="user_phonenumber" property="userPhonenumber" jdbcType="VARCHAR" />
         <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
         <result column="user_introduction" property="userIntroduction" jdbcType="VARCHAR" />
@@ -19,7 +19,7 @@
 
     <!--依据用户登录给的user_account user_password信息书写的登录用户loginCustom的映射
     -->
-    <resultMap id="loginFunctionMap" type="com.kcsj.gwglxt.entity.LoginCustom">
+    <resultMap id="loginFunctionMap" type="com.kcsj.gwglxt.DTO.LoginCustom">
         <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
             <id column="user_id"  property="userId" jdbcType="CHAR"/>
             <result column="user_account" property="userAccount" jdbcType="CHAR" />
@@ -52,7 +52,7 @@
 
     </resultMap>-->
 
-    <resultMap id="loginResultMap" type="com.kcsj.gwglxt.entity.LoginCustom">
+    <resultMap id="loginResultMap" type="com.kcsj.gwglxt.DTO.LoginCustom">
         <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
             <id column="user_id"  property="userId" jdbcType="CHAR"/>
             <result column="user_account" property="userAccount" jdbcType="CHAR" />
@@ -69,7 +69,7 @@
             <result column="user_isdelete" property="userIsdelete" jdbcType="INTEGER"/>
         </association>
         <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
-            <id column="user_department" property="departmentId" jdbcType="CHAR" />
+            <id column="user_department" property="departmentId"   />
             <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
         </association>
         <association property="permission" javaType="com.kcsj.gwglxt.entity.Permission">
@@ -433,8 +433,21 @@
         AND de.department_id = g.user_department
         AND po.position_id = g.user_position
         AND pe.permission_id = po.position_permission
-
     </select>
-    <!--<select id="userLogin" parameterType="java.lang.String" resultMap=""></select>-->
+    <select id="getUserByPosition" resultMap="BaseResultMap">
+        SELECT
+         <include refid="Base_Column_List"/>
+         FROM guser WHERE user_position = #{userPosition} and user_department = #{userDepartment}
+    </select>
+    <select id="getPersonalInfo" parameterType="java.lang.String" resultMap="loginResultMap">
+        select
+        g.user_id,g.user_account,g.user_password,g.user_name,g.user_phonenumber,g.user_email,g.user_introduction,g.user_picture,d.department_name,po.position_name,pe.permission_level
+        from
+        <include refid="user_login_condition"/>
+        where g.user_department = d.department_id
+        AND g.user_position = po.position_id
+        AND po.position_permission = pe.permission_id
+        AND g.user_id = #{userId}
+    </select>
 
 </mapper>

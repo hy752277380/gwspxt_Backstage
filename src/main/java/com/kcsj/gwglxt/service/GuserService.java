@@ -2,7 +2,7 @@ package com.kcsj.gwglxt.service;
 
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
-import com.kcsj.gwglxt.entity.LoginCustom;
+import com.kcsj.gwglxt.DTO.LoginCustom;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -32,4 +32,6 @@ public interface GuserService {
 
     LoginCustom loginInfo(String userId);
     LoginCustom loginFunction(String userAccount);
+    //查询个人信息
+    LoginCustom getPersonalInfo(String userId);
 }

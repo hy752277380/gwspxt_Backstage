@@ -29,4 +29,6 @@ public interface BorrowingMapper {
     int updateByPrimaryKeySelective(Borrowing record);
 
     int updateByPrimaryKey(Borrowing record);
+
+    Borrowing borrowingState(@Param("borrowingDocument") String documentId,@Param("borrowingBorrowUser") String userId);
 }

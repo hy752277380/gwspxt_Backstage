@@ -3,13 +3,13 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.ProcessNodeMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.ProcessNode" >
-        <id column="process_node_id" property="processNodeId" jdbcType="CHAR" />
-        <result column="process_node_process" property="processNodeProcess" jdbcType="CHAR" />
+        <id column="process_node_id" property="processNodeId"   />
+        <result column="process_node_process" property="processNodeProcess"   />
         <result column="process_node_name" property="processNodeName" jdbcType="VARCHAR" />
-        <result column="process_node_department" property="processNodeDepartment" jdbcType="CHAR" />
-        <result column="process_node_position" property="processNodePosition" jdbcType="CHAR" />
-        <result column="process_node_step" property="processNodeStep" jdbcType="INTEGER" />
-        <result column="process_node_isdelete" property="processNodeIsdelete" jdbcType="INTEGER" />
+        <result column="process_node_department" property="processNodeDepartment"   />
+        <result column="process_node_position" property="processNodePosition"   />
+        <result column="process_node_step" property="processNodeStep"  />
+        <result column="process_node_isdelete" property="processNodeIsdelete"  />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -115,8 +115,8 @@
         insert into process_node (process_node_id, process_node_process, process_node_name, 
             process_node_department, process_node_position, 
             process_node_step, process_node_isdelete)
-        values (#{processNodeId,jdbcType=CHAR}, #{processNodeProcess,jdbcType=CHAR}, #{processNodeName,jdbcType=VARCHAR}, 
-            #{processNodeDepartment,jdbcType=CHAR}, #{processNodePosition,jdbcType=CHAR}, 
+        values (#{processNodeId,jdbcType=CHAR}, #{processNodeProcess,jdbcType=CHAR}, #{processNodeName,jdbcType=VARCHAR},
+            #{processNodeDepartment,jdbcType=CHAR}, #{processNodePosition,jdbcType=CHAR},
             #{processNodeStep,jdbcType=INTEGER}, #{processNodeIsdelete,jdbcType=INTEGER})
     </insert>
 
@@ -256,4 +256,20 @@
             process_node_isdelete = #{processNodeIsdelete,jdbcType=INTEGER}
         where process_node_id = #{processNodeId,jdbcType=CHAR}
     </update>
+    <select id="getMaxStep" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT MAX(process_node_step) FROM process_node WHERE process_node_process =#{processNodeProcess}
+    </select>
+    <select id="getNextOne" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+         FROM process_node WHERE process_node_process = #{processNodeProcess} AND process_node_step = #{processNodeStep}
+    </select>
+    <select id="getAllProcessNode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+         FROM process_node WHERE process_node_process = #{processNodeProcess}
+    </select>
+    <select id="getProcessNodeByUser" resultMap="BaseResultMap">
+        SELECT * FROM process_node WHERE process_node_department=#{processNodeDepartment} and process_node_position=#{processNodePosition}
+    </select>
 </mapper>

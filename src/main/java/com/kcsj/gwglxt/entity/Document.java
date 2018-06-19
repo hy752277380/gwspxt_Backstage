@@ -28,6 +28,8 @@ public class Document {
 
     private String documentProcess;
 
+    private Integer documentLocation;
+
     private String documentProcessBegin;
 
     private String documentProcessFinish;
@@ -120,6 +122,14 @@ public class Document {
         this.documentProcess = documentProcess == null ? null : documentProcess.trim();
     }
 
+    public Integer getDocumentLocation() {
+        return documentLocation;
+    }
+
+    public void setDocumentLocation(Integer documentLocation) {
+        this.documentLocation = documentLocation;
+    }
+
     public String getDocumentProcessBegin() {
         return documentProcessBegin;
     }
@@ -166,5 +176,28 @@ public class Document {
 
     public void setDocumentIsdelete(Integer documentIsdelete) {
         this.documentIsdelete = documentIsdelete;
+    }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                "documentId='" + documentId + '\'' +
+                ", documentTitle='" + documentTitle + '\'' +
+                ", documentType='" + documentType + '\'' +
+                ", documentNo='" + documentNo + '\'' +
+                ", documentDept='" + documentDept + '\'' +
+                ", documentUser='" + documentUser + '\'' +
+                ", documentConfidential=" + documentConfidential +
+                ", doucmentContent='" + doucmentContent + '\'' +
+                ", documentRemark='" + documentRemark + '\'' +
+                ", documentProcess='" + documentProcess + '\'' +
+                ", documentLocation=" + documentLocation +
+                ", documentProcessBegin='" + documentProcessBegin + '\'' +
+                ", documentProcessFinish='" + documentProcessFinish + '\'' +
+                ", documentState=" + documentState +
+                ", documentSpeed=" + documentSpeed +
+                ", creationTime='" + creationTime + '\'' +
+                ", documentIsdelete=" + documentIsdelete +
+                '}';
     }
 }

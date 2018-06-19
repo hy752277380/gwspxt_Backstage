@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.mapper;
 
+import com.kcsj.gwglxt.DTO.MessageCustom;
 import com.kcsj.gwglxt.entity.Mobject;
 import com.kcsj.gwglxt.entity.MobjectExample;
 import java.util.List;
@@ -27,4 +28,8 @@ public interface MobjectMapper {
     int updateByPrimaryKeySelective(Mobject record);
 
     int updateByPrimaryKey(Mobject record);
+
+    int insertMbj(Mobject mobject);
+
+    List<MessageCustom> getMyAllMessage(String mobjectUser);
 }

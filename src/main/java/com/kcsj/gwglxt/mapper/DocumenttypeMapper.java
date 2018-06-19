@@ -27,4 +27,6 @@ public interface DocumenttypeMapper {
     int updateByPrimaryKeySelective(Documenttype record);
 
     int updateByPrimaryKey(Documenttype record);
+
+    List<Documenttype> getAllDocType();
 }

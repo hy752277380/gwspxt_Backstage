@@ -3,8 +3,8 @@
 <mapper namespace="com.kcsj.gwglxt.mapper.PermissionMapper" >
 
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Permission" >
-        <id column="permission_id" property="permissionId" jdbcType="CHAR" />
-        <result column="permission_level" property="permissionLevel" jdbcType="INTEGER" />
+        <id column="permission_id" property="permissionId"   />
+        <result column="permission_level" property="permissionLevel"  />
         <result column="permission_remark" property="permissionRemark" jdbcType="VARCHAR" />
     </resultMap>
 

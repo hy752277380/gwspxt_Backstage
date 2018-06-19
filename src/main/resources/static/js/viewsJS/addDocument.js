@@ -10,7 +10,7 @@ $(function() {
 		var documentDept = $("#documentDept  option:selected").val();
 		var documentSpeed = $('input[type=radio][name=documentSpeed]:checked').val();
 		var documentConfidential = $('input[type=radio][name=documentConfidential]:checked').val();
-
+		var documentProcess = $("#documentProcess  option:selected").val();
 		var data = {
 			"documentTitle": documentTitle,
 			"documentNo": documentNo,
@@ -21,8 +21,12 @@ $(function() {
 			"documentConfidential": documentConfidential,
 			"doucmentContent": doucmentContent,
 			"documentRemark": documentRemark,
+			"documentProcess": documentProcess,
 		}
 
+console.log(JSON.stringify(data));
+
+		return false;
 		$.ajax({
 			type: "post",
 			url: "http://localhost:8080/gwspxt/addDocument",

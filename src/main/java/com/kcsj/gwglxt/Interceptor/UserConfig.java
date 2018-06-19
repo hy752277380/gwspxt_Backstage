@@ -19,8 +19,6 @@ public class UserConfig implements HandlerInterceptor {
         //System.out.println("getRealPath:" + httpServletRequest.getSession().getServletContext().getRealPath("image"));
         LoginCustom loginCustom = (LoginCustom) httpServletRequest.getSession().getAttribute("LoginInformation");
         if (null == loginCustom || "".equals(loginCustom)) {
-            System.out.println("-----------------");
-            //httpServletRequest.getRequestDispatcher("/gwspxt/login").forward(httpServletRequest, httpServletResponse);
             httpServletResponse.sendRedirect("/gwspxt");
             return false;
         }
@@ -29,11 +27,11 @@ public class UserConfig implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler, ModelAndView modelAndView) throws Exception {
-        System.out.println("post");
+        //System.out.println("post");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler, Exception ex) throws Exception {
-        System.out.println("after");
+        //System.out.println("after");
     }
 }

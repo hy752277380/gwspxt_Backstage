@@ -49,9 +49,9 @@ public class DocumentManageController {
         document.setDocumentDept(loginCustom.getGuser().getUserDepartment());
         document.setDocumentUser(loginCustom.getGuser().getUserId());
         document.setDocumentConfidential(1);
-        document.setDoucmentContent("  ");
-        document.setDocumentRemark("  ");
-        document.setDocumentProcess("1");
+        document.setDoucmentContent(document.getDoucmentContent());
+        document.setDocumentRemark(document.getDocumentRemark());
+        document.setDocumentProcess(document.getDocumentProcess());
         document.setDocumentLocation(0);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         document.setCreationTime(df.format(new Date()));
@@ -72,18 +72,6 @@ public class DocumentManageController {
         }
         result = "updateSuccess";
         return document;
-    }
-
-    //补充文档信息
-    @RequestMapping("/completeDocument")
-    public String completeDocument(@RequestBody Document document) {
-        String result = null;
-        int updateResult = documentService.updateByPrimaryKey(document);
-        if (updateResult == 0) {
-            result = "updateFailed";
-        }
-        result = "updateSuccess";
-        return "{\"msg\":\"" + result + "\"}";
     }
 
     //提交文档，更改文档状态

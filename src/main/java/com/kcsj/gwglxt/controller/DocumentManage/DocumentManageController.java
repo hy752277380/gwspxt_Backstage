@@ -271,7 +271,7 @@ public class DocumentManageController {
     }
 
     /**********************************日志消息中心及其他*********************************/
-    
+
     //获取所有本人消息
     @RequestMapping("/getAllMessage")
     public List<MessageCustom> getMyAllMessage(HttpSession httpSession) {

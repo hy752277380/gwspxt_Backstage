@@ -53,4 +53,6 @@ public interface DocumentService {
     List<Documenttype> getAllDocType();
 
     List<Process> getAllProcess();
+
+    int insertBorrowing(Borrowing borrowing, LoginCustom loginCustom);
 }

@@ -2,6 +2,7 @@ package com.kcsj.gwglxt.service.departmentManage;
 
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.DepartmentExample;
+import com.kcsj.gwglxt.vo.QueryForPage;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -29,5 +30,5 @@ public interface DepartmentService {
 
     int updateByPrimaryKey(Department record);
 
-    List<Department> getAllDepartment();
+    QueryForPage getAllDepartment(int currentPage,String searchInfo);
 }

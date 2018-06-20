@@ -209,5 +209,10 @@
     </update>
     <select id="getAllDepartment" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/> from department
+        <where>
+            <if test="searchInfo!=null">
+                department_name like '${searchInfo}
+            </if>
+        </where>
     </select>
 </mapper>

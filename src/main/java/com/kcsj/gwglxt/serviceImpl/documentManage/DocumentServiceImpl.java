@@ -37,6 +37,8 @@ public class DocumentServiceImpl implements DocumentService {
     private DocumenttypeMapper documenttypeMapper;
     @Autowired
     private ProcessMapper processMapper;
+    @Autowired
+    private PositionMapper positionMapper;
 
     @Override
     public int insert(Document record) {
@@ -225,6 +227,51 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public List<Process> getAllProcess() {
         return processMapper.getAllProcess();
+    }
+
+    @Override
+    public int insertBorrowing(Borrowing borrowing, LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        //获取借阅文档的名称
+        Document document = documentMapper.selectByPrimaryKey(borrowing.getBorrowingDocument());
+        //获取该部门最高权限职称
+        List<Position> positions = positionMapper.getDptManager(document.getDocumentDept());
+        //获取该职称对应的人
+        List<Guser> gusers = guserMapper.getDptManager(document.getDocumentDept(), positions.get(0).getPositionId());
+        //添加申请借阅记录
+        borrowing.setBorrowingId(TeamUtil.getUuid());
+        borrowing.setBorrowingBorrowUser(loginCustom.getGuser().getUserId());
+        borrowing.setBorrowingLendUser(gusers.get(0).getUserId());
+        borrowing.setBorrowingApplicationdate(df.format(new Date()));
+        borrowing.setBorrowingState(1);
+        borrowing.setBorrowingBegintime("还未开始");
+        borrowing.setBorrowingOvertime("还未开始");
+        borrowing.setBorrowingIsdelete(0);
+        int result = borrowingMapper.insert(borrowing);
+        //添加个人日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        log.setLogContent("提交了对"+document.getDocumentTitle()+"的阅读申请");
+        log.setCreationTime(df.format(new Date()));
+        logMapper.insert(log);
+        //添加消息
+        LoginCustom user = guserMapper.getPersonalInfo(loginCustom.getGuser().getUserId());
+        Message message = new Message();
+        String messageId = TeamUtil.getUuid();
+        message.setMessageId(messageId);
+        message.setMessageContent(user.getGuser().getUserName()+"申请了对"+document.getDocumentTitle()+"的借阅");
+        message.setMessageTime(df.format(new Date()));
+        message.setMessageIsdelete(0);
+        message.setMessageType(1);
+        messageMapper.insertMsg(message);
+        Mobject mobject = new Mobject();
+        mobject.setMobjectId(TeamUtil.getUuid());
+        mobject.setMobjectUser(gusers.get(0).getUserId());
+        mobject.setMobjectMessage(messageId);
+        mobject.setMobjectIsread(0);
+        mobjectMapper.insertMbj(mobject);
+        return result;
     }
 
     @Override

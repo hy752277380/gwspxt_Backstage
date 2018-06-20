@@ -122,7 +122,7 @@ public class DocumentManageController {
     }
 
     //更改文档当前所处流程的位置
-    @RequestMapping("/updateDocumentLocation/")
+    @RequestMapping("/updateDocumentLocation")
     public String updateDocumentLocation(String documentId, HttpSession httpSession, HttpServletResponse response) {
         //初始化result
         String result = null;
@@ -175,8 +175,9 @@ public class DocumentManageController {
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (updateLocationResult == 0) {
             result = "updateFailed";
+        }else{
+            result = "updateSuccess";
         }
-        result = "updateSuccess";
         return "{\"msg\":\"" + result + "\"}";
     }
 
@@ -212,14 +213,14 @@ public class DocumentManageController {
     }
 
     //根据id查看文档全部信息
-    @RequestMapping("/documentBaseInfo/")
+    @RequestMapping("/documentBaseInfo")
     public DocumentCustom documentBaseInfo(String documentId) {
         DocumentCustom documentCustom = documentService.documentBaseInfo(documentId);
         return documentCustom;
     }
 
     //查看文档的所有流程节点
-    @RequestMapping("/getProcessNode/")
+    @RequestMapping("/getProcessNode")
     public List<ProcessNode> getProcessNode(String documentId) {
         Document document = documentService.selectByPrimaryKey(documentId);
         List<ProcessNode> list = documentService.getAllProcessNode(document.getDocumentProcess());

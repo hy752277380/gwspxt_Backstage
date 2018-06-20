@@ -23,7 +23,7 @@ $(function() {
 			"documentRemark": documentRemark,
 			"documentProcess": documentProcess,
 		}
-	
+
 		$.ajax({
 			type: "post",
 			url: "http://localhost:8080/gwspxt/addDocument",
@@ -32,7 +32,29 @@ $(function() {
 			data: JSON.stringify(data),
 			success: function(data) {
 				if(data) {
-					window.location.href = "http://localhost:8080/gwspxt/reviewDocument"
+					var documentId = data.documentId;
+					$.ajax({
+						type: "post",
+						url: "http://localhost:8080/gwspxt/updateDocumentState",
+						dataType: "json",
+						data: JSON.stringify(data),
+						contentType: 'application/json;charset=UTF-8',
+						success: function(data) {
+							$.ajax({
+								type: "post",
+								url: "http://localhost:8080/gwspxt/messageNextOne",
+								dataType: "json",
+								data: {
+									"documentId": documentId,
+								},
+								contentType: 'application/json;charset=UTF-8',
+								success: function(data) {
+									window.location.href = "http://localhost:8080/gwspxt/reviewDocument";
+								}
+							});
+
+						}
+					});
 				} else {
 
 				}

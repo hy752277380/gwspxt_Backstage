@@ -312,4 +312,9 @@ WHERE
 	borrowing_document = #{borrowingDocument}
 AND borrowing_borrow_user = #{borrowingBorrowUser}
     </select>
+    <select id="getDocuments" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+         <include refid="Base_Column_List"/>
+         FROM borrowing WHERE borrowing_lend_user = '10011' AND borrowing_state = '1'
+    </select>
 </mapper>

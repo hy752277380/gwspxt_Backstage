@@ -37,6 +37,8 @@ public class DocumentServiceImpl implements DocumentService {
     private DocumenttypeMapper documenttypeMapper;
     @Autowired
     private ProcessMapper processMapper;
+    @Autowired
+    private PositionMapper positionMapper;
 
     @Override
     public int insert(Document record) {
@@ -92,39 +94,45 @@ public class DocumentServiceImpl implements DocumentService {
         int location = document.getDocumentLocation();
         if (location == processNodeMapper.getMaxStep(document.getDocumentProcess())) {
             System.out.println("流程审核完成。");
-        }
-        Integer nextLocation = location + 1;
-        //利用当前文档所走流程和流程子节点步骤锁定下一个流程节点操作人所在的部门和所需要的职位
-        //System.out.println("我是两个参数"+document.getDocumentProcess()+"我他妈是分隔符"+nextLocation);
-        ProcessNode processNode = processNodeMapper.getNextOne(document.getDocumentProcess(), nextLocation);
-        System.out.println("查出的流程节点" + processNode);
-        if (processNode != null) {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-            //根据职位和部门查出人员
-            Guser user = guserMapper.getUserByPosition(processNode.getProcessNodePosition(), processNode.getProcessNodeDepartment());
-            System.out.println("查出的用户" + user);
-            Message message = new Message();
-            String messageId = TeamUtil.getUuid();
-            message.setMessageId(messageId);
-            message.setMessageContent("您有新的公文待审核，请尽快处理！");
-            message.setMessageTime(df.format(new Date()));
-            message.setMessageIsdelete(0);
-            message.setMessageType(3);
-            Mobject mobject = new Mobject();
-            mobject.setMobjectId(TeamUtil.getUuid());
-            mobject.setMobjectUser(user.getUserId());
-            mobject.setMobjectMessage(messageId);
-            mobject.setMobjectIsread(0);
-            mobjectMapper.insert(mobject);
-            return messageMapper.insert(message);
-        } else {
             return 0;
+        }else{
+            Integer nextLocation = location + 1;
+            //利用当前文档所走流程和流程子节点步骤锁定下一个流程节点操作人所在的部门和所需要的职位
+            //System.out.println("我是两个参数"+document.getDocumentProcess()+"我他妈是分隔符"+nextLocation);
+            ProcessNode processNode = processNodeMapper.getNextOne(document.getDocumentProcess(), nextLocation);
+            System.out.println("查出的流程节点" + processNode);
+            if (processNode != null) {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+                //根据职位和部门查出人员
+                List<Guser> users = guserMapper.getUserByPosition(processNode.getProcessNodePosition(), processNode.getProcessNodeDepartment());
+                System.out.println("查出的用户" + users.get(0));
+                //遍历users
+                for(Guser guser:users){
+                    Message message = new Message();
+                    String messageId = TeamUtil.getUuid();
+                    message.setMessageId(messageId);
+                    message.setMessageContent("您有新的公文待审核，请尽快处理！");
+                    message.setMessageTime(df.format(new Date()));
+                    message.setMessageIsdelete(0);
+                    message.setMessageType(3);
+                    Mobject mobject = new Mobject();
+                    mobject.setMobjectId(TeamUtil.getUuid());
+                    mobject.setMobjectUser(guser.getUserId());
+                    mobject.setMobjectMessage(messageId);
+                    mobject.setMobjectIsread(0);
+                    mobjectMapper.insert(mobject);
+                    return messageMapper.insert(message);
+                }
+            } else {
+                return 0;
+            }
         }
+        return 0;
     }
-
+    //根据文档状态查询
     @Override
-    public QueryForPage getDocumentByState(Integer documentState, String documentUser, int currentPage,String searchInfo) {
-        List<DocumentCustom> list = documentMapper.getDocumentByState(documentState, documentUser,searchInfo);
+    public QueryForPage getDocumentByState(String documentType,Integer documentConfidential,Integer documentState, String documentUser, int currentPage,String searchInfo) {
+        List<DocumentCustom> list = documentMapper.getDocumentByState(documentType,documentConfidential,documentState, documentUser,searchInfo);
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
         int allRow = list.size();//总记录数
@@ -202,10 +210,119 @@ public class DocumentServiceImpl implements DocumentService {
         //遍历该人员所需要任的所有流程子节点
         for (ProcessNode processNode : list) {
             //用每一个processNode里面的流程名和流程位置的前一位查询文档
-            list_doc.add(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1));
+            list_doc.add(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment()));
         }
         return list_doc;
     }
+
+    @Override
+    public int insertBorrowing(Borrowing borrowing, LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        //获取借阅文档的名称
+        Document document = documentMapper.selectByPrimaryKey(borrowing.getBorrowingDocument());
+        //获取该部门最高权限职称
+        List<Position> positions = positionMapper.getDptManager(document.getDocumentDept());
+        //获取该职称对应的人
+        List<Guser> gusers = guserMapper.getDptManager(document.getDocumentDept(), positions.get(0).getPositionId());
+        //添加申请借阅记录
+        borrowing.setBorrowingId(TeamUtil.getUuid());
+        borrowing.setBorrowingBorrowUser(loginCustom.getGuser().getUserId());
+        borrowing.setBorrowingLendUser(gusers.get(0).getUserId());
+        borrowing.setBorrowingApplicationdate(df.format(new Date()));
+        borrowing.setBorrowingState(1);
+        borrowing.setBorrowingBegintime("还未开始");
+        borrowing.setBorrowingOvertime("还未开始");
+        borrowing.setBorrowingIsdelete(0);
+        int result = borrowingMapper.insert(borrowing);
+        //添加个人日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        log.setLogContent("提交了对"+document.getDocumentTitle()+"的阅读申请");
+        log.setCreationTime(df.format(new Date()));
+        logMapper.insert(log);
+        //添加消息
+        LoginCustom user = guserMapper.getPersonalInfo(loginCustom.getGuser().getUserId());
+        Message message = new Message();
+        String messageId = TeamUtil.getUuid();
+        message.setMessageId(messageId);
+        message.setMessageContent(user.getGuser().getUserName()+"申请了对"+document.getDocumentTitle()+"的借阅");
+        message.setMessageTime(df.format(new Date()));
+        message.setMessageIsdelete(0);
+        message.setMessageType(1);
+        messageMapper.insertMsg(message);
+        Mobject mobject = new Mobject();
+        mobject.setMobjectId(TeamUtil.getUuid());
+        mobject.setMobjectUser(gusers.get(0).getUserId());
+        mobject.setMobjectMessage(messageId);
+        mobject.setMobjectIsread(0);
+        mobjectMapper.insertMbj(mobject);
+        return result;
+    }
+    //获取需要本人同意的文档借阅申请
+    @Override
+    public List<DocumentCustom> getAllApplyRead(LoginCustom loginCustom) {
+        //获取本人需要借出的文档
+        List<Borrowing> borrowings = borrowingMapper.getDocuments(loginCustom.getGuser().getUserId());
+        List<DocumentCustom> documents = new ArrayList<>();
+        //遍历查询结果用文档id得到文档信息
+        for (Borrowing borrowing:borrowings){
+            documents.add(documentMapper.documentBaseInfo(borrowing.getBorrowingDocument()));
+        }
+        return documents;
+    }
+    //拒绝文档申请
+    @Override
+    public void refuseDoc(LoginCustom loginCustom, String documentId) {
+        //根据id获取文档信息，目的是得到文档的流程开始时间
+        Document document = documentMapper.selectByPrimaryKey(documentId);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        String documentProcessBegin;
+        String documentProcessFinish = null;
+        //判断流程开始时间是否为空，若为空则说明文档在第一个流程子节点被拒绝，则同时更改流程开始和结束时间
+        if(document.getDocumentProcessBegin()==null){
+            documentProcessBegin = df.format(new Date());
+            documentProcessFinish = df.format(new Date());
+        }
+        else {
+            documentProcessBegin = document.getDocumentProcessBegin();
+        }
+        //将文档状态更改为退回状态
+        documentMapper.updateDocumentState(0,documentProcessBegin,documentProcessFinish,documentId);
+        //生成审核人日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        log.setLogContent("拒绝了对"+document.getDocumentTitle()+"的申请");
+        log.setCreationTime(df.format(new Date()));
+        logMapper.insert(log);
+        //生成文档提交人的消息
+        Message message = new Message();
+        String messageId = TeamUtil.getUuid();
+        message.setMessageId(messageId);
+        message.setMessageContent(loginCustom.getGuser().getUserName()+"拒绝了对你的"+document.getDocumentTitle()+"的申请");
+        message.setMessageTime(df.format(new Date()));
+        message.setMessageIsdelete(0);
+        message.setMessageType(3);
+        messageMapper.insertMsg(message);
+        Mobject mobject = new Mobject();
+        mobject.setMobjectId(TeamUtil.getUuid());
+        mobject.setMobjectUser(document.getDocumentUser());
+        mobject.setMobjectMessage(messageId);
+        mobject.setMobjectIsread(0);
+        mobjectMapper.insertMbj(mobject);
+    }
+
+    @Override
+    public int insertMsg(Message message) {
+        return messageMapper.insertMsg(message);
+    }
+
+    @Override
+    public int insertMbj(Mobject mobject) {
+        return mobjectMapper.insertMbj(mobject);
+    }
+
 
     @Override
     public List<MessageCustom> getMyAllMessage(String userId) {
@@ -226,16 +343,5 @@ public class DocumentServiceImpl implements DocumentService {
     public List<Process> getAllProcess() {
         return processMapper.getAllProcess();
     }
-
-    @Override
-    public int insertMsg(Message message) {
-        return messageMapper.insertMsg(message);
-    }
-
-    @Override
-    public int insertMbj(Mobject mobject) {
-        return mobjectMapper.insertMbj(mobject);
-    }
-
 
 }

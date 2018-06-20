@@ -34,7 +34,7 @@ public interface DocumentService {
     //生成信息
     int insertMessage(String documentId);
 
-    QueryForPage getDocumentByState(Integer documentState,String documentUser, int currentPage,String searchInfo);
+    QueryForPage getDocumentByState(String documentType,Integer documentConfidential,Integer documentState,String documentUser, int currentPage,String searchInfo);
 
     //查询该文档所走流程的每一个流程节点
     List<ProcessNode> getAllProcessNode(String processNodeProcess);
@@ -53,4 +53,10 @@ public interface DocumentService {
     List<Documenttype> getAllDocType();
 
     List<Process> getAllProcess();
+
+    int insertBorrowing(Borrowing borrowing, LoginCustom loginCustom);
+
+    List<DocumentCustom> getAllApplyRead(LoginCustom loginCustom);
+
+    void refuseDoc(LoginCustom loginCustom, String documentId);
 }

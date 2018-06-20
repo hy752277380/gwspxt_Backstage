@@ -38,12 +38,12 @@ public interface DocumentMapper {
     //根据id查询该文档当前流程子节点位置
     int getDocumentLocation(String documentId);
 
-    List<DocumentCustom> getDocumentByState(@Param("documentState") Integer documentState,@Param("documentUser") String documentUser,@Param("searchInfo") String searchInfo);
+    List<DocumentCustom> getDocumentByState(@Param("documentType") String documentType,@Param("documentConfidential") Integer documentConfidential,@Param("documentState") Integer documentState,@Param("documentUser") String documentUser,@Param("searchInfo") String searchInfo);
     //查询所有文档
     List<DocumentCustom> getAllDocument(String searchInfo);
     //联合查询文档信息
     DocumentCustom documentBaseInfo(String documentId);
 
-    DocumentCustom findCheckingDoc(@Param("documentProcess") String documentProcess,@Param("documentLocation") Integer documentLocation);
+    DocumentCustom findCheckingDoc(@Param("documentProcess") String documentProcess,@Param("documentLocation") Integer documentLocation,@Param("userDepartment") String userDepartment);
 
 }

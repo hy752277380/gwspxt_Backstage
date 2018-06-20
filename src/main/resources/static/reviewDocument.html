@@ -1,57 +1,58 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title>文档查看</title>
-		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-		<!-- bootstrap 3.0.2 -->
-		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-		<!-- font Awesome -->
-		<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-		<!-- Ionicons -->
-		<link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
-		<!-- Morris chart -->
-		<link href="css/morris/morris.css" rel="stylesheet" type="text/css" />
-		<!-- jvectormap -->
-		<link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
-		<!-- Date Picker -->
-		<link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
-		<!-- fullCalendar -->
-		<!-- Daterange picker -->
-		<link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-		<!-- iCheck for checkboxes and radio inputs -->
-		<link href="css/iCheck/all.css" rel="stylesheet" type="text/css" />
-		<!-- bootstrap wysihtml5 - text editor -->
-		<!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
-		<!-- Theme style -->
-		<link href="css/style.css" rel="stylesheet" type="text/css" />
-		<!-- 消息通知css -->
-		<link href="css/spop.css" rel="stylesheet" type="text/css">
+<head>
+    <meta charset="UTF-8">
+    <title>文档查看</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- bootstrap 3.0.2 -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- font Awesome -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Ionicons -->
+    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Morris chart -->
+    <link href="css/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <!-- jvectormap -->
+    <link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
+    <!-- Date Picker -->
+    <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
+    <!-- fullCalendar -->
+    <!-- Daterange picker -->
+    <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>
+    <!-- bootstrap wysihtml5 - text editor -->
+    <!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
+    <!-- Theme style -->
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- 消息通知css -->
+    <link href="css/spop.css" rel="stylesheet" type="text/css">
 
-		<script src="js/vue.js"></script>
+    <script src="js/vue.js"></script>
 
-		<style>
-			[v-cloak] {
-				display: none;
-			}
-			
-			td {
-				vertical-align: initial !important;
-			}
-			/* 除去input为number时候的箭头*/
-			
-			input::-webkit-outer-spin-button,
-			input::-webkit-inner-spin-button {
-				-webkit-appearance: none !important;
-				margin: 0;
-			}
-			
-			input[type="number"] {
-				-moz-appearance: textfield;
-			}
-		</style>
-	</head>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        td {
+            vertical-align: initial !important;
+        }
+
+        /* 除去input为number时候的箭头*/
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
 
 <body class="skin-black">
 <header id="header" class="header">
@@ -89,17 +90,17 @@
                                         <h4>
                                             Support Team
                                         </h4>
-												<p>Why not buy a new awesome theme?</p>
-												<small class="pull-right"><i class="fa fa-clock-o"></i> 5 mins</small>
-											</a>
-										</li>
-										<!-- end message -->
-										<li>
-											<a href="">
-												<div class="pull-left">
-													<img src="img/26115.jpg" class="img-circle" alt="user image" />
-												</div>
-												<h4>
+                                        <p>Why not buy a new awesome theme?</p>
+                                        <small class="pull-right"><i class="fa fa-clock-o"></i> 5 mins</small>
+                                    </a>
+                                </li>
+                                <!-- end message -->
+                                <li>
+                                    <a href="">
+                                        <div class="pull-left">
+                                            <img src="img/26115.jpg" class="img-circle" alt="user image"/>
+                                        </div>
+                                        <h4>
                                             Director Design Team
                                         </h4>
                                         <p>Why not buy a new awesome theme?</p>
@@ -142,7 +143,7 @@
 </header>
 <div id="main" class="wrapper row-offcanvas row-offcanvas-left">
     <!-- Left side column. contains the logo and sidebar -->
-    <aside  style="height: 712px;" class="left-side sidebar-offcanvas">
+    <aside style="height: 712px;" class="left-side sidebar-offcanvas">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
@@ -163,95 +164,97 @@
                                   <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i
                                           class="fa fa-search"></i></button>
                                     </span>
-						</div>
-					</form>
-					<!-- /.search form -->
-					<ul class="sidebar-menu">
-						<li>
-							<a href="approvalApplication.html">
-								<i class="fa fa-pencil-square-o"></i> <span>批阅申请</span>
-							</a>
-						</li>
-						<li>
-							<a href="addDocument.html">
-								<i class="fa fa-clipboard"></i> <span>添加文档</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-dashboard"></i> <span>文档查看</span>
-							</a>
-						</li>
-						<li>
-							<a href="documentManage.html">
-								<i class="fa fa-book fa-fw"></i> <span>文档管理</span>
-							</a>
-						</li>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="approvalApplication.html">
+                        <i class="fa fa-pencil-square-o"></i> <span>批阅申请</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="addDocument.html">
+                        <i class="fa fa-clipboard"></i> <span>添加文档</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>文档查看</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="documentManage.html">
+                        <i class="fa fa-book fa-fw"></i> <span>文档管理</span>
+                    </a>
+                </li>
 
-						<li>
-							<a href="information.html">
-								<i class="fa fa-meh-o"></i> <span>个人信息</span>
-							</a>
-						</li>
+                <li>
+                    <a href="information.html">
+                        <i class="fa fa-meh-o"></i> <span>个人信息</span>
+                    </a>
+                </li>
 
-						<li>
-							<a href="journal.html">
-								<i class="fa fa-location-arrow"></i> <span>查看日志</span>
-							</a>
-						</li>
-						<li>
-							<a href="departmentMemberManage.html">
-								<i class="fa fa-male"></i> <span>部门成员管理</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-user"></i> <span>账号管理</span>
-							</a>
-						</li>
+                <li>
+                    <a href="journal.html">
+                        <i class="fa fa-location-arrow"></i> <span>查看日志</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="departmentMemberManage.html">
+                        <i class="fa fa-male"></i> <span>部门成员管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-user"></i> <span>账号管理</span>
+                    </a>
+                </li>
 
-						<li>
-							<a href="departmentManagement.html">
-								<i class="fa fa-gavel"></i> <span>部门管理</span>
-							</a>
-						</li>
+                <li>
+                    <a href="departmentManagement.html">
+                        <i class="fa fa-gavel"></i> <span>部门管理</span>
+                    </a>
+                </li>
 
-						<li>
-							<a href="processManagement.html">
-								<i class="fa fa-sitemap"></i> <span>流程管理</span>
-							</a>
-						</li>
-					</ul>
-				</section>
-				<!-- /.sidebar -->
-			</aside>
-			<aside id="content" class="right-side">
-				<!-- Main content -->
-				<section class="content">
-					<div class="row">
-						<div class="col-md-12">
-							<!--breadcrumbs start -->
-							<ul class="breadcrumb">
-								<li>
-									<a href=""><i class="fa fa-home"></i> 首页</a>
-								</li>
-								<li class="active">文档查看</li>
-							</ul>
-							<!--breadcrumbs end -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<!--内容-->
-							<div class="row">
-								<div class="col-xs-12">
-									<div class="panel">
-										<div class="panel-body table-responsive">
-											<div class="box-tools m-b-15">
-												<div class="input-group">
-													<input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
-													<div class="input-group-btn">
-														<button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
+                <li>
+                    <a href="processManagement.html">
+                        <i class="fa fa-sitemap"></i> <span>流程管理</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <aside id="content" class="right-side">
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!--breadcrumbs start -->
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href=""><i class="fa fa-home"></i> 首页</a>
+                        </li>
+                        <li class="active">文档查看</li>
+                    </ul>
+                    <!--breadcrumbs end -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!--内容-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel">
+                                <div class="panel-body table-responsive">
+                                    <div class="box-tools m-b-15">
+                                        <div class="input-group">
+                                            <input type="text" name="table_search"
+                                                   class="form-control input-sm pull-right" style="width: 150px;"
+                                                   placeholder="Search"/>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -264,7 +267,8 @@
                                             <th>文档标题</th>
                                             <!--<th>文档类型<span class="caret"></span></th>-->
                                             <th><span role="presentation" class="dropdown">
-                                                <a class="dropdown-toggle" data-toggle="dropdown">文档类型<span class="caret"></span></a>
+                                                <a class="dropdown-toggle" data-toggle="dropdown">文档类型<span
+                                                        class="caret"></span></a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="#">Action</a></li>
                                                     <li><a href="#">Another action</a></li>

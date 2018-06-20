@@ -13,8 +13,33 @@ $(function () {
             hasPreviousPage: false,
             hasNextPage: false,
         },
-        docTypeSelect: 0,
-        docConfidential: 0,
+        docType: {
+            name: "文档类型",
+            items: [
+                {key: "命令", value: "命令"},
+                {key: "批复", value: "批复"},
+                {key: "意见", value: "意见"},
+                {key: "函", value: "函"},
+                {key: "会议纪要", value: "会议纪要"},
+                {key: "决定", value: "决定"},
+                {key: "公告", value: "公告"},
+                {key: "通告", value: "通告"},
+                {key: "通知", value: "通知"},
+                {key: "通报", value: "通报"},
+                {key: "议案", value: "议案"},
+                {key: "报告", value: "报告"},
+                {key: "请示", value: "请示"},
+            ],
+        },
+        docConfidential: {
+            name: "文档密级",
+            items: [
+                {key: "1", value: "绝密"},
+                {key: "2", value: "机密"},
+                {key: "3", value: "秘密"},
+                {key: "4", value: "普通"},
+            ],
+        },
         docDepartment: 0,
     }
 
@@ -92,12 +117,12 @@ $(function () {
 
     var searchUtil = Vue.extend({
         template: `<span role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{selectData.name}}<span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
                      <ul class="dropdown-menu">
-                         <li v-for="item in selectData.items"><a href="#" :key="item.key">{{item.value}}</a></li>
+                         <li v-for="item in query.items"><a href="javascript:;" :key="item.key">{{item.value}}</a></li>
                      </ul>
                    </span>`,
-        props: ['selectData'],
+        props: ['query'],
     });
 
 
@@ -176,6 +201,7 @@ $(function () {
         },
         components: {
             'page-util': pageUtil,
+            'search-util': searchUtil,
         }
     });
 })

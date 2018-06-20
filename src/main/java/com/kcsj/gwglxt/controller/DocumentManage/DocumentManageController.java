@@ -122,8 +122,8 @@ public class DocumentManageController {
     }
 
     //更改文档当前所处流程的位置
-    @RequestMapping("/updateDocumentLocation/{documentId}")
-    public String updateDocumentLocation(@PathVariable("documentId") String documentId, HttpSession httpSession, HttpServletResponse response) {
+    @RequestMapping("/updateDocumentLocation/")
+    public String updateDocumentLocation(String documentId, HttpSession httpSession, HttpServletResponse response) {
         //初始化result
         String result = null;
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
@@ -212,27 +212,28 @@ public class DocumentManageController {
     }
 
     //根据id查看文档全部信息
-    @RequestMapping("/documentBaseInfo/{documentId}")
-    public DocumentCustom documentBaseInfo(@PathVariable("documentId") String documentId) {
+    @RequestMapping("/documentBaseInfo/")
+    public DocumentCustom documentBaseInfo(String documentId) {
         DocumentCustom documentCustom = documentService.documentBaseInfo(documentId);
         return documentCustom;
     }
 
     //查看文档的所有流程节点
-    @RequestMapping("/getProcessNode/{documentId}")
-    public List<ProcessNode> getProcessNode(@PathVariable("documentId") String documentId) {
+    @RequestMapping("/getProcessNode/")
+    public List<ProcessNode> getProcessNode(String documentId) {
         Document document = documentService.selectByPrimaryKey(documentId);
         List<ProcessNode> list = documentService.getAllProcessNode(document.getDocumentProcess());
         return list;
     }
-/***************************文档借阅部分*****************************/
+
     //查询本人需要审核的文档
     @RequestMapping("/findCheckDoc")
-    public List<DocumentCustom> findCheckDoc(HttpSession httpSession) {
+    public QueryForPage findCheckDoc(int currentPage,HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        List<DocumentCustom> list = documentService.findCheckingDoc(loginCustom);
-        return list;
+        QueryForPage queryForPage = documentService.findCheckingDoc(currentPage,loginCustom);
+        return queryForPage;
     }
+/***************************文档借阅部分*****************************/
 
     //列出待本人批准的借阅申请
     @RequestMapping("/getAllApplyRead")
@@ -246,25 +247,18 @@ public class DocumentManageController {
     @RequestMapping("/applyRead")
     public void applyRead(@RequestBody Borrowing borrowing,HttpSession httpSession){
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        int updateResult = documentService.insertBorrowing(borrowing,loginCustom);
+        documentService.insertBorrowing(borrowing,loginCustom);
     }
 
     //同意借阅文档
     @RequestMapping("/acceptApply")
     public void acceptApply(){
 
-
     }
     //拒绝借阅文档
     @RequestMapping("/refuseApply")
     public void refuseApply(HttpSession httpSession){
-        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-        //生成日志
-        Log log = new Log();
-        log.setLogId(TeamUtil.getUuid());
-        log.setLogUser(loginCustom.getGuser().getUserId());
-        log.setLogContent("拒绝了");
+
     }
 /**********************************日志消息中心及其他*********************************/
     //获取所有本人消息

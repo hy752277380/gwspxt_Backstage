@@ -77,4 +77,11 @@ public class PageController {
     public String departmentPosition() {
         return "departmentPosition.html";
     }
+    //查看文档详细界面
+    @RequestMapping("/reviewDetailDocument")
+    public String reviewDetailDocument() {
+        return "reviewDetailDocument.html";
+    }
+
 }
+

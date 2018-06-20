@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <title>文档查看</title>
@@ -126,11 +125,10 @@
                                                 <template v-else-if="doc.borrowing == null">
                                                     <button type="button" class="btn btn-primary btn-sm">申请查看
                                                     </button>
-                                                </template>
-                                                <!-- 非本部门已有借阅文档 -->
-                                                <template v-else>
-                                                    <button v-if="doc.borrowing.borrowingState==2" type="button"
-                                                            class="btn btn-primary btn-sm">阅读
+															</template>
+															<!-- 非本部门已有借阅文档 -->
+															<template v-else>
+																<button v-if="doc.borrowing.borrowingState==2" type="button" class="btn btn-primary btn-sm">阅读
                                                     </button>
                                                 </template>
                                             </td>

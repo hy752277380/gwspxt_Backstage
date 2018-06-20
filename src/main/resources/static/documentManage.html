@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title>文档查看</title>
@@ -167,6 +168,11 @@
 					<!-- /.search form -->
 					<ul class="sidebar-menu">
 						<li>
+							<a href="index.html">
+								<i class="fa fa-home fa-fw"></i> <span>首页</span>
+							</a>
+						</li>
+						<li>
 							<a href="approvalApplication.html">
 								<i class="fa fa-pencil-square-o"></i> <span>批阅申请</span>
 							</a>
@@ -181,12 +187,11 @@
 								<i class="fa fa-th-list"></i> <span>文档查看</span>
 							</a>
 						</li>
-						<li class="active">
-							<a href="#">
+						<li>
+							<a href="documentManage.html">
 								<i class="fa fa-book fa-fw"></i> <span>文档管理</span>
 							</a>
 						</li>
-
 						<li>
 							<a href="information.html">
 								<i class="fa fa-meh-o"></i> <span>个人信息</span>
@@ -209,11 +214,11 @@
 							</a>
 						</li>
 
-                <li>
-                    <a href="departmentManagement.html">
-                        <i class="fa fa-gavel"></i> <span>部门管理</span>
-                    </a>
-                </li>
+						<li class="active">
+							<a href="#">
+								<i class="fa fa-gavel"></i> <span>部门管理</span>
+							</a>
+						</li>
 
 						<li>
 							<a href="processManagement.html">
@@ -251,13 +256,11 @@
 													<button type="button" class="btn btn-primary" onclick="window.location.href='addDocument.html'"><i
                                                     class="fa fa-plus" aria-hidden="true"></i> 添加文档
                                             </button>
-                                        </div>
-                                        <div class="input-group">
-                                            <input type="text" name="table_search"
-                                                   class="form-control input-sm pull-right" style="width: 150px;"
-                                                   placeholder="Search"/>
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
+												</div>
+												<div class="input-group">
+													<input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
+													<div class="input-group-btn">
+														<button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
                                                 </button>
 													</div>
 												</div>
@@ -281,27 +284,58 @@
 													<th>发布时间</th>
 													<th>操作</th>
 												</tr>
-												<tr v-for="(doc,index) of docData">
-													<td><input check="self" :doc-id="doc.document.documentId" type="checkbox">
-													</td>
-													<td>{{doc.document.documentNo}}</td>
-													<td>{{doc.document.documentTitle}}</td>
-													<td>{{doc.documenttype.documenttypeName}}</td>
-													<td>{{doc.guser.userName}}</td>
-													<td v-html="replaceConfidential(doc.document.documentConfidential)"></td>
-													<td>{{doc.department.departmentName}}</td>
-													<td>{{doc.document.documentState}}</td>
-													<td>{{doc.document.creationTime}}</td>
-													<td>
-														<button type="button" class="btn btn-primary btn-sm"><i
+												<tbody v-cloak v-if="ready">
+													<tr v-for="(doc,index) of docData">
+														<td><input check="self" :doc-id="doc.document.documentId" type="checkbox">
+														</td>
+														<td>{{doc.document.documentNo}}</td>
+														<td>{{doc.document.documentTitle}}</td>
+														<td>{{doc.documenttype.documenttypeName}}</td>
+														<td>{{doc.guser.userName}}</td>
+														<td v-html="replaceConfidential(doc.document.documentConfidential)"></td>
+														<td>{{doc.department.departmentName}}</td>
+														<td v-html="replaceState(doc.document.documentState)"></td>
+														<td>{{doc.document.creationTime}}</td>
+														<td>
+															<template v-if="doc.document.documentState==1">
+																<button type="button" class="btn btn-primary btn-sm" @click="editDocument(index)"><i
+                                                   class="fa fa-pencil fa-fw"></i> 编辑
+                                                </button>
+																<button type="button" class="btn btn-danger btn-sm" @click="deleteDocument(index)"><i
+                                                        class="fa fa-trash-o fa-fw" @click="deleteDocument(index)"></i> 删除
+                                                </button> </template>
+															<!-- 非本部门未借阅文档 -->
+															<template v-else-if="doc.document.documentState==2">
+																<button type="button" class="btn btn-primary btn-sm" @click="checkDocument(index)"><i
+                                                        class="fa fa-pencil fa-fw" ></i> 查看
+                                                </button>
+															</template>
+															<template v-else-if="doc.document.documentState==3">
+																<button type="button" class="btn btn-primary btn-sm" @click="checkDocument(index)"><i
+                                                        class="fa fa-pencil fa-fw"></i> 查看
+                                                </button>
+															</template>
+															<template v-else-if="doc.document.documentState==4">
+																<button type="button" class="btn btn-primary btn-sm" @click="checkDocument(index)"><i
+                                                        class="fa fa-pencil fa-fw"></i> 查看
+                                                </button>
+															</template>
+															<template v-else-if="doc.document.documentState==5">
+																<button type="button" class="btn btn-primary btn-sm" @click="checkDocument(index)"><i
+                                                        class="fa fa-pencil fa-fw"></i> 查看
+                                                </button>
+															</template>
+															<template v-else-if="doc.document.documentState==0">
+																<button type="button" class="btn btn-primary btn-sm" @click="editDocument(index)"><i
                                                         class="fa fa-pencil fa-fw"></i> 编辑
                                                 </button>
-                                                <button type="button" class="btn btn-danger btn-sm"><i
+																<button type="button" class="btn btn-danger btn-sm" @click="deleteDocument(index)"><i
                                                         class="fa fa-trash-o fa-fw"></i> 删除
                                                 </button>
-													</td>
-												</tr>
-
+															</template>
+														</td>
+													</tr>
+												</tbody>
 											</table>
 											<div v-cloak style="float: left;">
 												<page-util :page="page"></page-util>
@@ -372,6 +406,7 @@
 		<script src="js/viewsJS/userInfoVue.js"></script>
 		<script src="js/viewsJS/documentManage.js"></script>
 		<!-- Director for demo purposes -->
+		
 	</body>
 
 </html>

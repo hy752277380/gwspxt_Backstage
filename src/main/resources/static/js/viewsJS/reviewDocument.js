@@ -1,7 +1,7 @@
 $(function () {
-
     var data = {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
+        name: 'reviewDocument',
         docData: '', //所有数据
         showData: '', //显示在页面的数据
         ready: false,
@@ -42,7 +42,6 @@ $(function () {
         },
         docDepartment: 0,
     }
-
 
     /*分页信息*/
     var pageUtil = Vue.extend({
@@ -200,8 +199,9 @@ $(function () {
             },
         },
         components: {
+            'asideComponent': Aside,
             'page-util': pageUtil,
-            'search-util': searchUtil,
+            'search-util': searchUtil
         }
     });
 })

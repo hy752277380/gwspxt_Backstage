@@ -18,6 +18,12 @@ public class PageController {
         return "login.html";
     }
 
+    //首页
+    @GetMapping("/index")
+    public String indexPage() {
+        return "index.html";
+    }
+
     //个人信息页面
     @RequestMapping("/information")
     public String infomation() {

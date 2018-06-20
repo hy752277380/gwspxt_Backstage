@@ -140,9 +140,8 @@
                          class="img-circle" alt="User Image"/>
                 </div>
                 <div class="pull-left info">
-                    <p>Hello, Jane</p>
-
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <p v-cloak>{{user.guser.userName}}</p>
+                    <a href=""><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
             <!-- search form -->
@@ -158,6 +157,11 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home fa-fw"></i> <span>首页</span>
+                    </a>
+                </li>
                 <li>
                     <a href="approvalApplication.html">
                         <i class="fa fa-pencil-square-o"></i> <span>批阅申请</span>

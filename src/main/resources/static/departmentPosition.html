@@ -43,7 +43,6 @@
     </style>
 </head>
 
-<<<<<<< HEAD
 <body class="skin-black">
 <!-- header logo: style can be found in header.less -->
 <header class="header">
@@ -145,8 +144,8 @@
                          class="img-circle" alt="User Image"/>
                 </div>
                 <div class="pull-left info">
-                    <p>Hello, Jane</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <p v-cloak>{{user.guser.userName}}</p>
+                    <a href=""><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
             <!-- search form -->
@@ -157,12 +156,16 @@
                                   <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i
                                           class="fa fa-search"></i></button>
                                     </span>
-                    <<<<<<< HEAD
                 </div>
             </form>
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home fa-fw"></i> <span>首页</span>
+                    </a>
+                </li>
                 <li>
                     <a href="approvalApplication.html">
                         <i class="fa fa-pencil-square-o"></i> <span>批阅申请</span>
@@ -189,7 +192,6 @@
                     </a>
                 </li>
 
-                <<<<<<< HEAD
                 <li>
                     <a href="journal.html">
                         <i class="fa fa-location-arrow"></i> <span>查看日志</span>
@@ -217,43 +219,12 @@
                         <i class="fa fa-sitemap"></i> <span>流程管理</span>
                     </a>
                 </li>
-                =======
-                <li>
-                    <a href="journal.html">
-                        <i class="fa fa-location-arrow"></i> <span>查看日志</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="departmentMemberManage.html">
-                        <i class="fa fa-male"></i> <span>部门成员管理</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="accountManagement.html">
-                        <i class="fa fa-user"></i> <span>账号管理</span>
-                    </a>
-                </li>
-                >>>>>>> e784b5fc9af3bf4aac03ff737d5de168bb778717
-
-                <li>
-                    <a href="departmentManagement.html">
-                        <i class="fa fa-gavel"></i> <span>部门管理</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="processManagement.html">
-                        <i class="fa fa-sitemap"></i> <span>流程管理</span>
-                    </a>
-                </li>
-
             </ul>
         </section>
         <!-- /.sidebar -->
     </aside>
 
-    <aside class="right-side">
-
+    <aside id="content" class="right-side">
         <!-- Main content -->
         <section class="content">
             <div class="row">
@@ -261,72 +232,96 @@
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb">
                         <li>
-                            <a href="#"><i class="fa fa-home"></i> 首页</a>
+                            <a href=""><i class="fa fa-home"></i> 首页</a>
                         </li>
+                        <li class="active">部门职称</li>
                     </ul>
-                    <<<<<<< HEAD
-                    <div class="box-tools m-b-15" style="margin-bottom: 30px;">
-                        <div>
-                            <span style="font-weight: bold;">当前位置：新闻部</span>
+                    <!--breadcrumbs end -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!--内容-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel">
+                                <div class="panel-body table-responsive">
+                                    <div class="box-tools m-b-15">
+                                        <!--breadcrumbs start -->
+                                        <ul class="breadcrumb">
+                                            <li>
+                                                <a href="#"><i class="fa fa-home"></i> 首页</a>
+                                            </li>
+                                        </ul>
+                                        <div class="box-tools m-b-15" style="margin-bottom: 30px;">
+                                            <div>
+                                                <span style="font-weight: bold;">当前位置：新闻部</span>
+                                            </div>
+                                            <div style="float: right;margin-top: -20px;">
+                                                <button href="#myModal" data-toggle="modal" type="button"
+                                                        class="btn btn-primary"><i
+                                                        class="fa fa-plus" aria-hidden="true"></i> 添加职称
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <table class="table table-hover">
+                                                <tr>
+                                                    <th>序号</th>
+                                                    <th>部门职称</th>
+                                                    <th>权限</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>部长</td>
+                                                    <td>权限1</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning btn-sm"><i
+                                                                class="fa fa-pencil fa-fw"></i> 修改
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>部长</td>
+                                                    <td>权限1</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning btn-sm"><i
+                                                                class="fa fa-pencil fa-fw"></i> 修改
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>部长</td>
+                                                    <td>权限1</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning btn-sm"><i
+                                                                class="fa fa-pencil fa-fw"></i> 修改
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>部长</td>
+                                                    <td>权限1</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning btn-sm"><i
+                                                                class="fa fa-pencil fa-fw"></i> 修改
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div style="float: right;margin-top: -20px;">
-                            <button href="#myModal" data-toggle="modal" type="button" class="btn btn-primary"><i
-                                    class="fa fa-plus" aria-hidden="true"></i> 添加职称
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <table class="table table-hover">
-                            <tr>
-                                <th>序号</th>
-                                <th>部门职称</th>
-                                <th>权限</th>
-                                <th>操作</th>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>部长</td>
-                                <td>权限1</td>
-                                <td>
-                                    <button type="button" class="btn btn-warning btn-sm"><i
-                                            class="fa fa-pencil fa-fw"></i> 修改
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>部长</td>
-                                <td>权限1</td>
-                                <td>
-                                    <button type="button" class="btn btn-warning btn-sm"><i
-                                            class="fa fa-pencil fa-fw"></i> 修改
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>部长</td>
-                                <td>权限1</td>
-                                <td>
-                                    <button type="button" class="btn btn-warning btn-sm"><i
-                                            class="fa fa-pencil fa-fw"></i> 修改
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>部长</td>
-                                <td>权限1</td>
-                                <td>
-                                    <button type="button" class="btn btn-warning btn-sm"><i
-                                            class="fa fa-pencil fa-fw"></i> 修改
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
                     </div>
                 </div>
             </div>
+
         </section>
 
         <!-- /.content -->
@@ -335,81 +330,6 @@
         </div>
     </aside>
     <!-- /.right-side -->
-    <div class="row">
-        <div class="col-md-12">
-            <!--内容-->
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="panel">
-
-                        <div class="panel-body table-responsive">
-
-                            <div class="box-tools m-b-15" style="margin-bottom: 30px;">
-                                <div>
-                                    <span style="font-weight: bold;">当前位置：新闻部</span>
-                                </div>
-                                <div style="float: right;margin-top: -20px;">
-                                    <button href="#myModal" data-toggle="modal" type="button" class="btn btn-primary">
-                                        添加职称
-                                    </button>
-                                </div>
-                            </div>
-                            <div>
-                                <table class="table table-hover">
-                                    <tr>
-                                        <th>序号</th>
-                                        <th>部门职称</th>
-                                        <th>权限</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>部长</td>
-                                        <td>权限1</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>部长</td>
-                                        <td>权限1</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>部长</td>
-                                        <td>权限1</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>部长</td>
-                                        <td>权限1</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </section>
-    <!-- /.content -->
-    <div class="footer-main">
-        Copyright &copy Director, 2014. More Templates
-    </div>
-    </aside>
-    <!-- /.right-side -->
-
 </div>
 <!-- ./wrapper -->
 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">

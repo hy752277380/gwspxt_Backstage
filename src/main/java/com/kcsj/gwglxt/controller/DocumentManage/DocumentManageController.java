@@ -122,8 +122,8 @@ public class DocumentManageController {
     }
 
     //更改文档当前所处流程的位置
-    @RequestMapping("/updateDocumentLocation/{documentId}")
-    public String updateDocumentLocation(@PathVariable("documentId") String documentId, HttpSession httpSession, HttpServletResponse response) {
+    @RequestMapping("/updateDocumentLocation/")
+    public String updateDocumentLocation(String documentId, HttpSession httpSession, HttpServletResponse response) {
         //初始化result
         String result = null;
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
@@ -210,15 +210,15 @@ public class DocumentManageController {
     }
 
     //根据id查看文档全部信息
-    @RequestMapping("/documentBaseInfo/{documentId}")
-    public DocumentCustom documentBaseInfo(@PathVariable("documentId") String documentId) {
+    @RequestMapping("/documentBaseInfo/")
+    public DocumentCustom documentBaseInfo(String documentId) {
         DocumentCustom documentCustom = documentService.documentBaseInfo(documentId);
         return documentCustom;
     }
 
     //查看文档的所有流程节点
-    @RequestMapping("/getProcessNode/{documentId}")
-    public List<ProcessNode> getProcessNode(@PathVariable("documentId") String documentId) {
+    @RequestMapping("/getProcessNode/")
+    public List<ProcessNode> getProcessNode(String documentId) {
         Document document = documentService.selectByPrimaryKey(documentId);
         List<ProcessNode> list = documentService.getAllProcessNode(document.getDocumentProcess());
         return list;

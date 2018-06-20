@@ -16,7 +16,7 @@ public interface DocumentService {
     int insertMbj(Mobject mobject);
     int insert(Document record);
     //根据id更改文档状态
-    int updateDocumentState(@Param("documentState") Integer documentState,@Param("documentProcessBegin")String documentProcessBegin,@Param("documentProcessFinish")String documentProcessFinish,@Param("documentId") String documentId);
+    int updateDocumentState(Integer documentState,String documentProcessBegin,String documentProcessFinish,String documentId);
     //添加日志
     int insertLog(Log log);
     //根据文档id获取文档名称

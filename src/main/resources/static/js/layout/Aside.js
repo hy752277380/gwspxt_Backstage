@@ -1,6 +1,5 @@
 /*在vue.js后  和   主页面用的js前   引入*/
 
-
 /* 左侧的导航栏 */
 var Aside = Vue.extend({
     template: `<aside style="height: 712px;" class="left-side sidebar-offcanvas">

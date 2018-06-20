@@ -28,6 +28,30 @@
             <result column="document_no" property="documentNo"/>
             <result column="document_confidential" property="documentConfidential"/>
             <result column="creation_time" property="creationTime"/>
+        </association>
+        <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
+            <result column="user_name" property="userName"/>
+        </association>
+        <association property="documenttype" javaType="com.kcsj.gwglxt.entity.Documenttype">
+            <result column="documenttype_name" property="documenttypeName"/>
+        </association>
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <result column="department_name" property="departmentName"/>
+        </association>
+        <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
+            <result column="process_name" property="processName"/>
+        </association>
+        <association property="borrowing" javaType="com.kcsj.gwglxt.entity.Borrowing">
+            <result column="borrowing_state" property="borrowingState"/>
+        </association>
+    </resultMap>
+    <resultMap id="DocumentInfo" type="com.kcsj.gwglxt.DTO.DocumentCustom">
+        <association property="document" javaType="com.kcsj.gwglxt.entity.Document">
+            <id column="document_id" property="documentId"/>
+            <result column="document_title" property="documentTitle"/>
+            <result column="document_no" property="documentNo"/>
+            <result column="document_confidential" property="documentConfidential"/>
+            <result column="creation_time" property="creationTime"/>
             <result column="document_state" property="documentState"/>
         </association>
         <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
@@ -486,7 +510,7 @@
     <select id="getDocumentLocation" parameterType="java.lang.String" resultType="int">
         SELECT document_location FROM document WHERE document_id = #{documentId}
     </select>
-    <select id="getDocumentByState" resultMap="DocumentBaseInfo">
+    <select id="getDocumentByState" resultMap="DocumentInfo">
 select
         doc.document_id,
 	doc.document_title,

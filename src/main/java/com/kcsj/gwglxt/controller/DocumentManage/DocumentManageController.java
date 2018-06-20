@@ -212,6 +212,7 @@ public class DocumentManageController {
 
     public QueryForPage getDocumentByState(String documentType, Integer documentConfidential, Integer documentState, int currentPage, String searchInfo, HttpSession httpSession) {
 
+
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         QueryForPage queryForPage = documentService.getDocumentByState(documentType, documentConfidential, documentState, loginCustom.getGuser().getUserId(), currentPage, searchInfo);

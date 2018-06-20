@@ -141,7 +141,7 @@ $(function () {
                 }
             },
             getInfo(params) {
-                $.post('http://localhost:8080/gwspxt/getAllDocument', params, function (response) {
+                $.post('http://localhost:8080/gwspxt/findCheckDoc', params, function (response) {
                     reviewDocument.docData = response.list;
                     reviewDocument.page.currentPage = response.currentPage;
                     reviewDocument.page.totalPage = response.totalPage;
@@ -163,7 +163,26 @@ $(function () {
                     case 4:
                         return "<span class=\"label label-primary\">普通</span>";
                 }
-            }
+            },
+            pass(index) {
+                let documentId = this.$data.docData[index].document.documentId;
+                console.log(documentId);
+                $.post('http://localhost:8080/gwspxt/updateDocumentLocation', {documentId}, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        $.post('http://localhost:8080/gwspxt/messageNextOne', {documentId}, '', 'json');
+                    }
+                    else if (response.msg == "updateFailed") {
+                        spop({
+                            template: "审核失败！",
+                            style: "danger",
+                            autoclose: 3000
+                        })
+                    }
+                }, 'json');
+            },
+            refuse(index) {
+
+            },
         },
         mounted() {
             this.getInfo({

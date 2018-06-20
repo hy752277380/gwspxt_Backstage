@@ -22,7 +22,8 @@ import java.util.List;
 public class DocumentManageController {
     @Autowired
     private DocumentService documentService;
-/**********************************************************文档添加查询及流程模块********************************************/
+
+    /**********************************************************文档添加查询及流程模块********************************************/
     //获取全部文档
     @RequestMapping("/getAllDocument")
     public QueryForPage getAllDocument(String searchInfo, int currentPage, HttpSession httpSession) {
@@ -76,7 +77,7 @@ public class DocumentManageController {
 
     //修改文档
     @RequestMapping("/updateDocument")
-    public String updateDocument(@RequestBody Document document){
+    public String updateDocument(@RequestBody Document document) {
         String result = null;
         int updateResult = documentService.updateByPrimaryKey(document);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
@@ -145,6 +146,7 @@ public class DocumentManageController {
         log1.setCreationTime(df.format(new Date()));
         documentService.insertLog(log1);
         int documentLocation = document.getDocumentLocation() + 1;
+        System.out.println(documentLocation);
         //获取当前所走流程的最大步骤
         int maxStep = documentService.getMaxStep(document.getDocumentProcess());
         String documentProcessBegin = null;
@@ -153,9 +155,11 @@ public class DocumentManageController {
         if (documentLocation == 1) {
             documentProcessBegin = df.format(new Date());
             documentService.updateDocumentState(3, documentProcessBegin, documentProcessFinish, documentId);
+            System.out.println("1");
         } else if (documentLocation == maxStep) {
             documentProcessFinish = df.format(new Date());
             documentService.updateDocumentState(4, documentProcessBegin, documentProcessFinish, documentId);
+            System.out.println("2");
             Message message = new Message();
             String messageId = TeamUtil.getUuid();
             message.setMessageId(messageId);
@@ -172,10 +176,11 @@ public class DocumentManageController {
             documentService.insertMbj(mobject);
         }
         int updateLocationResult = documentService.updateDocumentLocation(documentLocation, documentId);
+        System.out.println("3");
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (updateLocationResult == 0) {
             result = "updateFailed";
-        }else{
+        } else {
             result = "updateSuccess";
         }
         return "{\"msg\":\"" + result + "\"}";
@@ -193,22 +198,23 @@ public class DocumentManageController {
         }
         return "{\"msg\":\"" + result + "\"}";
     }
+
     //文档审核选择拒绝
     @RequestMapping("/refuseDoc")
-    public void refuseDoc(String documentId,HttpSession httpSession){
+    public void refuseDoc(String documentId, HttpSession httpSession) {
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        documentService.refuseDoc(loginCustom,documentId);
+        documentService.refuseDoc(loginCustom, documentId);
     }
 
     //根据文档状态查询文档
     @RequestMapping("/getDocumentByState")
 
-    public QueryForPage getDocumentByState(String documentType,Integer documentConfidential,Integer documentState, int currentPage,String searchInfo, HttpSession httpSession) {
+    public QueryForPage getDocumentByState(String documentType, Integer documentConfidential, Integer documentState, int currentPage, String searchInfo, HttpSession httpSession) {
 
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        QueryForPage queryForPage = documentService.getDocumentByState(documentType,documentConfidential,documentState, loginCustom.getGuser().getUserId(),currentPage,searchInfo);
+        QueryForPage queryForPage = documentService.getDocumentByState(documentType, documentConfidential, documentState, loginCustom.getGuser().getUserId(), currentPage, searchInfo);
         return queryForPage;
     }
 
@@ -229,16 +235,17 @@ public class DocumentManageController {
 
     //查询本人需要审核的文档
     @RequestMapping("/findCheckDoc")
-    public QueryForPage findCheckDoc(int currentPage,HttpSession httpSession) {
+    public QueryForPage findCheckDoc(int currentPage, HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        QueryForPage queryForPage = documentService.findCheckingDoc(currentPage,loginCustom);
+        QueryForPage queryForPage = documentService.findCheckingDoc(currentPage, loginCustom);
         return queryForPage;
     }
-/***************************文档借阅部分*****************************/
+
+    /***************************文档借阅部分*****************************/
 
     //列出待本人批准的借阅申请
     @RequestMapping("/getAllApplyRead")
-    public List<DocumentCustom> getAllApplyRead(HttpSession httpSession){
+    public List<DocumentCustom> getAllApplyRead(HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         List<DocumentCustom> documents = documentService.getAllApplyRead(loginCustom);
         return documents;
@@ -246,22 +253,24 @@ public class DocumentManageController {
 
     //申请批阅文档
     @RequestMapping("/applyRead")
-    public void applyRead(@RequestBody Borrowing borrowing,HttpSession httpSession){
+    public void applyRead(@RequestBody Borrowing borrowing, HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        documentService.insertBorrowing(borrowing,loginCustom);
+        documentService.insertBorrowing(borrowing, loginCustom);
     }
 
     //同意借阅文档
     @RequestMapping("/acceptApply")
-    public void acceptApply(){
+    public void acceptApply() {
 
     }
+
     //拒绝借阅文档
     @RequestMapping("/refuseApply")
-    public void refuseApply(HttpSession httpSession){
+    public void refuseApply(HttpSession httpSession) {
 
     }
-/**********************************日志消息中心及其他*********************************/
+
+    /**********************************日志消息中心及其他*********************************/
     //获取所有本人消息
     @RequestMapping("/getAllMessage")
     public List<MessageCustom> getMyAllMessage(HttpSession httpSession) {
@@ -290,6 +299,7 @@ public class DocumentManageController {
         List<Process> list = documentService.getAllProcess();
         return list;
     }
+
     //登录
     @PostMapping("/login")
     public String login() {

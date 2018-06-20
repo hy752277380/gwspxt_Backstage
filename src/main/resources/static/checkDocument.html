@@ -98,9 +98,13 @@
                                             <th>文档编号</th>
                                             <th>文档标题</th>
                                             <!--<th>文档类型<span class="caret"></span></th>-->
-                                            <th><search-util :query="docType"></search-util></th>
+                                            <th>
+                                                <search-util :query="docType"></search-util>
+                                            </th>
                                             <th>拟稿人</th>
-                                            <th><search-util :query="docConfidential"></search-util></th>
+                                            <th>
+                                                <search-util :query="docConfidential"></search-util>
+                                            </th>
                                             <!--<th>文档密级<span class="caret"></span></th>-->
                                             <th>拟稿部门<span class="caret"></span></th>
                                             <th>发布时间</th>
@@ -119,7 +123,8 @@
                                             <td>{{doc.department.departmentName}}</td>
                                             <td>{{doc.document.creationTime}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-sm">阅读</button>
+                                                <button @click="pass(index)" type="button" class="btn btn-primary btn-sm"><i class="fa fa-repeat" aria-hidden="true"></i>同意</button>
+                                                <button @click="refuse(index)" type="button" class="btn btn-danger btn-sm"><i class="fa fa-rotate-left" aria-hidden="true"></i>回绝</button>
                                             </td>
                                         </tr>
                                         </tbody>

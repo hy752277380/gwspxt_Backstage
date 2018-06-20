@@ -23,10 +23,7 @@ $(function() {
 			"documentRemark": documentRemark,
 			"documentProcess": documentProcess,
 		}
-
-console.log(JSON.stringify(data));
-
-		return false;
+	
 		$.ajax({
 			type: "post",
 			url: "http://localhost:8080/gwspxt/addDocument",

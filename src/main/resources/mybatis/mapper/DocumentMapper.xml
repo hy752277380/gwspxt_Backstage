@@ -541,6 +541,12 @@ AND doc.document_process = pr.process_id
                 AND doc.document_state in(1,2,3,4,5)
             </otherwise>
         </choose>
+        <if test="documentType!=null">
+                and doc.document_type = #{documentState}
+        </if>
+        <if test="documentConfidential!=null">
+            and doc.document_confidential=#{documentConfidential}
+        </if>
 and doc.document_user = #{documentUser}
         <if test="searchInfo!=null">
             and (doc.document_title like '${searchInfo}' or doc.document_no like '${searchInfo}' or gu.user_name like '${searchInfo}' or dt.documenttype_name like '${searchInfo}' or de.department_name like '${searchInfo}')
@@ -621,6 +627,6 @@ and doc.document_id = #{documentId,jdbcType=CHAR}
 	department de,
 	guser gu,
 	process pr
-          WHERE document_process = #{documentProcess} and document_location =#{documentLocation}
+          WHERE document_process = #{documentProcess} and document_location =#{documentLocation} and document_dept = #{userDepartment}
     </select>
 </mapper>

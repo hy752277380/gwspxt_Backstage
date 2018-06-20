@@ -22,7 +22,7 @@ import java.util.List;
 public class DocumentManageController {
     @Autowired
     private DocumentService documentService;
-
+/**********************************************************文档添加查询及流程模块********************************************/
     //获取全部文档
     @RequestMapping("/getAllDocument")
     public QueryForPage getAllDocument(String searchInfo, int currentPage, HttpSession httpSession) {
@@ -72,6 +72,19 @@ public class DocumentManageController {
         }
         result = "updateSuccess";
         return document;
+    }
+
+    //修改文档
+    @RequestMapping("/updateDocument")
+    public String updateDocument(@RequestBody Document document){
+        String result = null;
+        int updateResult = documentService.updateByPrimaryKey(document);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        }
+        result = "updateSuccess";
+        return "{\"msg\":\"" + result + "\"}";
     }
 
     //提交文档，更改文档状态
@@ -168,8 +181,8 @@ public class DocumentManageController {
     }
 
     //通知下一个节点操作人
-    @RequestMapping("/messageNextOne/{documentId}")
-    public String messageNextOne(@PathVariable("documentId") String documentId) {
+    @RequestMapping("/messageNextOne")
+    public String messageNextOne(String documentId) {
         String result = null;
         int messageResult = documentService.insertMessage(documentId);
         if (messageResult == 0) {
@@ -179,13 +192,20 @@ public class DocumentManageController {
         }
         return "{\"msg\":\"" + result + "\"}";
     }
-
-    //根据文档状态查询文档
-    @RequestMapping("/getDocumentByState/{documentState}")
-    public QueryForPage getDocumentByState(@PathVariable("documentState") Integer documentState, int currentPage,String searchInfo, HttpSession httpSession) {
+    //文档审核选择拒绝
+    @RequestMapping("/refuseDoc")
+    public void refuseDoc(String documentId,HttpSession httpSession){
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        QueryForPage queryForPage = documentService.getDocumentByState(documentState, loginCustom.getGuser().getUserId(),currentPage,searchInfo);
+        documentService.refuseDoc(loginCustom,documentId);
+    }
+
+    //根据文档状态查询文档
+    @RequestMapping("/getDocumentByState")
+    public QueryForPage getDocumentByState(String documentType,Integer documentConfidential,Integer documentState, int currentPage,String searchInfo, HttpSession httpSession) {
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        QueryForPage queryForPage = documentService.getDocumentByState(documentType,documentConfidential,documentState, loginCustom.getGuser().getUserId(),currentPage,searchInfo);
         return queryForPage;
     }
 
@@ -203,7 +223,7 @@ public class DocumentManageController {
         List<ProcessNode> list = documentService.getAllProcessNode(document.getDocumentProcess());
         return list;
     }
-
+/***************************文档借阅部分*****************************/
     //查询本人需要审核的文档
     @RequestMapping("/findCheckDoc")
     public List<DocumentCustom> findCheckDoc(HttpSession httpSession) {
@@ -212,25 +232,45 @@ public class DocumentManageController {
         return list;
     }
 
+    //列出待本人批准的借阅申请
+    @RequestMapping("/getAllApplyRead")
+    public List<DocumentCustom> getAllApplyRead(HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        List<DocumentCustom> documents = documentService.getAllApplyRead(loginCustom);
+        return documents;
+    }
+
+    //申请批阅文档
+    @RequestMapping("/applyRead")
+    public void applyRead(@RequestBody Borrowing borrowing,HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        int updateResult = documentService.insertBorrowing(borrowing,loginCustom);
+    }
+
+    //同意借阅文档
+    @RequestMapping("/acceptApply")
+    public void acceptApply(){
+
+
+    }
+    //拒绝借阅文档
+    @RequestMapping("/refuseApply")
+    public void refuseApply(HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        //生成日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        log.setLogContent("拒绝了");
+    }
+/**********************************日志消息中心及其他*********************************/
     //获取所有本人消息
     @RequestMapping("/getAllMessage")
     public List<MessageCustom> getMyAllMessage(HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         List<MessageCustom> list = documentService.getMyAllMessage(loginCustom.getGuser().getUserId());
         return list;
-    }
-
-    //修改文档
-    @RequestMapping("/updateDocument")
-    public String updateDocument(@RequestBody Document document){
-        String result = null;
-        int updateResult = documentService.updateByPrimaryKey(document);
-        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
-        if (updateResult == 0) {
-            result = "updateFailed";
-        }
-        result = "updateSuccess";
-        return "{\"msg\":\"" + result + "\"}";
     }
 
     //查看本人所有日志
@@ -253,28 +293,9 @@ public class DocumentManageController {
         List<Process> list = documentService.getAllProcess();
         return list;
     }
-    //申请批阅文档
-    @RequestMapping("/applyRead")
-    public void applyRead(@RequestBody Borrowing borrowing,HttpSession httpSession){
-        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        int updateResult = documentService.insertBorrowing(borrowing,loginCustom);
-    }
-    //同意借阅文档
-    @RequestMapping("/acceptApply")
-    public void acceptApply(){
+/************************************首页数据*******************************/
+    
 
-    }
-    //拒绝借阅文档
-    @RequestMapping("/refuseApply")
-    public void refuseApply(HttpSession httpSession){
-        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-        //生成日志
-        Log log = new Log();
-        log.setLogId(TeamUtil.getUuid());
-        log.setLogUser(loginCustom.getGuser().getUserId());
-        log.setLogContent("拒绝了");
-    }
     //登录
     @PostMapping("/login")
     public String login() {

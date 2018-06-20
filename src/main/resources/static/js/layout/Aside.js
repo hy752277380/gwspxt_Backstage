@@ -1,6 +1,5 @@
 /*在vue.js后  和   主页面用的js前   引入*/
 
-
 /* 左侧的导航栏 */
 var Aside = Vue.extend({
     template: `<aside style="height: 712px;" class="left-side sidebar-offcanvas">
@@ -37,7 +36,9 @@ var Aside = Vue.extend({
     <li :class="name=='reviewDocument'?'active':''"><a href="reviewDocument.html"> <i class="fa fa-th-list fa-fw"></i><span>文档查看</span></a></li>
     
     <li :class="name=='documentManage'?'active':''"><a href="documentManage.html"><i class="fa fa-book fa-fw"></i><span>文档管理</span></a></li>
-
+    
+    <li :class="name=='checkDocument'?'active':''"><a href="checkDocument.html"><i class="fa fa-book fa-fw"></i><span>审核文档</span></a></li>
+    
     <li :class="name=='information'?'active':''"><a href="information.html"><i class="fa fa-meh-o fa-fw"></i><span>个人信息</span></a></li>
 
     <li :class="name=='journal'?'active':''"><a href="journal.html"><i class="fa fa-location-arrow fa-fw"></i><span>查看日志</span></a></li>

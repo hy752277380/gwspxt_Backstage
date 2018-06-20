@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kcsj.gwglxt.mapper.DocumentMapper" >
-
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Document" >
         <id column="document_id" property="documentId"/>
         <result column="document_title" property="documentTitle"/>
@@ -493,13 +492,14 @@
         where document_id = #{documentId,jdbcType=CHAR}
     </update>
     <update id="updateDocumentState">
-        UPDATE document SET document_state = #{documentState},
+        UPDATE document SET document_state = #{documentState}
         <if test="documentProcessBegin!=null">
-            document_process_begin=#{documentProcessBegin},
+            ,document_process_begin=#{documentProcessBegin}
         </if>
         <if test="documentProcessFinish!=null">
-            document_process_finish=#{documentProcessFinish}
-        </if>WHERE document_id = #{documentId}
+            ,document_process_finish=#{documentProcessFinish}
+        </if>
+        WHERE document_id = #{documentId}
     </update>
     <select id="getDocumentName" parameterType="java.lang.String" resultType="java.lang.String">
         SELECT document_title FROM document WHERE document_id = #{documentId}

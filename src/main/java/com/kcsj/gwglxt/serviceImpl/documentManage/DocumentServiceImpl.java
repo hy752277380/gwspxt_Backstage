@@ -215,11 +215,12 @@ public class DocumentServiceImpl implements DocumentService {
         }
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
-        int allRow = list.size();//总记录数
+        int allRow = list_doc.size();//总记录数
         int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
         int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
         int currentPages = QueryForPage.countCurrentPage(currentPage);
         int endSet = pagesize * currentPage;
+        System.out.println(allRow);
         if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
             endSet = allRow;
         }

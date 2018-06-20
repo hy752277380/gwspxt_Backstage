@@ -155,7 +155,7 @@ public class DocumentManageController {
         if (documentLocation == 1) {
             documentProcessBegin = df.format(new Date());
             documentService.updateDocumentState(3, documentProcessBegin, documentProcessFinish, documentId);
-            System.out.println("1");
+            System.out.println("1111111111");
         } else if (documentLocation == maxStep) {
             documentProcessFinish = df.format(new Date());
             documentService.updateDocumentState(4, documentProcessBegin, documentProcessFinish, documentId);
@@ -176,7 +176,7 @@ public class DocumentManageController {
             documentService.insertMbj(mobject);
         }
         int updateLocationResult = documentService.updateDocumentLocation(documentLocation, documentId);
-        System.out.println("3");
+        System.out.println("3111");
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (updateLocationResult == 0) {
             result = "updateFailed";
@@ -211,6 +211,7 @@ public class DocumentManageController {
     @RequestMapping("/getDocumentByState")
 
     public QueryForPage getDocumentByState(String documentType, Integer documentConfidential, Integer documentState, int currentPage, String searchInfo, HttpSession httpSession) {
+
 
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");

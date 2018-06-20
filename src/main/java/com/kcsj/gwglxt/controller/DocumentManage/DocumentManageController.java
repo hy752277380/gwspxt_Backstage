@@ -48,7 +48,7 @@ public class DocumentManageController {
         document.setDocumentId(TeamUtil.getUuid());
         document.setDocumentDept(loginCustom.getGuser().getUserDepartment());
         document.setDocumentUser(loginCustom.getGuser().getUserId());
-        document.setDocumentConfidential(1);
+        document.setDocumentConfidential(document.getDocumentConfidential());
         document.setDoucmentContent(document.getDoucmentContent());
         document.setDocumentRemark(document.getDocumentRemark());
         document.setDocumentProcess(document.getDocumentProcess());
@@ -56,6 +56,7 @@ public class DocumentManageController {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         document.setCreationTime(df.format(new Date()));
         document.setDocumentState(1);
+        document.setDocumentSpeed(document.getDocumentSpeed());
         document.setDocumentIsdelete(0);
         //将对象存入数据库
         int addResult = documentService.insert(document);

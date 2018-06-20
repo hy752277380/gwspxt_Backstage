@@ -225,14 +225,15 @@ public class DocumentManageController {
         List<ProcessNode> list = documentService.getAllProcessNode(document.getDocumentProcess());
         return list;
     }
-/***************************文档借阅部分*****************************/
+
     //查询本人需要审核的文档
     @RequestMapping("/findCheckDoc")
-    public List<DocumentCustom> findCheckDoc(HttpSession httpSession) {
+    public QueryForPage findCheckDoc(int currentPage,HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        List<DocumentCustom> list = documentService.findCheckingDoc(loginCustom);
-        return list;
+        QueryForPage queryForPage = documentService.findCheckingDoc(currentPage,loginCustom);
+        return queryForPage;
     }
+/***************************文档借阅部分*****************************/
 
     //列出待本人批准的借阅申请
     @RequestMapping("/getAllApplyRead")
@@ -246,25 +247,18 @@ public class DocumentManageController {
     @RequestMapping("/applyRead")
     public void applyRead(@RequestBody Borrowing borrowing,HttpSession httpSession){
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        int updateResult = documentService.insertBorrowing(borrowing,loginCustom);
+        documentService.insertBorrowing(borrowing,loginCustom);
     }
 
     //同意借阅文档
     @RequestMapping("/acceptApply")
     public void acceptApply(){
 
-
     }
     //拒绝借阅文档
     @RequestMapping("/refuseApply")
     public void refuseApply(HttpSession httpSession){
-        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-        //生成日志
-        Log log = new Log();
-        log.setLogId(TeamUtil.getUuid());
-        log.setLogUser(loginCustom.getGuser().getUserId());
-        log.setLogContent("拒绝了");
+
     }
 /**********************************日志消息中心及其他*********************************/
     //获取所有本人消息

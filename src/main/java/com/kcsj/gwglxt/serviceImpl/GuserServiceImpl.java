@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.serviceImpl;
 
+import com.kcsj.gwglxt.DTO.CountUserByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
 import com.kcsj.gwglxt.DTO.LoginCustom;
@@ -8,6 +9,8 @@ import com.kcsj.gwglxt.service.GuserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -87,5 +90,12 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public LoginCustom getPersonalInfo(String userId) {
         return guserMapper.getPersonalInfo(userId);
+    }
+    //首页月份人数统计
+    @Override
+    public CountUserByMouth countUserByMouth() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
+        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
+        return guserMapper.countUserByMouth(df.format(new Date()));
     }
 }

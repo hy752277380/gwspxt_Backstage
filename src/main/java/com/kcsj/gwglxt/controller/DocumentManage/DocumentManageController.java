@@ -293,9 +293,6 @@ public class DocumentManageController {
         List<Process> list = documentService.getAllProcess();
         return list;
     }
-/************************************首页数据*******************************/
-    
-
     //登录
     @PostMapping("/login")
     public String login() {

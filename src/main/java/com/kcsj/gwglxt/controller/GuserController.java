@@ -1,5 +1,7 @@
 package com.kcsj.gwglxt.controller;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.kcsj.gwglxt.DTO.CountUserByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.DTO.LoginCustom;
 import com.kcsj.gwglxt.service.GuserService;
@@ -91,6 +93,13 @@ public class GuserController {
 
             return false;
         }return true;
+    }
+    /************************************首页数据*******************************/
+    //首页月份人数统计
+    @RequestMapping("/countUserByMouth")
+    public CountUserByMouth countUserByMouth(){
+        CountUserByMouth countUserByMouth = guserService.countUserByMouth();
+        return countUserByMouth;
     }
 }
 

@@ -47,7 +47,7 @@
 <!-- header logo: style can be found in header.less -->
 <header class="header">
     <a href="index.html" class="logo">
-        Director
+        公文审批系统
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -92,7 +92,6 @@
                                         </div>
                                         <h4>
                                             Director Design Team
-
                                         </h4>
                                         <p>Why not buy a new awesome theme?</p>
                                         <small class="pull-right"><i class="fa fa-clock-o"></i> 2 hours</small>
@@ -140,11 +139,11 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="img/26115.jpg" class="img-circle" alt="User Image"/>
+                    <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"
+                         class="img-circle" alt="User Image"/>
                 </div>
                 <div class="pull-left info">
                     <p>Hello, Jane</p>
-
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
@@ -173,7 +172,7 @@
                 </li>
                 <li>
                     <a href="reviewDocument.html">
-                        <i class="fa fa-dashboard"></i> <span>文档查看</span>
+                        <i class="fa fa-th-list" aria-hidden="true"></i><span>查看文档</span>
                     </a>
                 </li>
                 <li>
@@ -181,13 +180,11 @@
                         <i class="fa fa-book fa-fw"></i> <span>文档管理</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="information.html">
                         <i class="fa fa-meh-o"></i> <span>个人信息</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="journal.html">
                         <i class="fa fa-location-arrow"></i> <span>查看日志</span>
@@ -203,7 +200,6 @@
                         <i class="fa fa-user"></i> <span>账号管理</span>
                     </a>
                 </li>
-
                 <li class="active">
                     <a href="#">
                         <i class="fa fa-gavel"></i> <span>部门管理</span>
@@ -216,14 +212,12 @@
                     </a>
                 </li>
 
-
             </ul>
         </section>
         <!-- /.sidebar -->
     </aside>
 
-    <aside class="right-side">
-
+    <aside id="content" class="right-side">
         <!-- Main content -->
         <section class="content">
             <div class="row">
@@ -231,27 +225,25 @@
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb">
                         <li>
-                            <a href="#"><i class="fa fa-home"></i> 首页</a>
+                            <a href=""><i class="fa fa-home"></i> 首页</a>
                         </li>
-
-                        <li class="active">部门管理</li>
+                        <li class="active">文档查看</li>
                     </ul>
                     <!--breadcrumbs end -->
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-12">
                     <!--内容-->
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="panel">
-
                                 <div class="panel-body table-responsive">
                                     <div class="box-tools m-b-15">
                                         <div style="float: left;">
                                             <button href="#myModal" data-toggle="modal" type="button"
-                                                    class="btn btn-primary">添加部门
+                                                    class="btn btn-primary btn-sm"><i class="fa fa-plus"
+                                                                                      aria-hidden="true"></i> 添加部门
                                             </button>
                                         </div>
                                         <div class="input-group">
@@ -269,7 +261,6 @@
                                             <th>序号</th>
                                             <th>部门名称</th>
                                             <th>部门号码</th>
-
                                             <th>操作</th>
                                         </tr>
                                         <tr>
@@ -277,11 +268,14 @@
                                             <td>人事部</td>
                                             <td>123</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary"
+                                                <button type="button" class="btn btn-primary btn-sm"
                                                         style="margin-right: 10px;"
-                                                        onclick="window.location.href='departmentPosition.html'">管理
+                                                        onclick="window.location.href='departmentPosition.html'"><i
+                                                        class="fa fa-wrench" aria-hidden="true"></i> 管理
                                                 </button>
-                                                <button type="button" class="btn btn-warning">修改</button>
+                                                <button type="button" class="btn btn-warning btn-sm"><i
+                                                        class="fa fa-pencil fa-fw"></i> 修改
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -289,11 +283,14 @@
                                             <td>人事部</td>
                                             <td>123</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary"
+                                                <button type="button" class="btn btn-primary btn-sm"
                                                         style="margin-right: 10px;"
-                                                        onclick="window.location.href='departmentPosition.html'">管理
+                                                        onclick="window.location.href='departmentPosition.html'"><i
+                                                        class="fa fa-wrench" aria-hidden="true"></i> 管理
                                                 </button>
-                                                <button type="button" class="btn btn-warning">修改</button>
+                                                <button type="button" class="btn btn-warning btn-sm"><i
+                                                        class="fa fa-pencil fa-fw"></i> 修改
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -301,11 +298,14 @@
                                             <td>人事部</td>
                                             <td>123</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary"
+                                                <button type="button" class="btn btn-primary btn-sm"
                                                         style="margin-right: 10px;"
-                                                        onclick="window.location.href='departmentPosition.html'">管理
+                                                        onclick="window.location.href='departmentPosition.html'"><i
+                                                        class="fa fa-wrench" aria-hidden="true"></i> 管理
                                                 </button>
-                                                <button type="button" class="btn btn-warning">修改</button>
+                                                <button type="button" class="btn btn-warning btn-sm"><i
+                                                        class="fa fa-pencil fa-fw"></i> 修改
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -313,11 +313,14 @@
                                             <td>人事部</td>
                                             <td>123</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary"
+                                                <button type="button" class="btn btn-primary btn-sm"
                                                         style="margin-right: 10px;"
-                                                        onclick="window.location.href='departmentPosition.html'">管理
+                                                        onclick="window.location.href='departmentPosition.html'"><i
+                                                        class="fa fa-wrench" aria-hidden="true"></i> 管理
                                                 </button>
-                                                <button type="button" class="btn btn-warning">修改</button>
+                                                <button type="button" class="btn btn-warning btn-sm"><i
+                                                        class="fa fa-pencil fa-fw"></i> 修改
+                                                </button>
                                             </td>
                                         </tr>
                                     </table>
@@ -359,40 +362,40 @@
         </div>
     </aside>
     <!-- /.right-side -->
+    <!-- ./wrapper -->
 
-</div>
-<!-- ./wrapper -->
-<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                <h4 class="modal-title">添加部门</h4>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 class="modal-title">添加部门</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-lg-2 col-sm-2 control-label">部门名称</label>
+                            <div class="col-lg-10">
+                                <input type="input" class="form-control" id="inputName" placeholder="部门名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-sm-2 control-label">部门号码</label>
+                            <div class="col-lg-10">
+                                <input type="input" class="form-control" placeholder="部门号码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <button type="submit" class="btn btn-info" style="margin-right: 10px;">添加</button>
+                                <button type="submit" class="btn btn-default">返回</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-lg-2 col-sm-2 control-label">部门名称</label>
-                        <div class="col-lg-10">
-                            <input type="input" class="form-control" id="inputName" placeholder="部门名称">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 col-sm-2 control-label">部门号码</label>
-                        <div class="col-lg-10">
-                            <input type="input" class="form-control" id="inputName" placeholder="部门号码">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-10">
-                            <button type="submit" class="btn btn-info" style="margin-right: 10px;">添加</button>
-                            <button type="submit" class="btn btn-default">返回</button>
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-
         </div>
     </div>
 </div>
@@ -408,83 +411,8 @@
 <script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
 
 <script src="js/plugins/chart.js" type="text/javascript"></script>
-
-<!-- datepicker
-<script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>-->
-<!-- Bootstrap WYSIHTML5
-<script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>-->
-<!-- iCheck -->
-<script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-<!-- calendar -->
-<script src="js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
-
-<!-- Director App -->
-<script src="js/Director/app.js" type="text/javascript"></script>
-
-<!-- Director dashboard demo (This is only for demo purposes) -->
-<script src="js/Director/dashboard.js" type="text/javascript"></script>
-
 <!-- Director for demo purposes -->
-<script type="text/javascript">
-    $('input').on('ifChecked', function (event) {
-        // var element = $(this).parent().find('input:checkbox:first');
-        // element.parent().parent().parent().addClass('highlight');
-        $(this).parents('li').addClass("task-done");
-    });
-    $('input').on('ifUnchecked', function (event) {
-        // var element = $(this).parent().find('input:checkbox:first');
-        // element.parent().parent().parent().removeClass('highlight');
-        $(this).parents('li').removeClass("task-done");
-    });
-</script>
-<script>
-    $('#noti-box').slimScroll({
-        height: '400px',
-        size: '5px',
-        BorderRadius: '5px'
-    });
 
-    $('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
-        checkboxClass: 'icheckbox_flat-grey',
-        radioClass: 'iradio_flat-grey'
-    });
-</script>
-<script type="text/javascript">
-    $(function () {
-        "use strict";
-        //BAR CHART
-        var data = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [{
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0.2)",
-                strokeColor: "rgba(220,220,220,1)",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: [65, 59, 80, 81, 56, 55, 40]
-            },
-                {
-                    label: "My Second dataset",
-                    fillColor: "rgba(151,187,205,0.2)",
-                    strokeColor: "rgba(151,187,205,1)",
-                    pointColor: "rgba(151,187,205,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(151,187,205,1)",
-                    data: [28, 48, 40, 19, 86, 27, 90]
-                }
-            ]
-        };
-        new Chart(document.getElementById("linechart").getContext("2d")).Line(data, {
-            responsive: true,
-            maintainAspectRatio: false,
-        });
-
-    });
-    // Chart.defaults.global.responsive = true;
-</script>
 </body>
 
 </html>

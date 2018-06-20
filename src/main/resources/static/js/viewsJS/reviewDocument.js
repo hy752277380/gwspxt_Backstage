@@ -6,22 +6,27 @@ $(function () {
         showData: '', //显示在页面的数据
         ready: false,
         page: {
-            allRow: 0,
-            totalPage: 0,
-            currentPage: 0,
+            allRow: 1,
+            totalPage: 1,
+            currentPage: 1,
             pageSize: 10,
             hasPreviousPage: false,
             hasNextPage: false,
         },
+        docTypeSelect: 0,
+        docConfidential: 0,
+        docDepartment: 0,
     }
 
+
+    /*分页信息*/
     var pageUtil = Vue.extend({
         template: `<ul style="color: #606266" class="pagination">
-		<li :class="page.hasPreviousPage?'':'disabled'"><a @click="next('-')"><span aria-hidden="true">&laquo;</span></a></li>
+		<li :class="page.hasPreviousPage?'':'disabled'"><a href="javascript:" @click="next('-')"><span aria-hidden="true">&laquo;</span></a></li>
 		<li v-for="index in page.totalPage" :class="{'active' : page.currentPage == index}">
 			<a @click="btnclick(index)" href="javascript:">{{index}}</a>
 		</li>
-		<li :class="page.hasNextPage?'':'disabled'"><a @click="next('+')"><span aria-hidden="true">&raquo;</span></a></li>
+		<li :class="page.hasNextPage?'':'disabled'"><a href="javascript:" @click="next('+')"><span aria-hidden="true">&raquo;</span></a></li>
 		<li><input v-model="topage" style="width: 34px; height: 34px; display: inline;" type="text" class="form-control" :placeholder="page.currentPage"></li>
 		<li><strong>共{{page.allRow}}条记录,当前显示{{page.pageSize}}/页</strong></li>
 		</ul>`,
@@ -57,18 +62,25 @@ $(function () {
                         })
                     }
                 }
+                /*  更新当前页面显示  */
+                this.topage = data.page.currentPage;
             },
         },
         watch: {
             'topage': function (newVal, oldVal) {
                 var reg = /^[1-9]\d*$|^0$/;
                 if (reg.test(newVal) == true) {
-                    if (newVal < data.page.totalPage && newVal > 0) {
+                    if (newVal <= data.page.totalPage && newVal > 0) {
                         this.topage = newVal;
                         data.page.currentPage = newVal;
                     } else {
-                        data.page.currentPage = oldVal;
                         this.topage = oldVal;
+                        data.page.currentPage = oldVal;
+                        spop({
+                            template: "超出总页面数",
+                            style: "info",
+                            autoclose: 2000
+                        })
                     }
                 } else {
                     this.topage = oldVal;
@@ -78,8 +90,19 @@ $(function () {
         props: ['page'],
     })
 
+    var searchUtil = Vue.extend({
+        template: `<span role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{selectData.name}}<span class="caret"></span></a>
+                     <ul class="dropdown-menu">
+                         <li v-for="item in selectData.items"><a href="#" :key="item.key">{{item.value}}</a></li>
+                     </ul>
+                   </span>`,
+        props: ['selectData'],
+    });
+
+
     var reviewDocument = new Vue({
-        el: "#content",
+        el: "#main",
         data: data,
         methods: {
             checkAll($event) {
@@ -105,6 +128,18 @@ $(function () {
                     reviewDocument.ready = true;
                 }, 'json');
             },
+            replaceConfidential(documentConfidential) {
+                switch (documentConfidential) {
+                    case 1:
+                        return "<span class=\"label label-danger\">绝密</span>";
+                    case 2:
+                        return "<span class=\"label label-warning\">机密</span>";
+                    case 3:
+                        return "<span class=\"label label-info\">秘密</span>";
+                    case 4:
+                        return "<span class=\"label label-primary\">普通</span>";
+                }
+            }
         },
         mounted() {
             this.getInfo({

@@ -75,12 +75,6 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public int updateByPrimaryKey(Document record) {
-        String documentId = record.getDocumentId();
-        Document documentOld = documentMapper.selectByPrimaryKey(documentId);
-        documentOld.setDocumentType(record.getDocumentType());
-        documentOld.setDocumentConfidential(record.getDocumentConfidential());
-        documentOld.setDocumentSpeed(record.getDocumentSpeed());
-        documentOld.setDocumentProcess(record.getDocumentProcess());
         return documentMapper.updateByPrimaryKey(record);
     }
 

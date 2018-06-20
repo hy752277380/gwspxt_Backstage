@@ -211,7 +211,7 @@ public class DocumentServiceImpl implements DocumentService {
         //遍历该人员所需要任的所有流程子节点
         for (ProcessNode processNode : list) {
             //用每一个processNode里面的流程名和流程位置的前一位查询文档
-            list_doc.add(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment()));
+            list_doc.addAll(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment()));
         }
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数

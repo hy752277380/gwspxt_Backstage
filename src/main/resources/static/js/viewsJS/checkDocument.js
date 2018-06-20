@@ -218,7 +218,7 @@ $(function () {
             },
         },
         components: {
-            'asideComponent': Aside,
+            'asideComponent': Layout,
             'page-util': pageUtil,
             'search-util': searchUtil
         }

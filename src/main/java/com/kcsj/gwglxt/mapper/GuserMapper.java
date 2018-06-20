@@ -37,4 +37,6 @@ public interface GuserMapper {
     Guser getUserByPosition(@Param("userPosition") String userPosition,@Param("userDepartment") String userDepartment);
     //查询个人信息
     LoginCustom getPersonalInfo(String userId);
+
+    int countByDepartment(String departmentId);
 }

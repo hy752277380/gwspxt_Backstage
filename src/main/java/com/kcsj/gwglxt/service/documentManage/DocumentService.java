@@ -27,7 +27,7 @@ public interface DocumentService {
     int updateDocumentLocation(@Param("documentLocation")Integer documentLocation,@Param("documentId")String documentId);
     //根据id查询该文档当前流程子节点位置
     int getDocumentLocation(String documentId);
-    //更新用户信息
+    //更新信息
     int updateByPrimaryKey(Document record);
     //根据id获取当前流程最后一步
     int getMaxStep(String processNodeProcess);

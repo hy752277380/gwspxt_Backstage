@@ -36,11 +36,10 @@ public class DocumentManageController {
 
     //添加文档
     @RequestMapping("/addDocument")
-
     public Document addDocument(@RequestBody Document document, HttpSession httpSession, HttpServletResponse response) {
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        //初始化resul
+        //初始化result
         String result = null;
         //从对象中获得文档标题
         String documentName = document.getDocumentTitle();
@@ -219,6 +218,19 @@ public class DocumentManageController {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         List<MessageCustom> list = documentService.getMyAllMessage(loginCustom.getGuser().getUserId());
         return list;
+    }
+
+    //修改文档
+    @RequestMapping("/updateDocument")
+    public String updateDocument(@RequestBody Document document){
+        String result = null;
+        int updateResult = documentService.updateByPrimaryKey(document);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        }
+        result = "updateSuccess";
+        return "{\"msg\":\"" + result + "\"}";
     }
 
     //查看本人所有日志

@@ -207,4 +207,7 @@
             department_isdelete = #{departmentIsdelete,jdbcType=INTEGER}
         where department_id = #{departmentId,jdbcType=CHAR}
     </update>
+    <select id="getAllDepartment" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from department
+    </select>
 </mapper>

@@ -1,4 +1,4 @@
-package com.kcsj.gwglxt.service;
+package com.kcsj.gwglxt.service.departmentManage;
 
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.DepartmentExample;
@@ -28,4 +28,6 @@ public interface DepartmentService {
     int updateByPrimaryKeySelective(Department record);
 
     int updateByPrimaryKey(Department record);
+
+    List<Department> getAllDepartment();
 }

@@ -129,9 +129,26 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<DocumentCustom> getDocumentByState(Integer documentState, String documentUser) {
-        List<DocumentCustom> list = documentMapper.getDocumentByState(documentState, documentUser);
-        return list;
+    public QueryForPage getDocumentByState(Integer documentState, String documentUser, int currentPage,String searchInfo) {
+        List<DocumentCustom> list = documentMapper.getDocumentByState(documentState, documentUser,searchInfo);
+        QueryForPage queryForPage = new QueryForPage();
+        int pagesize = 10;//每页记录数
+        int allRow = list.size();//总记录数
+        int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
+        int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
+        int currentPages = QueryForPage.countCurrentPage(currentPage);
+        int endSet = pagesize * currentPage;
+        if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
+            endSet = allRow;
+        }
+        List<DocumentCustom> list_thisPage = list.subList(offSet, endSet);
+        queryForPage.setList(list_thisPage);
+        queryForPage.setAllRow(allRow);
+        queryForPage.setCurrentPage(currentPages);
+        queryForPage.setPageSize(pagesize);
+        queryForPage.setTotalPage(totalPage);
+        queryForPage.init();
+        return queryForPage;
     }
 
     @Override

@@ -94,7 +94,7 @@ $(function () {
         template: `<span role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{selectData.name}}<span class="caret"></span></a>
                      <ul class="dropdown-menu">
-                         <li v-for="item in selectData.items"><a href="#" :value="item.key">{{item.value}}</a></li>
+                         <li v-for="item in selectData.items"><a href="#" :key="item.key">{{item.value}}</a></li>
                      </ul>
                    </span>`,
         props: ['selectData'],

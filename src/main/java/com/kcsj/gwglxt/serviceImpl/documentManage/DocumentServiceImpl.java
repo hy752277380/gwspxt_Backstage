@@ -202,8 +202,9 @@ public class DocumentServiceImpl implements DocumentService {
         return documentMapper.documentBaseInfo(documentId);
     }
 
+    //查询本人需要审核的文档
     @Override
-    public List<DocumentCustom> findCheckingDoc(LoginCustom loginCustom) {
+    public QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom) {
         List<ProcessNode> list = processNodeMapper.getProcessNodeByUser(loginCustom.getGuser().getUserDepartment(), loginCustom.getGuser().getUserPosition());
         //定义Documentcustom集合
         List<DocumentCustom> list_doc = new ArrayList<>();
@@ -212,9 +213,26 @@ public class DocumentServiceImpl implements DocumentService {
             //用每一个processNode里面的流程名和流程位置的前一位查询文档
             list_doc.add(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment()));
         }
-        return list_doc;
+        QueryForPage queryForPage = new QueryForPage();
+        int pagesize = 10;//每页记录数
+        int allRow = list.size();//总记录数
+        int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
+        int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
+        int currentPages = QueryForPage.countCurrentPage(currentPage);
+        int endSet = pagesize * currentPage;
+        if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
+            endSet = allRow;
+        }
+        List<DocumentCustom> list_thisPage = list_doc.subList(offSet, endSet);
+        queryForPage.setList(list_thisPage);
+        queryForPage.setAllRow(allRow);
+        queryForPage.setCurrentPage(currentPages);
+        queryForPage.setPageSize(pagesize);
+        queryForPage.setTotalPage(totalPage);
+        queryForPage.init();
+        return queryForPage;
     }
-
+    //申请批阅
     @Override
     public int insertBorrowing(Borrowing borrowing, LoginCustom loginCustom) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
@@ -227,11 +245,11 @@ public class DocumentServiceImpl implements DocumentService {
         //添加申请借阅记录
         borrowing.setBorrowingId(TeamUtil.getUuid());
         borrowing.setBorrowingBorrowUser(loginCustom.getGuser().getUserId());
-        borrowing.setBorrowingLendUser(gusers.get(0).getUserId());
+        borrowing.setBorrowingLendUser("");
         borrowing.setBorrowingApplicationdate(df.format(new Date()));
         borrowing.setBorrowingState(1);
-        borrowing.setBorrowingBegintime("还未开始");
-        borrowing.setBorrowingOvertime("还未开始");
+        borrowing.setBorrowingBegintime("");
+        borrowing.setBorrowingOvertime("");
         borrowing.setBorrowingIsdelete(0);
         int result = borrowingMapper.insert(borrowing);
         //添加个人日志
@@ -267,7 +285,8 @@ public class DocumentServiceImpl implements DocumentService {
         List<DocumentCustom> documents = new ArrayList<>();
         //遍历查询结果用文档id得到文档信息
         for (Borrowing borrowing:borrowings){
-            documents.add(documentMapper.documentBaseInfo(borrowing.getBorrowingDocument()));
+            //documents.add(documentMapper.documentBaseInfo(borrowing.getBorrowingDocument()));
+
         }
         return documents;
     }

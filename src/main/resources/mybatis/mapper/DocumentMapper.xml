@@ -28,6 +28,7 @@
             <result column="document_no" property="documentNo"/>
             <result column="document_confidential" property="documentConfidential"/>
             <result column="creation_time" property="creationTime"/>
+            <result column="document_state" property="documentState"/>
         </association>
         <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
             <result column="user_name" property="userName"/>
@@ -492,6 +493,7 @@ select
 	doc.document_no,
 	doc.document_confidential,
 	doc.creation_time,
+    doc.document_state,
 	gu.user_name,
 	dt.documenttype_name,
 	de.department_name,

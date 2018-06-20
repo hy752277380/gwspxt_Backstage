@@ -208,4 +208,7 @@
             position_name = #{positionName,jdbcType=VARCHAR}
         where position_id = #{positionId,jdbcType=CHAR}
     </update>
+    <select id="getDptManager" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT MAX(position_permission) FROM position where position_dept = #{positionDept}
+    </select>
 </mapper>

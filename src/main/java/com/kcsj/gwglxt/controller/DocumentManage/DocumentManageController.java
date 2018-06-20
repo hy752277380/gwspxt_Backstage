@@ -253,7 +253,28 @@ public class DocumentManageController {
         List<Process> list = documentService.getAllProcess();
         return list;
     }
+    //申请批阅文档
+    @RequestMapping("/applyRead")
+    public void applyRead(@RequestBody Borrowing borrowing,HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        int updateResult = documentService.insertBorrowing(borrowing,loginCustom);
+    }
+    //同意借阅文档
+    @RequestMapping("/acceptApply")
+    public void acceptApply(){
 
+    }
+    //拒绝借阅文档
+    @RequestMapping("/refuseApply")
+    public void refuseApply(HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        //生成日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        log.setLogContent("拒绝了");
+    }
     //登录
     @PostMapping("/login")
     public String login() {

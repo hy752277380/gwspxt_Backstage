@@ -1,58 +1,57 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>文档查看</title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <!-- bootstrap 3.0.2 -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <!-- font Awesome -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <!-- Ionicons -->
-    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css"/>
-    <!-- Morris chart -->
-    <link href="css/morris/morris.css" rel="stylesheet" type="text/css"/>
-    <!-- jvectormap -->
-    <link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
-    <!-- Date Picker -->
-    <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
-    <!-- fullCalendar -->
-    <!-- Daterange picker -->
-    <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>
-    <!-- bootstrap wysihtml5 - text editor -->
-    <!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
-    <!-- Theme style -->
-    <link href="css/style.css" rel="stylesheet" type="text/css"/>
-    <!-- 消息通知css -->
-    <link href="css/spop.css" rel="stylesheet" type="text/css">
+	<head>
+		<meta charset="UTF-8">
+		<title>文档查看</title>
+		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+		<!-- bootstrap 3.0.2 -->
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<!-- font Awesome -->
+		<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<!-- Ionicons -->
+		<link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
+		<!-- Morris chart -->
+		<link href="css/morris/morris.css" rel="stylesheet" type="text/css" />
+		<!-- jvectormap -->
+		<link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+		<!-- Date Picker -->
+		<link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+		<!-- fullCalendar -->
+		<!-- Daterange picker -->
+		<link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+		<!-- iCheck for checkboxes and radio inputs -->
+		<link href="css/iCheck/all.css" rel="stylesheet" type="text/css" />
+		<!-- bootstrap wysihtml5 - text editor -->
+		<!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
+		<!-- Theme style -->
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<!-- 消息通知css -->
+		<link href="css/spop.css" rel="stylesheet" type="text/css">
 
-    <script src="js/vue.js"></script>
+		<script src="js/vue.js"></script>
 
-    <style>
-        [v-cloak] {
-            display: none;
-        }
-
-        td {
-            vertical-align: initial !important;
-        }
-
-        /* 除去input为number时候的箭头*/
-
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none !important;
-            margin: 0;
-        }
-
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-    </style>
-</head>
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+			
+			td {
+				vertical-align: initial !important;
+			}
+			/* 除去input为number时候的箭头*/
+			
+			input::-webkit-outer-spin-button,
+			input::-webkit-inner-spin-button {
+				-webkit-appearance: none !important;
+				margin: 0;
+			}
+			
+			input[type="number"] {
+				-moz-appearance: textfield;
+			}
+		</style>
+	</head>
 
 <body class="skin-black">
 <header id="header" class="header">
@@ -74,10 +73,10 @@
                 <li class="dropdown messages-menu">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope"></i>
-                        <span class="label label-success">2</span>
+                        <span class="label label-success">4</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">2条未读消息</li>
+                        <li class="header">4条未读消息</li>
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
@@ -145,14 +144,13 @@
 </header>
 <div id="main" class="wrapper row-offcanvas row-offcanvas-left">
     <!-- Left side column. contains the logo and sidebar -->
-    <aside style="height: 712px;" class="left-side sidebar-offcanvas">
+    <aside  style="height: 712px;" class="left-side sidebar-offcanvas">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"
-                         class="img-circle" alt="User Image"/>
+                    <img src="" class="img-circle" alt="User Image"/>
                 </div>
                 <div class="pull-left info">
                     <p v-cloak>{{user.guser.userName}}</p>
@@ -196,73 +194,70 @@
                         <i class="fa fa-book fa-fw"></i> <span>文档管理</span>
                     </a>
                 </li>
+						<li>
+							<a href="information.html">
+								<i class="fa fa-meh-o"></i> <span>个人信息</span>
+							</a>
+						</li>
 
-                <li>
-                    <a href="information.html">
-                        <i class="fa fa-meh-o"></i> <span>个人信息</span>
-                    </a>
-                </li>
+						<li>
+							<a href="journal.html">
+								<i class="fa fa-location-arrow"></i> <span>查看日志</span>
+							</a>
+						</li>
+						<li>
+							<a href="departmentMemberManage.html">
+								<i class="fa fa-male"></i> <span>部门成员管理</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-user"></i> <span>账号管理</span>
+							</a>
+						</li>
 
-                <li>
-                    <a href="journal.html">
-                        <i class="fa fa-location-arrow"></i> <span>查看日志</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="departmentMemberManage.html">
-                        <i class="fa fa-male"></i> <span>部门成员管理</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-user"></i> <span>账号管理</span>
-                    </a>
-                </li>
+						<li>
+							<a href="departmentManagement.html">
+								<i class="fa fa-gavel"></i> <span>部门管理</span>
+							</a>
+						</li>
 
-                <li>
-                    <a href="departmentManagement.html">
-                        <i class="fa fa-gavel"></i> <span>部门管理</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="processManagement.html">
-                        <i class="fa fa-sitemap"></i> <span>流程管理</span>
-                    </a>
-                </li>
-            </ul>
-        </section>
-        <!-- /.sidebar -->
-    </aside>
-    <aside id="content" class="right-side">
-        <!-- Main content -->
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <!--breadcrumbs start -->
-                    <ul class="breadcrumb">
-                        <li>
-                            <a href=""><i class="fa fa-home"></i> 首页</a>
-                        </li>
-                        <li class="active">文档查看</li>
-                    </ul>
-                    <!--breadcrumbs end -->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <!--内容-->
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="panel">
-                                <div class="panel-body table-responsive">
-                                    <div class="box-tools m-b-15">
-                                        <div class="input-group">
-                                            <input type="text" name="table_search"
-                                                   class="form-control input-sm pull-right" style="width: 150px;"
-                                                   placeholder="Search"/>
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
+						<li>
+							<a href="processManagement.html">
+								<i class="fa fa-sitemap"></i> <span>流程管理</span>
+							</a>
+						</li>
+					</ul>
+				</section>
+				<!-- /.sidebar -->
+			</aside>
+			<aside id="content" class="right-side">
+				<!-- Main content -->
+				<section class="content">
+					<div class="row">
+						<div class="col-md-12">
+							<!--breadcrumbs start -->
+							<ul class="breadcrumb">
+								<li>
+									<a href=""><i class="fa fa-home"></i> 首页</a>
+								</li>
+								<li class="active">文档查看</li>
+							</ul>
+							<!--breadcrumbs end -->
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<!--内容-->
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="panel">
+										<div class="panel-body table-responsive">
+											<div class="box-tools m-b-15">
+												<div class="input-group">
+													<input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
+													<div class="input-group-btn">
+														<button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -270,27 +265,30 @@
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
-                                            <th>#<!--<input @click="checkAll($event)" type="checkbox">--></th>
+                                            <th><input @click="checkAll($event)" type="checkbox"></th>
                                             <th>文档编号</th>
                                             <th>文档标题</th>
                                             <!--<th>文档类型<span class="caret"></span></th>-->
-                                            <th v-cloak>
-                                                <search-util :query="docType"></search-util>
+                                            <th><span role="presentation" class="dropdown">
+                                                <a class="dropdown-toggle" data-toggle="dropdown">文档类型<span class="caret"></span></a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="#">Action</a></li>
+                                                    <li><a href="#">Another action</a></li>
+                                                </ul>
+                                               </span>
                                             </th>
                                             <th>拟稿人</th>
-                                            <!--<th>文档密级<span class="caret"></span></th>-->
-                                            <th v-cloak>
-                                                <search-util :query="docConfidential"></search-util>
-                                            </th>
-                                            <th>拟稿部门</th>
+                                            <th>文档密级<span class="caret"></span></th>
+                                            <th>拟稿部门<span class="caret"></span></th>
                                             <th>发布时间</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
                                         <tbody v-cloak v-if="ready">
-                                        <tr v-for="(doc,index) of docData">
-                                            <td>{{index+1}}<input check="self" :doc-id="doc.document.documentId"
-                                                                  type="hidden"></td>
+                                        <tr v-for="doc in docData">
+                                            <td><input check="self" :doc-id="doc.document.documentId"
+                                                       type="checkbox">
+                                            </td>
                                             <td>{{doc.document.documentNo}}</td>
                                             <td>{{doc.document.documentTitle}}</td>
                                             <td>{{doc.documenttype.documenttypeName}}</td>

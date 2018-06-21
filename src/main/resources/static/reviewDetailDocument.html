@@ -30,6 +30,7 @@
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <!-- Theme style -->
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
+
     <script src="js/vue.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,15 +40,6 @@
     <![endif]-->
 
     <style type="text/css">
-        .textarea {
-            BORDER-TOP: #7F9DB9 1px solid;
-            BORDER-LEFT: #7F9DB9 1px solid;
-            BORDER-RIGHT: #7F9DB9 1px solid;
-            BORDER-BOTTOM: #7F9DB9 1px solid;
-            FONT-FAMILY: "宋体", "Verdana", "Arial", "Helvetica";
-            FONT-SIZE: 12px;
-            TEXT-ALIGN: LIFT;
-        }
     </style>
 </head>
 
@@ -318,8 +310,15 @@
 <!-- Director dashboard demo (This is only for demo purposes) -->
 <script src="js/Director/dashboard.js" type="text/javascript"></script>
 
-<script src="js/viewsJS/reviewDetailDocument.js"></script>
+<!--<script src="js/viewsJS/reviewDetailDocument.js"></script>-->
 <!-- Director for demo purposes -->
+<script>
+    new Vue({
+       el:"#main",
+       data:{},
+
+    });
+</script>
 </body>
 
 </html>

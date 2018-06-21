@@ -141,7 +141,7 @@ $(function () {
                 }
             },
             getInfo(params) {
-                $.post('http://localhost:8080/gwspxt/getAllDocument', params, function (response) {
+                $.post('/gwspxt/getAllDocument', params, function (response) {
                     reviewDocument.docData = response.list;
                     reviewDocument.page.currentPage = response.currentPage;
                     reviewDocument.page.totalPage = response.totalPage;
@@ -199,7 +199,7 @@ $(function () {
             },
         },
         components: {
-            'asideComponent': Aside,
+            'asideComponent': Layout,
             'page-util': pageUtil,
             'search-util': searchUtil
         }

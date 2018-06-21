@@ -1,4 +1,18 @@
 $(function() {
+			var data = {
+				user: JSON.parse(sessionStorage.getItem("loginUser")),
+				lhs_edit: JSON.parse(sessionStorage.getItem("lhs_edit")),
+				docData: '', //所有数据
+			}
+			var detailDoc = new Vue({
+					el: "#main",
+					data: data,
+					methods: {
+						getInfo(params) {
+							$.post('/gwspxt/documentBaseInfo/'+lhs_edit, params, function(response) {
+							}, 'json');
+						},
+
     var lhs_edit=JSON.parse(sessionStorage.getItem("lhs_edit"));
     var documentId=lhs_edit.doc_id;
     var operate=lhs_edit.action;
@@ -8,6 +22,7 @@ $(function() {
     var documentUser=$("#documentUser");
     var doucmentContent=$("#doucmentContent");
     var documentRemark=$("#documentRemark");
+
 
      $.ajax({
                 url: "http://localhost:8080/gwspxt/documentBaseInfo",

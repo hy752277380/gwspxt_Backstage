@@ -211,10 +211,20 @@ public class DocumentServiceImpl implements DocumentService {
         //遍历该人员所需要任的所有流程子节点
         for (ProcessNode processNode : list) {
             //用每一个processNode里面的流程名和流程位置的前一位查询文档
-            list_doc.addAll(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment()));
+            //list_doc.add(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment()));
+            List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment());
+            System.out.println("changdu1aaaa"+documentCustoms.size());
+            for (DocumentCustom documentCustom:documentCustoms){
+                list_doc.add(documentCustom);
+            }
+            System.out.println("流程是"+processNode.getProcessNodeProcess());
+            System.out.println(processNode.getProcessNodeStep() - 1);
+            System.out.println(loginCustom.getGuser().getUserDepartment());
+            System.out.println(list_doc.size());
         }
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
+        System.out.println("我的長度是"+list_doc.size());
         int allRow = list_doc.size();//总记录数
         int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
         int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数

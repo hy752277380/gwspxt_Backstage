@@ -81,6 +81,9 @@
             <result column="document_process_begin" property="documentProcessBegin"   />
             <result column="document_process_finish" property="documentProcessFinish"   />
             <result column="document_state" property="documentState"  />
+            <result column="document_dept" property="documentDept"  />
+            <result column="document_type" property="documentType"  />
+            <result column="document_process" property="documentProcess"  />
             <result column="document_speed" property="documentSpeed"  />
             <result column="creation_time" property="creationTime"/>
         </association>
@@ -593,6 +596,9 @@ and doc.document_state = '5'
     doc.document_state,
     doc.document_speed,
 	doc.creation_time,
+	doc.document_dept,
+	doc.document_type,
+	doc.document_process,
 	gu.user_name,
 	dt.documenttype_name,
 	de.department_name,
@@ -612,7 +618,7 @@ and doc.document_id = #{documentId,jdbcType=CHAR}
     </select>
     <select id="findCheckingDoc" resultMap="DocumentBaseInfo">
         SELECT
-         doc.document_id,
+	doc.document_id,
 	doc.document_title,
 	doc.document_no,
 	doc.document_confidential,
@@ -621,12 +627,17 @@ and doc.document_id = #{documentId,jdbcType=CHAR}
 	dt.documenttype_name,
 	de.department_name,
 	pr.process_name
-         FROM
-          document doc,
+FROM
+	document doc,
 	documenttype dt,
 	department de,
 	guser gu,
 	process pr
-          WHERE document_process = #{documentProcess} and document_location =#{documentLocation} and document_dept = #{userDepartment}
+WHERE
+ doc.document_process = pr.process_id
+and doc.document_dept = de.department_id
+and doc.document_type = dt.documenttype_id
+and doc.document_user = gu.user_id
+and doc.document_process = #{documentProcess} and doc.document_location =#{documentLocation} and doc.document_dept = #{userDepartment}
     </select>
 </mapper>

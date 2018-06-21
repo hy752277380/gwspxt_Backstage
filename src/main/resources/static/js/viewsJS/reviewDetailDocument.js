@@ -1,10 +1,11 @@
+
 $(function () {
     var data = {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
-        lhs_edit:JSON.parse(sessionStorage.getItem('lhs_edit')),
+        lhs_edit: JSON.parse(sessionStorage.getItem('lhs_edit')),
         name: 'reviewDetailDocument',
         docData: '', //所有数据
-        /*ready: false,
+        ready: false,
         page: {
             allRow: 1,
             totalPage: 1,
@@ -12,7 +13,7 @@ $(function () {
             pageSize: 10,
             hasPreviousPage: false,
             hasNextPage: false,
-        },*/
+        },
     }
     var reviewDetailDocument = new Vue({
         el: "#main",
@@ -21,7 +22,6 @@ $(function () {
             'asideComponent': Layout,
             //'page-util': pageUtil,
             //'search-util': searchUtil
-        }
-    });
+        },
+    })
 })
-

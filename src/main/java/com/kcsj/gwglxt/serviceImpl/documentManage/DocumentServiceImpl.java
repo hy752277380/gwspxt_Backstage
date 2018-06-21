@@ -161,8 +161,8 @@ public class DocumentServiceImpl implements DocumentService {
 
     //按阅读权限整理出所有文档
     @Override
-    public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String searchInfo) {
-        List<DocumentCustom> list = documentMapper.getAllDocument(searchInfo);
+    public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String searchInfo,String documentType,Integer documentConfidential,String documentDept) {
+        List<DocumentCustom> list = documentMapper.getAllDocument(searchInfo,documentType,documentConfidential,documentDept);
         Borrowing borrowing;
         for (DocumentCustom documentCustom : list) {
             if (documentCustom.getDepartment().getDepartmentName() != departmentName) {
@@ -294,10 +294,30 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //获取需要本人同意的文档借阅申请
     @Override
-    public List<DocumentCustom> getAllApplyRead(LoginCustom loginCustom) {
+    public QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage) {
         //获得本人所在的部门，查看本部门的文档
         List<DocumentCustom> documentCustoms = documentMapper.getDocumentByDpt(loginCustom.getGuser().getUserDepartment());
-        return documentCustoms;
+        //分页
+        QueryForPage queryForPage = new QueryForPage();
+        int pagesize = 10;//每页记录数
+        System.out.println("我的長度是"+documentCustoms.size());
+        int allRow = documentCustoms.size();//总记录数
+        int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
+        int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
+        int currentPages = QueryForPage.countCurrentPage(currentPage);
+        int endSet = pagesize * currentPage;
+        System.out.println(allRow);
+        if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
+            endSet = allRow;
+        }
+        List<DocumentCustom> list_thisPage = documentCustoms.subList(offSet, endSet);
+        queryForPage.setList(list_thisPage);
+        queryForPage.setAllRow(allRow);
+        queryForPage.setCurrentPage(currentPages);
+        queryForPage.setPageSize(pagesize);
+        queryForPage.setTotalPage(totalPage);
+        queryForPage.init();
+        return queryForPage;
     }
     //拒绝文档申请
     @Override

@@ -26,12 +26,12 @@ public class DocumentManageController {
     /**********************************************************文档添加查询及流程模块********************************************/
     //获取全部文档
     @RequestMapping("/getAllDocument")
-    public QueryForPage getAllDocument(String searchInfo, int currentPage, HttpSession httpSession) {
+    public QueryForPage getAllDocument(String searchInfo, int currentPage,String documentType,Integer documentConfidential,String documentDept, HttpSession httpSession) {
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         String departmentName = loginCustom.getDepartment().getDepartmentName();
         String userId = loginCustom.getGuser().getUserId();
-        QueryForPage queryForPage = documentService.getAllDocument(departmentName, userId, currentPage, searchInfo);
+        QueryForPage queryForPage = documentService.getAllDocument(departmentName, userId, currentPage, searchInfo,documentType,documentConfidential,documentDept);
         return queryForPage;
     }
 
@@ -246,10 +246,10 @@ public class DocumentManageController {
 
     //列出待本人批准的借阅申请
     @RequestMapping("/getAllApplyRead")
-    public List<DocumentCustom> getAllApplyRead(HttpSession httpSession) {
+    public QueryForPage getAllApplyRead(int currentPage,HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        List<DocumentCustom> documents = documentService.getAllApplyRead(loginCustom);
-        return documents;
+        QueryForPage queryForPage = documentService.getAllApplyRead(loginCustom,currentPage);
+        return queryForPage;
     }
 
     //申请批阅文档

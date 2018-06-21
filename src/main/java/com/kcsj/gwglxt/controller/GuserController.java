@@ -116,7 +116,7 @@ public class GuserController {
         return result;
     }
     //计算部门文档
-    @RequestMapping("/countAllDocument")
+    @RequestMapping("/countDptDocument")
     public int countDptDocument(HttpSession httpSession){
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
@@ -126,7 +126,7 @@ public class GuserController {
         return result;
     }
     //计算个人文档
-    @RequestMapping("/countAllDocument")
+    @RequestMapping("/countPersonalDocument")
     public int countPersonalDocument(HttpSession httpSession){
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");

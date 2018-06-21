@@ -40,7 +40,7 @@ public interface DocumentMapper {
 
     List<DocumentCustom> getDocumentByState(@Param("documentType") String documentType,@Param("documentConfidential") Integer documentConfidential,@Param("documentState") Integer documentState,@Param("documentUser") String documentUser,@Param("searchInfo") String searchInfo);
     //查询所有文档
-    List<DocumentCustom> getAllDocument(String searchInfo);
+    List<DocumentCustom> getAllDocument(@Param("searchInfo") String searchInfo,@Param("documentType")String documentType,@Param("documentConfidential")Integer documentConfidential,@Param("documentDept")String documentDept);
     //联合查询文档信息
     DocumentCustom documentBaseInfo(String documentId);
 
@@ -48,5 +48,5 @@ public interface DocumentMapper {
 
     List<DocumentCustom> getDocumentByDpt(String userDepartment);
 
-    int countAllDocument(String department,String user);
+    int countAllDocument(@Param("documentDept") String department,@Param("documentUser") String user);
 }

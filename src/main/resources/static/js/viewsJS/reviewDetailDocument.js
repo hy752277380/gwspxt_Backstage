@@ -14,7 +14,6 @@ $(function () {
             hasNextPage: false,
         },*/
     }
-
     var reviewDetailDocument = new Vue({
         el: "#main",
         data: data,

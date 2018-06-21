@@ -88,7 +88,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">文本标题</label>
                                         <div class="col-md-4">
-                                            <input class="form-control" id="documentTitle" type="text">
+                                            <input class="form-control" id="documentTitle" :value="" type="text">
                                         </div>
                                         <label class="col-sm-2 control-label">文本文号</label>
                                         <div class="col-md-4">
@@ -317,35 +317,9 @@
 
 <!-- Director dashboard demo (This is only for demo purposes) -->
 <script src="js/Director/dashboard.js" type="text/javascript"></script>
+
 <script src="js/viewsJS/reviewDetailDocument.js"></script>
 <!-- Director for demo purposes -->
-<script>
-    var data = {
-        user: JSON.parse(sessionStorage.getItem("loginUser")),
-        name: 'reviewDetailDocument',
-        docData: '', //所有数据
-        ready: false,
-        page: {
-            allRow: 1,
-            totalPage: 1,
-            currentPage: 1,
-            pageSize: 10,
-            hasPreviousPage: false,
-            hasNextPage: false,
-        },
-    }
-
-    var reviewDocument = new Vue({
-        el: "#main",
-        data: data,
-        components: {
-            'asideComponent': Layout,
-            //'page-util': pageUtil,
-            //'search-util': searchUtil
-        }
-    });
-
-</script>
 </body>
 
 </html>

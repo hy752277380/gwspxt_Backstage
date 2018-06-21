@@ -141,7 +141,7 @@ $(function () {
                 }
             },
             getInfo(params) {
-                $.post('http://localhost:8080/gwspxt/findCheckDoc', params, function (response) {
+                $.post('/gwspxt/findCheckDoc', params, function (response) {
                     reviewDocument.docData = response.list;
                     reviewDocument.page.currentPage = response.currentPage;
                     reviewDocument.page.totalPage = response.totalPage;
@@ -167,9 +167,9 @@ $(function () {
             pass(index) {
                 let documentId = this.$data.docData[index].document.documentId;
                 console.log(documentId);
-                $.post('http://localhost:8080/gwspxt/updateDocumentLocation', {documentId}, function (response) {
+                $.post('/gwspxt/updateDocumentLocation', {documentId}, function (response) {
                     if (response.msg == "updateSuccess") {
-                        $.post('http://localhost:8080/gwspxt/messageNextOne', {documentId}, '', 'json');
+                        $.post('/gwspxt/messageNextOne', {documentId}, '', 'json');
                     }
                     else if (response.msg == "updateFailed") {
                         spop({

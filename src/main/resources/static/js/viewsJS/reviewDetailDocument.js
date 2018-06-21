@@ -9,7 +9,7 @@ $(function() {
 					data: data,
 					methods: {
 						getInfo(params) {
-							$.post('http://localhost:8080/gwspxt/documentBaseInfo/'+lhs_edit, params, function(response) {
+							$.post('/gwspxt/documentBaseInfo/'+lhs_edit, params, function(response) {
 
 							}, 'json');
 						},

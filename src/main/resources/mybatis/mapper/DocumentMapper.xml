@@ -686,4 +686,15 @@ and doc.document_type = dt.documenttype_id
 and doc.document_user = gu.user_id
 and bo.borrowing_document = doc.document_id
     </select>
+    <select id="countAllDocument" parameterType="java.lang.String" resultType="int">
+        select count(*) from document
+        <where>
+            <if test="documentDept!=null">
+                document_dept = #{documentDept}
+            </if>
+            <if test="documentUser!=null">
+                document_user = #{documentUser}
+            </if>
+        </where>
+    </select>
 </mapper>

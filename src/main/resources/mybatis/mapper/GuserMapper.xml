@@ -485,6 +485,9 @@ sum(case month(guser.creation_time) when '12' then 1 else 0 end) as December
 from guser
 where year(guser.creation_time)=#{year};
     </select>
+    <select id="countAllUser" resultType="int">
+        select count(*) from guser
+    </select>
 
 
 </mapper>

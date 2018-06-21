@@ -4,6 +4,7 @@ import com.kcsj.gwglxt.DTO.CountUserByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
 import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.mapper.DocumentMapper;
 import com.kcsj.gwglxt.mapper.GuserMapper;
 import com.kcsj.gwglxt.service.GuserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class GuserServiceImpl implements GuserService {
 
     @Autowired
     private GuserMapper guserMapper;
+    @Autowired
+    private DocumentMapper documentMapper;
     @Override
     public int countByExample(GuserExample example) {
         return 0;
@@ -97,5 +100,15 @@ public class GuserServiceImpl implements GuserService {
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
         System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         return guserMapper.countUserByMouth(df.format(new Date()));
+    }
+    //计算总人数
+    @Override
+    public int countAllUser() {
+        return guserMapper.countAllUser();
+    }
+    //计算总文档数
+    @Override
+    public int countAllDocument(String department,String user) {
+        return documentMapper.countAllDocument(department,user);
     }
 }

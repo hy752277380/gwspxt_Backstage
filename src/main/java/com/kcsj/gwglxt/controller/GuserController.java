@@ -101,5 +101,39 @@ public class GuserController {
         CountUserByMouth countUserByMouth = guserService.countUserByMouth();
         return countUserByMouth;
     }
+    //计算总人数
+    @RequestMapping("/countAllUser")
+    public int countAllUser(){
+        int result = guserService.countAllUser();
+        return result;
+    }
+    //计算总数文档
+    @RequestMapping("/countAllDocument")
+    public int countAllDocument(){
+        String department = null;
+        String user = null;
+        int result = guserService.countAllDocument(department,user);
+        return result;
+    }
+    //计算部门文档
+    @RequestMapping("/countAllDocument")
+    public int countDptDocument(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        String department = loginCustom.getGuser().getUserDepartment();
+        String user = null;
+        int result = guserService.countAllDocument(department,user);
+        return result;
+    }
+    //计算个人文档
+    @RequestMapping("/countAllDocument")
+    public int countPersonalDocument(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        String department = null;
+        String user = loginCustom.getGuser().getUserId();
+        int result = guserService.countAllDocument(department,user);
+        return result;
+    }
 }
 

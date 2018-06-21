@@ -82,6 +82,11 @@ public class PageController {
     public String reviewDetailDocument() {
         return "reviewDetailDocument.html";
     }
+    //查看文档详细界面
+    @RequestMapping("/editDetailDocument")
+    public String editDetailDocument() {
+        return "editDetailDocument.html";
+    }
 
 }
 

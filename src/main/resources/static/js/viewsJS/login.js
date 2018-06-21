@@ -9,7 +9,7 @@ function check() {
         var user = $('#userAccount').val();
         var pass = $('#userPassword').val();
         $.ajax({
-            url: "http://localhost:8080/gwspxt/login/" + user + "/" + pass,
+            url: "/gwspxt/login/" + user + "/" + pass,
             type: "post",
             timeout: 3000,
             data: {},
@@ -18,7 +18,7 @@ function check() {
                 if (data.code == "20000") {
                     //console.log(data.loginCustom);
                     sessionStorage.setItem("loginUser", JSON.stringify(data.loginCustom));
-                    window.location.href = "http://localhost:8080/gwspxt/index";
+                    window.location.href = "/gwspxt/index";
                 } else if (data.code == "20001") {
                     alert("没有该用户");
                 } else {

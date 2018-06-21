@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
-    <title>查看文档</title>
+    <title>添加文档</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="description" content="Developed By M Abdur Rokib Promy">
     <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -38,18 +37,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
-    <!--<style type="text/css">
-        .textarea {
-            BORDER-TOP: #7F9DB9 1px solid;
-            BORDER-LEFT: #7F9DB9 1px solid;
-            BORDER-RIGHT: #7F9DB9 1px solid;
-            BORDER-BOTTOM: #7F9DB9 1px solid;
-            FONT-FAMILY: "宋体", "Verdana", "Arial", "Helvetica";
-            FONT-SIZE: 12px;
-            TEXT-ALIGN: LIFT;
-        }
-    </style>-->
 </head>
 
 <body class="skin-black">
@@ -87,7 +74,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">文本标题</label>
                                         <div class="col-md-4">
-                                            <input class="form-control" id="documentTitle" :value="" type="text">
+                                            <input class="form-control" id="documentTitle" type="text">
                                         </div>
                                         <label class="col-sm-2 control-label">文本文号</label>
                                         <div class="col-md-4">
@@ -162,8 +149,7 @@
                                         <div class="col-md-4">
                                             <div class="radio" style="float: left;margin-right: 10px;">
                                                 <label>
-                                                    <input type="radio" name="documentSpeed" id="documentSpeed"
-                                                           value="1">加急
+                                                    <input type="radio" name="documentSpeed" value="1">加急
                                                 </label>
                                             </div>
                                             <div class="radio" style="float: left;margin-right: 10px;">
@@ -175,51 +161,46 @@
                                                 <label>
                                                     <input type="radio" name="documentSpeed" value="3">平急
                                                 </label>
-													</div>
+                                            </div>
 
-												</div>
+                                        </div>
 
-												<div class="form-group" style="margin-top:5%;margin-left: 1px;">
-													<label class="control-label col-lg-2">文本内容</label>
-													<div class="col-lg-10">
-														<textarea rows="10" cols="100" id="doucmentContent" class="textarea"></textarea>
-													</div>
+                                        <div class="form-group" style="margin-top:5%;margin-left: 1px;">
+                                            <label class="control-label col-lg-2">文本内容</label>
+                                            <div class="col-lg-10">
+                                                <textarea rows="10" cols="80" id="doucmentContent"
+                                                          class="textarea"></textarea>
+                                            </div>
 
-												</div>
-												<div class="form-group" style="margin-left: 1px;">
-													<label class="control-label col-lg-2">备注</label>
-													<div class="col-lg-10">
-														<textarea rows="2" cols="100" id="documentRemark" class="textarea"></textarea>
-													</div>
+                                        </div>
+                                        <div class="form-group" style="margin-left: 1px;">
+                                            <label class="control-label col-lg-2">备注</label>
+                                            <div class="col-lg-10">
+                                                <textarea rows="2" cols="80" id="documentRemark"
+                                                          class="textarea"></textarea>
+                                            </div>
 
-												</div>
+                                        </div>
 
-											</div>
+                                    </div>
 
-											<div class="form-group" style="margin-left: 1px;">
-												<label class="control-label col-lg-2">选择流程</label>
-												<div class="col-lg-3">
-													<select class="form-control m-b-10" id="documentProcess">
-														<option selected>-请选择流程-</option>
-														<option value="1">流程一</option>
-														<option value="2">流程二</option>
-														<option value="3">流程三</option>
-														<option value="4">流程四</option>
-														<option value="5">流程一</option>
-														<option value="6">流程二</option>
-														<option value="7">流程三</option>
-														<option value="8">流程四</option>
-														<option value="9">流程一</option>
-														<option value="10">流程二</option>
-														<option value="11">流程三</option>
+                                    <div class="form-group" style="margin-left: 1px;">
+                                        <label class="control-label col-lg-2">选择流程</label>
+                                        <div class="col-lg-3">
+                                            <select class="form-control m-b-10" id="documentProcess">
+                                                <option selected>-请选择流程-</option>
+                                                <option value="1">流程一</option>
+                                                <option value="2">流程二</option>
+                                                <option value="3">流程三</option>
+                                                <option value="4">流程四</option>
+                                            </select>
 
-													</select>
-
-												</div>
-												<div id="operate" class="form-group" style="float:right;margin-right: 25%;">
-													<div>
-														<button type="button" class="btn btn-success" id="addDoc">确认</button>
-														<button type="button" class="btn btn-warning" style="margin-left: 10px;">草稿
+                                        </div>
+                                        <div class="form-group" style="float:right;margin-right: 25%;">
+                                            <div>
+                                                <button type="button" class="btn btn-success" id="addDoc">确认</button>
+                                                <button type="button" class="btn btn-warning"
+                                                        style="margin-left: 10px;">草稿
                                                 </button>
                                             </div>
                                         </div>
@@ -229,6 +210,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="panel">
+
                                         <div class="panel-body table-responsive">
                                             <div>
                                                 <table class="table table-hover">
@@ -236,35 +218,44 @@
                                                         <th>节点名</th>
                                                         <th>操作部门</th>
                                                         <th>职称</th>
+
                                                     </tr>
                                                     <tr>
                                                         <td>流程节点1</td>
                                                         <td>人事部</td>
                                                         <td>部长</td>
+
                                                     </tr>
                                                     <tr>
                                                         <td>流程节点1</td>
                                                         <td>人事部</td>
                                                         <td>部长</td>
+
                                                     </tr>
                                                     <tr>
                                                         <td>流程节点1</td>
                                                         <td>人事部</td>
                                                         <td>部长</td>
+
                                                     </tr>
                                                     <tr>
                                                         <td>流程节点1</td>
                                                         <td>人事部</td>
                                                         <td>部长</td>
+
                                                     </tr>
                                                 </table>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
+
                     </section>
+
                 </div>
             </div>
         </section>
@@ -274,60 +265,40 @@
         </div>
     </aside>
     <!-- /.right-side -->
+
 </div>
 <!-- ./wrapper -->
 
 <!-- jQuery 2.0.2 -->
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>-->
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <!--布局的组件-->
 <script src="js/layout/layout.js"></script>
-<!-- 消息通知js -->
-<script src="js/spop.js" type="text/javascript"></script>
 <!-- jQuery UI 1.10.3 -->
 <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap -->
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 <!-- daterangepicker -->
 <script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+
 <script src="js/plugins/chart.js" type="text/javascript"></script>
+
+<!-- datepicker
+<script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>-->
+<!-- Bootstrap WYSIHTML5
+<script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>-->
 <!-- iCheck -->
 <script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
 <!-- calendar -->
 <script src="js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+
 <!-- Director App -->
 <script src="js/Director/app.js" type="text/javascript"></script>
+<!-- Director dashboard demo (This is only for demo purposes) -->
 <script src="js/Director/dashboard.js" type="text/javascript"></script>
-
 <script src="js/viewsJS/reviewDetailDocument.js"></script>
-
 <!-- Director for demo purposes -->
-<!--<script>
-    var data = {
-        user: JSON.parse(sessionStorage.getItem("loginUser")),
-        name: 'reviewDetailDocument',
-        docData: '', //所有数据
-        ready: false,
-        page: {
-            allRow: 1,
-            totalPage: 1,
-            currentPage: 1,
-            pageSize: 10,
-            hasPreviousPage: false,
-            hasNextPage: false,
-        },
-    }
 
-    var reviewDocument = new Vue({
-        el: "#main",
-        data: data,
-        components: {
-            'asideComponent': Layout,
-            //'page-util': pageUtil,
-            //'search-util': searchUtil
-        }
-    });
-
-</script>-->
 </body>
 
 </html>

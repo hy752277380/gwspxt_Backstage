@@ -120,20 +120,16 @@
                                             <td>{{doc.document.creationTime}}</td>
                                             <td>
                                                 <!-- 本部门文档 -->
-                                                <template
-                                                        v-if="user.department.departmentName==doc.department.departmentName">
-                                                    <button type="button" class="btn btn-primary btn-sm">阅读</button>
+                                                <template v-if="user.department.departmentName==doc.department.departmentName">
+                                                    <button @click="reviewDocument(index)" type="button" class="btn btn-primary btn-sm">阅读</button>
                                                 </template>
                                                 <!-- 非本部门未借阅文档 -->
                                                 <template v-else-if="doc.borrowing == null">
-                                                    <button type="button" class="btn btn-primary btn-sm">申请查看
-                                                    </button>
+                                                    <button @click="applyBorrowing(index)" type="button" class="btn btn-primary btn-sm">申请查看</button>
                                                 </template>
                                                 <!-- 非本部门已有借阅文档 -->
-                                                <template v-else>
-                                                    <button v-if="doc.borrowing.borrowingState==2" type="button"
-                                                            class="btn btn-primary btn-sm">阅读
-                                                    </button>
+                                                <template v-else-if="doc.borrowing.borrowingState==2">
+                                                    <button @click="reviewDocument(index)" type="button" class="btn btn-primary btn-sm">阅读</button>
                                                 </template>
                                             </td>
                                         </tr>
@@ -178,7 +174,6 @@
 <!-- Director App -->
 <script src="js/Director/app.js" type="text/javascript"></script>
 <script src="js/Director/dashboard.js" type="text/javascript"></script>
-
 <script src="js/viewsJS/reviewDocument.js"></script>
 </body>
 </html>

@@ -16,6 +16,7 @@ $(function () {
         docType: {
             name: "文档类型",
             items: [
+                {key: "0", value: "全部"},
                 {key: "1", value: "命令"},
                 {key: "2", value: "批复"},
                 {key: "3", value: "意见"},
@@ -35,6 +36,7 @@ $(function () {
         docConfidential: {
             name: "文档密级",
             items: [
+                {key: "0", value: "所有"},
                 {key: "1", value: "绝密"},
                 {key: "2", value: "机密"},
                 {key: "3", value: "秘密"},
@@ -44,12 +46,13 @@ $(function () {
         docDepartment: 0,
     }
 
+    /*   表头的查询方法封装，暂未封装完全 */
     var searchUtil = Vue.extend({
         template: `<span role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
-                     <ul class="dropdown-menu">
-                         <li v-for="item in query.items"><a href="javascript:;" :key="item.key">{{item.value}}</a></li>
-                     </ul>
+                   <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
+                   <ul class="dropdown-menu">
+                       <li v-for="item in query.items"><a href="javascript:;" :key="item.key">{{item.value}}</a></li>
+                   </ul>
                    </span>`,
         props: ['query'],
     });
@@ -59,6 +62,7 @@ $(function () {
         el: "#main",
         data: data,
         methods: {
+            /* 选择所有，可以缺少 */
             checkAll($event) {
                 if ($event.target.checked) {
                     $('input[check="self"]').each(function () {
@@ -70,6 +74,7 @@ $(function () {
                     });
                 }
             },
+            /* 获取数据 */
             getInfo(params) {
                 $.post('/gwspxt/getAllDocument', params, function (response) {
                     reviewDocument.docData = response.list;
@@ -82,6 +87,7 @@ $(function () {
                     reviewDocument.ready = true;
                 }, 'json');
             },
+            /* 密级数字到标签的替换 */
             replaceConfidential(documentConfidential) {
                 switch (documentConfidential) {
                     case 1:
@@ -94,9 +100,20 @@ $(function () {
                         return "<span class=\"label label-primary\">普通</span>";
                 }
             },
+            /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
                 this.getInfo({currentPage: pageIndex});
+            },
+            applyBorrowing(index){
+                let documentCustom = this.$data.docData[index];
+                $.post('/gwspxt/applyRead', {documentCustom: documentCustom}, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        spop({template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`, style: "success", autoclose: 2000});
+                    } else if (response.msg == "updateFailed") {
+                        spop({template: `申请失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json');
             },
         },
         mounted() {

@@ -77,17 +77,17 @@ var pageUtil = Vue.extend({
     },
     methods: {
         btnclick(index) {
-            data.page.currentPage = index;
+            this.$data.pageUtil.currentPage = index;
         },
         next() {
-            if (data.page.hasNextPage) {
+            if (this.$data.pageUtil.hasNextPage) {
                 this.$data.pageUtil.currentPage++;
             } else {
                 spop({template: "没有下一页了", style: "info", autoclose: 2000});
             }
         },
         pre() {
-            if (data.page.hasPreviousPage) {
+            if (this.$data.pageUtil.hasPreviousPage) {
                 this.$data.pageUtil.currentPage--;
             } else {
                 spop({template: "没有上一页了", style: "info", autoclose: 2000});
@@ -103,18 +103,17 @@ var pageUtil = Vue.extend({
             else if (reg.test(newVal) == true) {
                 if (newVal <= this.$data.pageUtil.totalPage && newVal > 0) {
                     this.$data.pageUtil.currentPage = newVal;
-                    console.log(newVal + "===" + oldVal)
                     this.$emit('change', newVal);
                 } else {
                     this.$data.pageUtil.currentPage = oldVal;
-                    data.page.currentPage = oldVal;
                     spop({template: "超出总页面数", style: "info", autoclose: 2000});
                 }
             } else if (newVal < 1) {
+                this.$data.pageUtil.currentPage = oldVal;
                 spop({template: "请输入大于0的数字", style: "info", autoclose: 2000});
             } else {
-                spop({template: "请输入正确的数字", style: "info", autoclose: 2000});
                 this.$data.pageUtil.currentPage = oldVal;
+                spop({template: "请输入正确的数字", style: "info", autoclose: 2000});
             }
 
         }

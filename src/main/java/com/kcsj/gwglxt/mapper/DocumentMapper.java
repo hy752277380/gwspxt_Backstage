@@ -46,4 +46,5 @@ public interface DocumentMapper {
 
     List<DocumentCustom> findCheckingDoc(@Param("documentProcess") String documentProcess,@Param("documentLocation") Integer documentLocation,@Param("userDepartment") String userDepartment);
 
+    List<DocumentCustom> getDocumentByDpt(String userDepartment);
 }

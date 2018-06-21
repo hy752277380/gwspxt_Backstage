@@ -254,21 +254,41 @@ public class DocumentManageController {
 
     //申请批阅文档
     @RequestMapping("/applyRead")
-    public void applyRead(@RequestBody Borrowing borrowing, HttpSession httpSession) {
+    public void applyRead(@RequestBody DocumentCustom documentCustom, HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        documentService.insertBorrowing(borrowing, loginCustom);
+        documentService.insertBorrowing(documentCustom, loginCustom);
     }
 
     //同意借阅文档
     @RequestMapping("/acceptApply")
-    public void acceptApply() {
-
+    public String acceptApply(@RequestBody  DocumentCustom documentCustom, HttpSession httpSession) {
+        //定义result
+        String result;
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        int updateResult = documentService.acceptApply(documentCustom,loginCustom);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        } else {
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
     }
 
     //拒绝借阅文档
     @RequestMapping("/refuseApply")
-    public void refuseApply(HttpSession httpSession) {
-
+    public String refuseApply(@RequestBody  DocumentCustom documentCustom, HttpSession httpSession) {
+        //定义result
+        String result;
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        int updateResult = documentService.refuseApply(documentCustom,loginCustom);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        } else {
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
     }
 
     /**********************************日志消息中心及其他*********************************/

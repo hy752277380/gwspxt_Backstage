@@ -54,9 +54,13 @@ public interface DocumentService {
 
     List<Process> getAllProcess();
 
-    int insertBorrowing(Borrowing borrowing, LoginCustom loginCustom);
+    int insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
 
     List<DocumentCustom> getAllApplyRead(LoginCustom loginCustom);
 
     void refuseDoc(LoginCustom loginCustom, String documentId);
+
+    int acceptApply(DocumentCustom documentCustom, LoginCustom loginCustom);
+
+    int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom);
 }

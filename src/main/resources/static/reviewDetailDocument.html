@@ -175,47 +175,51 @@
                                                 <label>
                                                     <input type="radio" name="documentSpeed" value="3">平急
                                                 </label>
+													</div>
 
-                                            </div>
+												</div>
 
-                                        </div>
+												<div class="form-group" style="margin-top:5%;margin-left: 1px;">
+													<label class="control-label col-lg-2">文本内容</label>
+													<div class="col-lg-10">
+														<textarea rows="10" cols="100" id="doucmentContent" class="textarea"></textarea>
+													</div>
 
-                                        <div class="form-group" style="margin-top:5%;margin-left: 1px;">
-                                            <label class="control-label col-lg-2">文本内容</label>
-                                            <div class="col-lg-10">
-                                                <textarea rows="10" cols="100" id="doucmentContent"
-                                                          class="textarea"></textarea>
-                                            </div>
+												</div>
+												<div class="form-group" style="margin-left: 1px;">
+													<label class="control-label col-lg-2">备注</label>
+													<div class="col-lg-10">
+														<textarea rows="2" cols="100" id="documentRemark" class="textarea"></textarea>
+													</div>
 
-                                        </div>
-                                        <div class="form-group" style="margin-left: 1px;">
-                                            <label class="control-label col-lg-2">备注</label>
-                                            <div class="col-lg-10">
-                                                <textarea rows="2" cols="100" id="documentRemark"
-                                                          class="textarea"></textarea>
-                                            </div>
+												</div>
 
-                                        </div>
+											</div>
 
-                                    </div>
+											<div class="form-group" style="margin-left: 1px;">
+												<label class="control-label col-lg-2">选择流程</label>
+												<div class="col-lg-3">
+													<select class="form-control m-b-10" id="documentProcess">
+														<option selected>-请选择流程-</option>
+														<option value="1">流程一</option>
+														<option value="2">流程二</option>
+														<option value="3">流程三</option>
+														<option value="4">流程四</option>
+														<option value="5">流程一</option>
+														<option value="6">流程二</option>
+														<option value="7">流程三</option>
+														<option value="8">流程四</option>
+														<option value="9">流程一</option>
+														<option value="10">流程二</option>
+														<option value="11">流程三</option>
 
-                                    <div class="form-group" style="margin-left: 1px;">
-                                        <label class="control-label col-lg-2">选择流程</label>
-                                        <div class="col-lg-3">
-                                            <select class="form-control m-b-10" id="">
-                                                <option selected="">-请选择流程-</option>
-                                                <option value="1">流程一</option>
-                                                <option value="2">流程二</option>
-                                                <option value="3">流程三</option>
-                                                <option value="4">流程四</option>
-                                            </select>
+													</select>
 
-                                        </div>
-                                        <div class="form-group" style="float:right;margin-right: 25%;">
-                                            <div>
-                                                <button type="button" class="btn btn-success" id="addDoc">确认</button>
-                                                <button type="button" class="btn btn-warning"
-                                                        style="margin-left: 10px;">草稿
+												</div>
+												<div id="operate" class="form-group" style="float:right;margin-right: 25%;">
+													<div>
+														<button type="button" class="btn btn-success" id="addDoc">确认</button>
+														<button type="button" class="btn btn-warning" style="margin-left: 10px;">草稿
                                                 </button>
                                             </div>
                                         </div>

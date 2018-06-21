@@ -145,7 +145,7 @@
                                         </tbody>
                                     </table>
                                     <div v-cloak style="float: left;">
-                                        <page-util :page="page"></page-util>
+                                        <page-util @change="change" :page="page"></page-util>
                                     </div>
                                 </div>
                             </div>

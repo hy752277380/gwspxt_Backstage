@@ -59,6 +59,70 @@ var Layout = Vue.extend({
 })
 
 
+/*分页信息*/
+var pageUtil = Vue.extend({
+    template: `<ul style="color: #606266" class="pagination">
+		<li :class="pageUtil.hasPreviousPage?'':'disabled'"><a href="javascript:" @click="pre()"><span aria-hidden="true">&laquo;</span></a></li>
+		<li v-for="index in pageUtil.totalPage" :class="{'active' : pageUtil.currentPage == index}">
+			<a @click="btnclick(index)" href="javascript:">{{index}}</a>
+		</li>
+		<li :class="pageUtil.hasNextPage?'':'disabled'"><a href="javascript:" @click="next()"><span aria-hidden="true">&raquo;</span></a></li>
+		<li><input v-model="pageUtil.currentPage" style="width: 34px; height: 34px; display: inline;" type="text" class="form-control" :placeholder="pageUtil.currentPage"></li>
+		<li><strong>共{{page.allRow}}条记录,当前显示{{page.pageSize}}/页</strong></li>
+		</ul>`,
+    data() {
+        return {
+            pageUtil: this.page,
+        }
+    },
+    methods: {
+        btnclick(index) {
+            data.page.currentPage = index;
+        },
+        next() {
+            if (data.page.hasNextPage) {
+                this.$data.pageUtil.currentPage++;
+            } else {
+                spop({template: "没有下一页了", style: "info", autoclose: 2000});
+            }
+        },
+        pre() {
+            if (data.page.hasPreviousPage) {
+                this.$data.pageUtil.currentPage--;
+            } else {
+                spop({template: "没有上一页了", style: "info", autoclose: 2000});
+            }
+        },
+    },
+    watch: {
+        'pageUtil.currentPage': function (newVal, oldVal) {
+            var reg = /^[1-9]\d*$|^0$/;
+            if (newVal == oldVal) {
+                /* 第一次为子组件的触发监听，第二次为父组件改变值时的触发监听，为多余的一次监听，不做处理 */
+            }
+            else if (reg.test(newVal) == true) {
+                if (newVal <= this.$data.pageUtil.totalPage && newVal > 0) {
+                    this.$data.pageUtil.currentPage = newVal;
+                    console.log(newVal + "===" + oldVal)
+                    this.$emit('change', newVal);
+                } else {
+                    this.$data.pageUtil.currentPage = oldVal;
+                    data.page.currentPage = oldVal;
+                    spop({template: "超出总页面数", style: "info", autoclose: 2000});
+                }
+            } else if (newVal < 1) {
+                spop({template: "请输入大于0的数字", style: "info", autoclose: 2000});
+            } else {
+                spop({template: "请输入正确的数字", style: "info", autoclose: 2000});
+                this.$data.pageUtil.currentPage = oldVal;
+            }
+
+        }
+    },
+    props: ['page'],
+})
+
+
 var Header = Vue.extend({
     template: `<!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">

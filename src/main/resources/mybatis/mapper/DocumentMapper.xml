@@ -585,7 +585,16 @@ AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
 and doc.document_state = '5'
 <if test="searchInfo!=null">
-    and (doc.document_title like '${searchInfo}' or doc.document_no like '${searchInfo}' or gu.user_name like '${searchInfo}' or dt.documenttype_name like '${searchInfo}' or de.department_name like '${searchInfo}')
+    and (doc.document_title like '${searchInfo}' or doc.document_no like '${searchInfo}' or gu.user_name like '${searchInfo}')
+</if>
+<if test="documentType!=null">
+    and doc.document_type = #{documentType}
+</if>
+<if test="documentConfidential!=null">
+    and doc.document_confidential = #{documentConfidential}
+</if>
+ <if test="documentDept!=null">
+    and doc.document_dept = #{documentDept}
 </if>
     </select>
     <select id="documentBaseInfo" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
@@ -685,5 +694,16 @@ and doc.document_dept = de.department_id
 and doc.document_type = dt.documenttype_id
 and doc.document_user = gu.user_id
 and bo.borrowing_document = doc.document_id
+    </select>
+    <select id="countAllDocument" parameterType="java.lang.String" resultType="int">
+        select count(*) from document
+        <where>
+            <if test="documentDept!=null">
+                document_dept = #{documentDept}
+            </if>
+            <if test="documentUser!=null">
+                document_user = #{documentUser}
+            </if>
+        </where>
     </select>
 </mapper>

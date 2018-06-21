@@ -37,4 +37,8 @@ public interface GuserService {
     LoginCustom getPersonalInfo(String userId);
 
     CountUserByMouth countUserByMouth();
+
+    int countAllUser();
+
+    int countAllDocument(String department,String user);
 }

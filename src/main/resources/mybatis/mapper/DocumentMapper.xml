@@ -81,6 +81,9 @@
             <result column="document_process_begin" property="documentProcessBegin"   />
             <result column="document_process_finish" property="documentProcessFinish"   />
             <result column="document_state" property="documentState"  />
+            <result column="document_dept" property="documentDept"  />
+            <result column="document_type" property="documentType"  />
+            <result column="document_process" property="documentProcess"  />
             <result column="document_speed" property="documentSpeed"  />
             <result column="creation_time" property="creationTime"/>
         </association>
@@ -593,6 +596,9 @@ and doc.document_state = '5'
     doc.document_state,
     doc.document_speed,
 	doc.creation_time,
+	doc.document_dept,
+	doc.document_type,
+	doc.document_process,
 	gu.user_name,
 	dt.documenttype_name,
 	de.department_name,

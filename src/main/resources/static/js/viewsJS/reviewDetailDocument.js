@@ -9,18 +9,22 @@ $(function() {
 					data: data,
 					methods: {
 						getInfo(params) {
-							$.post('http://localhost:8080/gwspxt/documentBaseInfo/'+lhs_edit, params, function(response) {
+						   console.log(data.lhs_edit.doc_id);
+							$.post('http://localhost:8080/gwspxt/documentBaseInfo', params, function(response) {
+                            detailDoc.docData=response.list;
 
 							}, 'json');
 						},
 
 						mounted() {
 							this.getInfo({
+                             documentId:lhs_edit.doc_id,
 
 							});
 						},
 						watch: {},
 						components: {}
+						}
 					});
 			})
 

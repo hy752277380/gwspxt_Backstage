@@ -77,4 +77,17 @@ public class ProcessNode {
     public void setProcessNodeIsdelete(Integer processNodeIsdelete) {
         this.processNodeIsdelete = processNodeIsdelete;
     }
+
+    @Override
+    public String toString() {
+        return "ProcessNode{" +
+                "processNodeId='" + processNodeId + '\'' +
+                ", processNodeProcess='" + processNodeProcess + '\'' +
+                ", processNodeName='" + processNodeName + '\'' +
+                ", processNodeDepartment='" + processNodeDepartment + '\'' +
+                ", processNodePosition='" + processNodePosition + '\'' +
+                ", processNodeStep=" + processNodeStep +
+                ", processNodeIsdelete=" + processNodeIsdelete +
+                '}';
+    }
 }

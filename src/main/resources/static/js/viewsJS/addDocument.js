@@ -45,9 +45,8 @@ $(function() {
 								url: "http://localhost:8080/gwspxt/messageNextOne",
 								dataType: "json",
 								data: {
-									"documentId": documentId,
+									documentId: documentId,
 								},
-								contentType: 'application/json;charset=UTF-8',
 								success: function(data) {
 									window.location.href = "http://localhost:8080/gwspxt/reviewDocument";
 								}

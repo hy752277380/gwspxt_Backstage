@@ -1,5 +1,4 @@
 function check() {
-
     if (document.getElementById("userAccount").value == "") {
         alert("用户名不能为空！");
         return false;

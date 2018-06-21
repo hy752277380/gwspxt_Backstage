@@ -99,6 +99,12 @@
         <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
             <result column="process_name" property="processName"/>
         </association>
+        <association property="borrowing" javaType="com.kcsj.gwglxt.entity.Borrowing">
+            <id column="borrowing_id" property="borrowingId"/>
+            <result column="borrowing_borrow_user" property="borrowingBorrowUser"/>
+            <result column="borrowing_reason" property="borrowingReason"/>
+            <result column="borrowing_state" property="borrowingState"/>
+        </association>
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -639,5 +645,45 @@ and doc.document_dept = de.department_id
 and doc.document_type = dt.documenttype_id
 and doc.document_user = gu.user_id
 and doc.document_process = #{documentProcess} and doc.document_location =#{documentLocation} and doc.document_dept = #{userDepartment}
+    </select>
+    <select id="getDocumentByDpt" parameterType="java.lang.String" resultMap="">
+        SELECT
+doc.document_id,
+	doc.document_title,
+	doc.document_no,
+	doc.document_confidential,
+    doc.doucment_content,
+    doc.document_remark,
+    doc.document_location,
+    doc.document_process_begin,
+    doc.document_process_finish,
+    doc.document_state,
+    doc.document_speed,
+	doc.creation_time,
+	doc.document_dept,
+	doc.document_type,
+	doc.document_process,
+	gu.user_name,
+	dt.documenttype_name,
+	de.department_name,
+	pr.process_name,
+	bo.borrowing_borrow_user,
+	bo.borrowing_reason,
+	bo.borrowing_id,
+	bo.borrowing_state
+FROM
+	document doc,
+	documenttype dt,
+	department de,
+	guser gu,
+	process pr,
+	borrowing bo
+	where doc.document_dept = #{documentDept}
+and bo.borrowing_state = '1'
+and doc.document_process = pr.process_id
+and doc.document_dept = de.department_id
+and doc.document_type = dt.documenttype_id
+and doc.document_user = gu.user_id
+and bo.borrowing_document = doc.document_id
     </select>
 </mapper>

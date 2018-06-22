@@ -502,4 +502,19 @@ where year(guser.creation_time)=#{year};
         AND po.position_id = g.user_position
         AND pe.permission_id = po.position_permission
     </select>
+    <select id="getUserByDpt" parameterType="java.lang.String" resultMap="loginFunctionMap">
+        SELECT
+        user_id,user_account,user_password,user_name,user_sex,user_department,user_position,user_phonenumber,user_email,
+        user_introduction,user_picture,creation_time,user_isdelete,department_id,department_name,position_permission,position_id,permission_id,position_name,permission_level
+        FROM
+        guser g,
+        department de,
+        position po,
+        permission pe
+        WHERE
+        g.user_department = #{userDepartment}
+        AND de.department_id = g.user_department
+        AND po.position_id = g.user_position
+        AND pe.permission_id = po.position_permission
+    </select>
 </mapper>

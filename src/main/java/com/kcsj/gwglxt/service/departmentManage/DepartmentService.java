@@ -2,6 +2,7 @@ package com.kcsj.gwglxt.service.departmentManage;
 
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.DepartmentExample;
+import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,4 +32,6 @@ public interface DepartmentService {
     int updateByPrimaryKey(Department record);
 
     QueryForPage getAllDepartment(int currentPage,String searchInfo);
+
+    QueryForPage getPositionByDpt(String departmentId,int currentPage);
 }

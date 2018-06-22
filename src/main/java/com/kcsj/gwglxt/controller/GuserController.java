@@ -1,18 +1,17 @@
 package com.kcsj.gwglxt.controller;
 
 import com.kcsj.gwglxt.DTO.CountByMouth;
+import com.kcsj.gwglxt.DTO.DocumentCustom;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.entity.Log;
 import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.service.GuserService;
 import com.kcsj.gwglxt.util.md5;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import com.kcsj.gwglxt.vo.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -165,7 +164,7 @@ public class GuserController {
     /***************************个人信息管理****************************/
     //修改个人信息
     @RequestMapping("/updatePersonInfo")
-    public String updatePersonInfo(Guser guser){
+    public String updatePersonInfo(@RequestBody Guser guser){
         String result;
         System.out.println("我是刘华山"+guser);
         int updateResult = guserService.updateByPrimaryKeySelective(guser);
@@ -191,9 +190,9 @@ public class GuserController {
         int insertResult = guserService.insert(guser);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (insertResult == 0) {
-            result = "updateFailed";
+            result = "addFailed";
         }else{
-            result = "updateSuccess";
+            result = "addSuccess";
         }
         return result;
     }
@@ -205,7 +204,7 @@ public class GuserController {
     }
     //修改人员信息
     @RequestMapping("/updateUserinfo")
-    public String updateUserinfo(Guser guser){
+    public String updateUserinfo(@RequestBody Guser guser){
         String result;
         int updateResult = guserService.updateByPrimaryKey(guser);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
@@ -235,5 +234,26 @@ public class GuserController {
         }
         return result;
     }
+    /*******************************************部门成员管理************************************/
+    //列出本部门成员
+    @RequestMapping("/getUserByDpt")
+    public QueryForPage getUserByDpt(int currentPage,HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        QueryForPage queryForPage = guserService.getUserByDpt(loginCustom.getGuser().getUserDepartment(),currentPage);
+        return queryForPage;
+    }
+    //查看目标人员工作日志
+    @RequestMapping("/getLogByUser")
+    public List<Log> getLogByUser(String userId){
+        List<Log> logs = guserService.getLogByUser(userId);
+        return logs;
+    }
+    //查看目标人员所有文档
+    @RequestMapping("/getDocByUser")
+    public QueryForPage getDocByUser(String userId){
+        return null;
+    }
+    //调配
 }
 

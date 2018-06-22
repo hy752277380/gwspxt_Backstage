@@ -101,12 +101,14 @@ public class GuserController {
         CountUserByMouth countUserByMouth = guserService.countUserByMouth();
         return countUserByMouth;
     }
+
     //计算总人数
     @RequestMapping("/countAllUser")
     public int countAllUser(){
         int result = guserService.countAllUser();
         return result;
     }
+
     //计算总数文档
     @RequestMapping("/countAllDocument")
     public int countAllDocument(){
@@ -115,6 +117,7 @@ public class GuserController {
         int result = guserService.countAllDocument(department,user);
         return result;
     }
+    
     //计算部门文档
     @RequestMapping("/countDptDocument")
     public int countDptDocument(HttpSession httpSession){

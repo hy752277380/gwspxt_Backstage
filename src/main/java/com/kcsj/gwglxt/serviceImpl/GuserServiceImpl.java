@@ -111,11 +111,29 @@ public class GuserServiceImpl implements GuserService {
     public int countAllDocument(String department,String user) {
         return documentMapper.countAllDocument(department,user);
     }
-
+    //公司文档月份统计
     @Override
     public CountByMouth countDocumentByMouth() {
+        String department = null;
+        String userId = null;
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
         System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
-        return documentMapper.countDocumentByMouth(df.format(new Date()));
+        return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
+    }
+
+    @Override
+    public CountByMouth countDptDocumentByMouth(String department) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
+        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
+        String userId = null;
+        return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
+    }
+
+    @Override
+    public CountByMouth countPersonalDocumentByMouth(String userId) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
+        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
+        String department = null;
+        return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
     }
 }

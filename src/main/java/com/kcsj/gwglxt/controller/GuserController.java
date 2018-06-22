@@ -143,6 +143,21 @@ public class GuserController {
         CountByMouth countByMouth = guserService.countDocumentByMouth();
         return countByMouth;
     }
-    //计算部门文档
+    //部门文档月份统计
+    @RequestMapping("/countDptDocumentByMouth")
+    public CountByMouth countDptDocumentByMouth(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        CountByMouth countByMouth = guserService.countDptDocumentByMouth(loginCustom.getGuser().getUserDepartment());
+        return countByMouth;
+    }
+    //个人文档月份统计
+    @RequestMapping("/countPersonalDocumentByMouth")
+    public CountByMouth countPersonalDocumentByMouth(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        CountByMouth countByMouth = guserService.countPersonalDocumentByMouth(loginCustom.getGuser().getUserId());
+        return countByMouth;
+    }
 }
 

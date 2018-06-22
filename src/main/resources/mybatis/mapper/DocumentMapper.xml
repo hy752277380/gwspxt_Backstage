@@ -735,6 +735,12 @@ sum(case month(document.creation_time) when '10' then 1 else 0 end) as October,
 sum(case month(document.creation_time) when '11' then 1 else 0 end) as November,
 sum(case month(document.creation_time) when '12' then 1 else 0 end) as December
 from document
-where year(document.creation_time)=#{year};
+where year(document.creation_time)=#{year}
+<if test="department!=null">
+    and document.document_dept = #{department}
+</if>
+<if test="userId!=null">
+     and document.document_user = #{userId}
+</if>
     </select>
 </mapper>

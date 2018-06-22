@@ -43,4 +43,8 @@ public interface GuserService {
     int countAllDocument(String department,String user);
 
     CountByMouth countDocumentByMouth();
+
+    CountByMouth countDptDocumentByMouth(String department);
+
+    CountByMouth countPersonalDocumentByMouth(String userId);
 }

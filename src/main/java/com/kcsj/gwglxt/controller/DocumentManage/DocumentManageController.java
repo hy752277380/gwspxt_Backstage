@@ -70,8 +70,9 @@ public class DocumentManageController {
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (addResult == 0) {
             result = "updateFailed";
+        }else{
+            result = "updateSuccess";
         }
-        result = "updateSuccess";
         return document;
     }
 
@@ -121,8 +122,9 @@ public class DocumentManageController {
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (updateResult == 0) {
             result = "updateFailed";
+        }else{
+            result = "updateSuccess";
         }
-        result = "updateSuccess";
         return "{\"msg\":\"" + result + "\"}";
     }
 
@@ -233,6 +235,12 @@ public class DocumentManageController {
         Document document = documentService.selectByPrimaryKey(documentId);
         List<ProcessNode> list = documentService.getAllProcessNode(document.getDocumentProcess());
         return list;
+    }
+    //根据流程id流程子节点
+    @RequestMapping("/getProcessNodeByPro")
+    public List<ProcessNode> getProcessNodeByPro(String process){
+        List<ProcessNode> processNodes = documentService.getProcessNodeByPro(process);
+        return  processNodes;
     }
 
     //查询本人需要审核的文档

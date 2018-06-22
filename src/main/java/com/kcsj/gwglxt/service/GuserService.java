@@ -53,4 +53,8 @@ public interface GuserService {
     QueryForPage getAllUser(int currentPage);
 
     List<Position> getPositionByDpt(String department);
+
+    int resetPassword(String userId);
+
+    int batchDelete(String[] userIds);
 }

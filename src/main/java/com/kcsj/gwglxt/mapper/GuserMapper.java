@@ -3,11 +3,10 @@ package com.kcsj.gwglxt.mapper;
 
 import java.util.List;
 
-import com.kcsj.gwglxt.DTO.CountUserByMouth;
+import com.kcsj.gwglxt.DTO.CountByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
 import com.kcsj.gwglxt.DTO.LoginCustom;
-import com.kcsj.gwglxt.entity.Position;
 import org.apache.ibatis.annotations.Param;
 
 public interface GuserMapper {
@@ -44,7 +43,7 @@ public interface GuserMapper {
 
     List<Guser> getDptManager(String documentDept,String position);
 
-    CountUserByMouth countUserByMouth(String year);
+    CountByMouth countUserByMouth(String year);
 
     int countAllUser();
 }

@@ -79,6 +79,11 @@ public class DocumentManageController {
     @RequestMapping("/updateDocument")
     public String updateDocument(@RequestBody Document document) {
         String result = null;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        document.setDocumentLocation(0);
+        document.setDocumentState(0);
+        document.setCreationTime(df.format(new Date()));
+        document.setDocumentIsdelete(0);
         int updateResult = documentService.updateByPrimaryKey(document);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (updateResult == 0) {

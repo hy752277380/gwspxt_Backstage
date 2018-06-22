@@ -51,7 +51,7 @@
     <!--<resultMap id="userLogin" type="" >
 
     </resultMap>-->
-    <resultMap id="MouthResultMap" type="com.kcsj.gwglxt.DTO.CountUserByMouth">
+    <resultMap id="MouthResultMap" type="com.kcsj.gwglxt.DTO.CountByMouth">
         <result column="January" property="Jan"/>
         <result column="February" property="Feb"/>
         <result column="March" property="Mar"/>
@@ -488,6 +488,4 @@ where year(guser.creation_time)=#{year};
     <select id="countAllUser" resultType="int">
         select count(*) from guser
     </select>
-
-
 </mapper>

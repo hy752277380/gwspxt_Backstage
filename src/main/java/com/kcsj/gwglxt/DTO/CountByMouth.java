@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder(value = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"})
-public class CountUserByMouth {
+public class CountByMouth {
     @JsonProperty("Jan")
     private int Jan;
     @JsonProperty("Feb")

@@ -77,13 +77,17 @@ public class DocumentManageController {
 
     //修改文档
     @RequestMapping("/updateDocument")
-    public Document updateDocument(@RequestBody Document document) {
+    public Document updateDocument(@RequestBody Document document,HttpSession httpSession) {
         String result = null;
+        //获取session中的信息
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         document.setDocumentLocation(0);
         document.setDocumentState(1);
         document.setCreationTime(df.format(new Date()));
         document.setDocumentIsdelete(0);
+        document.setDocumentUser(loginCustom.getGuser().getUserId());
+        document.setDocumentDept(loginCustom.getGuser().getUserDepartment());
         documentService.updateByPrimaryKey(document);
         return document;
     }
@@ -209,7 +213,6 @@ public class DocumentManageController {
 
     //根据文档状态查询文档
     @RequestMapping("/getDocumentByState")
-
     public QueryForPage getDocumentByState(String documentType, Integer documentConfidential, Integer documentState, int currentPage, String searchInfo, HttpSession httpSession) {
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");

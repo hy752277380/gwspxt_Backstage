@@ -51,5 +51,6 @@ public interface DocumentMapper {
 
     int countAllDocument(@Param("documentDept") String department,@Param("documentUser") String user);
 
-    CountByMouth countDocumentByMouth(String year);
+    CountByMouth countDocumentByMouth(@Param("year") String year,@Param("department") String department,@Param("userId") String userId);
+
 }

@@ -484,8 +484,28 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<Process> getAllProcess() {
-        return processMapper.getAllProcess();
+    public QueryForPage getAllProcess(int currentPage) {
+        List<com.kcsj.gwglxt.entity.Process> processes = processMapper.getAllProcess();
+        QueryForPage queryForPage = new QueryForPage();
+        int pagesize = 10;//每页记录数
+        System.out.println("我的長度是"+processes.size());
+        int allRow = processes.size();//总记录数
+        int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
+        int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
+        int currentPages = QueryForPage.countCurrentPage(currentPage);
+        int endSet = pagesize * currentPage;
+        System.out.println(allRow);
+        if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
+            endSet = allRow;
+        }
+        List<com.kcsj.gwglxt.entity.Process> list_thisPage = processes.subList(offSet, endSet);
+        queryForPage.setList(list_thisPage);
+        queryForPage.setAllRow(allRow);
+        queryForPage.setCurrentPage(currentPages);
+        queryForPage.setPageSize(pagesize);
+        queryForPage.setTotalPage(totalPage);
+        queryForPage.init();
+        return queryForPage;
     }
 
 }

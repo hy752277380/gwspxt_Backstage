@@ -193,4 +193,7 @@
             permission_remark = #{permissionRemark,jdbcType=VARCHAR}
         where permission_id = #{permissionId,jdbcType=CHAR}
     </update>
+    <select id="getAllPermission" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from permission
+    </select>
 </mapper>

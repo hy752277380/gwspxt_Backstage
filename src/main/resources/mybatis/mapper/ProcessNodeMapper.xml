@@ -11,7 +11,31 @@
         <result column="process_node_step" property="processNodeStep"  />
         <result column="process_node_isdelete" property="processNodeIsdelete"  />
     </resultMap>
-
+    
+    <resultMap id="ProcessNodeDetailInfo" type="com.kcsj.gwglxt.DTO.ProcessInfo">
+        <association property="process_node" javaType="com.kcsj.gwglxt.entity.ProcessNode">
+            <id column="process_node_id" property="processNodeId"   />
+            <result column="process_node_process" property="processNodeProcess"   />
+            <result column="process_node_name" property="processNodeName" jdbcType="VARCHAR" />
+            <result column="process_node_department" property="processNodeDepartment"   />
+            <result column="process_node_position" property="processNodePosition"   />
+            <result column="process_node_step" property="processNodeStep"  />
+            <result column="process_node_isdelete" property="processNodeIsdelete"  />
+        </association>
+        <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
+            <id column="process_id" property="processId"   />
+            <result column="process_introduction" property="processIntroduction" jdbcType="VARCHAR" />
+            <result column="process_name" property="processName" jdbcType="VARCHAR" />
+        </association>
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <id column="user_department" property="departmentId"   />
+            <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        </association>
+        <association property="position" javaType="com.kcsj.gwglxt.entity.Position">
+            <result column="position_name" property="positionName" />
+        </association>
+    </resultMap>
+    
     <sql id="Example_Where_Clause" >
         <where >
             <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -276,5 +300,19 @@
         select
          <include refid="Base_Column_List"/>
         from process_node where process_node_process = #{process}
+    </select>
+    <select id="getProNodeByPro" parameterType="java.lang.String" resultMap="ProcessNodeDetailInfo">
+        SELECT
+	*
+FROM
+	process_node pn,
+	process pr,
+	department de,
+	position po
+WHERE
+	pn.process_node_process = pr.process_id
+AND pn.process_node_department = de.department_id
+AND pn.process_node_position = po.position_id
+and pn.process_node_process =#{processId}
     </select>
 </mapper>

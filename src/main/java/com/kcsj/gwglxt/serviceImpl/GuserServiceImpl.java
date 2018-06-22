@@ -195,7 +195,10 @@ public class GuserServiceImpl implements GuserService {
         int result = 0;
         //遍历id删除
         for (String userId:userIds){
-            int deleteResult = guserMapper.deleteByPrimaryKey(userId);
+            Guser guser = new Guser();
+            guser.setUserId(userId);
+            guser.setUserIsdelete(1);
+            int deleteResult = guserMapper.updateByPrimaryKeySelective(guser);
             result = result + deleteResult;
         }
         return result;

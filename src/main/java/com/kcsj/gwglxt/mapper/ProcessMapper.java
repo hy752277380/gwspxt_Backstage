@@ -28,5 +28,5 @@ public interface ProcessMapper {
 
     int updateByPrimaryKey(Process record);
 
-    List<java.lang.Process> getAllProcess();
+    List<Process> getAllProcess();
 }

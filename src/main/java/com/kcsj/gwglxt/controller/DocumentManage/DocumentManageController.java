@@ -326,9 +326,9 @@ public class DocumentManageController {
 
     //获取所有流程
     @RequestMapping("/getAllProcess")
-    public List<Process> getAllProcess() {
-        List<Process> list = documentService.getAllProcess();
-        return list;
+    public QueryForPage getAllProcess(int currentPage) {
+        QueryForPage queryForPage = documentService.getAllProcess(currentPage);
+        return queryForPage;
     }
 
     //登录

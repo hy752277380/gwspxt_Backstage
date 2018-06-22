@@ -513,4 +513,12 @@ public class DocumentServiceImpl implements DocumentService {
         return mobjectMapper.getUnReadMsg(userId);
     }
 
+    @Override
+    public int isRead(String mobjectId) {
+        Mobject mobject = new Mobject();
+        mobject.setMobjectId(mobjectId);
+        mobject.setMobjectIsread(1);
+        return mobjectMapper.updateByPrimaryKeySelective(mobject);
+    }
+
 }

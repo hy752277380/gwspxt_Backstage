@@ -316,6 +316,19 @@ public class DocumentManageController {
         List<MessageCustom> list = documentService.getUnReadMsg(loginCustom.getGuser().getUserId());
         return list;
     }
+    //标记消息已读
+    @RequestMapping("/isRead/{MobjectId}")
+    public String isRead(@PathVariable("MobjectId") String MobjectId){
+        String result;
+        int updateResult = documentService.isRead(MobjectId);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        } else {
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
+    }
 
     //查看本人所有日志
     @RequestMapping("/getAllLog")

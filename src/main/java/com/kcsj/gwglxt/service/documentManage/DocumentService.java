@@ -67,4 +67,6 @@ public interface DocumentService {
     List<ProcessNode> getProcessNodeByPro(String process);
 
     List<MessageCustom> getUnReadMsg(String userId);
+    //消息标记已读
+    int isRead(String mobjectId);
 }

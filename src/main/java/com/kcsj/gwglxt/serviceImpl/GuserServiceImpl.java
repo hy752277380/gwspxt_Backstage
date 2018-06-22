@@ -1,12 +1,17 @@
 package com.kcsj.gwglxt.serviceImpl;
 
 import com.kcsj.gwglxt.DTO.CountByMouth;
+import com.kcsj.gwglxt.DTO.DocumentCustom;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
 import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.mapper.DocumentMapper;
 import com.kcsj.gwglxt.mapper.GuserMapper;
+import com.kcsj.gwglxt.mapper.PositionMapper;
 import com.kcsj.gwglxt.service.GuserService;
+import com.kcsj.gwglxt.util.TeamUtil;
+import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +26,8 @@ public class GuserServiceImpl implements GuserService {
     private GuserMapper guserMapper;
     @Autowired
     private DocumentMapper documentMapper;
+    @Autowired
+    private PositionMapper positionMapper;
     @Override
     public int countByExample(GuserExample example) {
         return 0;
@@ -35,10 +42,14 @@ public class GuserServiceImpl implements GuserService {
     public int deleteByPrimaryKey(String userId) {
         return 0;
     }
-
+    //插入用户信息
     @Override
     public int insert(Guser record) {
-        return 0;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        record.setUserId(TeamUtil.getUuid());
+        record.setCreationTime(df.format(new Date()));
+        record.setUserIsdelete(0);
+        return guserMapper.insert(record);
     }
 
     @Override
@@ -135,5 +146,33 @@ public class GuserServiceImpl implements GuserService {
         System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         String department = null;
         return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
+    }
+
+    @Override
+    public QueryForPage getAllUser(int currentPage) {
+        List<LoginCustom>  users = guserMapper.getAllUser();
+        QueryForPage queryForPage = new QueryForPage();
+        int pagesize = 10;//每页记录数
+        int allRow = users.size();//总记录数
+        int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
+        int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
+        int currentPages = QueryForPage.countCurrentPage(currentPage);
+        int endSet = pagesize * currentPage;
+        if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
+            endSet = allRow;
+        }
+        List<LoginCustom> list_thisPage = users.subList(offSet, endSet);
+        queryForPage.setList(list_thisPage);
+        queryForPage.setAllRow(allRow);
+        queryForPage.setCurrentPage(currentPages);
+        queryForPage.setPageSize(pagesize);
+        queryForPage.setTotalPage(totalPage);
+        queryForPage.init();
+        return queryForPage;
+    }
+
+    @Override
+    public List<Position> getPositionByDpt(String department) {
+        return positionMapper.getPositionByDpt(department);
     }
 }

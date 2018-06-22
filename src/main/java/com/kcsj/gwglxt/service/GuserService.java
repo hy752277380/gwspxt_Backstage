@@ -4,6 +4,8 @@ import com.kcsj.gwglxt.DTO.CountByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
 import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.entity.Position;
+import com.kcsj.gwglxt.vo.QueryForPage;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -47,4 +49,8 @@ public interface GuserService {
     CountByMouth countDptDocumentByMouth(String department);
 
     CountByMouth countPersonalDocumentByMouth(String userId);
+
+    QueryForPage getAllUser(int currentPage);
+
+    List<Position> getPositionByDpt(String department);
 }

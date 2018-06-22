@@ -16,6 +16,8 @@ public class Position {
 
     private String positionName;
 
+    private Integer positionIsdelete;
+
     public String getPositionId() {
         return positionId;
     }
@@ -46,5 +48,14 @@ public class Position {
 
     public void setPositionName(String positionName) {
         this.positionName = positionName == null ? null : positionName.trim();
+    }
+
+
+    public Integer getPositionIsdelete() {
+        return positionIsdelete;
+    }
+
+    public void setPositionIsdelete(Integer positionIsdelete) {
+        this.positionIsdelete = positionIsdelete;
     }
 }

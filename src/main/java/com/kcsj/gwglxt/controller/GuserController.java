@@ -1,7 +1,6 @@
 package com.kcsj.gwglxt.controller;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.kcsj.gwglxt.DTO.CountUserByMouth;
+import com.kcsj.gwglxt.DTO.CountByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.DTO.LoginCustom;
 import com.kcsj.gwglxt.service.GuserService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -97,9 +95,54 @@ public class GuserController {
     /************************************首页数据*******************************/
     //首页月份人数统计
     @RequestMapping("/countUserByMouth")
-    public CountUserByMouth countUserByMouth(){
-        CountUserByMouth countUserByMouth = guserService.countUserByMouth();
-        return countUserByMouth;
+    public CountByMouth countUserByMouth(){
+        CountByMouth countByMouth = guserService.countUserByMouth();
+        return countByMouth;
     }
+
+    //计算总人数
+    @RequestMapping("/countAllUser")
+    public int countAllUser(){
+        int result = guserService.countAllUser();
+        return result;
+    }
+
+    //计算总数文档
+    @RequestMapping("/countAllDocument")
+    public int countAllDocument(){
+        String department = null;
+        String user = null;
+        int result = guserService.countAllDocument(department,user);
+        return result;
+    }
+
+    //计算部门文档
+    @RequestMapping("/countDptDocument")
+    public int countDptDocument(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        String department = loginCustom.getGuser().getUserDepartment();
+        String user = null;
+        int result = guserService.countAllDocument(department,user);
+        return result;
+    }
+
+    //计算个人文档
+    @RequestMapping("/countPersonalDocument")
+    public int countPersonalDocument(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        String department = null;
+        String user = loginCustom.getGuser().getUserId();
+        int result = guserService.countAllDocument(department,user);
+        return result;
+    }
+    //计算月份文档数
+    @RequestMapping("/countDocumentByMouth")
+    public CountByMouth countDocumentByMouth(){
+        CountByMouth countByMouth = guserService.countDocumentByMouth();
+        return countByMouth;
+    }
+    //计算部门文档
 }
 

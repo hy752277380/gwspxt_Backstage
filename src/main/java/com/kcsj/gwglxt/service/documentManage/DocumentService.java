@@ -39,7 +39,7 @@ public interface DocumentService {
     //查询该文档所走流程的每一个流程节点
     List<ProcessNode> getAllProcessNode(String processNodeProcess);
     //查询所有文档
-    QueryForPage getAllDocument(String deaprtmentName, String userId, int currentPage,String searchInfo);
+    QueryForPage getAllDocument(String deaprtmentName, String userId, int currentPage,String searchInfo,String documentType,Integer documentConfidential,String documentDept);
     //联合查询文档信息
     DocumentCustom documentBaseInfo(String documentId);
 
@@ -54,9 +54,13 @@ public interface DocumentService {
 
     List<Process> getAllProcess();
 
-    int insertBorrowing(Borrowing borrowing, LoginCustom loginCustom);
+    int insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
 
-    List<DocumentCustom> getAllApplyRead(LoginCustom loginCustom);
+    QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage);
 
     void refuseDoc(LoginCustom loginCustom, String documentId);
+
+    int acceptApply(DocumentCustom documentCustom, LoginCustom loginCustom);
+
+    int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom);
 }

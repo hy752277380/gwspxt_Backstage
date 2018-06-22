@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.mapper;
 
+import com.kcsj.gwglxt.DTO.CountByMouth;
 import com.kcsj.gwglxt.entity.Borrowing;
 import com.kcsj.gwglxt.entity.Document;
 import com.kcsj.gwglxt.DTO.DocumentCustom;
@@ -40,10 +41,15 @@ public interface DocumentMapper {
 
     List<DocumentCustom> getDocumentByState(@Param("documentType") String documentType,@Param("documentConfidential") Integer documentConfidential,@Param("documentState") Integer documentState,@Param("documentUser") String documentUser,@Param("searchInfo") String searchInfo);
     //查询所有文档
-    List<DocumentCustom> getAllDocument(String searchInfo);
+    List<DocumentCustom> getAllDocument(@Param("searchInfo") String searchInfo,@Param("documentType")String documentType,@Param("documentConfidential")Integer documentConfidential,@Param("documentDept")String documentDept);
     //联合查询文档信息
     DocumentCustom documentBaseInfo(String documentId);
 
     List<DocumentCustom> findCheckingDoc(@Param("documentProcess") String documentProcess,@Param("documentLocation") Integer documentLocation,@Param("userDepartment") String userDepartment);
 
+    List<DocumentCustom> getDocumentByDpt(String userDepartment);
+
+    int countAllDocument(@Param("documentDept") String department,@Param("documentUser") String user);
+
+    CountByMouth countDocumentByMouth(String year);
 }

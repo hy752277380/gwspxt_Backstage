@@ -1,6 +1,6 @@
 package com.kcsj.gwglxt.service;
 
-import com.kcsj.gwglxt.DTO.CountUserByMouth;
+import com.kcsj.gwglxt.DTO.CountByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
 import com.kcsj.gwglxt.DTO.LoginCustom;
@@ -36,5 +36,11 @@ public interface GuserService {
     //查询个人信息
     LoginCustom getPersonalInfo(String userId);
 
-    CountUserByMouth countUserByMouth();
+    CountByMouth countUserByMouth();
+
+    int countAllUser();
+
+    int countAllDocument(String department,String user);
+
+    CountByMouth countDocumentByMouth();
 }

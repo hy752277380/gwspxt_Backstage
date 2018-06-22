@@ -161,8 +161,8 @@ public class DocumentServiceImpl implements DocumentService {
 
     //按阅读权限整理出所有文档
     @Override
-    public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String searchInfo) {
-        List<DocumentCustom> list = documentMapper.getAllDocument(searchInfo);
+    public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String searchInfo,String documentType,Integer documentConfidential,String documentDept) {
+        List<DocumentCustom> list = documentMapper.getAllDocument(searchInfo,documentType,documentConfidential,documentDept);
         Borrowing borrowing;
         for (DocumentCustom documentCustom : list) {
             if (documentCustom.getDepartment().getDepartmentName() != departmentName) {
@@ -245,18 +245,19 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //申请批阅
     @Override
-    public int insertBorrowing(Borrowing borrowing, LoginCustom loginCustom) {
+    public int insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-        //获取借阅文档的名称
-        Document document = documentMapper.selectByPrimaryKey(borrowing.getBorrowingDocument());
+        //从documentCustom对象中获得borrowing对象
+        Borrowing borrowing = documentCustom.getBorrowing();
         //获取该部门最高权限职称
-        List<Position> positions = positionMapper.getDptManager(document.getDocumentDept());
+        List<Position> positions = positionMapper.getDptManager(documentCustom.getDocument().getDocumentDept());
         //获取该职称对应的人
-        List<Guser> gusers = guserMapper.getDptManager(document.getDocumentDept(), positions.get(0).getPositionId());
+        List<Guser> gusers = guserMapper.getDptManager(documentCustom.getDocument().getDocumentDept(), positions.get(0).getPositionId());
         //添加申请借阅记录
         borrowing.setBorrowingId(TeamUtil.getUuid());
         borrowing.setBorrowingBorrowUser(loginCustom.getGuser().getUserId());
         borrowing.setBorrowingLendUser("");
+        borrowing.setBorrowingDocument(documentCustom.getDocument().getDocumentId());
         borrowing.setBorrowingApplicationdate(df.format(new Date()));
         borrowing.setBorrowingState(1);
         borrowing.setBorrowingBegintime("");
@@ -267,39 +268,56 @@ public class DocumentServiceImpl implements DocumentService {
         Log log = new Log();
         log.setLogId(TeamUtil.getUuid());
         log.setLogUser(loginCustom.getGuser().getUserId());
-        log.setLogContent("提交了对"+document.getDocumentTitle()+"的阅读申请");
+        log.setLogContent("提交了对"+documentCustom.getDocument().getDocumentTitle()+"的阅读申请");
         log.setCreationTime(df.format(new Date()));
         logMapper.insert(log);
-        //添加消息
-        LoginCustom user = guserMapper.getPersonalInfo(loginCustom.getGuser().getUserId());
-        Message message = new Message();
-        String messageId = TeamUtil.getUuid();
-        message.setMessageId(messageId);
-        message.setMessageContent(user.getGuser().getUserName()+"申请了对"+document.getDocumentTitle()+"的借阅");
-        message.setMessageTime(df.format(new Date()));
-        message.setMessageIsdelete(0);
-        message.setMessageType(1);
-        messageMapper.insertMsg(message);
-        Mobject mobject = new Mobject();
-        mobject.setMobjectId(TeamUtil.getUuid());
-        mobject.setMobjectUser(gusers.get(0).getUserId());
-        mobject.setMobjectMessage(messageId);
-        mobject.setMobjectIsread(0);
-        mobjectMapper.insertMbj(mobject);
+        //添加有审核权限人的消息通知
+        //遍历
+        for(Guser guser:gusers){
+            LoginCustom user = guserMapper.getPersonalInfo(loginCustom.getGuser().getUserId());
+            Message message = new Message();
+            String messageId = TeamUtil.getUuid();
+            message.setMessageId(messageId);
+            message.setMessageContent(user.getGuser().getUserName()+"申请了对"+documentCustom.getDocument().getDocumentTitle()+"的借阅,请尽快处理。");
+            message.setMessageTime(df.format(new Date()));
+            message.setMessageIsdelete(0);
+            message.setMessageType(1);
+            messageMapper.insertMsg(message);
+            Mobject mobject = new Mobject();
+            mobject.setMobjectId(TeamUtil.getUuid());
+            mobject.setMobjectUser(guser.getUserId());
+            mobject.setMobjectMessage(messageId);
+            mobject.setMobjectIsread(0);
+            mobjectMapper.insertMbj(mobject);
+        }
         return result;
     }
     //获取需要本人同意的文档借阅申请
     @Override
-    public List<DocumentCustom> getAllApplyRead(LoginCustom loginCustom) {
-        //获取本人需要借出的文档
-        List<Borrowing> borrowings = borrowingMapper.getDocuments(loginCustom.getGuser().getUserId());
-        List<DocumentCustom> documents = new ArrayList<>();
-        //遍历查询结果用文档id得到文档信息
-        for (Borrowing borrowing:borrowings){
-            //documents.add(documentMapper.documentBaseInfo(borrowing.getBorrowingDocument()));
-
+    public QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage) {
+        //获得本人所在的部门，查看本部门的文档
+        List<DocumentCustom> documentCustoms = documentMapper.getDocumentByDpt(loginCustom.getGuser().getUserDepartment());
+        //分页
+        QueryForPage queryForPage = new QueryForPage();
+        int pagesize = 10;//每页记录数
+        System.out.println("我的長度是"+documentCustoms.size());
+        int allRow = documentCustoms.size();//总记录数
+        int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
+        int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
+        int currentPages = QueryForPage.countCurrentPage(currentPage);
+        int endSet = pagesize * currentPage;
+        System.out.println(allRow);
+        if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
+            endSet = allRow;
         }
-        return documents;
+        List<DocumentCustom> list_thisPage = documentCustoms.subList(offSet, endSet);
+        queryForPage.setList(list_thisPage);
+        queryForPage.setAllRow(allRow);
+        queryForPage.setCurrentPage(currentPages);
+        queryForPage.setPageSize(pagesize);
+        queryForPage.setTotalPage(totalPage);
+        queryForPage.init();
+        return queryForPage;
     }
     //拒绝文档申请
     @Override
@@ -341,6 +359,96 @@ public class DocumentServiceImpl implements DocumentService {
         mobject.setMobjectMessage(messageId);
         mobject.setMobjectIsread(0);
         mobjectMapper.insertMbj(mobject);
+    }
+    //同意借阅申请
+    @Override
+    public int acceptApply(DocumentCustom documentCustom, LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        //首先改变该文档及改人的借阅记录的借阅状态
+        //获取该条documentCustom记录的borrowing的id
+        String borrowingId = documentCustom.getBorrowing().getBorrowingId();
+        //根据主键查询原借阅记录
+        Borrowing borrowing = borrowingMapper.selectByPrimaryKey(borrowingId);
+        if(borrowing.getBorrowingState()==1){
+            //更新部分属性
+            borrowing.setBorrowingLendUser(loginCustom.getGuser().getUserId());
+            borrowing.setBorrowingBegintime(df.format(new Date()));
+            borrowing.setBorrowingState(2);
+            //根据主键更改借阅表的状态及借出时间
+            int result = borrowingMapper.updateByPrimaryKey(borrowing);
+            //添加批准人日志
+            Log log = new Log();
+            log.setLogId(TeamUtil.getUuid());
+            log.setLogUser(loginCustom.getGuser().getUserId());
+            //根据借阅表中的借入用户id查询其姓名
+            Guser guser = guserMapper.selectByPrimaryKey(borrowing.getBorrowingBorrowUser());
+            log.setLogContent("同意了"+guser.getUserName()+"对"+documentCustom.getDocument().getDocumentTitle()+"的借阅申请。");
+            log.setCreationTime(df.format(new Date()));
+            logMapper.insert(log);
+            //添加申请人的消息通知
+            Message message = new Message();
+            String messageId = TeamUtil.getUuid();
+            message.setMessageId(messageId);
+            message.setMessageContent("您申请批阅的"+documentCustom.getDocument().getDocumentTitle()+"已被同意。");
+            message.setMessageTime(df.format(new Date()));
+            message.setMessageIsdelete(0);
+            message.setMessageType(1);
+            messageMapper.insertMsg(message);
+            Mobject mobject = new Mobject();
+            mobject.setMobjectId(TeamUtil.getUuid());
+            mobject.setMobjectUser(borrowing.getBorrowingBorrowUser());
+            mobject.setMobjectMessage(messageId);
+            mobject.setMobjectIsread(0);
+            mobjectMapper.insertMbj(mobject);
+            return result;
+        }else {
+            return 0;
+        }
+
+    }
+    //拒绝批阅申请
+    @Override
+    public int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        //首先改变该文档及改人的借阅记录的借阅状态
+        //获取该条documentCustom记录的borrowing的id
+        String borrowingId = documentCustom.getBorrowing().getBorrowingId();
+        //根据主键查询原借阅记录
+        Borrowing borrowing = borrowingMapper.selectByPrimaryKey(borrowingId);
+        if(borrowing.getBorrowingState()==1){
+            //更新部分属性
+            borrowing.setBorrowingState(4);
+            //根据主键更改借阅表的状态及借出时间
+            int result = borrowingMapper.updateByPrimaryKey(borrowing);
+            //添加批准人日志
+            Log log = new Log();
+            log.setLogId(TeamUtil.getUuid());
+            log.setLogUser(loginCustom.getGuser().getUserId());
+            //根据借阅表中的借入用户id查询其姓名
+            Guser guser = guserMapper.selectByPrimaryKey(borrowing.getBorrowingBorrowUser());
+            log.setLogContent("拒绝了"+guser.getUserName()+"对"+documentCustom.getDocument().getDocumentTitle()+"的借阅申请。");
+            log.setCreationTime(df.format(new Date()));
+            logMapper.insert(log);
+            //添加申请人的消息通知
+            Message message = new Message();
+            String messageId = TeamUtil.getUuid();
+            message.setMessageId(messageId);
+            message.setMessageContent("您申请批阅的"+documentCustom.getDocument().getDocumentTitle()+"已被拒绝。");
+            message.setMessageTime(df.format(new Date()));
+            message.setMessageIsdelete(0);
+            message.setMessageType(1);
+            messageMapper.insertMsg(message);
+            Mobject mobject = new Mobject();
+            mobject.setMobjectId(TeamUtil.getUuid());
+            mobject.setMobjectUser(borrowing.getBorrowingBorrowUser());
+            mobject.setMobjectMessage(messageId);
+            mobject.setMobjectIsread(0);
+            mobjectMapper.insertMbj(mobject);
+            return result;
+        }else {
+            return 0;
+        }
+
     }
 
     @Override

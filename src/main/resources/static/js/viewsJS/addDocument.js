@@ -88,7 +88,7 @@ $(function () {
                                     documentId: documentId,
                                 },
                                 success: function(data) {
-                                    window.location.href = "/gwspxt/reviewDetailDocument";
+                                    window.location.href = "/gwspxt/reviewDocument";
                                 }
                             });
 
@@ -137,7 +137,7 @@ $(function () {
             data: JSON.stringify(data),
             success: function(data) {
                 if(data) {
-                   /* window.location.href = "/gwspxt/reviewDetailDocument";*/
+                    window.location.href = "/gwspxt/reviewDocument";
                     }
                     else {
 

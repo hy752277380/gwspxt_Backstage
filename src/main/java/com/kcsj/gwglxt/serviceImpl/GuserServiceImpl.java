@@ -11,6 +11,7 @@ import com.kcsj.gwglxt.mapper.GuserMapper;
 import com.kcsj.gwglxt.mapper.PositionMapper;
 import com.kcsj.gwglxt.service.GuserService;
 import com.kcsj.gwglxt.util.TeamUtil;
+import com.kcsj.gwglxt.util.md5;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,12 +80,12 @@ public class GuserServiceImpl implements GuserService {
 
     @Override
     public int updateByPrimaryKeySelective(Guser record) {
-        return 0;
+        return guserMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
     public int updateByPrimaryKey(Guser record) {
-        return 0;
+        return guserMapper.updateByPrimaryKey(record);
     }
 
     @Override
@@ -174,5 +175,25 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public List<Position> getPositionByDpt(String department) {
         return positionMapper.getPositionByDpt(department);
+    }
+    //重置密码
+    @Override
+    public int resetPassword(String userId) {
+        String password = md5.GetMD5Code("111111");
+        Guser guser = new Guser();
+        guser.setUserId(userId);
+        guser.setUserPassword(password);
+        return guserMapper.updateByPrimaryKey(guser);
+    }
+    //批量删除
+    @Override
+    public int batchDelete(String[] userIds) {
+        int result = 0;
+        //遍历id删除
+        for (String userId:userIds){
+            int deleteResult = guserMapper.deleteByPrimaryKey(userId);
+            result = result + deleteResult;
+        }
+        return result;
     }
 }

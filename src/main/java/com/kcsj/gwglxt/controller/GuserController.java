@@ -117,7 +117,7 @@ public class GuserController {
         int result = guserService.countAllDocument(department,user);
         return result;
     }
-    
+
     //计算部门文档
     @RequestMapping("/countDptDocument")
     public int countDptDocument(HttpSession httpSession){
@@ -128,6 +128,7 @@ public class GuserController {
         int result = guserService.countAllDocument(department,user);
         return result;
     }
+    
     //计算个人文档
     @RequestMapping("/countPersonalDocument")
     public int countPersonalDocument(HttpSession httpSession){

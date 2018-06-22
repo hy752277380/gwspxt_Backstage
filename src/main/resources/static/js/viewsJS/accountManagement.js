@@ -2,7 +2,25 @@ $(function () {
     var data = {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
         name: 'accountManagement',
-        personData: '', //所有数据
+        personData: [], //所有数据
+        modalPersonData: {
+            userId: '',
+            userAccount: '',
+            userPassword: '',
+            userName: '',
+            userSex: '',
+            userDepartment: '',
+            userPosition: '',
+            userPhonenumber: '',
+            userEmail: '',
+            userIntroduction: '',
+            userPicture: '',
+            creationTime: '',
+            userIsdelete: ''
+        },
+        modalAction: true,
+        allDepartment: {},
+        allDepartmentOfPosition: {},
         ready: false,
         page: {
             allRow: 1,
@@ -32,8 +50,8 @@ $(function () {
             },
             /* 获取数据 */
             getInfo(params) {
-                $.post('/gwspxt/getAllDocument', params, function (response) {
-                    reviewDocument.docData = response.list;
+                $.post('/gwspxt/getAllUser', params, function (response) {
+                    reviewDocument.personData = response.list;
                     reviewDocument.page.currentPage = response.currentPage;
                     reviewDocument.page.totalPage = response.totalPage;
                     reviewDocument.page.allRow = response.allRow;
@@ -48,6 +66,72 @@ $(function () {
                 this.$data.page.currentPage = pageIndex;
                 this.getInfo({currentPage: pageIndex});
             },
+            modify(index) {
+                console.log(data.personData[index].guser)
+                data.modalPersonData = data.personData[index].guser;
+                data.modalAction = false;
+                $('#myModal').modal('show');
+            },
+            deleteP(index) {
+                let person = data.personData[index].guser;
+                const that = this;
+                $.post('/gwspxt/batchDelete', {userId: [person.userId]}, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        spop({template: `删除成功`, style: "success", autoclose: 2000});
+                        that.getInfo({currentPage: data.page.currentPage})
+                    }
+                    else if (response.msg == "updateFailed") {
+                        spop({template: `删除失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json');
+            },
+            reset(index) {
+                let person = data.personData[index].guser;
+                const that = this;
+                $.post('/gwspxt/resetPassword', {userId: person.userId}, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        spop({template: `重置成功`, style: "success", autoclose: 2000});
+                        that.getInfo({currentPage: data.page.currentPage})
+                    }
+                    else if (response.msg == "updateFailed") {
+                        spop({template: `重置失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json');
+            },
+            modalAdd() {
+                let person = data.modalPersonData;
+                const that = this;
+                $.post('/gwspxt/andUser', person, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        spop({template: `添加成功`, style: "success", autoclose: 2000});
+                        that.getInfo({currentPage: data.page.currentPage})
+                    }
+                    else if (response.msg == "updateFailed") {
+                        spop({template: `添加失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json');
+            },
+            modalModify() {
+                let person = data.modalPersonData;
+                const that = this;
+                $.post('/gwspxt/updateUserinfo', person, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        spop({template: `修改成功`, style: "success", autoclose: 2000});
+                        that.getInfo({currentPage: data.page.currentPage})
+                    }
+                    else if (response.msg == "updateFailed") {
+                        spop({template: `修改失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json');
+            }
+        },
+        mounted() {
+            this.getInfo({currentPage: 1});
+            $('#myModal').on('hidden.bs.modal', function () {
+                for (let item in data.modalPersonData) {
+                    data.modalPersonData.item = '';
+                }
+            })
         },
         components: {
             'asideComponent': Layout,

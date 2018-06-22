@@ -193,15 +193,19 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public int batchDelete(String[] userIds) {
         int result = 0;
-        //遍历id删除
-        for (String userId:userIds){
-            Guser guser = new Guser();
-            guser.setUserId(userId);
-            guser.setUserIsdelete(1);
-            int deleteResult = guserMapper.updateByPrimaryKeySelective(guser);
-            result = result + deleteResult;
+        if (userIds==null&&"".equals(userIds)){
+            return 0;
+        }else{
+            //遍历id删除
+            for (String userId:userIds){
+                Guser guser = new Guser();
+                guser.setUserId(userId);
+                guser.setUserIsdelete(1);
+                int deleteResult = guserMapper.updateByPrimaryKeySelective(guser);
+                result = result + deleteResult;
+            }
+            return result;
         }
-        return result;
     }
 
     @Override

@@ -216,8 +216,15 @@ public class GuserController {
     }
     //批量删除人员
     @RequestMapping("/batchDelete")
-    public int batchDelete(String userIds[]){
-        int result = guserService.batchDelete(userIds);
+    public String batchDelete(String userIds[]){
+        String result;
+        int updateResult = guserService.batchDelete(userIds);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        }else{
+            result = "updateSuccess";
+        }
         return result;
     }
     //重置密码

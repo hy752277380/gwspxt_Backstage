@@ -15,6 +15,7 @@
         <result column="user_introduction" property="userIntroduction" jdbcType="VARCHAR" />
         <result column="user_picture" property="userPicture" jdbcType="VARCHAR" />
         <result column="creation_time" property="creationTime" jdbcType="VARCHAR" />
+        <result column="user_isdelete" property="userIsdelete" jdbcType="INTEGER" />
     </resultMap>
 
     <!--依据用户登录给的user_account user_password信息书写的登录用户loginCustom的映射
@@ -155,7 +156,7 @@
 
     <sql id="Base_Column_List" >
         user_id, user_account, user_password, user_name, user_sex, user_department, user_position,
-        user_phonenumber, user_email, user_introduction, user_picture, creation_time
+        user_phonenumber, user_email, user_introduction, user_picture, creation_time, user_isdelete
     </sql>
 
     <sql id="user_login_info">
@@ -431,6 +432,7 @@
         AND g.user_position = po.position_id
         AND po.position_permission = pe.permission_id
         AND g.user_id = #{userId}
+        and g.user_isdelete = '0'
     </select>
     <select id="loginFunction" parameterType="java.lang.String" resultMap="loginResultMap">
         SELECT
@@ -446,11 +448,12 @@
         AND de.department_id = g.user_department
         AND po.position_id = g.user_position
         AND pe.permission_id = po.position_permission
+        and g.user_isdelete = '0'
     </select>
     <select id="getUserByPosition" resultMap="BaseResultMap">
         SELECT
          <include refid="Base_Column_List"/>
-         FROM guser WHERE user_position = #{userPosition} and user_department = #{userDepartment}
+         FROM guser WHERE user_position = #{userPosition} and user_department = #{userDepartment} and user_isdelete = '0'
     </select>
     <select id="getPersonalInfo" parameterType="java.lang.String" resultMap="loginResultMap">
         select
@@ -461,12 +464,13 @@
         AND g.user_position = po.position_id
         AND po.position_permission = pe.permission_id
         AND g.user_id = #{userId}
+        and g.user_isdelete = '0'
     </select>
     <select id="countByDepartment" parameterType="java.lang.String" resultType="int">
-        SELECT COUNT(*) FROM guser WHERE user_department = #{userDepartment}
+        SELECT COUNT(*) FROM guser WHERE user_department = #{userDepartment} and user_isdelete = '0'
     </select>
     <select id="getDptManager" parameterType="java.lang.String" resultMap="BaseResultMap">
-        SELECT * FROM guser where user_department = #{userDepartment}  AND user_position = #{userPosition}
+        SELECT * FROM guser where user_department = #{userDepartment}  AND user_position = #{userPosition} and user_isdelete = '0'
     </select>
     <select id="countUserByMouth" parameterType="java.lang.String" resultMap="MouthResultMap">
         select
@@ -484,9 +488,10 @@ sum(case month(guser.creation_time) when '11' then 1 else 0 end) as November,
 sum(case month(guser.creation_time) when '12' then 1 else 0 end) as December
 from guser
 where year(guser.creation_time)=#{year};
+and user_isdelete = '0'
     </select>
     <select id="countAllUser" resultType="int">
-        select count(*) from guser
+        select count(*) from guser where user_isdelete = '0'
     </select>
     <select id="getAllUser" resultMap="loginFunctionMap">
         SELECT
@@ -501,6 +506,7 @@ where year(guser.creation_time)=#{year};
        de.department_id = g.user_department
         AND po.position_id = g.user_position
         AND pe.permission_id = po.position_permission
+        and g.user_isdelete = '0'
     </select>
     <select id="getUserByDpt" parameterType="java.lang.String" resultMap="loginFunctionMap">
         SELECT
@@ -516,5 +522,6 @@ where year(guser.creation_time)=#{year};
         AND de.department_id = g.user_department
         AND po.position_id = g.user_position
         AND pe.permission_id = po.position_permission
+        and g.user_isdelete = '0'
     </select>
 </mapper>

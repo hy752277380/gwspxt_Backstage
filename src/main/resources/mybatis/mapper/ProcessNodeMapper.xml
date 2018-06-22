@@ -11,7 +11,31 @@
         <result column="process_node_step" property="processNodeStep"  />
         <result column="process_node_isdelete" property="processNodeIsdelete"  />
     </resultMap>
-
+    
+    <resultMap id="ProcessNodeDetailInfo" type="com.kcsj.gwglxt.DTO.ProcessInfo">
+        <association property="process_node" javaType="com.kcsj.gwglxt.entity.ProcessNode">
+            <id column="process_node_id" property="processNodeId"   />
+            <result column="process_node_process" property="processNodeProcess"   />
+            <result column="process_node_name" property="processNodeName" jdbcType="VARCHAR" />
+            <result column="process_node_department" property="processNodeDepartment"   />
+            <result column="process_node_position" property="processNodePosition"   />
+            <result column="process_node_step" property="processNodeStep"  />
+            <result column="process_node_isdelete" property="processNodeIsdelete"  />
+        </association>
+        <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
+            <id column="process_id" property="processId"   />
+            <result column="process_introduction" property="processIntroduction" jdbcType="VARCHAR" />
+            <result column="process_name" property="processName" jdbcType="VARCHAR" />
+        </association>
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <id column="user_department" property="departmentId"   />
+            <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        </association>
+        <association property="position" javaType="com.kcsj.gwglxt.entity.Position">
+            <result column="position_name" property="positionName" />
+        </association>
+    </resultMap>
+    
     <sql id="Example_Where_Clause" >
         <where >
             <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -257,17 +281,17 @@
         where process_node_id = #{processNodeId,jdbcType=CHAR}
     </update>
     <select id="getMaxStep" parameterType="java.lang.String" resultType="java.lang.Integer">
-        SELECT MAX(process_node_step) FROM process_node WHERE process_node_process =#{processNodeProcess}
+        SELECT MAX(process_node_step) FROM process_node WHERE process_node_process =#{processNodeProcess} and process_node_isdelete = '0'
     </select>
     <select id="getNextOne" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-         FROM process_node WHERE process_node_process = #{processNodeProcess} AND process_node_step = #{processNodeStep}
+         FROM process_node WHERE process_node_process = #{processNodeProcess} AND process_node_step = #{processNodeStep} and process_node_isdelete = '0'
     </select>
     <select id="getAllProcessNode" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-         FROM process_node WHERE process_node_process = #{processNodeProcess}
+         FROM process_node WHERE process_node_process = #{processNodeProcess} and process_node_isdelete = '0'
     </select>
     <select id="getProcessNodeByUser" resultMap="BaseResultMap">
         SELECT * FROM process_node WHERE process_node_department=#{processNodeDepartment} and process_node_position=#{processNodePosition}
@@ -275,6 +299,23 @@
     <select id="getProcessNodeByPro" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
          <include refid="Base_Column_List"/>
-        from process_node where process_node_process = #{process}
+        from process_node where process_node_process = #{process} and process_node_isdelete = '0'
+    </select>
+    <select id="getProNodeByPro" parameterType="java.lang.String" resultMap="ProcessNodeDetailInfo">
+        SELECT
+	*
+FROM
+	process_node pn,
+	process pr,
+	department de,
+	position po
+WHERE
+	pn.process_node_process = pr.process_id
+AND pn.process_node_department = de.department_id
+AND pn.process_node_position = po.position_id
+and pn.process_node_process =#{processId}
+    </select>
+    <select id="getOthers" resultMap="BaseResultMap">
+        SELECT * FROM process_node where process_node_process = #{processNodeProcess} and process_node_step > #{processNodeStep} and process_node_isdelete = '0'
     </select>
 </mapper>

@@ -525,13 +525,13 @@
         WHERE document_id = #{documentId}
     </update>
     <select id="getDocumentName" parameterType="java.lang.String" resultType="java.lang.String">
-        SELECT document_title FROM document WHERE document_id = #{documentId}
+        SELECT document_title FROM document WHERE document_id = #{documentId} and document_isdelete = '0'
     </select>
     <update id="updateDocumentLocation">
         UPDATE document SET document_location = #{documentLocation} WHERE document_id = #{documentId}
     </update>
     <select id="getDocumentLocation" parameterType="java.lang.String" resultType="int">
-        SELECT document_location FROM document WHERE document_id = #{documentId}
+        SELECT document_location FROM document WHERE document_id = #{documentId} and document_isdelete = '0'
     </select>
     <select id="getDocumentByState" resultMap="DocumentInfo">
 select
@@ -556,6 +556,7 @@ WHERE
 AND doc.document_dept = de.department_id
 AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
+        and doc.document_isdelete = '0'
         <choose>
             <when test="documentState!=null">
                 and doc.document_state = #{documentState}
@@ -598,6 +599,7 @@ AND doc.document_dept = de.department_id
 AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
 and doc.document_state = '5'
+and doc.document_isdelete = '0'
 <if test="searchInfo!=null">
     and (doc.document_title like '${searchInfo}' or doc.document_no like '${searchInfo}' or gu.user_name like '${searchInfo}')
 </if>
@@ -644,6 +646,7 @@ AND doc.document_dept = de.department_id
 AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
 and doc.document_id = #{documentId,jdbcType=CHAR}
+and doc.document_isdelete = '0'
     </select>
     <select id="findCheckingDoc" resultMap="DocumentBaseInfo">
         SELECT
@@ -667,7 +670,7 @@ WHERE
 and doc.document_dept = de.department_id
 and doc.document_type = dt.documenttype_id
 and doc.document_user = gu.user_id
-and doc.document_process = #{documentProcess} and doc.document_location =#{documentLocation} and doc.document_dept = #{userDepartment}
+and doc.document_process = #{documentProcess} and doc.document_location =#{documentLocation} and doc.document_dept = #{userDepartment} and doc.document_isdelete = '0'
     </select>
     <select id="getDocumentByDpt" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
         SELECT
@@ -708,17 +711,16 @@ and doc.document_dept = de.department_id
 and doc.document_type = dt.documenttype_id
 and doc.document_user = gu.user_id
 and bo.borrowing_document = doc.document_id
+and doc.document_isdelete = '0'
     </select>
     <select id="countAllDocument" parameterType="java.lang.String" resultType="int">
-        select count(*) from document
-        <where>
+        select count(*) from document where document_isdelete = '0'
             <if test="documentDept!=null">
-                document_dept = #{documentDept}
+                and document_dept = #{documentDept}
             </if>
             <if test="documentUser!=null">
-                document_user = #{documentUser}
+                and document_user = #{documentUser}
             </if>
-        </where>
     </select>
     <select id="countDocumentByMouth" parameterType="java.lang.String" resultMap="MouthResultMap">
          select
@@ -735,7 +737,7 @@ sum(case month(document.creation_time) when '10' then 1 else 0 end) as October,
 sum(case month(document.creation_time) when '11' then 1 else 0 end) as November,
 sum(case month(document.creation_time) when '12' then 1 else 0 end) as December
 from document
-where year(document.creation_time)=#{year}
+where year(document.creation_time)=#{year} and document_isdelete = '0'
 <if test="department!=null">
     and document.document_dept = #{department}
 </if>

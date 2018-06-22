@@ -52,7 +52,7 @@ public interface DocumentService {
 
     List<Documenttype> getAllDocType();
 
-    List<Process> getAllProcess();
+    QueryForPage getAllProcess(int currentPage);
 
     int insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
 
@@ -65,4 +65,8 @@ public interface DocumentService {
     int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom);
 
     List<ProcessNode> getProcessNodeByPro(String process);
+
+    List<MessageCustom> getUnReadMsg(String userId);
+    //消息标记已读
+    int isRead(String mobjectId);
 }

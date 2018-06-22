@@ -2,6 +2,7 @@ package com.kcsj.gwglxt.controller.DepartmentManage;
 
 import com.kcsj.gwglxt.DTO.PositionPermission;
 import com.kcsj.gwglxt.entity.Department;
+import com.kcsj.gwglxt.entity.Permission;
 import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.service.departmentManage.DepartmentService;
 import com.kcsj.gwglxt.vo.QueryForPage;
@@ -36,10 +37,55 @@ public class DepartmentController {
         QueryForPage queryForPage = departmentService.getAllDepartment(currentPage,searchInfo);
         return queryForPage;
     }
-    //添加职位
     //按部门查询职位权限
-    @RequestMapping("/getPoPeByDpr")
-    public void getPoPeByDpr(String department){
-        List<PositionPermission> positionPermissions = departmentService.getPoPeByDpr(department);
+    @RequestMapping("/getPoPeByDpt")
+    public List<PositionPermission> getPoPeByDpt(String department){
+        List<PositionPermission> positionPermissions = departmentService.getPoPeByDpt(department);
+        return positionPermissions;
+    }
+    //查询所有权限
+    @RequestMapping("/getAllPermission")
+    public List<Permission> getAllPermission(){
+        List<Permission> permissions = departmentService.getAllPermission();
+        return permissions;
+    }
+    //添加职位
+    @RequestMapping("/addPosition")
+    public String addPosition(@RequestBody Position position){
+        String result;
+        int addResult = departmentService.insertPosition(position);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (addResult == 0) {
+            result = "addFailed";
+        }else{
+            result = "addSuccess";
+        }
+        return result;
+    }
+    //修改职位权限
+    @RequestMapping("/updatePermission")
+    public String updatePermission(@RequestBody Position position){
+        String result;
+        int updateResult = departmentService.updatePermission(position);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "addFailed";
+        }else{
+            result = "addSuccess";
+        }
+        return result;
+    }
+    //修改部门信息
+    @RequestMapping("/updateDptInfo")
+    public String updateDptInfo(@RequestBody Department department){
+        String result;
+        int updateResult = departmentService.updateDptInfo(department);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "addFailed";
+        }else{
+            result = "addSuccess";
+        }
+        return result;
     }
 }

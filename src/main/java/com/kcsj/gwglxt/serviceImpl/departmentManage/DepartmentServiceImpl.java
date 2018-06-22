@@ -4,9 +4,11 @@ import com.kcsj.gwglxt.DTO.DocumentCustom;
 import com.kcsj.gwglxt.DTO.PositionPermission;
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.DepartmentExample;
+import com.kcsj.gwglxt.entity.Permission;
 import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.mapper.DepartmentMapper;
 import com.kcsj.gwglxt.mapper.GuserMapper;
+import com.kcsj.gwglxt.mapper.PermissionMapper;
 import com.kcsj.gwglxt.mapper.PositionMapper;
 import com.kcsj.gwglxt.service.departmentManage.DepartmentService;
 import com.kcsj.gwglxt.util.TeamUtil;
@@ -24,6 +26,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     private GuserMapper guserMapper;
     @Autowired
     private PositionMapper positionMapper;
+    @Autowired
+    private PermissionMapper permissionMapper;
 
     @Override
     public int countByExample(DepartmentExample example) {
@@ -110,9 +114,31 @@ public class DepartmentServiceImpl implements DepartmentService {
         queryForPage.init();
         return queryForPage;
     }
+    //获取职位和权限信息
+    @Override
+    public List<PositionPermission> getPoPeByDpt(String department) {
+        return positionMapper.getPoPeByDpt(department);
+    }
+    //获取所有权限
+    @Override
+    public List<Permission> getAllPermission() {
+        return permissionMapper.getAllPermission();
+    }
+    //添加职位
+    @Override
+    public int insertPosition(Position position) {
+        position.setPositionId(TeamUtil.getUuid());
+        position.setPositionIsdelete(0);
+        return positionMapper.insert(position);
+    }
 
     @Override
-    public List<PositionPermission> getPoPeByDpr(String department) {
-        return null;
+    public int updatePermission(Position position) {
+        return positionMapper.updateByPrimaryKeySelective(position);
+    }
+    //修改部门信息
+    @Override
+    public int updateDptInfo(Department department) {
+        return departmentMapper.updateByPrimaryKeySelective(department);
     }
 }

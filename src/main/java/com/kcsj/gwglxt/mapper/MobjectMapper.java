@@ -32,4 +32,6 @@ public interface MobjectMapper {
     int insertMbj(Mobject mobject);
 
     List<MessageCustom> getMyAllMessage(String mobjectUser);
+
+    List<MessageCustom> getUnReadMsg(String userId);
 }

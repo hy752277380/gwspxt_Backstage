@@ -6,6 +6,7 @@
         <id column="process_id" property="processId"   />
         <result column="process_introduction" property="processIntroduction" jdbcType="VARCHAR" />
         <result column="process_name" property="processName" jdbcType="VARCHAR" />
+        <result column="process_isdelete" property="processIsdelete" jdbcType="INTEGER" />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -69,7 +70,7 @@
     </sql>
 
     <sql id="Base_Column_List" >
-        process_id, process_introduction, process_name
+        process_id, process_introduction, process_name, process_isdelete
     </sql>
 
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.ProcessExample" >
@@ -110,7 +111,7 @@
         insert into process (process_id, process_introduction, process_name
             )
         values (#{processId,jdbcType=CHAR}, #{processIntroduction,jdbcType=VARCHAR}, #{processName,jdbcType=VARCHAR}
-            )
+            ,#{processIsdelete,jdbcType=INTEGER})
     </insert>
 
     <insert id="insertSelective" parameterType="com.kcsj.gwglxt.entity.Process" >
@@ -125,6 +126,9 @@
             <if test="processName != null" >
                 process_name,
             </if>
+            <if test="processIsdelete != null" >
+                process_isdelete,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="processId != null" >
@@ -135,6 +139,9 @@
             </if>
             <if test="processName != null" >
                 #{processName,jdbcType=VARCHAR},
+            </if>
+            <if test="processIsdelete != null" >
+                #{processIsdelete,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -158,6 +165,9 @@
             <if test="record.processName != null" >
                 process_name = #{record.processName,jdbcType=VARCHAR},
             </if>
+            <if test="record.processIsdelete != null" >
+                process_isdelete = #{record.processIsdelete,jdbcType=INTEGER},
+            </if>
         </set>
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
@@ -168,7 +178,8 @@
         update process
         set process_id = #{record.processId,jdbcType=CHAR},
             process_introduction = #{record.processIntroduction,jdbcType=VARCHAR},
-            process_name = #{record.processName,jdbcType=VARCHAR}
+            process_name = #{record.processName,jdbcType=VARCHAR},
+            process_isdelete = #{record.processIsdelete,jdbcType=INTEGER}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -183,6 +194,9 @@
             <if test="processName != null" >
                 process_name = #{processName,jdbcType=VARCHAR},
             </if>
+            <if test="processIsdelete != null" >
+                process_isdelete = #{processIsdelete,jdbcType=INTEGER},
+            </if>
         </set>
         where process_id = #{processId,jdbcType=CHAR}
     </update>
@@ -190,11 +204,12 @@
     <update id="updateByPrimaryKey" parameterType="com.kcsj.gwglxt.entity.Process" >
         update process
         set process_introduction = #{processIntroduction,jdbcType=VARCHAR},
-            process_name = #{processName,jdbcType=VARCHAR}
+            process_name = #{processName,jdbcType=VARCHAR},
+            process_isdelete = #{processIsdelete,jdbcType=INTEGER}
         where process_id = #{processId,jdbcType=CHAR}
     </update>
     <select id="getAllProcess" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
-        from process
+        from process where process_isdelete = '0'
     </select>
 </mapper>

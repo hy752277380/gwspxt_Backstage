@@ -106,6 +106,20 @@
             <result column="borrowing_state" property="borrowingState"/>
         </association>
     </resultMap>
+    <resultMap id="MouthResultMap" type="com.kcsj.gwglxt.DTO.CountByMouth">
+        <result column="January" property="Jan"/>
+        <result column="February" property="Feb"/>
+        <result column="March" property="Mar"/>
+        <result column="April" property="Apr"/>
+        <result column="May" property="May"/>
+        <result column="June" property="Jun"/>
+        <result column="July" property="Jul"/>
+        <result column="August" property="Aug"/>
+        <result column="September" property="Sep"/>
+        <result column="October" property="Oct"/>
+        <result column="November" property="Nov"/>
+        <result column="December" property="Dec"/>
+    </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
             <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -705,5 +719,22 @@ and bo.borrowing_document = doc.document_id
                 document_user = #{documentUser}
             </if>
         </where>
+    </select>
+    <select id="countDocumentByMouth" parameterType="java.lang.String" resultMap="MouthResultMap">
+         select
+sum(case month(document.creation_time) when '1' then 1 else 0 end) as January,
+sum(case month(document.creation_time) when '2' then 1 else 0 end) as February,
+sum(case month(document.creation_time) when '3' then 1 else 0 end) as March,
+sum(case month(document.creation_time) when '4' then 1 else 0 end) as April,
+sum(case month(document.creation_time) when '5' then 1 else 0 end) as May,
+sum(case month(document.creation_time) when '6' then 1 else 0 end) as June,
+sum(case month(document.creation_time) when '7' then 1 else 0 end) as July,
+sum(case month(document.creation_time) when '8' then 1 else 0 end) as August,
+sum(case month(document.creation_time) when '9' then 1 else 0 end) as September,
+sum(case month(document.creation_time) when '10' then 1 else 0 end) as October,
+sum(case month(document.creation_time) when '11' then 1 else 0 end) as November,
+sum(case month(document.creation_time) when '12' then 1 else 0 end) as December
+from document
+where year(document.creation_time)=#{year};
     </select>
 </mapper>

@@ -79,6 +79,7 @@ public class DocumentManageController {
     @RequestMapping("/updateDocument")
     public String updateDocument(@RequestBody Document document) {
         String result = null;
+        document.setDocumentLocation(0);
         int updateResult = documentService.updateByPrimaryKey(document);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (updateResult == 0) {

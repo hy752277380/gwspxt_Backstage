@@ -1,6 +1,6 @@
 package com.kcsj.gwglxt.serviceImpl;
 
-import com.kcsj.gwglxt.DTO.CountUserByMouth;
+import com.kcsj.gwglxt.DTO.CountByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
 import com.kcsj.gwglxt.DTO.LoginCustom;
@@ -96,7 +96,7 @@ public class GuserServiceImpl implements GuserService {
     }
     //首页月份人数统计
     @Override
-    public CountUserByMouth countUserByMouth() {
+    public CountByMouth countUserByMouth() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
         System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         return guserMapper.countUserByMouth(df.format(new Date()));
@@ -110,5 +110,12 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public int countAllDocument(String department,String user) {
         return documentMapper.countAllDocument(department,user);
+    }
+
+    @Override
+    public CountByMouth countDocumentByMouth() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
+        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
+        return documentMapper.countDocumentByMouth(df.format(new Date()));
     }
 }

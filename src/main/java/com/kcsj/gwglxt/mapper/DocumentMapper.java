@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.mapper;
 
+import com.kcsj.gwglxt.DTO.CountByMouth;
 import com.kcsj.gwglxt.entity.Borrowing;
 import com.kcsj.gwglxt.entity.Document;
 import com.kcsj.gwglxt.DTO.DocumentCustom;
@@ -49,4 +50,6 @@ public interface DocumentMapper {
     List<DocumentCustom> getDocumentByDpt(String userDepartment);
 
     int countAllDocument(@Param("documentDept") String department,@Param("documentUser") String user);
+
+    CountByMouth countDocumentByMouth(String year);
 }

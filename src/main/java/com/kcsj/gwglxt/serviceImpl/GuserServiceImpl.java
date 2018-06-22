@@ -80,6 +80,7 @@ public class GuserServiceImpl implements GuserService {
 
     @Override
     public int updateByPrimaryKeySelective(Guser record) {
+        System.out.println("ssssssss"+record);
         return guserMapper.updateByPrimaryKeySelective(record);
     }
 

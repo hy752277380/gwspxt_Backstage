@@ -127,7 +127,8 @@
                                         <label class="col-sm-2 control-label">账号:</label>
                                         <div class="col-md-2">
                                             <span class="form-control"   style="border:0;background:transparent;"  >{{user.guser.userAccount}}</span>
-                                            <input class="form-control"   style="border:0;background:transparent;" :value="user.guser.userAccount" type="hidden">
+                                            <input class="form-control" id="userId"  style="border:0;background:transparent;" :value="user.guser.userId" type="hidden">
+
                                         </div>
 
                                     </div>
@@ -179,7 +180,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">简介:</label>
                                         <div class="col-md-5">
-                                            <textarea rows="4" class="form-control"  type="text">{{user.guser.userIntroduction}}</textarea>
+                                            <textarea rows="4" id="userIntroduction" class="form-control"  type="text">{{user.guser.userIntroduction}}</textarea>
                                         </div>
 
                                     </div>
@@ -267,14 +268,37 @@
     });
 
     $('#modifyInfo').click(function () {
+   var userPhonenumber=$('#userPhonenumber').val();
+   var userEmail=$('#userEmail').val();
+   var userIntroduction=$('#userIntroduction').val();
+ var userId=$('#userId').val();
+            var data = {
+                "userId": userId,
+                "userPhonenumber": userPhonenumber,
+                "userEmail": userEmail,
+                "userIntroduction": userIntroduction,
+
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/gwspxt/updatePersonInfo",
+                dataType: "json",
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify(data),
+                success: function(data) {
+                    if(data) {
+                       console.log(data);
+                    }
+                    else {
+
+                    }
+                }
+            });
+
 
     })
 
-    function changePhone(){
-        var o = document.getElementById("userPhonenumber");
-        var c = o.innerHTML;
-        o.innerHTML = "<span  type='text'>" + c +"</span>"
-    }
 
 </script>
 </body>

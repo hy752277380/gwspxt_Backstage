@@ -167,6 +167,7 @@ public class GuserController {
     @RequestMapping("/updatePersonInfo")
     public String updatePersonInfo(Guser guser){
         String result;
+        System.out.println("我是刘华山"+guser);
         int updateResult = guserService.updateByPrimaryKeySelective(guser);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (updateResult == 0) {

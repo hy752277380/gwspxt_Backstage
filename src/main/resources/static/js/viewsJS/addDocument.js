@@ -37,7 +37,6 @@ $(function () {
             //'search-util': searchUtil
         }
     });
-    console.log(data.user.department);
     $('#addDoc').click(function() {
         var documentTitle = $('#documentTitle').val();
         var documentNo = $('#documentNo').val();
@@ -103,5 +102,49 @@ $(function () {
 
     });
 
+
+
+    $('#addDraft').click(function() {
+        var documentTitle = $('#documentTitle').val();
+        var documentNo = $('#documentNo').val();
+        var documentUser = $('#documentUser').val();
+        var doucmentContent = $('#doucmentContent').val();
+        var documentRemark = $('#documentRemark').val();
+        var documentType = $("#documentType  option:selected").val();
+        var documentDept = 1;
+        var documentSpeed = $('input[type=radio][name=documentSpeed]:checked').val();
+        var documentConfidential = $('input[type=radio][name=documentConfidential]:checked').val();
+        var documentProcess = $("#documentProcess  option:selected").val();
+
+        var data = {
+            "documentTitle": documentTitle,
+            "documentNo": documentNo,
+            "documentUser": documentUser,
+            "documentType": documentType,
+            "documentDept": documentDept,
+            "documentSpeed": documentSpeed,
+            "documentConfidential": documentConfidential,
+            "doucmentContent": doucmentContent,
+            "documentRemark": documentRemark,
+            "documentProcess": documentProcess,
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/gwspxt/addDocument",
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(data),
+            success: function(data) {
+                if(data) {
+                    window.location.href = "/gwspxt/reviewDocument";
+                    }
+                    else {
+
+                }
+            }
+        });
+
+    });
 
 })

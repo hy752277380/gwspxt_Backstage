@@ -309,6 +309,13 @@ public class DocumentManageController {
         List<MessageCustom> list = documentService.getMyAllMessage(loginCustom.getGuser().getUserId());
         return list;
     }
+    //获得本人未读消息
+    @RequestMapping("/getUnReadMsg")
+    public List<MessageCustom> getUnReadMsg(HttpSession httpSession) {
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        List<MessageCustom> list = documentService.getUnReadMsg(loginCustom.getGuser().getUserId());
+        return list;
+    }
 
     //查看本人所有日志
     @RequestMapping("/getAllLog")

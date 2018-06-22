@@ -65,4 +65,6 @@ public interface DocumentService {
     int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom);
 
     List<ProcessNode> getProcessNodeByPro(String process);
+
+    List<MessageCustom> getUnReadMsg(String userId);
 }

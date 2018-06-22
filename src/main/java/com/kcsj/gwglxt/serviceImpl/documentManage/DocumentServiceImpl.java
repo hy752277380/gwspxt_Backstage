@@ -507,5 +507,10 @@ public class DocumentServiceImpl implements DocumentService {
         queryForPage.init();
         return queryForPage;
     }
+    //获取本人未读消息
+    @Override
+    public List<MessageCustom> getUnReadMsg(String userId) {
+        return mobjectMapper.getUnReadMsg(userId);
+    }
 
 }

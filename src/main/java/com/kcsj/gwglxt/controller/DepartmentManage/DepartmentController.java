@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.controller.DepartmentManage;
 
+import com.kcsj.gwglxt.DTO.PositionPermission;
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.service.departmentManage.DepartmentService;
@@ -15,12 +16,6 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    //获得所有部门
-    @RequestMapping("/getAllDepartment")
-    public QueryForPage getAllDepartment(@PathVariable("currentPage") int currentPage, @PathVariable("searchInfo") String searchInfo){
-        QueryForPage queryForPage = departmentService.getAllDepartment(currentPage,searchInfo);
-        return queryForPage;
-    }
     /****************************************8部门管理**************************/
     //添加部门
     @RequestMapping("/addDepartment")
@@ -35,12 +30,16 @@ public class DepartmentController {
         }
         return result;
     }
-    //查询所有部门
-    //按部门查询职位
-    @RequestMapping("/getPositionByDpt")
-    public QueryForPage getPositionByDpt(String departmentId,int currentPage){
-        QueryForPage queryForPage = departmentService.getPositionByDpt(departmentId,currentPage);
+    //获得所有部门
+    @RequestMapping("/getAllDepartment")
+    public QueryForPage getAllDepartment(int currentPage, String searchInfo){
+        QueryForPage queryForPage = departmentService.getAllDepartment(currentPage,searchInfo);
         return queryForPage;
     }
-
+    //添加职位
+    //按部门查询职位权限
+    @RequestMapping("/getPoPeByDpr")
+    public void getPoPeByDpr(String department){
+        List<PositionPermission> positionPermissions = departmentService.getPoPeByDpr(department);
+    }
 }

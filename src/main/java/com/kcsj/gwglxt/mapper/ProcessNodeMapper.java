@@ -44,4 +44,6 @@ public interface ProcessNodeMapper {
 
     //根据流程id查询流程节点详细信息
     List<ProcessInfo> getProNodeByPro(String processId);
+
+    List<ProcessNode> getOthers(@Param("processNodeProcess") String processNodeProcess,@Param("processNodeStep") Integer processNodeStep);
 }

@@ -237,11 +237,11 @@
         where position_id = #{positionId,jdbcType=CHAR}
     </update>
     <select id="getDptManager" parameterType="java.lang.String" resultMap="BaseResultMap">
-        SELECT MAX(position_permission) FROM position where position_dept = #{positionDept}
+        SELECT MAX(position_permission) FROM position where position_dept = #{positionDept} and po.position_isdelete = '0'
     </select>
     <select id="getPositionByDpt" parameterType="java.lang.String" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
-        from position where position_dept = #{department}
+        from position where position_dept = #{department} and position_isdelete = '0'
     </select>
     <select id="getPoPeByDpt" parameterType="java.lang.String" resultMap="PositionandPermission">
         SELECT
@@ -253,6 +253,6 @@
 	pe.permission_id,
 	pe.permission_level,
 	pe.permission_remark
-         from position po,permission pe WHERE po.position_permission = pe.permission_id and po.position_id = #{department}
+         from position po,permission pe WHERE po.position_permission = pe.permission_id and po.position_id = #{department} and po.position_isdelete = '0'
     </select>
 </mapper>

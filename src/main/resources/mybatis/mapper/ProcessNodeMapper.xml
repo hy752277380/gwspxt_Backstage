@@ -281,17 +281,17 @@
         where process_node_id = #{processNodeId,jdbcType=CHAR}
     </update>
     <select id="getMaxStep" parameterType="java.lang.String" resultType="java.lang.Integer">
-        SELECT MAX(process_node_step) FROM process_node WHERE process_node_process =#{processNodeProcess}
+        SELECT MAX(process_node_step) FROM process_node WHERE process_node_process =#{processNodeProcess} and process_node_isdelete = '0'
     </select>
     <select id="getNextOne" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-         FROM process_node WHERE process_node_process = #{processNodeProcess} AND process_node_step = #{processNodeStep}
+         FROM process_node WHERE process_node_process = #{processNodeProcess} AND process_node_step = #{processNodeStep} and process_node_isdelete = '0'
     </select>
     <select id="getAllProcessNode" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-         FROM process_node WHERE process_node_process = #{processNodeProcess}
+         FROM process_node WHERE process_node_process = #{processNodeProcess} and process_node_isdelete = '0'
     </select>
     <select id="getProcessNodeByUser" resultMap="BaseResultMap">
         SELECT * FROM process_node WHERE process_node_department=#{processNodeDepartment} and process_node_position=#{processNodePosition}
@@ -299,7 +299,7 @@
     <select id="getProcessNodeByPro" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
          <include refid="Base_Column_List"/>
-        from process_node where process_node_process = #{process}
+        from process_node where process_node_process = #{process} and process_node_isdelete = '0'
     </select>
     <select id="getProNodeByPro" parameterType="java.lang.String" resultMap="ProcessNodeDetailInfo">
         SELECT
@@ -314,5 +314,8 @@ WHERE
 AND pn.process_node_department = de.department_id
 AND pn.process_node_position = po.position_id
 and pn.process_node_process =#{processId}
+    </select>
+    <select id="getOthers" resultMap="BaseResultMap">
+        SELECT * FROM process_node where process_node_process = #{processNodeProcess} and process_node_step > #{processNodeStep} and process_node_isdelete = '0'
     </select>
 </mapper>

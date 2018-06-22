@@ -3,6 +3,8 @@ package com.kcsj.gwglxt.mapper;
 import com.kcsj.gwglxt.entity.ProcessExample;
 import com.kcsj.gwglxt.entity.Process;
 import java.util.List;
+
+import com.kcsj.gwglxt.entity.ProcessNode;
 import org.apache.ibatis.annotations.Param;
 
 public interface ProcessMapper {
@@ -29,4 +31,5 @@ public interface ProcessMapper {
     int updateByPrimaryKey(Process record);
 
     List<Process> getAllProcess();
+
 }

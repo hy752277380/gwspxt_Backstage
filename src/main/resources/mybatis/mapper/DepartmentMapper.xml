@@ -208,11 +208,9 @@
         where department_id = #{departmentId,jdbcType=CHAR}
     </update>
     <select id="getAllDepartment" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/> from department
-        <where>
+        select <include refid="Base_Column_List"/> from department where department_isdelete = '0'
             <if test="searchInfo!=null">
-                department_name like '${searchInfo}'
+                and department_name like '${searchInfo}'
             </if>
-        </where>
     </select>
 </mapper>

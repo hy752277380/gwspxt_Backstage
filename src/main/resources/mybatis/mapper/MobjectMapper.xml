@@ -242,6 +242,7 @@ FROM
 WHERE
 	mo.mobject_message = me.message_id
 AND mo.mobject_user = #{mobjectUser}
+and me.message_isdelete= '0'
     </select>
     <select id="getUnReadMsg" parameterType="java.lang.String" resultMap="messageInfo">
         SELECT
@@ -259,5 +260,6 @@ WHERE
 	mo.mobject_message = me.message_id
 AND mo.mobject_user = #{mobjectUser}
 and mo.mobject_isread = '0'
+and me.message_isdelete= '0'
     </select>
 </mapper>

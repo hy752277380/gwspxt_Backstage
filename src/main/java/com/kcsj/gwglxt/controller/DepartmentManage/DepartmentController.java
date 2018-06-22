@@ -75,4 +75,17 @@ public class DepartmentController {
         }
         return result;
     }
+    //修改部门信息
+    @RequestMapping("/updateDptInfo")
+    public String updateDptInfo(@RequestBody Department department){
+        String result;
+        int updateResult = departmentService.updateDptInfo(department);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "addFailed";
+        }else{
+            result = "addSuccess";
+        }
+        return result;
+    }
 }

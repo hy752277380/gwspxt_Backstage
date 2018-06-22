@@ -42,4 +42,6 @@ public interface DepartmentService {
     int insertPosition(Position position);
 
     int updatePermission(Position position);
+
+    int updateDptInfo(Department department);
 }

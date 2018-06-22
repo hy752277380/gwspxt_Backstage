@@ -136,4 +136,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public int updatePermission(Position position) {
         return positionMapper.updateByPrimaryKeySelective(position);
     }
+    //修改部门信息
+    @Override
+    public int updateDptInfo(Department department) {
+        return departmentMapper.updateByPrimaryKeySelective(department);
+    }
 }

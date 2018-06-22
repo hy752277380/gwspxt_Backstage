@@ -29,4 +29,6 @@ public interface PositionMapper {
     int updateByPrimaryKey(Position record);
 
     List<Position> getDptManager(String documentDept);
+
+    List<Position> getPositionByDpt(String department);
 }

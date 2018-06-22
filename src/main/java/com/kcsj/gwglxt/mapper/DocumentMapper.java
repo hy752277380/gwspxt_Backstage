@@ -1,6 +1,7 @@
 package com.kcsj.gwglxt.mapper;
 
 import com.kcsj.gwglxt.DTO.CountByMouth;
+import com.kcsj.gwglxt.DTO.LoginCustom;
 import com.kcsj.gwglxt.entity.Borrowing;
 import com.kcsj.gwglxt.entity.Document;
 import com.kcsj.gwglxt.DTO.DocumentCustom;

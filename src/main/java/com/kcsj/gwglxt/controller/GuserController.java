@@ -3,8 +3,10 @@ package com.kcsj.gwglxt.controller;
 import com.kcsj.gwglxt.DTO.CountByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.service.GuserService;
 import com.kcsj.gwglxt.util.md5;
+import com.kcsj.gwglxt.vo.QueryForPage;
 import com.kcsj.gwglxt.vo.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -158,6 +161,31 @@ public class GuserController {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         CountByMouth countByMouth = guserService.countPersonalDocumentByMouth(loginCustom.getGuser().getUserId());
         return countByMouth;
+    }
+    /***************************8账号管理*******************************/
+    //列出所有账号
+    @RequestMapping("/getAllUser")
+    public QueryForPage getAllUser(int currentPage){
+        QueryForPage users = guserService.getAllUser(currentPage);
+        return users;
+    }
+    //添加账号
+    @RequestMapping("/andUser")
+    public String andUser(Guser guser){
+        String result;
+        int insertResult = guserService.insert(guser);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (insertResult == 0) {
+            result = "updateFailed";
+        }
+        result = "updateSuccess";
+        return result;
+    }
+    //根据部门查询本部门职位
+    @RequestMapping("/getPositionByDpt/{department}")
+    public List<Position> getPositionByDpt(@PathVariable("department") String department){
+        List<Position> positions = guserService.getPositionByDpt(department);
+        return positions;
     }
 }
 

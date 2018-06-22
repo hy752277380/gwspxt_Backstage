@@ -46,4 +46,6 @@ public interface GuserMapper {
     CountByMouth countUserByMouth(String year);
 
     int countAllUser();
+
+    List<LoginCustom> getAllUser();
 }

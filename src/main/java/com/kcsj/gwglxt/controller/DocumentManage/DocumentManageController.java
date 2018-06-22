@@ -81,7 +81,7 @@ public class DocumentManageController {
         String result = null;
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         document.setDocumentLocation(0);
-        document.setDocumentState(0);
+        document.setDocumentState(1);
         document.setCreationTime(df.format(new Date()));
         document.setDocumentIsdelete(0);
         int updateResult = documentService.updateByPrimaryKey(document);

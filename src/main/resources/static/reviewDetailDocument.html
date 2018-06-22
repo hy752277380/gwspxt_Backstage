@@ -177,9 +177,9 @@
                                         </div>
                                         <div v-if="lhs_edit.action=='edit'" class="form-group" style="float:right;margin-right: 25%;">
                                             <div>
-                                                <button onclick="editDoc()" type="button" class="btn btn-success">确认</button>
+                                                <button onclick="commitDoc()" type="button" class="btn btn-success">确认</button>
                                                 <button type="button" class="btn btn-warning"
-                                                        style="margin-left: 10px;">草稿
+                                                        style="margin-left: 10px;" onclick="editDraft()">草稿
                                                 </button>
                                             </div>
                                         </div>
@@ -278,7 +278,7 @@
 <script src="js/viewsJS/reviewDetailDocument.js"></script>
 <!-- Director for demo purposes -->
 <script type="text/javascript">
-    function editDoc() {
+    function editDraft(){
        var documentId=$('#documentId').val();
         var documentTitle = $('#documentTitle').val();
         var documentNo = $('#documentNo').val();
@@ -321,6 +321,73 @@
                 }
             }
         });
+
+    }
+
+    function commitDoc() {
+        var documentId=$('#documentId').val();
+        var documentTitle = $('#documentTitle').val();
+        var documentNo = $('#documentNo').val();
+        var documentUser = $('#documentUser').val();
+        var doucmentContent = $('#doucmentContent').val();
+        var documentRemark = $('#documentRemark').val();
+        var documentType = $("#documentType  option:selected").val();
+        var documentDept = 1;
+        var documentSpeed = $('input[type=radio][name=documentSpeed]:checked').val();
+        var documentConfidential = $('input[type=radio][name=documentConfidential]:checked').val();
+        var documentProcess = $("#documentProcess  option:selected").val();
+
+        var data = {
+            "documentId": documentId,
+            "documentTitle": documentTitle,
+            "documentNo": documentNo,
+            "documentUser": documentUser,
+            "documentType": documentType,
+            "documentDept": documentDept,
+            "documentSpeed": documentSpeed,
+            "documentConfidential": documentConfidential,
+            "doucmentContent": doucmentContent,
+            "documentRemark": documentRemark,
+            "documentProcess": documentProcess,
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/gwspxt/addDocument",
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(data),
+            success: function (data) {
+                if(data) {
+                    var documentId = data.documentId;
+                    console.log(documentId);
+                    $.ajax({
+                        type: "post",
+                        url: "/gwspxt/updateDocumentState",
+                        dataType: "json",
+                        data: JSON.stringify(data),
+                        contentType: 'application/json;charset=UTF-8',
+                        success: function(data) {
+                            $.ajax({
+                                type: "post",
+                                url: "/gwspxt/messageNextOne",
+                                dataType: "json",
+                                data: {
+                                    documentId: documentId,
+                                },
+                                success: function(data) {
+                                  /*  window.location.href = "/gwspxt/reviewDocument";*/
+                        }
+                            });
+
+                        }
+                    });
+                }  else {
+
+                }
+            }
+        });
+
 
     }
 </script>

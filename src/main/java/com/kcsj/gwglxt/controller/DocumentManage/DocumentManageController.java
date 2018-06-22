@@ -70,27 +70,27 @@ public class DocumentManageController {
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (addResult == 0) {
             result = "updateFailed";
+        }else{
+            result = "updateSuccess";
         }
-        result = "updateSuccess";
         return document;
     }
 
     //修改文档
     @RequestMapping("/updateDocument")
-    public String updateDocument(@RequestBody Document document) {
+    public Document updateDocument(@RequestBody Document document,HttpSession httpSession) {
         String result = null;
+        //获取session中的信息
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         document.setDocumentLocation(0);
-        document.setDocumentState(0);
+        document.setDocumentState(1);
         document.setCreationTime(df.format(new Date()));
         document.setDocumentIsdelete(0);
-        int updateResult = documentService.updateByPrimaryKey(document);
-        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
-        if (updateResult == 0) {
-            result = "updateFailed";
-        }
-        result = "updateSuccess";
-        return "{\"msg\":\"" + result + "\"}";
+        document.setDocumentUser(loginCustom.getGuser().getUserId());
+        document.setDocumentDept(loginCustom.getGuser().getUserDepartment());
+        documentService.updateByPrimaryKey(document);
+        return document;
     }
 
     //提交文档，更改文档状态
@@ -122,8 +122,9 @@ public class DocumentManageController {
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (updateResult == 0) {
             result = "updateFailed";
+        }else{
+            result = "updateSuccess";
         }
-        result = "updateSuccess";
         return "{\"msg\":\"" + result + "\"}";
     }
 
@@ -214,10 +215,7 @@ public class DocumentManageController {
 
     //根据文档状态查询文档
     @RequestMapping("/getDocumentByState")
-
     public QueryForPage getDocumentByState(String documentType, Integer documentConfidential, Integer documentState, int currentPage, String searchInfo, HttpSession httpSession) {
-
-
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         QueryForPage queryForPage = documentService.getDocumentByState(documentType, documentConfidential, documentState, loginCustom.getGuser().getUserId(), currentPage, searchInfo);
@@ -237,6 +235,12 @@ public class DocumentManageController {
         Document document = documentService.selectByPrimaryKey(documentId);
         List<ProcessNode> list = documentService.getAllProcessNode(document.getDocumentProcess());
         return list;
+    }
+    //根据流程id流程子节点
+    @RequestMapping("/getProcessNodeByPro")
+    public List<ProcessNode> getProcessNodeByPro(String process){
+        List<ProcessNode> processNodes = documentService.getProcessNodeByPro(process);
+        return  processNodes;
     }
 
     //查询本人需要审核的文档

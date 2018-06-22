@@ -38,4 +38,6 @@ public interface ProcessNodeMapper {
     List<ProcessNode> getAllProcessNode(String processNodeProcess);
 
     List<ProcessNode> getProcessNodeByUser(@Param("processNodeDepartment") String processNodeDepartment,@Param("processNodePosition") String processNodePosition);
+
+    List<ProcessNode> getProcessNodeByPro(String process);
 }

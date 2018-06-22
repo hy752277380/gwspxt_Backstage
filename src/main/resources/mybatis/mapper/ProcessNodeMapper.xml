@@ -272,4 +272,9 @@
     <select id="getProcessNodeByUser" resultMap="BaseResultMap">
         SELECT * FROM process_node WHERE process_node_department=#{processNodeDepartment} and process_node_position=#{processNodePosition}
     </select>
+    <select id="getProcessNodeByPro" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+         <include refid="Base_Column_List"/>
+        from process_node where process_node_process = #{process}
+    </select>
 </mapper>

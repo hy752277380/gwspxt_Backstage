@@ -105,11 +105,16 @@ $(function () {
                 this.$data.page.currentPage = pageIndex;
                 this.getInfo({currentPage: pageIndex});
             },
-            applyBorrowing(index){
+            /*申请借阅事件*/
+            applyBorrowing(index) {
                 let documentCustom = this.$data.docData[index];
                 $.post('/gwspxt/applyRead', {documentCustom: documentCustom}, function (response) {
                     if (response.msg == "updateSuccess") {
-                        spop({template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`, style: "success", autoclose: 2000});
+                        spop({
+                            template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`,
+                            style: "success",
+                            autoclose: 2000
+                        });
                     } else if (response.msg == "updateFailed") {
                         spop({template: `申请失败`, style: "error", autoclose: 2000});
                     }

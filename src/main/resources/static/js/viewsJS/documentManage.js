@@ -203,10 +203,10 @@ $(function () {
             },
             checkDocument(index) {
                 var lhs_check = {
-                    action: "check",
-                    doc_id: this.docData[index].document.documentId
+                    "action":"check",
+                    "doc_id":this.docData[index].document.documentId
                 }
-                sessionStorage.setItem('lhs_docId', JSON.stringify(lhs_check));
+                sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_check));
                 window.location.href = "/gwspxt/reviewDetailDocument";
             },
 

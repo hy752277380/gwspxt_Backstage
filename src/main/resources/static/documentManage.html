@@ -144,7 +144,7 @@
                                                             @click="deleteDocument(index)"></i> 删除
                                                     </button>
                                                 </template>
-                                                <!-- 非本部门未借阅文档 -->
+
                                                 <template v-else-if="doc.document.documentState==2">
                                                     <button type="button" class="btn btn-primary btn-sm"
                                                             @click="checkDocument(index)"><i

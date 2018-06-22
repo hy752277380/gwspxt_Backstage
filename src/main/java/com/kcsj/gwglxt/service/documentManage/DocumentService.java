@@ -63,4 +63,6 @@ public interface DocumentService {
     int acceptApply(DocumentCustom documentCustom, LoginCustom loginCustom);
 
     int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom);
+
+    List<ProcessNode> getProcessNodeByPro(String process);
 }

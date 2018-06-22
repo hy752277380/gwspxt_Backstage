@@ -451,6 +451,12 @@ public class DocumentServiceImpl implements DocumentService {
 
     }
 
+    //根据流程id流程子节点
+    @Override
+    public List<ProcessNode> getProcessNodeByPro(String process) {
+        return processNodeMapper.getProcessNodeByPro(process);
+    }
+
     @Override
     public int insertMsg(Message message) {
         return messageMapper.insertMsg(message);

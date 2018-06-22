@@ -234,6 +234,12 @@ public class DocumentManageController {
         List<ProcessNode> list = documentService.getAllProcessNode(document.getDocumentProcess());
         return list;
     }
+    //根据流程id流程子节点
+    @RequestMapping("/getProcessNodeByPro")
+    public List<ProcessNode> getProcessNodeByPro(String process){
+        List<ProcessNode> processNodes = documentService.getProcessNodeByPro(process);
+        return  processNodes;
+    }
 
     //查询本人需要审核的文档
     @RequestMapping("/findCheckDoc")

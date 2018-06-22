@@ -182,8 +182,8 @@ public class GuserController {
         return result;
     }
     //根据部门查询本部门职位
-    @RequestMapping("/getPositionByDpt/{department}")
-    public List<Position> getPositionByDpt(@PathVariable("department") String department){
+    @RequestMapping("/getPositionByDpt")
+    public List<Position> getPositionByDpt(String department){
         List<Position> positions = guserService.getPositionByDpt(department);
         return positions;
     }

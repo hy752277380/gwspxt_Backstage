@@ -29,4 +29,6 @@ public interface LogMapper {
     int updateByPrimaryKey(Log record);
 
     List<Log> getAllLog(String userId);
+
+    List<Log> getLogByUser(String userId);
 }

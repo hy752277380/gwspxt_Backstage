@@ -3,9 +3,12 @@ package com.kcsj.gwglxt.serviceImpl.departmentManage;
 import com.kcsj.gwglxt.DTO.DocumentCustom;
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.DepartmentExample;
+import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.mapper.DepartmentMapper;
 import com.kcsj.gwglxt.mapper.GuserMapper;
+import com.kcsj.gwglxt.mapper.PositionMapper;
 import com.kcsj.gwglxt.service.departmentManage.DepartmentService;
+import com.kcsj.gwglxt.util.TeamUtil;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentMapper departmentMapper;
     @Autowired
     private GuserMapper guserMapper;
+    @Autowired
+    private PositionMapper positionMapper;
 
     @Override
     public int countByExample(DepartmentExample example) {
@@ -36,7 +41,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public int insert(Department record) {
-        return 0;
+        record.setDepartmentId(TeamUtil.getUuid());
+        record.setDepartmentIsdelete(0);
+        return departmentMapper.insert(record);
     }
 
     @Override
@@ -94,6 +101,29 @@ public class DepartmentServiceImpl implements DepartmentService {
             endSet = allRow;
         }
         List<Department> list_thisPage = list.subList(offSet, endSet);
+        queryForPage.setList(list_thisPage);
+        queryForPage.setAllRow(allRow);
+        queryForPage.setCurrentPage(currentPages);
+        queryForPage.setPageSize(pagesize);
+        queryForPage.setTotalPage(totalPage);
+        queryForPage.init();
+        return queryForPage;
+    }
+
+    @Override
+    public QueryForPage getPositionByDpt(String departmentId,int currentPage) {
+        List<Position> positions = positionMapper.getPositionByDpt(departmentId);
+        QueryForPage queryForPage = new QueryForPage();
+        int pagesize = 10;//每页记录数
+        int allRow = positions.size();//总记录数
+        int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
+        int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
+        int currentPages = QueryForPage.countCurrentPage(currentPage);
+        int endSet = pagesize * currentPage;
+        if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
+            endSet = allRow;
+        }
+        List<Position> list_thisPage = positions.subList(offSet, endSet);
         queryForPage.setList(list_thisPage);
         queryForPage.setAllRow(allRow);
         queryForPage.setCurrentPage(currentPages);

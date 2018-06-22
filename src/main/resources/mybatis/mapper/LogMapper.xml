@@ -212,4 +212,8 @@
         select <include refid="Base_Column_List"/>
         where log_user=#{logUser}
     </select>
+    <select id="getLogByUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from log where log_user = #{userId}
+    </select>
 </mapper>

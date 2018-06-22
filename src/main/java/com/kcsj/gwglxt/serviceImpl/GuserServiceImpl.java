@@ -5,9 +5,11 @@ import com.kcsj.gwglxt.DTO.DocumentCustom;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
 import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.entity.Log;
 import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.mapper.DocumentMapper;
 import com.kcsj.gwglxt.mapper.GuserMapper;
+import com.kcsj.gwglxt.mapper.LogMapper;
 import com.kcsj.gwglxt.mapper.PositionMapper;
 import com.kcsj.gwglxt.service.GuserService;
 import com.kcsj.gwglxt.util.TeamUtil;
@@ -29,6 +31,8 @@ public class GuserServiceImpl implements GuserService {
     private DocumentMapper documentMapper;
     @Autowired
     private PositionMapper positionMapper;
+    @Autowired
+    private LogMapper logMapper;
     @Override
     public int countByExample(GuserExample example) {
         return 0;
@@ -195,5 +199,33 @@ public class GuserServiceImpl implements GuserService {
             result = result + deleteResult;
         }
         return result;
+    }
+
+    @Override
+    public QueryForPage getUserByDpt(String userDepartment,int currentPage) {
+        List<LoginCustom> loginCustoms = guserMapper.getUserByDpt(userDepartment);
+        QueryForPage queryForPage = new QueryForPage();
+        int pagesize = 10;//每页记录数
+        int allRow = loginCustoms.size();//总记录数
+        int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
+        int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
+        int currentPages = QueryForPage.countCurrentPage(currentPage);
+        int endSet = pagesize * currentPage;
+        if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
+            endSet = allRow;
+        }
+        List<LoginCustom> list_thisPage = loginCustoms.subList(offSet, endSet);
+        queryForPage.setList(list_thisPage);
+        queryForPage.setAllRow(allRow);
+        queryForPage.setCurrentPage(currentPages);
+        queryForPage.setPageSize(pagesize);
+        queryForPage.setTotalPage(totalPage);
+        queryForPage.init();
+        return queryForPage;
+    }
+    //获取目标人员日志
+    @Override
+    public List<Log> getLogByUser(String userId) {
+        return logMapper.getLogByUser(userId);
     }
 }

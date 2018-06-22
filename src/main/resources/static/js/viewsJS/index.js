@@ -4,18 +4,26 @@ $(function () {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
         name: 'index',
         docData: '', //所有数据
+        companyMemberNum:'',
+        companyDocumentNum:'',
+        departmentDocumentNum:'',
+        personalDocumentNum:'',
         ready: false,
         chars: {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             datasets: []
         },
     }
-
+    /* 红色  217,83,79 */
+    /* 紫色  114,102,186 */
+    /* 蓝色  35,183,229 */
+    /* 绿色  39,194,76 */
+    /* 灰色  151,187,205 */
     var charDataBase = {
         label: "1",
-        fillColor: "rgba(151,187,205,0.2)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
+        fillColor: "rgba(217,83,79,0.2)",
+        strokeColor: "rgba(217,83,79,1)",
+        pointColor: "rgba(217,83,79,1)",
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
         pointHighlightStroke: "rgba(220,220,220,1)",

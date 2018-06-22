@@ -103,7 +103,15 @@
                                             <td>{{doc.department.departmentName}}</td>
                                             <td>{{doc.department.departmentName}}</td>
                                             <td>{{doc.document.documentTitle}}</td>
-                                            <td>{{doc.borrowing.borrowingReason}}</td>
+                                            <td>
+                                                <a tabindex="0"
+                                                   class="btn btn-sm btn-danger"
+                                                   role="button"
+                                                   data-toggle="popover"
+                                                   data-trigger="focus"
+                                                   title="Dismissible popover"
+                                                   :data-content="doc.borrowing.borrowingReason">查看</a>
+                                            </td>
                                             <td>
                                                 <button type="button" @click="accept(index)" class="btn btn-primary btn-sm" style="margin-right: 10px;"><i class="fa fa-check"></i> 同意</button>
                                                 <button type="button" @click="refuse(index)" class="btn btn-danger btn-sm"><i class="fa fa-reply"></i> 拒绝</button>

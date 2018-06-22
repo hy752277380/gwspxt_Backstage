@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.service.departmentManage;
 
+import com.kcsj.gwglxt.DTO.PositionPermission;
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.DepartmentExample;
 import com.kcsj.gwglxt.entity.Position;
@@ -33,5 +34,5 @@ public interface DepartmentService {
 
     QueryForPage getAllDepartment(int currentPage,String searchInfo);
 
-    QueryForPage getPositionByDpt(String departmentId,int currentPage);
+    List<PositionPermission> getPoPeByDpr(String department);
 }

@@ -49,11 +49,19 @@ public class GuserServiceImpl implements GuserService {
     }
     //插入用户信息
     @Override
-    public int insert(Guser record) {
+    public int insertUser(Guser record,LoginCustom loginCustom) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         record.setUserId(TeamUtil.getUuid());
         record.setCreationTime(df.format(new Date()));
         record.setUserIsdelete(0);
+        //添加操作日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setCreationTime(df.format(new Date()));
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        //根据职位id获取职位名称
+        log.setLogContent("删除了"+record.getUserName()+"流程。");
+        logMapper.insert(log);
         return guserMapper.insert(record);
     }
 
@@ -82,14 +90,31 @@ public class GuserServiceImpl implements GuserService {
         return 0;
     }
 
+    //修改个人信息
     @Override
-    public int updateByPrimaryKeySelective(Guser record) {
-        System.out.println("ssssssss"+record);
+    public int updateByPrimaryKeySelective(Guser record,LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //添加操作日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setCreationTime(df.format(new Date()));
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        //根据职位id获取职位名称
+        log.setLogContent("修改了个人信息。");
+        logMapper.insert(log);
         return guserMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
-    public int updateByPrimaryKey(Guser record) {
+    public int updateByPrimaryKey(Guser record,LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //添加操作日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setCreationTime(df.format(new Date()));
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        //根据职位id获取职位名称
+        log.setLogContent("修改了"+record.getUserName()+"的信息。");
         return guserMapper.updateByPrimaryKey(record);
     }
 
@@ -183,7 +208,16 @@ public class GuserServiceImpl implements GuserService {
     }
     //重置密码
     @Override
-    public int resetPassword(String userId) {
+    public int resetPassword(String userId,LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //添加操作日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setCreationTime(df.format(new Date()));
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        //根据职位id获取职位名称
+        log.setLogContent("重置了"+guserMapper.selectByPrimaryKey(userId).getUserName()+"的密码");
+        logMapper.insert(log);
         String password = md5.GetMD5Code("111111");
         Guser guser = new Guser();
         guser.setUserId(userId);
@@ -192,7 +226,7 @@ public class GuserServiceImpl implements GuserService {
     }
     //批量删除
     @Override
-    public int batchDelete(String[] userIds) {
+    public int batchDelete(String[] userIds,LoginCustom loginCustom) {
         int result = 0;
         if (userIds==null&&"".equals(userIds)){
             return 0;
@@ -205,6 +239,15 @@ public class GuserServiceImpl implements GuserService {
                 int deleteResult = guserMapper.updateByPrimaryKeySelective(guser);
                 result = result + deleteResult;
             }
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            //添加操作日志
+            Log log = new Log();
+            log.setLogId(TeamUtil.getUuid());
+            log.setCreationTime(df.format(new Date()));
+            log.setLogUser(loginCustom.getGuser().getUserId());
+            //根据职位id获取职位名称
+            log.setLogContent("删除了"+result+"人。");
+            logMapper.insert(log);
             return result;
         }
     }
@@ -230,6 +273,11 @@ public class GuserServiceImpl implements GuserService {
         queryForPage.setTotalPage(totalPage);
         queryForPage.init();
         return queryForPage;
+    }
+
+    @Override
+    public LoginCustom getUserById(String userId) {
+        return guserMapper.getPersonalInfo(userId);
     }
 
 

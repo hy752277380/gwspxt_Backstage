@@ -18,7 +18,7 @@ public interface GuserService {
 
     int deleteByPrimaryKey(String userId);
 
-    int insert(Guser record);
+    int insertUser(Guser record,LoginCustom loginCustom);
 
     int insertSelective(Guser record);
 
@@ -30,9 +30,9 @@ public interface GuserService {
 
     int updateByExample(@Param("record") Guser record, @Param("example") GuserExample example);
 
-    int updateByPrimaryKeySelective(Guser record);
+    int updateByPrimaryKeySelective(Guser record,LoginCustom loginCustom);
 
-    int updateByPrimaryKey(Guser record);
+    int updateByPrimaryKey(Guser record,LoginCustom loginCustom);
 
     LoginCustom loginInfo(String userId);
     LoginCustom loginFunction(String userAccount);
@@ -55,10 +55,11 @@ public interface GuserService {
 
     List<Position> getPositionByDpt(String department);
 
-    int resetPassword(String userId);
+    int resetPassword(String userId,LoginCustom loginCustom);
 
-    int batchDelete(String[] userIds);
+    int batchDelete(String[] userIds,LoginCustom loginCustom);
 
     QueryForPage getUserByDpt(String userDepartment,int currentPage);
 
+    LoginCustom getUserById(String userId);
 }

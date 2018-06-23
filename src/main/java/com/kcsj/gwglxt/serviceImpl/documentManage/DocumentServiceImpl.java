@@ -450,7 +450,6 @@ public class DocumentServiceImpl implements DocumentService {
         }
 
     }
-
     //根据流程id流程子节点
     @Override
     public List<ProcessNode> getProcessNodeByPro(String process) {
@@ -471,11 +470,6 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public List<MessageCustom> getMyAllMessage(String userId) {
         return mobjectMapper.getMyAllMessage(userId);
-    }
-
-    @Override
-    public List<Log> getAllLog(String userId) {
-        return logMapper.getAllLog(userId);
     }
 
     @Override
@@ -524,6 +518,11 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage() {
         return processMapper.getAllProcess();
+    }
+
+    @Override
+    public List<Log> getLog(int year, String userId) {
+        return logMapper.getLogByUser(year,userId);
     }
 
 }

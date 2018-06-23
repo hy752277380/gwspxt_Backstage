@@ -231,9 +231,4 @@ public class GuserServiceImpl implements GuserService {
         queryForPage.init();
         return queryForPage;
     }
-    //获取目标人员日志
-    @Override
-    public List<Log> getLogByUser(String userId) {
-        return logMapper.getLogByUser(userId);
-    }
 }

@@ -215,10 +215,13 @@ public class DocumentManageController {
 
     //根据文档状态查询文档
     @RequestMapping("/getDocumentByState")
-    public QueryForPage getDocumentByState(String documentType, Integer documentConfidential, Integer documentState, int currentPage, String searchInfo, HttpSession httpSession) {
-        //获取session内容
-        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        QueryForPage queryForPage = documentService.getDocumentByState(documentType, documentConfidential, documentState, loginCustom.getGuser().getUserId(), currentPage, searchInfo);
+    public QueryForPage getDocumentByState(String userId,String documentType, Integer documentConfidential, Integer documentState, int currentPage, String searchInfo, HttpSession httpSession) {
+        if(userId==null&&"".equals(userId)){
+            //获取session内容
+            LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+            userId=loginCustom.getGuser().getUserId();
+        }
+        QueryForPage queryForPage = documentService.getDocumentByState(documentType, documentConfidential, documentState, userId, currentPage, searchInfo);
         return queryForPage;
     }
 

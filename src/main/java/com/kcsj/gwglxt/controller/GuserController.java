@@ -1,17 +1,14 @@
 package com.kcsj.gwglxt.controller;
 
 import com.kcsj.gwglxt.DTO.CountByMouth;
-import com.kcsj.gwglxt.DTO.DocumentCustom;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.DTO.LoginCustom;
-import com.kcsj.gwglxt.entity.Log;
 import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.service.GuserService;
 import com.kcsj.gwglxt.util.md5;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import com.kcsj.gwglxt.vo.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -91,15 +88,6 @@ public class GuserController {
         //拼接跳转路径
         String basePath = request.getScheme()+ "://"+request.getServerName()+":"+request.getServerPort()+path+"/";
         response.sendRedirect(basePath);
-    }
-    //登陆检测
-    public boolean LoginInterceptor (HttpSession httpSession){
-        //获取session内容
-        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        if(loginCustom==null){
-
-            return false;
-        }return true;
     }
     /************************************首页数据*******************************/
     //首页月份人数统计
@@ -256,7 +244,7 @@ public class GuserController {
         QueryForPage queryForPage = guserService.getUserByDpt(loginCustom.getGuser().getUserDepartment(),currentPage);
         return queryForPage;
     }
- 
+
     //调配
 }
 

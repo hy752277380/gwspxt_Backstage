@@ -84,5 +84,12 @@ public class ProcessServiceImpl implements ProcessService {
     public int updateProcessInfo(Process process) {
         return processMapper.updateByPrimaryKeySelective(process);
     }
+    //添加流程
+    @Override
+    public int addProcess(Process process) {
+        process.setProcessId(TeamUtil.getUuid());
+        process.setProcessIsdelete(0);
+        return processMapper.insert(process);
+    }
 
 }

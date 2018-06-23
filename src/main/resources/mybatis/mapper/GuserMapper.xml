@@ -487,7 +487,7 @@ sum(case month(guser.creation_time) when '10' then 1 else 0 end) as October,
 sum(case month(guser.creation_time) when '11' then 1 else 0 end) as November,
 sum(case month(guser.creation_time) when '12' then 1 else 0 end) as December
 from guser
-where year(guser.creation_time)=#{year};
+where year(guser.creation_time)=#{year}
 and user_isdelete = '0'
     </select>
     <select id="countAllUser" resultType="int">

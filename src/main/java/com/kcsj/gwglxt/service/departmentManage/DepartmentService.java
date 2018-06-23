@@ -44,4 +44,6 @@ public interface DepartmentService {
     int updatePermission(Position position);
 
     int updateDptInfo(Department department);
+
+    List<Department> getAllDepartmentNoPage();
 }

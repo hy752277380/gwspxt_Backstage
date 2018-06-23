@@ -37,6 +37,12 @@ public class DepartmentController {
         QueryForPage queryForPage = departmentService.getAllDepartment(currentPage,searchInfo);
         return queryForPage;
     }
+    //获得所有部门（不分页）
+    @RequestMapping("/getAllDepartmentNoPage")
+    public List<Department> getAllDepartmentNoPage(){
+        List<Department> departments = departmentService.getAllDepartmentNoPage();
+        return departments;
+    }
     //按部门查询职位权限
     @RequestMapping("/getPoPeByDpt")
     public List<PositionPermission> getPoPeByDpt(String department){

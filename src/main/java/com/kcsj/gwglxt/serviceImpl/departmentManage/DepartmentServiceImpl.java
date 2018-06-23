@@ -1,11 +1,17 @@
 package com.kcsj.gwglxt.serviceImpl.departmentManage;
 
 import com.kcsj.gwglxt.DTO.DocumentCustom;
+import com.kcsj.gwglxt.DTO.PositionPermission;
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.DepartmentExample;
+import com.kcsj.gwglxt.entity.Permission;
+import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.mapper.DepartmentMapper;
 import com.kcsj.gwglxt.mapper.GuserMapper;
+import com.kcsj.gwglxt.mapper.PermissionMapper;
+import com.kcsj.gwglxt.mapper.PositionMapper;
 import com.kcsj.gwglxt.service.departmentManage.DepartmentService;
+import com.kcsj.gwglxt.util.TeamUtil;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +24,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentMapper departmentMapper;
     @Autowired
     private GuserMapper guserMapper;
+    @Autowired
+    private PositionMapper positionMapper;
+    @Autowired
+    private PermissionMapper permissionMapper;
 
     @Override
     public int countByExample(DepartmentExample example) {
@@ -36,7 +46,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public int insert(Department record) {
-        return 0;
+        record.setDepartmentId(TeamUtil.getUuid());
+        record.setDepartmentIsdelete(0);
+        return departmentMapper.insert(record);
     }
 
     @Override
@@ -77,7 +89,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public QueryForPage getAllDepartment(int currentPage,String searchInfo) {
         //查询得到所有部门
-        List<Department> list = departmentMapper.getAllDepartment(searchInfo);
+        List<Department> list = departmentMapper.getAllDepartment();
         //遍历每一个查询结果，使用id查询人员表得到该部门人数
         for (Department departmentOne:list){
             int count = guserMapper.countByDepartment(departmentOne.getDepartmentId());
@@ -101,5 +113,37 @@ public class DepartmentServiceImpl implements DepartmentService {
         queryForPage.setTotalPage(totalPage);
         queryForPage.init();
         return queryForPage;
+    }
+    //获取职位和权限信息
+    @Override
+    public List<PositionPermission> getPoPeByDpt(String department) {
+        return positionMapper.getPoPeByDpt(department);
+    }
+    //获取所有权限
+    @Override
+    public List<Permission> getAllPermission() {
+        return permissionMapper.getAllPermission();
+    }
+    //添加职位
+    @Override
+    public int insertPosition(Position position) {
+        position.setPositionId(TeamUtil.getUuid());
+        position.setPositionIsdelete(0);
+        return positionMapper.insert(position);
+    }
+
+    @Override
+    public int updatePermission(Position position) {
+        return positionMapper.updateByPrimaryKeySelective(position);
+    }
+    //修改部门信息
+    @Override
+    public int updateDptInfo(Department department) {
+        return departmentMapper.updateByPrimaryKeySelective(department);
+    }
+
+    @Override
+    public List<Department> getAllDepartmentNoPage() {
+        return departmentMapper.getAllDepartment();
     }
 }

@@ -48,4 +48,6 @@ public interface GuserMapper {
     int countAllUser();
 
     List<LoginCustom> getAllUser();
+
+    List<LoginCustom> getUserByDpt(String userDepartment);
 }

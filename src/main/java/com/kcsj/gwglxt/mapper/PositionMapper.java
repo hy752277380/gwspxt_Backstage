@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.mapper;
 
+import com.kcsj.gwglxt.DTO.PositionPermission;
 import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.entity.PositionExample;
 import java.util.List;
@@ -31,4 +32,6 @@ public interface PositionMapper {
     List<Position> getDptManager(String documentDept);
 
     List<Position> getPositionByDpt(String department);
+
+    List<PositionPermission> getPoPeByDpt(String department);
 }

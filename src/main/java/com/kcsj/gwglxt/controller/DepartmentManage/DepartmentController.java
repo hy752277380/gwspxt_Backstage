@@ -1,13 +1,13 @@
 package com.kcsj.gwglxt.controller.DepartmentManage;
 
+import com.kcsj.gwglxt.DTO.PositionPermission;
 import com.kcsj.gwglxt.entity.Department;
+import com.kcsj.gwglxt.entity.Permission;
+import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.service.departmentManage.DepartmentService;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,10 +17,81 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
+    /****************************************8部门管理**************************/
+    //添加部门
+    @RequestMapping("/addDepartment")
+    public String addDepartment(@RequestBody Department department){
+        String result;
+        int addResult = departmentService.insert(department);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (addResult == 0) {
+            result = "addFailed";
+        }else{
+            result = "addSuccess";
+        }
+        return result;
+    }
     //获得所有部门
     @RequestMapping("/getAllDepartment")
-    public QueryForPage getAllDepartment(@PathVariable("currentPage") int currentPage, @PathVariable("searchInfo") String searchInfo){
+    public QueryForPage getAllDepartment(int currentPage, String searchInfo){
         QueryForPage queryForPage = departmentService.getAllDepartment(currentPage,searchInfo);
         return queryForPage;
+    }
+    //获得所有部门（不分页）
+    @RequestMapping("/getAllDepartmentNoPage")
+    public List<Department> getAllDepartmentNoPage(){
+        List<Department> departments = departmentService.getAllDepartmentNoPage();
+        return departments;
+    }
+    //按部门查询职位权限
+    @RequestMapping("/getPoPeByDpt")
+    public List<PositionPermission> getPoPeByDpt(String department){
+        List<PositionPermission> positionPermissions = departmentService.getPoPeByDpt(department);
+        return positionPermissions;
+    }
+    //查询所有权限
+    @RequestMapping("/getAllPermission")
+    public List<Permission> getAllPermission(){
+        List<Permission> permissions = departmentService.getAllPermission();
+        return permissions;
+    }
+    //添加职位
+    @RequestMapping("/addPosition")
+    public String addPosition(@RequestBody Position position){
+        String result;
+        int addResult = departmentService.insertPosition(position);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (addResult == 0) {
+            result = "addFailed";
+        }else{
+            result = "addSuccess";
+        }
+        return result;
+    }
+    //修改职位权限
+    @RequestMapping("/updatePermission")
+    public String updatePermission(@RequestBody Position position){
+        String result;
+        int updateResult = departmentService.updatePermission(position);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "addFailed";
+        }else{
+            result = "addSuccess";
+        }
+        return result;
+    }
+    //修改部门信息
+    @RequestMapping("/updateDptInfo")
+    public String updateDptInfo(@RequestBody Department department){
+        String result;
+        int updateResult = departmentService.updateDptInfo(department);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "addFailed";
+        }else{
+            result = "addSuccess";
+        }
+        return result;
     }
 }

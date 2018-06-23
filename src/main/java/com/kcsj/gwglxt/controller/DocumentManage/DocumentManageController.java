@@ -309,12 +309,36 @@ public class DocumentManageController {
         List<MessageCustom> list = documentService.getMyAllMessage(loginCustom.getGuser().getUserId());
         return list;
     }
+    //获得本人未读消息
+    @RequestMapping("/getUnReadMsg")
+    public List<MessageCustom> getUnReadMsg(HttpSession httpSession) {
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        List<MessageCustom> list = documentService.getUnReadMsg(loginCustom.getGuser().getUserId());
+        return list;
+    }
+    //标记消息已读
+    @RequestMapping("/isRead")
+    public String isRead(String MobjectId){
+        String result;
+        int updateResult = documentService.isRead(MobjectId);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        } else {
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
+    }
 
     //查看本人所有日志
     @RequestMapping("/getAllLog")
-    public void getAllLog(HttpSession httpSession) {
+    public List<Log> getAllLog(int year, String userId,HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        documentService.getAllLog(loginCustom.getGuser().getUserId());
+        if (userId==null&&"".equals(userId)){
+            userId = loginCustom.getGuser().getUserId();
+        }
+        List<Log> logs  = documentService.getLog(year,userId);
+        return logs;
     }
 
     //获取所有公文种类
@@ -326,9 +350,15 @@ public class DocumentManageController {
 
     //获取所有流程
     @RequestMapping("/getAllProcess")
-    public List<Process> getAllProcess() {
-        List<Process> list = documentService.getAllProcess();
-        return list;
+    public QueryForPage getAllProcess(int currentPage) {
+        QueryForPage queryForPage = documentService.getAllProcess(currentPage);
+        return queryForPage;
+    }
+    //获取所有流程（不分页）
+    @RequestMapping("/getAllProcessNoPage")
+    public List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage() {
+        List<com.kcsj.gwglxt.entity.Process> processes = documentService.getAllProcessNoPage();
+        return processes;
     }
 
     //登录

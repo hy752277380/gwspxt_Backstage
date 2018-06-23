@@ -1,7 +1,10 @@
 package com.kcsj.gwglxt.service.departmentManage;
 
+import com.kcsj.gwglxt.DTO.PositionPermission;
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.DepartmentExample;
+import com.kcsj.gwglxt.entity.Permission;
+import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,4 +34,16 @@ public interface DepartmentService {
     int updateByPrimaryKey(Department record);
 
     QueryForPage getAllDepartment(int currentPage,String searchInfo);
+
+    List<PositionPermission> getPoPeByDpt(String department);
+
+    List<Permission> getAllPermission();
+
+    int insertPosition(Position position);
+
+    int updatePermission(Position position);
+
+    int updateDptInfo(Department department);
+
+    List<Department> getAllDepartmentNoPage();
 }

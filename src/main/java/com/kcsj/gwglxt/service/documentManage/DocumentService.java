@@ -48,11 +48,9 @@ public interface DocumentService {
 
     List<MessageCustom> getMyAllMessage(String userId);
 
-    List<Log> getAllLog(String userId);
-
     List<Documenttype> getAllDocType();
 
-    List<Process> getAllProcess();
+    QueryForPage getAllProcess(int currentPage);
 
     int insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
 
@@ -65,4 +63,12 @@ public interface DocumentService {
     int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom);
 
     List<ProcessNode> getProcessNodeByPro(String process);
+
+    List<MessageCustom> getUnReadMsg(String userId);
+    //消息标记已读
+    int isRead(String mobjectId);
+
+    List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage();
+
+    List<Log> getLog(int year, String userId);
 }

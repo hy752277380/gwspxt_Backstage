@@ -4,6 +4,7 @@ import com.kcsj.gwglxt.DTO.CountByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
 import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.entity.Log;
 import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import org.apache.ibatis.annotations.Param;
@@ -57,4 +58,7 @@ public interface GuserService {
     int resetPassword(String userId);
 
     int batchDelete(String[] userIds);
+
+    QueryForPage getUserByDpt(String userDepartment,int currentPage);
+
 }

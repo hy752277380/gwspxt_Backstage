@@ -162,7 +162,7 @@ public class DocumentServiceImpl implements DocumentService {
     //按阅读权限整理出所有文档
     @Override
     public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String searchInfo,String documentType,Integer documentConfidential,String documentDept) {
-        List<DocumentCustom> list = documentMapper.getAllDocument(searchInfo,documentType,documentConfidential,documentDept);
+        List<DocumentCustom> list = documentMapper.getAllDocument(documentType,documentConfidential,documentDept);
         Borrowing borrowing;
         for (DocumentCustom documentCustom : list) {
             if (documentCustom.getDepartment().getDepartmentName() != departmentName) {
@@ -450,7 +450,6 @@ public class DocumentServiceImpl implements DocumentService {
         }
 
     }
-
     //根据流程id流程子节点
     @Override
     public List<ProcessNode> getProcessNodeByPro(String process) {
@@ -474,18 +473,56 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<Log> getAllLog(String userId) {
-        return logMapper.getAllLog(userId);
-    }
-
-    @Override
     public List<Documenttype> getAllDocType() {
         return documenttypeMapper.getAllDocType();
     }
 
     @Override
-    public List<Process> getAllProcess() {
+    public QueryForPage getAllProcess(int currentPage) {
+        List<com.kcsj.gwglxt.entity.Process> processes = processMapper.getAllProcess();
+        QueryForPage queryForPage = new QueryForPage();
+        int pagesize = 10;//每页记录数
+        System.out.println("我的長度是"+processes.size());
+        int allRow = processes.size();//总记录数
+        int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
+        int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
+        int currentPages = QueryForPage.countCurrentPage(currentPage);
+        int endSet = pagesize * currentPage;
+        System.out.println(allRow);
+        if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
+            endSet = allRow;
+        }
+        List<com.kcsj.gwglxt.entity.Process> list_thisPage = processes.subList(offSet, endSet);
+        queryForPage.setList(list_thisPage);
+        queryForPage.setAllRow(allRow);
+        queryForPage.setCurrentPage(currentPages);
+        queryForPage.setPageSize(pagesize);
+        queryForPage.setTotalPage(totalPage);
+        queryForPage.init();
+        return queryForPage;
+    }
+    //获取本人未读消息
+    @Override
+    public List<MessageCustom> getUnReadMsg(String userId) {
+        return mobjectMapper.getUnReadMsg(userId);
+    }
+
+    @Override
+    public int isRead(String mobjectId) {
+        Mobject mobject = new Mobject();
+        mobject.setMobjectId(mobjectId);
+        mobject.setMobjectIsread(1);
+        return mobjectMapper.updateByPrimaryKeySelective(mobject);
+    }
+
+    @Override
+    public List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage() {
         return processMapper.getAllProcess();
+    }
+
+    @Override
+    public List<Log> getLog(int year, String userId) {
+        return logMapper.getLogByUser(year,userId);
     }
 
 }

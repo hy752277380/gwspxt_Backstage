@@ -208,8 +208,8 @@
             creation_time = #{creationTime,jdbcType=CHAR}
         where log_id = #{logId,jdbcType=CHAR}
     </update>
-    <select id="getAllLog" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="getLogByUser" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
-        where log_user=#{logUser}
+        from log where log_user = #{userId} and substring(creation_time,1,4)=#{year}
     </select>
 </mapper>

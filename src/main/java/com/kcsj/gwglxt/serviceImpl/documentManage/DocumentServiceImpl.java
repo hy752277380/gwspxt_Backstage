@@ -528,8 +528,14 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<Log> getLog(int year, String userId) {
-        return logMapper.getLogByUser(year,userId);
+    public List<Object> getLog(int year, String userId) {
+        List<Object> list = new ArrayList<>();
+        //从一月开始循环查询
+        for(int mouth=1;mouth<=12;mouth++){
+            List<Log> logs = logMapper.getLogByUser(year,userId,mouth);
+            list.add(logs);
+        }
+        return list;
     }
 
     @Override

@@ -525,4 +525,9 @@ public class DocumentServiceImpl implements DocumentService {
         return logMapper.getLogByUser(year,userId);
     }
 
+    @Override
+    public int allAreRead(String userId) {
+        return mobjectMapper.allAreRead(userId);
+    }
+
 }

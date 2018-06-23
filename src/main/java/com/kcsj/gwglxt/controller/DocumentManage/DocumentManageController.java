@@ -329,6 +329,20 @@ public class DocumentManageController {
         }
         return "{\"msg\":\"" + result + "\"}";
     }
+    //一键消息已读
+    @RequestMapping("/allAreRead")
+    public String allAreRead(HttpSession httpSession){
+        String result;
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        int updateResult = documentService.allAreRead(loginCustom.getGuser().getUserId());
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        } else {
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
+    }
 
     //查看本人所有日志
     @RequestMapping("/getAllLog")

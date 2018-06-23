@@ -600,9 +600,6 @@ AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
 and doc.document_state = '5'
 and doc.document_isdelete = '0'
-<if test="searchInfo!=null">
-    and (doc.document_title like '${searchInfo}' or doc.document_no like '${searchInfo}' or gu.user_name like '${searchInfo}')
-</if>
 <if test="documentType!=null">
     and doc.document_type = #{documentType}
 </if>

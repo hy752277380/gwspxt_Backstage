@@ -210,6 +210,6 @@
     </update>
     <select id="getAllDocType" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
-        from documenttype and documenttype_isdelete = '0'
+        from documenttype where documenttype_isdelete = '0'
     </select>
 </mapper>

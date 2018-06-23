@@ -69,4 +69,6 @@ public interface DocumentService {
     List<MessageCustom> getUnReadMsg(String userId);
     //消息标记已读
     int isRead(String mobjectId);
+
+    List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage();
 }

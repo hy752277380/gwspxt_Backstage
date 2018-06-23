@@ -32,8 +32,8 @@ public class DepartmentController {
         return result;
     }
     //获得所有部门
-    @RequestMapping("/getAllDepartment")
-    public QueryForPage getAllDepartment(int currentPage, String searchInfo){
+    @RequestMapping("/getAllDepartment/{currentPage}/{searchInfo}")
+    public QueryForPage getAllDepartment(@PathVariable("currentPage") int currentPage,@PathVariable("searchInfo") String searchInfo){
         QueryForPage queryForPage = departmentService.getAllDepartment(currentPage,searchInfo);
         return queryForPage;
     }

@@ -207,10 +207,7 @@
             department_isdelete = #{departmentIsdelete,jdbcType=INTEGER}
         where department_id = #{departmentId,jdbcType=CHAR}
     </update>
-    <select id="getAllDepartment" resultMap="BaseResultMap">
+    <select id="getAllDepartment" parameterType="java.lang.String" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/> from department where department_isdelete = '0'
-            <if test="searchInfo!=null">
-                and department_name like '${searchInfo}'
-            </if>
     </select>
 </mapper>

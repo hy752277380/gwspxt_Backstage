@@ -521,4 +521,9 @@ public class DocumentServiceImpl implements DocumentService {
         return mobjectMapper.updateByPrimaryKeySelective(mobject);
     }
 
+    @Override
+    public List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage() {
+        return processMapper.getAllProcess();
+    }
+
 }

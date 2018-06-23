@@ -89,7 +89,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public QueryForPage getAllDepartment(int currentPage,String searchInfo) {
         //查询得到所有部门
-        List<Department> list = departmentMapper.getAllDepartment(searchInfo);
+        List<Department> list = departmentMapper.getAllDepartment();
         //遍历每一个查询结果，使用id查询人员表得到该部门人数
         for (Department departmentOne:list){
             int count = guserMapper.countByDepartment(departmentOne.getDepartmentId());
@@ -144,7 +144,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Department> getAllDepartmentNoPage() {
-        String searchInfo = null;
-        return departmentMapper.getAllDepartment(searchInfo);
+        return departmentMapper.getAllDepartment();
     }
 }

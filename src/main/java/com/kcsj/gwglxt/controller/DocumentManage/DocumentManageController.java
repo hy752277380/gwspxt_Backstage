@@ -317,8 +317,8 @@ public class DocumentManageController {
         return list;
     }
     //标记消息已读
-    @RequestMapping("/isRead/{MobjectId}")
-    public String isRead(@PathVariable("MobjectId") String MobjectId){
+    @RequestMapping("/isRead")
+    public String isRead(String MobjectId){
         String result;
         int updateResult = documentService.isRead(MobjectId);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
@@ -349,6 +349,12 @@ public class DocumentManageController {
     public QueryForPage getAllProcess(int currentPage) {
         QueryForPage queryForPage = documentService.getAllProcess(currentPage);
         return queryForPage;
+    }
+    //获取所有流程（不分页）
+    @RequestMapping("/getAllProcessNoPage")
+    public List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage() {
+        List<com.kcsj.gwglxt.entity.Process> processes = documentService.getAllProcessNoPage();
+        return processes;
     }
 
     //登录

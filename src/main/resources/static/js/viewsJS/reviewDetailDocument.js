@@ -35,7 +35,7 @@ $(function () {
                 }, 'json');
             },
             getProcess() {
-                $.post('/gwspxt/getAllProcess', {}, function (response) {
+                $.post('/gwspxt/getAllProcessNoPage', {}, function (response) {
                     data.docProcess = response;
                     data.ready = true;
                 }, 'json')
@@ -57,8 +57,8 @@ $(function () {
         },
         components: {
             'asideComponent': Layout,
-            //'page-util': pageUtil,
-            //'search-util': searchUtil
+           /* 'page-util': pageUtil,
+            'search-util': searchUtil*/
         },
 
     })

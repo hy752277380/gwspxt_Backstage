@@ -6,7 +6,7 @@ $(function () {
         showData: '', //显示在页面的数据
         ready: false,
         index:'',
-        processMoalData:'',
+        processModalData:'',
         page: {
             allRow: 1,
             totalPage: 1,
@@ -65,18 +65,19 @@ $(function () {
                 this.$data.page.currentPage = pageIndex;
                 this.getProcessInfo({currentPage: pageIndex});
             },
-            editDepartment(index) {
-                var newDept = data.processData[index];
-                data.processMoalData = newDept;
+            editProgress(index) {
+                var newProgress = data.processData[index];
+                data.processModalData = newProgress;
+                console.log(data.processModalData.processId);
                /* $('#editModal').modal("show");*/
             },
-            intoPosition(index){
-                var into_position = {
-                    "lhs_dept":this.processData[index].departmentName,
-                    "dept_id": this.processData[index].departmentId,
+            intoProgressNode(index){
+                var into_processNode = {
+                    "lhs_process":this.processData[index].processName,
+                    "process_id": this.processData[index].processId,
                 }
-                sessionStorage.setItem('into_position', JSON.stringify(into_position));
-                location.href = "/gwspxt/departmentPosition";
+                sessionStorage.setItem('into_processNode', JSON.stringify(into_processNode));
+                location.href = "/gwspxt/processNode";
             },
 
         },

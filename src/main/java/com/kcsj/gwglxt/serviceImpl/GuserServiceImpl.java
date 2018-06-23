@@ -276,8 +276,8 @@ public class GuserServiceImpl implements GuserService {
     }
 
     @Override
-    public LoginCustom getUserById(String userId) {
-        return guserMapper.getPersonalInfo(userId);
+    public Guser getUserById(String userId) {
+        return guserMapper.selectByPrimaryKey(userId);
     }
 
     @Override

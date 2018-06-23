@@ -266,9 +266,9 @@ public class GuserController {
     }
     //根据id查询个人信息
     @RequestMapping("/getUserById")
-    public LoginCustom getUserById(String userId){
-        LoginCustom loginCustom = guserService.getUserById(userId);
-        return loginCustom;
+    public Guser getUserById(String userId){
+        Guser guser = guserService.getUserById(userId);
+        return guser;
     }
     /*******************************************部门成员管理************************************/
     //列出本部门成员

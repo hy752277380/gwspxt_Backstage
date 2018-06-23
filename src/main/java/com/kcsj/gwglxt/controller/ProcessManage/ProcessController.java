@@ -42,8 +42,8 @@ public class ProcessController {
         return result;
     }
     //删除流程节点
-    @RequestMapping("/deleteProcessNode/{processNodeId}")
-    public String deleteProcessNode(@PathVariable("processNodeId") String processNodeId){
+    @RequestMapping("/deleteProcessNode")
+    public String deleteProcessNode(String processNodeId){
         String result;
         int updateResult = processService.deleteProcessNode(processNodeId);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数

@@ -8,6 +8,7 @@ $(function () {
         docType: [],
         docProcess: [],
         ready: false,
+        processNode:'',
         page: {
             allRow: 1,
             totalPage: 1,
@@ -34,10 +35,16 @@ $(function () {
                 }, 'json');
             },
             getProcess() {
-                $.post('/gwspxt/getAllProcess', {}, function (response) {
+                $.post('/gwspxt/getAllProcessNoPage', {}, function (response) {
                     data.docProcess = response;
                     data.ready = true;
                 }, 'json')
+            },
+            getProcessNod(documentId){
+                $.post('/gwspxt/getProcessNode', documentId, function (response) {
+                    data.processNode = response;
+                    console.log(data.processNode);
+                }, 'json');
             }
         },
 
@@ -46,11 +53,12 @@ $(function () {
             this.getInfo({documentId: this.$data.lhs_edit.doc_id});
             this.getDocType({});
             this.getProcess({});
+            this.getProcessNod({documentId: this.$data.lhs_edit.doc_id});
         },
         components: {
             'asideComponent': Layout,
-            //'page-util': pageUtil,
-            //'search-util': searchUtil
+           /* 'page-util': pageUtil,
+            'search-util': searchUtil*/
         },
 
     })

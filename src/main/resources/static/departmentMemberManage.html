@@ -149,38 +149,54 @@
                     <h4 class="modal-title" id="myModalLabel">成员调配</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>编号</label>
-                        <input disabled="disabled" type="password" :value="allocatePerson.userAccount" class="form-control" placeholder="编号">
-                    </div>
-                    <div class="form-group">
-                        <label>姓名</label>
-                        <input disabled="disabled" type="password" :value="allocatePerson.userName" class="form-control" placeholder="姓名">
-                    </div>
-                    <div class="form-group">
-                        <label>性别</label>
-                        <input disabled="disabled" type="password" :value="allocatePerson.userSex" class="form-control" placeholder="性别">
-                    </div>
-                    <div class="form-group">
-                        <label>手机号</label>
-                        <input disabled="disabled" type="password" :value="allocatePerson.userPhonenumber" class="form-control" placeholder="手机号">
-                    </div>
-                    <div class="form-group">
-                        <label>邮箱</label>
-                        <input disabled="disabled" type="password" :value="allocatePerson.userEmail" class="form-control" placeholder="邮箱">
-                    </div>
-                    <div class="form-group">
-                        <label>部门</label>
-                        <select type="password" @change="getDepartmentOfPosition" v-model="allocatePerson.userDepartment" class="form-control">
-                            <option v-for="department in allDepartment" :value="department.departmentId">{{department.departmentName}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>职称</label>
-                        <select type="password" v-model="allocatePerson.userPosition" class="form-control">
-                            <option v-for="position in allDepartmentOfPosition" :value="position.positionId">{{position.positionName}}</option>
-                        </select>
-                    </div>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label>编号</label>
+                                    <input style="width: 200px;" disabled111="disabled111" type="text" :value="allocatePerson.guser.userAccount" class="form-control" >
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label>姓名</label>
+                                    <input style="width: 200px;" disabled111="disabled111" type="text" :value="allocatePerson.guser.userName" class="form-control" >
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label>性别</label>
+                                    <input style="width: 200px;" disabled111="disabled111" type="text" :value="allocatePerson.guser.userSex" class="form-control">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label>手机号</label>
+                                    <input style="width: 200px;" disabled111="disabled111" type="text" :value="allocatePerson.guser.userPhonenumber" class="form-control" >
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label>部门</label>
+                                    <select style="width: 200px;" type="password" @change="getDepartmentOfPosition" v-model="allocatePerson.guser.userDepartment" class="form-control">
+                                        <option v-for="department in allDepartment" :value="department.departmentId">{{department.departmentName}}</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label>职称</label>
+                                    <select style="width: 200px;" type="password" v-model="allocatePerson.guser.userPosition" class="form-control">
+                                        <option v-for="position in allDepartmentOfPosition" :value="position.position.positionId">{{position.position.positionName}}</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

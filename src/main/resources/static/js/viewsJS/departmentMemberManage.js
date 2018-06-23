@@ -60,7 +60,7 @@ $(function () {
             },
             allocate(index) {
                 const personID = this.personData[index].guser.userId;
-                $.post('/gwspxt/getUserByDpt', {userId: personID}, function (response) {
+                $.post('/gwspxt/getUserById', {userId: personID}, function (response) {
                     data.allocatePerson = response;
                     $('#allocateModal').modal('show');
                 }, 'json');

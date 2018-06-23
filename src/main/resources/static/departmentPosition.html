@@ -6,26 +6,26 @@
     <title>部门职称</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.0.2 -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- font Awesome -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
-    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Morris chart -->
-    <link href="css/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <link href="css/morris/morris.css" rel="stylesheet" type="text/css" />
     <!-- jvectormap -->
-    <link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
+    <link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
     <!-- Date Picker -->
-    <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
+    <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
     <!-- fullCalendar -->
     <!-- Daterange picker -->
-    <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
     <!-- iCheck for checkboxes and radio inputs -->
-    <link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>
+    <link href="css/iCheck/all.css" rel="stylesheet" type="text/css" />
     <!-- bootstrap wysihtml5 - text editor -->
     <!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
     <!-- Theme style -->
-    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
     <!-- 消息通知css -->
     <link href="css/spop.css" rel="stylesheet" type="text/css">
     <script src="js/vue.js"></script>
@@ -37,7 +37,6 @@
         td {
             vertical-align: initial !important;
         }
-
         /* 除去input为number时候的箭头*/
 
         input::-webkit-outer-spin-button,
@@ -123,7 +122,7 @@
                                                     <td>
                                                         <button type="button" class="btn btn-warning btn-sm"
                                                                 href="#editPositionModal" data-toggle="modal"
-                                                                @click="editPosition(index)"><i
+                                                        @click="editPosition(index)"><i
                                                                 class="fa fa-pencil fa-fw"></i> 修改
                                                         </button>
                                                     </td>
@@ -146,8 +145,7 @@
             </div>
         </section>
 
-        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="addPositionModal"
-             class="modal fade">
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="addPositionModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -160,27 +158,21 @@
                                 <label class="col-lg-2 col-sm-2 control-label">部门职称</label>
                                 <div class="col-lg-10 ">
                                     <input type="input" class="form-control" id="positionName" placeholder="部门职称">
-                                    <input type="hidden" class="form-control" id="positionDeptId"
-                                           :value="into_position.dept_id">
+                                    <input type="hidden" class="form-control" id="positionDeptId"  :value="into_position.dept_id" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 col-sm-2 control-label">权限等级</label>
-                                <div class="col-lg-5">
-                                    <select class="form-control m-b-10" id="permissionLevel"
-                                            v-model="permissionData.permissionLevel">
-                                        <option v-for="(item,index) in permissionData" :value="item.permissionLevel">
-                                            {{item.permissionLevel}}
-                                        </option>
-                                    </select>
-                                </div>
+                                    <label class="col-lg-2 col-sm-2 control-label">权限等级</label>
+                                    <div class="col-lg-5">
+                                        <select  class="form-control m-b-10" id="permissionLevel" > <!--v-model="permissionData.permissionLevel"-->
+                                            <option v-for="(item,index) in permissionData" :value="item.permissionLevel" >{{item.permissionLevel}}</option>
+                                        </select>
+                                    </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-offset-2 col-lg-10">
-                                    <button onclick="addPosition()" class="btn btn-info" style="margin-right: 10px;">
-                                        添加
-                                    </button>
-                                    <button class="btn btn-default" data-dismiss="modal">返回</button>
+                                    <button onclick="addPosition()" class="btn btn-info" style="margin-right: 10px;">添加</button>
+                                    <button  class="btn btn-default" data-dismiss="modal">返回</button>
                                 </div>
                             </div>
                         </form>
@@ -191,8 +183,7 @@
             </div>
         </div>
 
-        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editPositionModal"
-             class="modal fade">
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editPositionModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -204,30 +195,22 @@
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">部门职称</label>
                                 <div class="col-lg-10">
-                                    <input type="input" class="form-control" id="editPositionName"
-                                           :value="modifyPositionData.position.positionName" placeholder="部门职称">
-                                    <input type="hidden" class="form-control" id="positionId"
-                                           :value="modifyPositionData.position.positionId">
+                                    <input type="input" class="form-control"  id="editPositionName" :value="modifyPositionData.position.positionName"  placeholder="部门职称">
+                                    <input type="hidden" class="form-control" id="positionId"  :value="modifyPositionData.position.positionId" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">权限等级</label>
                                 <div class="col-lg-5">
-                                    <select class="form-control m-b-10" id="editPermission">
-
-                                        <option v-for="(item,index) in permissionData" :value="item.permissionLevel">
-                                            {{item.permissionLevel}}
-                                        </option>
-
+                                    <select  class="form-control m-b-10" id="editPermission">
+                                        <option v-for="(item,index) in permissionData" :value="item.permissionLevel" >{{item.permissionLevel}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-offset-2 col-lg-10">
-                                    <button onclick="editPosition()" class="btn btn-info" style="margin-right: 10px;">
-                                        修改
-                                    </button>
-                                    <button class="btn btn-default" data-dismiss="modal">返回</button>
+                                    <button onclick="editPosition()" class="btn btn-info" style="margin-right: 10px;">修改</button>
+                                    <button  class="btn btn-default" data-dismiss="modal">返回</button>
                                 </div>
                             </div>
                         </form>
@@ -272,7 +255,7 @@
         var positionName = $('#positionName').val();
         var positionPermission = $("#permissionLevel  option:selected").val();
         var data = {
-            "positionDept": positionDept,
+            "positionDept":positionDept,
             "positionName": positionName,
             "positionPermission": positionPermission,
         }
@@ -282,7 +265,7 @@
             dataType: "json",
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(data),
-            success: function (data) {
+            success: function(data) {
             }
         });
     }
@@ -291,11 +274,11 @@
         var positionDept = $('#positionDeptId').val();
         var positionId = $('#positionId').val();
         var editPermission = $("#editPermission  option:selected").val();
-        var positionName = $("#editPositionName").val();
+        var positionName=$("#editPositionName").val();
         var data = {
-            "positionDept": positionDept,
+            "positionDept":positionDept,
             "positionId": positionId,
-            "editPermission": 1,
+            "positionPermission": editPermission,
             "positionName": positionName,
         }
 
@@ -305,7 +288,7 @@
             dataType: "json",
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(data),
-            success: function (data) {
+            success: function(data) {
             }
         });
     }

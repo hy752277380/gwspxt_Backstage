@@ -72,7 +72,7 @@ $(function () {
             },
             intoPosition(index){
                 var into_position = {
-                    "action": "edit",
+                    "lhs_dept":this.deptData[index].departmentName,
                     "dept_id": this.deptData[index].departmentId,
                 }
                 sessionStorage.setItem('into_position', JSON.stringify(into_position));

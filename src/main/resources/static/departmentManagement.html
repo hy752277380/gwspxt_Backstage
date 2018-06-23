@@ -92,7 +92,7 @@
                                     <div class="box-tools m-b-15">
                                         <div style="float: left;">
                                             <button href="#myModal" data-toggle="modal" type="button"
-                                                    class="btn btn-primary btn-sm"><i class="fa fa-plus"
+                                                    class="btn btn-primary"><i class="fa fa-plus"
                                                                                       aria-hidden="true"></i> 添加部门
                                             </button>
                                         </div>
@@ -279,7 +279,7 @@
 
      $.ajax({
          type: "post",
-         url: "/gwspxt/editDepartment",
+         url: "/gwspxt/updateDptInfo",
          dataType: "json",
          contentType: 'application/json;charset=UTF-8',
          data: JSON.stringify(data),

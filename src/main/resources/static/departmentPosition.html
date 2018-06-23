@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <title>部门职称</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <meta name="description" content="Developed By M Abdur Rokib Promy">
-    <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -20,18 +18,38 @@
     <!-- Date Picker -->
     <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
     <!-- fullCalendar -->
-    <!-- <link href="css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" /> -->
     <!-- Daterange picker -->
     <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
     <!-- iCheck for checkboxes and radio inputs -->
     <link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>
     <!-- bootstrap wysihtml5 - text editor -->
-    <!-- <link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" /> -->
-    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
     <!-- Theme style -->
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
-
+    <!-- 消息通知css -->
+    <link href="css/spop.css" rel="stylesheet" type="text/css">
     <script src="js/vue.js"></script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        td {
+            vertical-align: initial !important;
+        }
+
+        /* 除去input为number时候的箭头*/
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,13 +64,11 @@
 </head>
 
 <body class="skin-black">
-<!-- header logo: style can be found in header.less -->
 <header id="header" class="header">
     <a href="index.html" class="logo">公文审批系统</a>
     <header-component></header-component>
 </header>
 <div id="main" class="wrapper row-offcanvas row-offcanvas-left">
-    <!-- Left side column. contains the logo and sidebar -->
     <aside-component :user="user" :name="name"></aside-component>
     <aside id="content" class="right-side">
         <!-- Main content -->
@@ -77,18 +93,12 @@
                             <div class="panel">
                                 <div class="panel-body table-responsive">
                                     <div class="box-tools m-b-15">
-                                        <!--breadcrumbs start -->
-                                        <ul class="breadcrumb">
-                                            <li>
-                                                <a href="#"><i class="fa fa-home"></i> 首页</a>
-                                            </li>
-                                        </ul>
                                         <div class="box-tools m-b-15" style="margin-bottom: 30px;">
                                             <div>
-                                                <span style="font-weight: bold;">当前位置：新闻部</span>
+                                                <span style="font-weight: bold;"><h4>当前位置：{{into_position.lhs_dept}}</h4></span>
                                             </div>
                                             <div style="float: right;margin-top: -20px;">
-                                                <button href="#myModal" data-toggle="modal" type="button"
+                                                <button href="#addPositionModal" data-toggle="modal" type="button"
                                                         class="btn btn-primary"><i
                                                         class="fa fa-plus" aria-hidden="true"></i> 添加职称
                                                 </button>
@@ -99,50 +109,33 @@
                                                 <tr>
                                                     <th>序号</th>
                                                     <th>部门职称</th>
-                                                    <th>权限</th>
+                                                    <th>权限等级</th>
+                                                    <th>权限说明</th>
                                                     <th>操作</th>
                                                 </tr>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>部长</td>
-                                                    <td>权限1</td>
+                                                <tbody v-cloak v-if="ready">
+                                                <tr v-for="(dept,index) of positionData">
+                                                    <td>{{index+1}}
+                                                    </td>
+                                                    <td>{{dept.position.positionName}}</td>
+                                                    <td>{{dept.position.positionPermission}}</td>
+                                                    <td>{{dept.permission.permissionRemark}}</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-warning btn-sm"><i
+                                                        <button type="button" class="btn btn-warning btn-sm"
+                                                                href="#editPositionModal" data-toggle="modal"
+                                                                @click="editPosition(index)"><i
                                                                 class="fa fa-pencil fa-fw"></i> 修改
                                                         </button>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>部长</td>
-                                                    <td>权限1</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-warning btn-sm"><i
-                                                                class="fa fa-pencil fa-fw"></i> 修改
-                                                        </button>
-                                                    </td>
+                                                </tbody>
+                                                <tbody v-else>
+                                                <tr style="text-align: center;">
+                                                    <td colspan="9"><i class="fa fa-spinner fa-spin"></i></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>部长</td>
-                                                    <td>权限1</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-warning btn-sm"><i
-                                                                class="fa fa-pencil fa-fw"></i> 修改
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>部长</td>
-                                                    <td>权限1</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-warning btn-sm"><i
-                                                                class="fa fa-pencil fa-fw"></i> 修改
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                </tbody>
                                             </table>
+
                                         </div>
                                     </div>
                                 </div>
@@ -151,90 +144,171 @@
                     </div>
                 </div>
             </div>
-
         </section>
 
-        <!-- /.content -->
-        <div class="footer-main">
-            Copyright &copy Director, 2014. More Templates
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="addPositionModal"
+             class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                        <h4 class="modal-title">{{into_position.lhs_dept}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 control-label">部门职称</label>
+                                <div class="col-lg-10 ">
+                                    <input type="input" class="form-control" id="positionName" placeholder="部门职称">
+                                    <input type="hidden" class="form-control" id="positionDeptId"
+                                           :value="into_position.dept_id">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 control-label">权限等级</label>
+                                <div class="col-lg-5">
+                                    <select class="form-control m-b-10" id="permissionLevel"
+                                            v-model="permissionData.permissionLevel">
+                                        <option v-for="(item,index) in permissionData" :value="item.permissionLevel">
+                                            {{item.permissionLevel}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button onclick="addPosition()" class="btn btn-info" style="margin-right: 10px;">
+                                        添加
+                                    </button>
+                                    <button class="btn btn-default" data-dismiss="modal">返回</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editPositionModal"
+             class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                        <h4 class="modal-title">修改职称</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 control-label">部门职称</label>
+                                <div class="col-lg-10">
+                                    <input type="input" class="form-control" id="editPositionName"
+                                           :value="modifyPositionData.position.positionName" placeholder="部门职称">
+                                    <input type="hidden" class="form-control" id="positionId"
+                                           :value="modifyPositionData.position.positionId">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 control-label">权限等级</label>
+                                <div class="col-lg-5">
+                                    <select class="form-control m-b-10" id="editPermission">
+
+                                        <option v-for="(item,index) in permissionData" :value="item.permissionLevel">
+                                            {{item.permissionLevel}}
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button onclick="editPosition()" class="btn btn-info" style="margin-right: 10px;">
+                                        修改
+                                    </button>
+                                    <button class="btn btn-default" data-dismiss="modal">返回</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </aside>
-    <!-- /.right-side -->
 </div>
+
 <!-- ./wrapper -->
-<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                <h4 class="modal-title">添加部门</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-lg-2 col-sm-2 control-label">部门职称</label>
-                        <div class="col-lg-10">
-                            <input type="input" class="form-control" id="" placeholder="部门职称">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 col-sm-2 control-label">权&nbsp;&nbsp;&nbsp;限&nbsp;&nbsp;</label>
-                        <div class="col-lg-10">
-                            <input type="input" class="form-control" id="inputName" placeholder="权限">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-10">
-                            <button type="submit" class="btn btn-info" style="margin-right: 10px;">添加</button>
-                            <button type="submit" class="btn btn-default">返回</button>
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-
-        </div>
-    </div>
-</div>
 <!-- jQuery 2.0.2 -->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>-->
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <!--布局的组件-->
 <script src="js/layout/layout.js"></script>
+<!-- 消息通知js -->
+<script src="js/spop.js" type="text/javascript"></script>
 <!-- jQuery UI 1.10.3 -->
 <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap -->
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 <!-- daterangepicker -->
 <script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<script src="js/plugins/chart.js" type="text/javascript"></script>
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<!-- calendar -->
+<script src="js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+<!-- Director App -->
+<script src="js/Director/app.js" type="text/javascript"></script>
+<script src="js/Director/dashboard.js" type="text/javascript"></script>
 
 <script src="js/plugins/chart.js" type="text/javascript"></script>
+
 <!-- Director for demo purposes -->
-<script>
-    var data = {
-        user: JSON.parse(sessionStorage.getItem("loginUser")),
-        name: 'departmentPosition',
-        docData: '', //所有数据
-        ready: false,
-        page: {
-            allRow: 1,
-            totalPage: 1,
-            currentPage: 1,
-            pageSize: 10,
-            hasPreviousPage: false,
-            hasNextPage: false,
-        },
+<script src="js/viewsJS/departmentPosition.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function addPosition() {
+        var positionDept = $('#positionDeptId').val();
+        var positionName = $('#positionName').val();
+        var positionPermission = $("#permissionLevel  option:selected").val();
+        var data = {
+            "positionDept": positionDept,
+            "positionName": positionName,
+            "positionPermission": positionPermission,
+        }
+        $.ajax({
+            type: "post",
+            url: "/gwspxt/addPosition",
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(data),
+            success: function (data) {
+            }
+        });
     }
 
-    var reviewDocument = new Vue({
-        el: "#main",
-        data: data,
-        components: {
-            'asideComponent': Layout,
-            //'page-util': pageUtil,
-            //'search-util': searchUtil
+    function editPosition() {
+        var positionDept = $('#positionDeptId').val();
+        var positionId = $('#positionId').val();
+        var editPermission = $("#editPermission  option:selected").val();
+        var positionName = $("#editPositionName").val();
+        var data = {
+            "positionDept": positionDept,
+            "positionId": positionId,
+            "editPermission": 1,
+            "positionName": positionName,
         }
-    });
+
+        $.ajax({
+            type: "post",
+            url: "/gwspxt/updatePermission",
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(data),
+            success: function (data) {
+            }
+        });
+    }
 
 </script>
 </body>

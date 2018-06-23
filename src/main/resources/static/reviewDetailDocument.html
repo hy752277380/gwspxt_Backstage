@@ -73,37 +73,32 @@
                                 <form class="form-horizontal tasi-form" method="get">
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">文本标题</label>
-                                        <div class="col-md-4">
-                                            <input class="form-control" id="documentTitle" :value="docData.document.documentTitle" type="text">
-                                            <input class="form-control" id="documentId" :value="lhs_edit.doc_id" type="hidden">
+                                        <div class="col-md-5">
+                                            <input class="form-control" id="documentTitle" v-model="docData.document.documentTitle" type="text">
+                                            <input class="form-control" id="documentId" v-model="lhs_edit.doc_id" type="hidden">
 
                                         </div>
                                         <label class="col-sm-2 control-label">文本文号</label>
-                                        <div class="col-md-4">
-                                            <input class="form-control" id="documentNo" :value="docData.document.documentNo" type="text">
+                                        <div class="col-md-3">
+                                            <input class="form-control" id="documentNo" v-model="docData.document.documentNo" type="text">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-2">文本类型</label>
+                                    <div class="form-group" style="width: 90%;margin-left: 10px">
+
+                                        <label class="col-sm-2 control-label" >拟稿人</label>
+                                        <div class="col-md-2">
+                                            <input disabled class="form-control" id="documentUser" v-model="docData.guser.userName" type="text">
+                                        </div>
+                                        <label class="control-label col-lg-2" style="margin-left: -28px">拟稿部门</label>
+                                        <div class="col-md-2">
+                                            <input disabled class="form-control" v-model="docData.department.departmentName" type="text">
+                                        </div>
+                                        <label class="control-label col-lg-2" style="margin-left: 25px">文本类型</label>
                                         <div class="col-md-2">
                                             <select  class="form-control m-b-10" id="documentType" v-model="docData.document.documentType">
                                                 <option v-for="(item,index) in docType" :value="item.documenttypeId" >{{item.documenttypeName}}</option>
                                             </select>
                                         </div>
-                                        <label class="col-sm-2 control-label" >拟稿人</label>
-                                        <div class="col-md-2">
-                                            <input class="form-control" id="documentUser" :value="docData.guser.userName" type="text">
-                                        </div>
-                                        <label class="control-label col-lg-2" style="margin-left: -50px">拟稿部门</label>
-                                        <div class="col-md-2">
-                                            <input class="form-control" :value="docData.department.departmentName" type="text">
-                                        </div>
-                                        <!--<div class="col-md-2">
-                                            <select class="form-control m-b-10">
-                                                <option v-for="(item,index) in docType" :value="item.documenttypeId" >{{item.documenttypeName}}</option>
-                                            </select>
-
-                                        </div>-->
                                     </div>
                                     <div class="form-group" style="margin-bottom: 30px;">
                                         <label class="control-label col-lg-2">文档密级</label>
@@ -150,7 +145,7 @@
 
                                         </div>
                                          </div>
-                                        <div class="form-group" style="margin-top:5%;">
+                                        <div class="form-group" style="margin-top:5%;margin-left:0.7px;">
                                             <label class="control-label col-lg-2">文本内容</label>
                                             <div class="col-lg-10">
                                                 <textarea rows="10" cols="80" id="doucmentContent" class="form-control">{{docData.document.doucmentContent}}</textarea>
@@ -164,13 +159,12 @@
                                             </div>
 
                                         </div>
-
                                     </div>
 
                                     <div class="form-group" style="margin-left: 1px;">
                                         <label class="control-label col-lg-2">选择流程</label>
                                         <div class="col-lg-3">
-                                            <select  class="form-control m-b-10" id="documentProcess" v-model="docData.document.documentProcess">
+                                            <select  class="form-control m-b-10" id="documentProcess" v-model="docData.document.documentProcess">  <!--v-model="docData.document.documentProcess"-->
                                                 <option v-for="(item,index) in docProcess" :value="item.processId" >{{item.processName}}</option>
                                             </select>
 
@@ -314,7 +308,7 @@
             success: function (data) {
                 if (data) {
 
-                   /* window.location.href = "/gwspxt/reviewDocument";*/
+                    window.location.href = "/gwspxt/documentManage";
 
                 } else {
 
@@ -353,7 +347,7 @@
 
         $.ajax({
             type: "post",
-            url: "/gwspxt/addDocument",
+            url: "/gwspxt/updateDocument",
             dataType: "json",
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(data),
@@ -376,7 +370,7 @@
                                     documentId: documentId,
                                 },
                                 success: function(data) {
-                                  /*  window.location.href = "/gwspxt/reviewDocument";*/
+                                    window.location.href = "/gwspxt/documentManage";
                         }
                             });
 

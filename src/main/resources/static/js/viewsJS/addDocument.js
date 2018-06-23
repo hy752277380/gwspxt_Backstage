@@ -4,7 +4,7 @@ $(function () {
         name: 'accountManagement',
         docData: '', //所有数据
         ready: false,
-        docProcess:[],
+        docProcess: [],
         page: {
             allRow: 1,
             totalPage: 1,
@@ -19,10 +19,10 @@ $(function () {
         el: "#main",
         data: data,
         methods: {
-            getProcess(){
-                $.post('/gwspxt/getAllProcess',{},function (response) {
+            getProcess() {
+                $.post('/gwspxt/getAllProcessNoPage', {}, function (response) {
                     data.docProcess = response;
-                    data.ready= true;
+                    data.ready = true;
                 }, 'json')
             }
         },
@@ -37,7 +37,7 @@ $(function () {
             //'search-util': searchUtil
         }
     });
-    $('#addDoc').click(function() {
+    $('#addDoc').click(function () {
         var documentTitle = $('#documentTitle').val();
         var documentNo = $('#documentNo').val();
         var documentUser = $('#documentUser').val();
@@ -68,8 +68,8 @@ $(function () {
             dataType: "json",
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(data),
-            success: function(data) {
-                if(data) {
+            success: function (data) {
+                if (data) {
 
                     var documentId = data.documentId;
                     console.log(documentId);
@@ -79,7 +79,7 @@ $(function () {
                         dataType: "json",
                         data: JSON.stringify(data),
                         contentType: 'application/json;charset=UTF-8',
-                        success: function(data) {
+                        success: function (data) {
                             $.ajax({
                                 type: "post",
                                 url: "/gwspxt/messageNextOne",
@@ -87,8 +87,8 @@ $(function () {
                                 data: {
                                     documentId: documentId,
                                 },
-                                success: function(data) {
-                                    window.location.href = "/gwspxt/reviewDetailDocument";
+                                success: function (data) {
+                                    window.location.href = "/gwspxt/documentManage";
                                 }
                             });
 
@@ -103,8 +103,7 @@ $(function () {
     });
 
 
-
-    $('#addDraft').click(function() {
+    $('#addDraft').click(function () {
         var documentTitle = $('#documentTitle').val();
         var documentNo = $('#documentNo').val();
         var documentUser = $('#documentUser').val();
@@ -135,11 +134,11 @@ $(function () {
             dataType: "json",
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(data),
-            success: function(data) {
-                if(data) {
-                   /* window.location.href = "/gwspxt/reviewDetailDocument";*/
-                    }
-                    else {
+            success: function (data) {
+                if (data) {
+                      window.location.href = "/gwspxt/documentManage";
+                }
+                else {
 
                 }
             }

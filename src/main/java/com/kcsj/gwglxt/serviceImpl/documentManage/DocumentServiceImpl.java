@@ -11,7 +11,6 @@ import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.Process;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -102,7 +101,7 @@ public class DocumentServiceImpl implements DocumentService {
             ProcessNode processNode = processNodeMapper.getNextOne(document.getDocumentProcess(), nextLocation);
             System.out.println("查出的流程节点" + processNode);
             if (processNode != null) {
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                 //根据职位和部门查出人员
                 List<Guser> users = guserMapper.getUserByPosition(processNode.getProcessNodePosition(), processNode.getProcessNodeDepartment());
                 System.out.println("查出的用户" + users.get(0));
@@ -132,7 +131,9 @@ public class DocumentServiceImpl implements DocumentService {
     //根据文档状态查询
     @Override
     public QueryForPage getDocumentByState(String documentType,Integer documentConfidential,Integer documentState, String documentUser, int currentPage,String searchInfo) {
-        List<DocumentCustom> list = documentMapper.getDocumentByState(documentType,documentConfidential,documentState, documentUser,searchInfo);
+        String documentNo = searchInfo;
+        String documentTitle = searchInfo;
+        List<DocumentCustom> list = documentMapper.getDocumentByState(documentType,documentConfidential,documentState, documentUser,documentNo,documentTitle);
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
         int allRow = list.size();//总记录数
@@ -162,7 +163,10 @@ public class DocumentServiceImpl implements DocumentService {
     //按阅读权限整理出所有文档
     @Override
     public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String searchInfo,String documentType,Integer documentConfidential,String documentDept) {
-        List<DocumentCustom> list = documentMapper.getAllDocument(documentType,documentConfidential,documentDept);
+        String documentNo = searchInfo;
+        String documentTitle = searchInfo;
+        String userName = searchInfo;
+        List<DocumentCustom> list = documentMapper.getAllDocument(documentType,documentConfidential,documentDept,documentNo,documentTitle,userName);
         Borrowing borrowing;
         for (DocumentCustom documentCustom : list) {
             if (documentCustom.getDepartment().getDepartmentName() != departmentName) {
@@ -204,7 +208,10 @@ public class DocumentServiceImpl implements DocumentService {
 
     //查询本人需要审核的文档
     @Override
-    public QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom) {
+    public QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String searchInfo) {
+        String documentNo = searchInfo;
+        String documentTitle = searchInfo;
+        String userName = searchInfo;
         List<ProcessNode> list = processNodeMapper.getProcessNodeByUser(loginCustom.getGuser().getUserDepartment(), loginCustom.getGuser().getUserPosition());
         //定义Documentcustom集合
         List<DocumentCustom> list_doc = new ArrayList<>();
@@ -212,7 +219,7 @@ public class DocumentServiceImpl implements DocumentService {
         for (ProcessNode processNode : list) {
             //用每一个processNode里面的流程名和流程位置的前一位查询文档
             //list_doc.add(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment()));
-            List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment());
+            List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment(),documentNo,documentTitle,userName);
             System.out.println("changdu1aaaa"+documentCustoms.size());
             for (DocumentCustom documentCustom:documentCustoms){
                 list_doc.add(documentCustom);
@@ -246,7 +253,7 @@ public class DocumentServiceImpl implements DocumentService {
     //申请批阅
     @Override
     public int insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         //从documentCustom对象中获得borrowing对象
         Borrowing borrowing = documentCustom.getBorrowing();
         //获取该部门最高权限职称
@@ -324,7 +331,7 @@ public class DocumentServiceImpl implements DocumentService {
     public void refuseDoc(LoginCustom loginCustom, String documentId) {
         //根据id获取文档信息，目的是得到文档的流程开始时间
         Document document = documentMapper.selectByPrimaryKey(documentId);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String documentProcessBegin;
         String documentProcessFinish = null;
         //判断流程开始时间是否为空，若为空则说明文档在第一个流程子节点被拒绝，则同时更改流程开始和结束时间
@@ -363,7 +370,7 @@ public class DocumentServiceImpl implements DocumentService {
     //同意借阅申请
     @Override
     public int acceptApply(DocumentCustom documentCustom, LoginCustom loginCustom) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         //首先改变该文档及改人的借阅记录的借阅状态
         //获取该条documentCustom记录的borrowing的id
         String borrowingId = documentCustom.getBorrowing().getBorrowingId();
@@ -409,7 +416,7 @@ public class DocumentServiceImpl implements DocumentService {
     //拒绝批阅申请
     @Override
     public int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         //首先改变该文档及改人的借阅记录的借阅状态
         //获取该条documentCustom记录的borrowing的id
         String borrowingId = documentCustom.getBorrowing().getBorrowingId();
@@ -523,6 +530,11 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public List<Log> getLog(int year, String userId) {
         return logMapper.getLogByUser(year,userId);
+    }
+
+    @Override
+    public int allAreRead(String userId) {
+        return mobjectMapper.allAreRead(userId);
     }
 
 }

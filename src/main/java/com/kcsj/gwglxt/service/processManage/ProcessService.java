@@ -17,6 +17,8 @@ public interface ProcessService {
     int deleteProcess(String[] ids);
     //修改流程信息
     int updateProcessInfo(Process process);
+
+    int addProcess(Process process);
     /*//获取所有流程
     List<Process> getAllProcess();*/
 }

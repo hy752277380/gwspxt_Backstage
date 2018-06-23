@@ -22,6 +22,19 @@ public class ProcessController {
         List<Process> processes = processService.getAllProcess();
         return processes;
     }*/
+    //添加流程
+    @RequestMapping("/addProcess")
+    public String addProcess(@RequestBody Process process){
+        String result;
+        int addResult = processService.addProcess(process);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (addResult == 0) {
+            result = "addFailed";
+        }else{
+            result = "addSuccess";
+        }
+        return result;
+    }
     //根据流程id查询流程节点详细信息
     @RequestMapping("/getProNodeByPro")
     public List<ProcessInfo> getProNodeByPro(String processId){

@@ -262,4 +262,7 @@ AND mo.mobject_user = #{mobjectUser}
 and mo.mobject_isread = '0'
 and me.message_isdelete= '0'
     </select>
+    <update id="allAreRead" parameterType="java.lang.String">
+        UPDATE mobject set mobject_isread = '1' where mobject_user = #{userId}
+    </update>
 </mapper>

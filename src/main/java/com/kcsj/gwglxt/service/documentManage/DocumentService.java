@@ -44,7 +44,7 @@ public interface DocumentService {
     DocumentCustom documentBaseInfo(String documentId);
 
 
-    QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom);
+    QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String searchInfo);
 
     List<MessageCustom> getMyAllMessage(String userId);
 
@@ -71,4 +71,6 @@ public interface DocumentService {
     List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage();
 
     List<Log> getLog(int year, String userId);
+    //全部标记已读
+    int allAreRead(String userId);
 }

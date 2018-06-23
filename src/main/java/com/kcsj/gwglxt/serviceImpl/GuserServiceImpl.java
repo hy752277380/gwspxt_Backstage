@@ -50,7 +50,7 @@ public class GuserServiceImpl implements GuserService {
     //插入用户信息
     @Override
     public int insert(Guser record) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         record.setUserId(TeamUtil.getUuid());
         record.setCreationTime(df.format(new Date()));
         record.setUserIsdelete(0);
@@ -231,4 +231,6 @@ public class GuserServiceImpl implements GuserService {
         queryForPage.init();
         return queryForPage;
     }
+
+
 }

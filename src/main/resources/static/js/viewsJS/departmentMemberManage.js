@@ -5,14 +5,15 @@ $(function () {
         personData: '', //所有数据
         ready: false,
         allocatePerson: {
-            userAccount: '',
-            userPassword: '',
-            userName: '',
-            userSex: '',
-            userDepartment: '',
-            userPosition: '',
-            userPhonenumber: '',
-            userEmail: '',
+            userId: "",
+            userAccount: "",
+            userPassword: "",
+            userName: "",
+            userSex: 1,
+            userDepartment: "",
+            userPosition: "",
+            userPhonenumber: "",
+            userEmail: "",
         },
         allDepartment: [],
         allDepartmentOfPosition: [],
@@ -33,14 +34,14 @@ $(function () {
             /* 获取数据 */
             getInfo(params) {
                 $.post('/gwspxt/getUserByDpt', params, function (response) {
-                    reviewDocument.personData = response.list;
-                    reviewDocument.page.currentPage = response.currentPage;
-                    reviewDocument.page.totalPage = response.totalPage;
-                    reviewDocument.page.allRow = response.allRow;
-                    reviewDocument.page.currentPage = response.currentPage;
-                    reviewDocument.page.hasPreviousPage = response.hasPreviousPage;
-                    reviewDocument.page.hasNextPage = response.hasNextPage;
-                    reviewDocument.ready = true;
+                    data.personData = response.list;
+                    data.page.currentPage = response.currentPage;
+                    data.page.totalPage = response.totalPage;
+                    data.page.allRow = response.allRow;
+                    data.page.currentPage = response.currentPage;
+                    data.page.hasPreviousPage = response.hasPreviousPage;
+                    data.page.hasNextPage = response.hasNextPage;
+                    data.ready = true;
                 }, 'json');
             },
             /* 页码改变时候触发的事件，不可缺少 */
@@ -62,6 +63,10 @@ $(function () {
                 const personID = this.personData[index].guser.userId;
                 $.post('/gwspxt/getUserById', {userId: personID}, function (response) {
                     data.allocatePerson = response;
+                    /*再通过部门ID去获取，部门内的全部职称*/
+                    $.post('/gwspxt/getPoPeByDpt', {department: response.userDepartment}, function (response) {
+                        data.allDepartmentOfPosition = response;
+                    }, 'json');
                     $('#allocateModal').modal('show');
                 }, 'json');
             },
@@ -73,6 +78,15 @@ $(function () {
             getDepartmentOfPosition() {
                 $.post('/gwspxt/getPoPeByDpt', {department: data.allocatePerson.userDepartment}, function (response) {
                     data.allDepartmentOfPosition = response;
+                }, 'json');
+            },
+            saveModify() {
+                $.post('/gwspxt/updatePersonInfo', data.allocatePerson, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        spop({template: `调配成功`, style: "success", autoclose: 2000});
+                    } else if (response.msg == "updateFailed") {
+                        spop({template: `调配失败`, style: "error", autoclose: 2000});
+                    }
                 }, 'json');
             },
         },

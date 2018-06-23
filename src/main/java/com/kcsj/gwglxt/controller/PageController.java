@@ -89,7 +89,7 @@ public class PageController {
     public String editDetailDocument() {
         return "editDetailDocument.html";
     }
-    
+
     /*部门成员管理*/
     @RequestMapping("/departmentMemberManage")
     public String departmentMemberManage() {

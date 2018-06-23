@@ -154,13 +154,13 @@
                             <td>
                                 <div class="form-group">
                                     <label>编号</label>
-                                    <input style="width: 200px;" disabled111="disabled111" type="text" :value="allocatePerson.guser.userAccount" class="form-control" >
+                                    <input style="width: 200px;" disabled="disabled" type="text" :value="allocatePerson.userAccount" class="form-control" >
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
                                     <label>姓名</label>
-                                    <input style="width: 200px;" disabled111="disabled111" type="text" :value="allocatePerson.guser.userName" class="form-control" >
+                                    <input style="width: 200px;" disabled="disabled" type="text" :value="allocatePerson.userName" class="form-control" >
                                 </div>
                             </td>
                         </tr>
@@ -168,13 +168,13 @@
                             <td>
                                 <div class="form-group">
                                     <label>性别</label>
-                                    <input style="width: 200px;" disabled111="disabled111" type="text" :value="allocatePerson.guser.userSex" class="form-control">
+                                    <input style="width: 200px;" disabled="disabled" type="text" :value="allocatePerson.userSex==0?'女':'男'" class="form-control">
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
                                     <label>手机号</label>
-                                    <input style="width: 200px;" disabled111="disabled111" type="text" :value="allocatePerson.guser.userPhonenumber" class="form-control" >
+                                    <input style="width: 200px;" disabled="disabled" type="text" :value="allocatePerson.userPhonenumber" class="form-control" >
                                 </div>
                             </td>
                         </tr>
@@ -182,7 +182,7 @@
                             <td>
                                 <div class="form-group">
                                     <label>部门</label>
-                                    <select style="width: 200px;" type="password" @change="getDepartmentOfPosition" v-model="allocatePerson.guser.userDepartment" class="form-control">
+                                    <select style="width: 200px;" type="password" @change="getDepartmentOfPosition" v-model="allocatePerson.userDepartment" class="form-control">
                                         <option v-for="department in allDepartment" :value="department.departmentId">{{department.departmentName}}</option>
                                     </select>
                                 </div>
@@ -190,7 +190,7 @@
                             <td>
                                 <div class="form-group">
                                     <label>职称</label>
-                                    <select style="width: 200px;" type="password" v-model="allocatePerson.guser.userPosition" class="form-control">
+                                    <select style="width: 200px;" type="password" v-model="allocatePerson.userPosition" class="form-control">
                                         <option v-for="position in allDepartmentOfPosition" :value="position.position.positionId">{{position.position.positionName}}</option>
                                     </select>
                                 </div>
@@ -199,8 +199,8 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button @click="saveModify" type="button" class="btn btn-primary">保存修改</button>
                 </div>
             </div>
         </div>

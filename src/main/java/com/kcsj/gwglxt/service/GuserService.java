@@ -61,7 +61,7 @@ public interface GuserService {
 
     QueryForPage getUserByDpt(String userDepartment,int currentPage);
 
-    LoginCustom getUserById(String userId);
+    Guser getUserById(String userId);
 
     int changePassword(String newPassword, LoginCustom loginCustom);
 }

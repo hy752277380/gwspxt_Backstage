@@ -49,7 +49,7 @@ $(function () {
             },
             /* 获取数据 */
             getProcessInfo(params) {
-                $.post('/gwspxt/getAllDepartment', params, function (response) {
+                $.post('/gwspxt/getAllProcess', params, function (response) {
                     processManage.processData = response.list;
                     processManage.page.currentPage = response.currentPage;
                     processManage.page.totalPage = response.totalPage;

@@ -20,7 +20,7 @@ $(function () {
         data: data,
         methods: {
             getProcess(){
-                $.post('/gwspxt/getAllProcess',{},function (response) {
+                $.post('/gwspxt/getAllProcessNoPage',{},function (response) {
                     data.docProcess = response;
                     data.ready= true;
                 }, 'json')

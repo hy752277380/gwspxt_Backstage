@@ -88,5 +88,9 @@ public class PageController {
         return "editDetailDocument.html";
     }
 
+    @RequestMapping("reviewPersonDocument")
+    public String reviewPersonDocument() {
+        return "departmentMemberManage/reviewPersonDocument.html";
+    }
 }
 

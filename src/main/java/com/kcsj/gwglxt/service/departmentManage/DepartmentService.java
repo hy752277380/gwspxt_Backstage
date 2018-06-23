@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.service.departmentManage;
 
+import com.kcsj.gwglxt.DTO.LoginCustom;
 import com.kcsj.gwglxt.DTO.PositionPermission;
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.DepartmentExample;
@@ -17,7 +18,7 @@ public interface DepartmentService {
 
     int deleteByPrimaryKey(String departmentId);
 
-    int insert(Department record);
+    int insert(Department record, LoginCustom loginCustom);
 
     int insertSelective(Department record);
 
@@ -39,11 +40,11 @@ public interface DepartmentService {
 
     List<Permission> getAllPermission();
 
-    int insertPosition(Position position);
+    int insertPosition(Position position,LoginCustom loginCustom);
 
-    int updatePermission(Position position);
+    int updatePermission(Position position,LoginCustom loginCustom);
 
-    int updateDptInfo(Department department);
+    int updateDptInfo(Department department,LoginCustom loginCustom);
 
     List<Department> getAllDepartmentNoPage();
 }

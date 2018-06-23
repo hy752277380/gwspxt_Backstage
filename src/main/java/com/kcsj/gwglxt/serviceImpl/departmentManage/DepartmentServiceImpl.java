@@ -1,21 +1,18 @@
 package com.kcsj.gwglxt.serviceImpl.departmentManage;
 
 import com.kcsj.gwglxt.DTO.DocumentCustom;
+import com.kcsj.gwglxt.DTO.LoginCustom;
 import com.kcsj.gwglxt.DTO.PositionPermission;
-import com.kcsj.gwglxt.entity.Department;
-import com.kcsj.gwglxt.entity.DepartmentExample;
-import com.kcsj.gwglxt.entity.Permission;
-import com.kcsj.gwglxt.entity.Position;
-import com.kcsj.gwglxt.mapper.DepartmentMapper;
-import com.kcsj.gwglxt.mapper.GuserMapper;
-import com.kcsj.gwglxt.mapper.PermissionMapper;
-import com.kcsj.gwglxt.mapper.PositionMapper;
+import com.kcsj.gwglxt.entity.*;
+import com.kcsj.gwglxt.mapper.*;
 import com.kcsj.gwglxt.service.departmentManage.DepartmentService;
 import com.kcsj.gwglxt.util.TeamUtil;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,6 +25,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     private PositionMapper positionMapper;
     @Autowired
     private PermissionMapper permissionMapper;
+    @Autowired
+    private LogMapper logMapper;
 
     @Override
     public int countByExample(DepartmentExample example) {
@@ -44,8 +43,17 @@ public class DepartmentServiceImpl implements DepartmentService {
         return 0;
     }
 
+    //添加部门
     @Override
-    public int insert(Department record) {
+    public int insert(Department record, LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //添加操作日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setCreationTime(df.format(new Date()));
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        log.setLogContent("添加了"+record.getDepartmentName()+"部门");
+        logMapper.insert(log);
         record.setDepartmentId(TeamUtil.getUuid());
         record.setDepartmentIsdelete(0);
         return departmentMapper.insert(record);
@@ -126,19 +134,46 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
     //添加职位
     @Override
-    public int insertPosition(Position position) {
+    public int insertPosition(Position position,LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //添加操作日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setCreationTime(df.format(new Date()));
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        log.setLogContent("添加了"+position.getPositionName()+"职位。");
+        logMapper.insert(log);
         position.setPositionId(TeamUtil.getUuid());
         position.setPositionIsdelete(0);
         return positionMapper.insert(position);
     }
 
+    //修改职位权限
     @Override
-    public int updatePermission(Position position) {
+    public int updatePermission(Position position,LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //添加操作日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setCreationTime(df.format(new Date()));
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        //根据职位id获取职位名称
+        log.setLogContent("修改了"+positionMapper.selectByPrimaryKey(position.getPositionId()).getPositionName()+"职位权限。");
+        logMapper.insert(log);
         return positionMapper.updateByPrimaryKeySelective(position);
     }
     //修改部门信息
     @Override
-    public int updateDptInfo(Department department) {
+    public int updateDptInfo(Department department,LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //添加操作日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setCreationTime(df.format(new Date()));
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        //根据职位id获取职位名称
+        log.setLogContent("修改了"+department.getDepartmentName()+"职位权限。");
+        logMapper.insert(log);
         return departmentMapper.updateByPrimaryKeySelective(department);
     }
 

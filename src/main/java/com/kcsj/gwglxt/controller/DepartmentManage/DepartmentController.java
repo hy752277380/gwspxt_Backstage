@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.controller.DepartmentManage;
 
+import com.kcsj.gwglxt.DTO.LoginCustom;
 import com.kcsj.gwglxt.DTO.PositionPermission;
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.Permission;
@@ -9,6 +10,7 @@ import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -20,9 +22,10 @@ public class DepartmentController {
     /****************************************8部门管理**************************/
     //添加部门
     @RequestMapping("/addDepartment")
-    public String addDepartment(@RequestBody Department department){
+    public String addDepartment(@RequestBody Department department,HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         String result;
-        int addResult = departmentService.insert(department);
+        int addResult = departmentService.insert(department,loginCustom);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (addResult == 0) {
             result = "addFailed";
@@ -57,9 +60,10 @@ public class DepartmentController {
     }
     //添加职位
     @RequestMapping("/addPosition")
-    public String addPosition(@RequestBody Position position){
+    public String addPosition(@RequestBody Position position,HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         String result;
-        int addResult = departmentService.insertPosition(position);
+        int addResult = departmentService.insertPosition(position,loginCustom);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (addResult == 0) {
             result = "addFailed";
@@ -70,9 +74,10 @@ public class DepartmentController {
     }
     //修改职位权限
     @RequestMapping("/updatePermission")
-    public String updatePermission(@RequestBody Position position){
+    public String updatePermission(@RequestBody Position position,HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         String result;
-        int updateResult = departmentService.updatePermission(position);
+        int updateResult = departmentService.updatePermission(position,loginCustom);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (updateResult == 0) {
             result = "addFailed";
@@ -83,9 +88,10 @@ public class DepartmentController {
     }
     //修改部门信息
     @RequestMapping("/updateDptInfo")
-    public String updateDptInfo(@RequestBody Department department){
+    public String updateDptInfo(@RequestBody Department department,HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         String result;
-        int updateResult = departmentService.updateDptInfo(department);
+        int updateResult = departmentService.updateDptInfo(department,loginCustom);
         //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
         if (updateResult == 0) {
             result = "addFailed";

@@ -41,7 +41,7 @@ public class DocumentManageController {
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         //初始化result
-        String result = null;
+        String result;
         //从对象中获得文档标题
         String documentName = document.getDocumentTitle();
         //将部分属性存入doc对象中
@@ -53,7 +53,7 @@ public class DocumentManageController {
         document.setDocumentRemark(document.getDocumentRemark());
         document.setDocumentProcess(document.getDocumentProcess());
         document.setDocumentLocation(0);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         document.setCreationTime(df.format(new Date()));
         document.setDocumentState(1);
         document.setDocumentSpeed(document.getDocumentSpeed());
@@ -82,7 +82,15 @@ public class DocumentManageController {
         String result = null;
         //获取session中的信息
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //添加操作日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setCreationTime(df.format(new Date()));
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        //根据职位id获取职位名称
+        log.setLogContent("修改了"+document.getDocumentTitle()+"文档内容。");
+        documentService.insertLog(log);
         document.setDocumentLocation(0);
         document.setDocumentState(1);
         document.setCreationTime(df.format(new Date()));
@@ -110,7 +118,7 @@ public class DocumentManageController {
         String documentProcessBegin = null;
         String documentProcessFinish = null;
         int updateResult = documentService.updateDocumentState(documentState, documentProcessBegin, documentProcessFinish, documentId);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         Log log = new Log();
         String text = null;
         text = "提交了" + document1.getDocumentTitle() + "文档";
@@ -133,7 +141,7 @@ public class DocumentManageController {
     public String updateDocumentLocation(String documentId, HttpSession httpSession, HttpServletResponse response) {
         //初始化result
         String result = null;
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         Document document = documentService.selectByPrimaryKey(documentId);
@@ -248,9 +256,9 @@ public class DocumentManageController {
 
     //查询本人需要审核的文档
     @RequestMapping("/findCheckDoc")
-    public QueryForPage findCheckDoc(int currentPage, HttpSession httpSession) {
+    public QueryForPage findCheckDoc(String searchInfo,int currentPage, HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        QueryForPage queryForPage = documentService.findCheckingDoc(currentPage, loginCustom);
+        QueryForPage queryForPage = documentService.findCheckingDoc(currentPage, loginCustom,searchInfo);
         return queryForPage;
     }
 

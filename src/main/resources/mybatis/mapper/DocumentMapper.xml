@@ -572,8 +572,8 @@ AND doc.document_process = pr.process_id
             and doc.document_confidential=#{documentConfidential}
         </if>
 and doc.document_user = #{documentUser}
-        <if test="searchInfo!=null">
-            and (doc.document_title like '${searchInfo}' or doc.document_no like '${searchInfo}' or gu.user_name like '${searchInfo}' or dt.documenttype_name like '${searchInfo}' or de.department_name like '${searchInfo}')
+        <if test="documentDept!=null">
+            and (doc.document_dept CONCAT('%',#{document_dept},'%' ) or doc.documentTitle CONCAT('%',#{documentTitle},'%' ))
         </if>
     </select>
     <select id="getAllDocument" resultMap="DocumentBaseInfo">
@@ -607,7 +607,7 @@ and doc.document_isdelete = '0'
     and doc.document_confidential = #{documentConfidential}
 </if>
  <if test="documentDept!=null">
-    and doc.document_dept = #{documentDept}
+    and (doc.document_dept CONCAT('%',#{document_dept},'%' ) or doc.documentTitle CONCAT('%',#{documentTitle},'%' ) or gu.userName CONCAT('%',#{userName},'%' ))
 </if>
     </select>
     <select id="documentBaseInfo" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
@@ -668,6 +668,9 @@ and doc.document_dept = de.department_id
 and doc.document_type = dt.documenttype_id
 and doc.document_user = gu.user_id
 and doc.document_process = #{documentProcess} and doc.document_location =#{documentLocation} and doc.document_dept = #{userDepartment} and doc.document_isdelete = '0'
+        <if test="documentDept!=null">
+            and (doc.document_dept CONCAT('%',#{document_dept},'%' ) or doc.documentTitle CONCAT('%',#{documentTitle},'%' ) or gu.userName CONCAT('%',#{userName},'%' ))
+        </if>
     </select>
     <select id="getDocumentByDpt" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
         SELECT

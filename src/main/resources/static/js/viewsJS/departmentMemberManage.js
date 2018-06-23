@@ -5,7 +5,6 @@ $(function () {
         personData: '', //所有数据
         ready: false,
         allocatePerson: {
-            userId: '',
             userAccount: '',
             userPassword: '',
             userName: '',
@@ -14,11 +13,9 @@ $(function () {
             userPosition: '',
             userPhonenumber: '',
             userEmail: '',
-            userIntroduction: '',
-            userPicture: '',
-            creationTime: '',
-            userIsdelete: ''
         },
+        allDepartment: [],
+        allDepartmentOfPosition: [],
         page: {
             allRow: 1,
             totalPage: 1,
@@ -62,11 +59,32 @@ $(function () {
                 window.location.href = "/gwspxt/reviewPersonDocument";
             },
             allocate(index) {
-
+                const personID = this.personData[index].guser.userId;
+                $.post('/gwspxt/getUserByDpt', {userId: personID}, function (response) {
+                    data.allocatePerson = response;
+                    $('#allocateModal').modal('show');
+                }, 'json');
+            },
+            getAllDepartment() {
+                $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
+                    data.allDepartment = response;
+                }, 'json');
+            },
+            getDepartmentOfPosition() {
+                $.post('/gwspxt/getPoPeByDpt', {department: data.allocatePerson.userDepartment}, function (response) {
+                    data.allDepartmentOfPosition = response;
+                }, 'json');
             },
         },
         mounted() {
             this.getInfo({currentPage: 1});
+            this.getAllDepartment();
+            /*/!*清空数据*!/
+            $('#allocateModal').on('hidden.bs.modal', function (e) {
+                for (let item in data.allocatePerson) {
+                    data.allocatePerson.item = '',
+                }
+            })*/
         },
         components: {
             'asideComponent': Layout,

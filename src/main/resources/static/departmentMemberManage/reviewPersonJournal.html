@@ -89,11 +89,14 @@
                                     <div class="page">
                                         <div class="box">
                                             <ul class="event_year">
-                                                <li class="current"><label @click="label" for="2013">2013</label></li>
+                                                <li class="current" v-for="log in logData">
+                                                    <label @click="label"
+                                                           :for="format(log.creationTime)">{{format(log.creationTime)}}</label>
+                                                </li>
                                             </ul>
                                             <ul class="event_list">
-                                                <div>
-                                                    <h3 id="2013">2013</h3>
+                                                <div v-for="log in logData">
+                                                    <h3 :id="format(log.creationTime)">{{format(log.creationTime)}}</h3>
                                                     <li><span>5月</span>
                                                         <p><span>站长之家专栏改版上线</span></p></li>
                                                     <li><span>4月</span>

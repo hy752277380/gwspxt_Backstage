@@ -80,4 +80,9 @@ public class ProcessServiceImpl implements ProcessService {
         }
     }
 
+    @Override
+    public int updateProcessInfo(Process process) {
+        return processMapper.updateByPrimaryKeySelective(process);
+    }
+
 }

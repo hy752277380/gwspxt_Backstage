@@ -141,4 +141,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     public int updateDptInfo(Department department) {
         return departmentMapper.updateByPrimaryKeySelective(department);
     }
+
+    @Override
+    public List<Department> getAllDepartmentNoPage() {
+        String searchInfo = null;
+        return departmentMapper.getAllDepartment(searchInfo);
+    }
 }

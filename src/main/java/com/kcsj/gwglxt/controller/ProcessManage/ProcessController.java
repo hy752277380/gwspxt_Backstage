@@ -55,6 +55,18 @@ public class ProcessController {
         return "{\"msg\":\"" + result + "\"}";
     }
     //修改流程信息
+    @RequestMapping("/updateProcessInfo")
+    public String updateProcessInfo(@RequestBody Process process){
+        String result;
+        int updateResult = processService.updateProcessInfo(process);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "addFailed";
+        }else{
+            result = "addSuccess";
+        }
+        return result;
+    }
     //删除流程
     @RequestMapping("/deleteProcess")
     public String deleteProcess(String ids[]){

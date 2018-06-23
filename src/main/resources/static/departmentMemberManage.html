@@ -262,33 +262,7 @@
 <script src="js/Director/app.js" type="text/javascript"></script>
 <!-- Director dashboard demo (This is only for demo purposes) -->
 <script src="js/Director/dashboard.js" type="text/javascript"></script>
-<script>
-    var data = {
-        user: JSON.parse(sessionStorage.getItem("loginUser")),
-        name: 'departmentMemberManage',
-        docData: '', //所有数据
-        ready: false,
-        page: {
-            allRow: 1,
-            totalPage: 1,
-            currentPage: 1,
-            pageSize: 10,
-            hasPreviousPage: false,
-            hasNextPage: false,
-        },
-    }
-
-    var reviewDocument = new Vue({
-        el: "#main",
-        data: data,
-        components: {
-            'asideComponent': Layout,
-            //'page-util': pageUtil,
-            //'search-util': searchUtil
-        }
-    });
-
-</script>
+<script src="js/viewsJS/departmentMemberManage.js"></script>
 <!-- Director for demo purposes -->
 </body>
 </html>

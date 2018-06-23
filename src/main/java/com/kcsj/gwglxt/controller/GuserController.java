@@ -249,12 +249,6 @@ public class GuserController {
         QueryForPage queryForPage = guserService.getUserByDpt(loginCustom.getGuser().getUserDepartment(),currentPage);
         return queryForPage;
     }
-    //查看目标人员工作日志
-    @RequestMapping("/getLogByUser")
-    public List<Log> getLogByUser(String userId){
-        List<Log> logs = guserService.getLogByUser(userId);
-        return logs;
-    }
     //查看目标人员所有文档
     @RequestMapping("/getDocByUser")
     public QueryForPage getDocByUser(String userId){

@@ -61,5 +61,4 @@ public interface GuserService {
 
     QueryForPage getUserByDpt(String userDepartment,int currentPage);
 
-    List<Log> getLogByUser(String userId);
 }

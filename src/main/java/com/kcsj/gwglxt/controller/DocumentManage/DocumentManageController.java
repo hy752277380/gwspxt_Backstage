@@ -332,9 +332,13 @@ public class DocumentManageController {
 
     //查看本人所有日志
     @RequestMapping("/getAllLog")
-    public void getAllLog(HttpSession httpSession) {
+    public List<Log> getAllLog(int year, String userId,HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        documentService.getAllLog(loginCustom.getGuser().getUserId());
+        if (userId==null&&"".equals(userId)){
+            userId = loginCustom.getGuser().getUserId();
+        }
+        List<Log> logs  = documentService.getLog(year,userId);
+        return logs;
     }
 
     //获取所有公文种类

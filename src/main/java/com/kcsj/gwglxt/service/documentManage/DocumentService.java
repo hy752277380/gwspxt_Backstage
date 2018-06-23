@@ -48,8 +48,6 @@ public interface DocumentService {
 
     List<MessageCustom> getMyAllMessage(String userId);
 
-    List<Log> getAllLog(String userId);
-
     List<Documenttype> getAllDocType();
 
     QueryForPage getAllProcess(int currentPage);
@@ -71,4 +69,6 @@ public interface DocumentService {
     int isRead(String mobjectId);
 
     List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage();
+
+    List<Log> getLog(int year, String userId);
 }

@@ -34,4 +34,6 @@ public interface MobjectMapper {
     List<MessageCustom> getMyAllMessage(String mobjectUser);
 
     List<MessageCustom> getUnReadMsg(String userId);
+
+    int allAreRead(String userId);
 }

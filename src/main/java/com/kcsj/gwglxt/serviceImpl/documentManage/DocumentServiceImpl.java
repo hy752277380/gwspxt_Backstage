@@ -11,7 +11,6 @@ import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.Process;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -162,7 +161,10 @@ public class DocumentServiceImpl implements DocumentService {
     //按阅读权限整理出所有文档
     @Override
     public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String searchInfo,String documentType,Integer documentConfidential,String documentDept) {
-        List<DocumentCustom> list = documentMapper.getAllDocument(documentType,documentConfidential,documentDept);
+        String documentNo = searchInfo;
+        String documentTitle = searchInfo;
+        String userName = searchInfo;
+        List<DocumentCustom> list = documentMapper.getAllDocument(documentType,documentConfidential,documentDept,documentNo,documentTitle,userName);
         Borrowing borrowing;
         for (DocumentCustom documentCustom : list) {
             if (documentCustom.getDepartment().getDepartmentName() != departmentName) {
@@ -523,6 +525,11 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public List<Log> getLog(int year, String userId) {
         return logMapper.getLogByUser(year,userId);
+    }
+
+    @Override
+    public int allAreRead(String userId) {
+        return mobjectMapper.allAreRead(userId);
     }
 
 }

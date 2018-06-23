@@ -7,7 +7,7 @@ $(function () {
         showData: '', //显示在页面的数据
         ready: false,
         index: '',
-        permissionData: [],
+        departmentData: [],
         page: {
             allRow: 1,
             totalPage: 1,
@@ -35,16 +35,16 @@ $(function () {
         el: "#main",
         data: data,
         methods: {
-            getProcessNodeInfoById(processId) {
-                $.post('/gwspxt/getProNodeByPro', processId, function (response) {
+            getProcessNodeInfoById(param) {
+                $.post('/gwspxt/getProNodeByPro', param, function (response) {
                     data.processNodeData = response;
-
+                    data.ready = true;
                 }, 'json');
             },
-            getPermission() {
-                $.post('/gwspxt/getAllPermission', {}, function (response) {
-                    data.permissionData = response;
-                    positionManage.ready = true;
+            getdepartment() {
+                $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
+                    data.departmentData = response;
+                    data.ready = true;
                 }, 'json');
             },
             editPosition(index) {
@@ -52,17 +52,10 @@ $(function () {
                 data.modifyprocessNodeData = posiData;
                 console.log(data.modifyprocessNodeData.permission.permissionId);
             },
-
-            /*editDepartment(index) {
-                var newDept = data.processNodeData[index];
-                data.modifyprocessNodeData = newDept;
-               /!* $('#editModal').modal("show");*!/
-            },*/
-
         },
         mounted() {
-            this.getProcessNodeInfoById({processId: this.$data.into_processNode.process_id});
-            /*this.getPermission({});*/
+            this.getProcessNodeInfoById({processId: data.into_processNode.process_id});
+            this.getdepartment({});
             /* this.getPositionInfo({currentPage : 1});*/
         },
         components: {

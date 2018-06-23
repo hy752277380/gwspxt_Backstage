@@ -54,7 +54,7 @@ $(function () {
             reviewJournal(index) {
                 const personID = this.personData[index].guser.userId;
                 sessionStorage.setItem('reviewPersonId', personID);
-                window.location.href = "/gwspxt/reviewPersonDocument";
+                window.location.href = "/gwspxt/reviewPersonJournal";
             },
             reviewDocument(index) {
                 const personID = this.personData[index].guser.userId;

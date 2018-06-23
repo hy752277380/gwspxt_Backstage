@@ -2,12 +2,12 @@ $(function () {
 
     var data = {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
-        name: 'documentManage',
+        name: 'departmentMemberManage',
         docData: '', //所有数据
         showData: '', //显示在页面的数据
         ready: false,
         index: '',
-        reviewPersonId:0,
+        reviewPersonId: sessionStorage.getItem("reviewPersonId"),
         page: {
             allRow: 1,
             totalPage: 1,
@@ -84,7 +84,7 @@ $(function () {
                 }
             },
             getInfo(params) {
-                $.post('/gwspxt/getDocByUser', params, function (response) {
+                $.post('/gwspxt/getDocumentByState', params, function (response) {
                     documentManage.docData = response.list;
                     documentManage.page.currentPage = response.currentPage;
                     documentManage.page.totalPage = response.totalPage;
@@ -138,18 +138,17 @@ $(function () {
             },
             checkDocument(index) {
                 var lhs_check = {
-                    "action":"check",
-                    "doc_id":this.docData[index].document.documentId
+                    "action": "check",
+                    "doc_id": this.docData[index].document.documentId
                 }
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_check));
                 window.location.href = "/gwspxt/reviewDetailDocument";
             },
         },
         mounted() {
-            this.getInfo({currentPage: 1});
+            this.getInfo({currentPage: 1, userId: data.reviewPersonId});
         },
-        watch: {
-        },
+        watch: {},
         components: {
             'asideComponent': Layout,
             'page-util': pageUtil,

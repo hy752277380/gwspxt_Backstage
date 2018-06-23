@@ -61,9 +61,9 @@ label[for] {
 
 .event_list h3 {
     margin: 0 0 10px 132px;
-    font-size: 24px;
-    font-family: Georgia;
-    color: #0066ff;
+    font-size: 22px;
+    /*font-family: Georgia;*/
+    /*color: #0066ff;*/
     padding-left: 25px;
     background: url('../img/jian.png') 0 -45px no-repeat;
     height: 38px;

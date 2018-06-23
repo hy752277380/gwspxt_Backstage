@@ -89,6 +89,25 @@ public class GuserController {
         String basePath = request.getScheme()+ "://"+request.getServerName()+":"+request.getServerPort()+path+"/";
         response.sendRedirect(basePath);
     }
+    //更改密码
+    @RequestMapping("/changePassword")
+    public String changePassword(String password,String newPassword,HttpSession httpSession){
+        String result;
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        if (password==loginCustom.getGuser().getUserPassword()){
+            int updateResult = guserService.changePassword(newPassword,loginCustom);
+            //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+            if (updateResult == 0) {
+                result = "updateFailed";
+            }else{
+                result = "updateSuccess";
+            }
+            return result;
+        }else{
+            return "oldPasswordError";
+        }
+    }
     /************************************首页数据*******************************/
     //首页月份人数统计
     @RequestMapping("/countUserByMouth")

@@ -108,8 +108,7 @@
     </delete>
 
     <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Process" >
-        insert into process (process_id, process_introduction, process_name
-            )
+        insert into process (process_id, process_introduction, process_name,process_isdelete)
         values (#{processId,jdbcType=CHAR}, #{processIntroduction,jdbcType=VARCHAR}, #{processName,jdbcType=VARCHAR}
             ,#{processIsdelete,jdbcType=INTEGER})
     </insert>

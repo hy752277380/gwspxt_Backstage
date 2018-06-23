@@ -138,21 +138,21 @@ var Header = Vue.extend({
                 <li class="dropdown messages-menu">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope"></i>
-                        <span class="label label-success">2</span>
+                        <span class="label label-success">{{message.number}}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">2条未读消息</li>
+                        <li class="header">{{message.number}}条未读消息</li>
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
                                 <li>
                                     <!-- start message -->
-                                    <a href="">
+                                    <a v-for="(msg,index) in message.msgContent" href="">
                                         <div class="pull-left">
                                             <img src="http://www.hywebsite.cn/static/gif/rabbit.gif" class="img-circle" alt="User Image"/>
                                         </div>
-                                        <h4>Support Team</h4>
-                                        <p>Why not buy a new awesome theme?</p>
+                                        <h4>{{msg.title}}</h4>
+                                        <p>{{msg.content}}</p>
                                         <small class="pull-right"><i class="fa fa-clock-o"></i> 5 mins</small>
                                     </a>
                                 </li>
@@ -191,10 +191,48 @@ var Header = Vue.extend({
     data() {
         return {
             user: JSON.parse(sessionStorage.getItem("loginUser")),
-            message: '',
+            message: {
+                number: 0,
+                msgContent: [],
+            },
+        }
+    },
+    methods: {
+        repleace(num) {
+            switch (num) {
+                case 1 :
+                    return "批阅申请";
+                case 2 :
+                    return "申请通过";
+                case 3 :
+                    return "公文审核";
+                case 4 :
+                    return "审核通过";
+                case 5 :
+                    return "通知";
+            }
+        },
+        getMessage(that) {
+            $.post('/gwspxt/getAllMessage', {}, function (response) {
+                that.message.number = response.length;
+                let newMsgContent = [];
+                for (let item in response) {
+                    let newMsg = {
+                        title: that.repleace(response[item].message.messageType),
+                        content: response[item].message.messageContent,
+                    }
+                    newMsgContent.push(newMsg);
+                }
+                that.message.msgContent = newMsgContent;
+            }, 'json');
         }
     },
     mounted() {
+        const that = this;
+        this.getMessage(that);
+        setInterval(function () {
+            that.getMessage(that);
+        }, 10000)
     },
 })
 

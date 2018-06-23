@@ -34,6 +34,25 @@ public class Guser {
 
     private Integer userIsdelete;
 
+    @Override
+    public String toString() {
+        return "Guser{" +
+                "userId='" + userId + '\'' +
+                ", userAccount='" + userAccount + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userSex=" + userSex +
+                ", userDepartment='" + userDepartment + '\'' +
+                ", userPosition='" + userPosition + '\'' +
+                ", userPhonenumber='" + userPhonenumber + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userIntroduction='" + userIntroduction + '\'' +
+                ", userPicture='" + userPicture + '\'' +
+                ", creationTime='" + creationTime + '\'' +
+                ", userIsdelete=" + userIsdelete +
+                '}';
+    }
+
     public String getUserId() {
         return userId;
     }

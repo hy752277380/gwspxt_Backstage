@@ -77,17 +77,35 @@ public class PageController {
     public String departmentPosition() {
         return "departmentPosition.html";
     }
+
     //查看文档详细界面
     @RequestMapping("/reviewDetailDocument")
     public String reviewDetailDocument() {
         return "reviewDetailDocument.html";
     }
+
     //查看文档详细界面
     @RequestMapping("/editDetailDocument")
     public String editDetailDocument() {
         return "editDetailDocument.html";
     }
 
+    /*部门成员管理*/
+    @RequestMapping("/departmentMemberManage")
+    public String departmentMemberManage() {
+        return "departmentMemberManage.html";
+    }
 
+    /*成员管理中查看成员文档*/
+    @RequestMapping("/reviewPersonDocument")
+    public String reviewPersonDocument() {
+        return "departmentMemberManage/reviewPersonDocument.html";
+    }
+
+    /*成员管理中查看成员日志*/
+    @RequestMapping("/reviewPersonJournal")
+    public String reviewPersonJournal() {
+        return "departmentMemberManage/reviewPersonJournal.html";
+    }
 }
 

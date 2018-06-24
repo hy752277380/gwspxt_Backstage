@@ -3,32 +3,34 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>文档查看</title>
+    <title>文档管理</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.0.2 -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!-- Ionicons -->
-    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/ionicons.min.css" rel="stylesheet" type="text/css"/>
     <!-- Morris chart -->
-    <link href="css/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/morris/morris.css" rel="stylesheet" type="text/css"/>
     <!-- jvectormap -->
-    <link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
     <!-- Date Picker -->
-    <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
     <!-- fullCalendar -->
     <!-- Daterange picker -->
-    <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
     <!-- iCheck for checkboxes and radio inputs -->
-    <link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/iCheck/all.css" rel="stylesheet" type="text/css"/>
     <!-- bootstrap wysihtml5 - text editor -->
     <!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
     <!-- Theme style -->
-    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/style.css" rel="stylesheet" type="text/css"/>
     <!-- 消息通知css -->
-    <link href="css/spop.css" rel="stylesheet" type="text/css">
-    <script src="js/vue.js"></script>
+    <link href="./css/spop.css" rel="stylesheet" type="text/css">
+
+    <script src="./js/vue.js"></script>
+
     <style>
         [v-cloak] {
             display: none;
@@ -58,6 +60,7 @@
     <header-component></header-component>
 </header>
 <div id="main" class="wrapper row-offcanvas row-offcanvas-left">
+    <!-- Left side column. contains the logo and sidebar -->
     <aside-component :user="user" :name="name"></aside-component>
     <aside id="content" class="right-side">
         <!-- Main content -->
@@ -67,9 +70,12 @@
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb">
                         <li>
-                            <a href=""><i class="fa fa-home"></i> 首页</a>
+                            <a href="index"><i class="fa fa-home"></i> 首页</a>
                         </li>
-                        <li class="active">文档查看</li>
+                        <li>
+                            <a href="departmentMemberManage"><i class="fa fa-male fa-fw"></i> 部门成员管理</a>
+                        </li>
+                        <li class="active">查看成员文档</li>
                     </ul>
                     <!--breadcrumbs end -->
                 </div>
@@ -93,24 +99,26 @@
                                         </div>
                                     </div>
                                     <table class="table table-hover">
-                                        <thead>
                                         <tr>
                                             <th>#<!--<input @click="checkAll($event)" type="checkbox">--></th>
                                             <th>文档编号</th>
                                             <th>文档标题</th>
-                                            <!--<th>文档类型<span class="caret"></span></th>-->
-                                            <th>
-                                                <search-util :query="docType" :search-name="'documentType'" @search="search"></search-util>
+                                            <th v-cloak>
+                                                <search-util :query="docType"></search-util>
                                             </th>
                                             <th>拟稿人</th>
-                                            <th>文档密级<span class="caret"></span></th>
-                                            <th>拟稿部门<span class="caret"></span></th>
+                                            <th v-cloak>
+                                                <search-util :query="docConfidential"></search-util>
+                                            </th>
+                                            <th>拟稿部门</th>
+                                            <th v-cloak>
+                                                <search-util :query="documentState"></search-util>
+                                            </th>
                                             <th>发布时间</th>
                                             <th>操作</th>
                                         </tr>
-                                        </thead>
                                         <tbody v-cloak v-if="ready">
-                                        <tr v-for="(doc,index) in docData">
+                                        <tr v-for="(doc,index) of docData">
                                             <td>{{index+1}}
                                                 <!--<input check="self" :doc-id="doc.document.documentId" type="checkbox">--></td>
                                             <td>{{doc.document.documentNo}}</td>
@@ -119,33 +127,14 @@
                                             <td>{{doc.guser.userName}}</td>
                                             <td v-html="replaceConfidential(doc.document.documentConfidential)"></td>
                                             <td>{{doc.department.departmentName}}</td>
+                                            <td v-html="replaceState(doc.document.documentState)"></td>
                                             <td>{{doc.document.creationTime}}</td>
                                             <td>
-                                                <!-- 本部门文档 -->
-                                                <template
-                                                        v-if="user.department.departmentName==doc.department.departmentName">
-                                                    <button @click="reviewDocument(index)" type="button"
-                                                            class="btn btn-primary btn-sm">阅读
-                                                    </button>
-                                                </template>
-                                                <!-- 非本部门未借阅文档 -->
-                                                <template v-else-if="doc.borrowing == null">
-                                                    <button @click="applyBorrowing(index)" type="button"
-                                                            class="btn btn-primary btn-sm">申请查看
-                                                    </button>
-                                                </template>
-                                                <!-- 非本部门已有借阅文档 -->
-                                                <template v-else-if="doc.borrowing.borrowingState==2">
-                                                    <button @click="reviewDocument(index)" type="button"
-                                                            class="btn btn-primary btn-sm">阅读
-                                                    </button>
-                                                </template>
+                                                <button type="button" class="btn btn-primary btn-sm"
+                                                        @click="checkDocument(index)"><i
+                                                        class="fa fa-pencil fa-fw"></i> 查看
+                                                </button>
                                             </td>
-                                        </tr>
-                                        </tbody>
-                                        <tbody v-else>
-                                        <tr style="text-align: center;">
-                                            <td colspan="9"><i class="fa fa-spinner fa-spin"></i></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -160,29 +149,37 @@
             </div>
         </section>
         <!-- /.content -->
+        <div class="footer-main">
+            Copyright &copy Director, 2014. More Templates
+        </div>
     </aside>
     <!-- /.right-side -->
 </div>
+<!-- ./wrapper -->
+
 <!-- jQuery 2.0.2 -->
-<script src="js/jquery.min.js" type="text/javascript"></script>
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>-->
+<script src="./js/jquery.min.js" type="text/javascript"></script>
 <!--布局的组件-->
-<script src="js/layout/layout.js"></script>
+<script src="./js/layout/layout.js"></script>
 <!-- 消息通知js -->
-<script src="js/spop.js" type="text/javascript"></script>
+<script src="./js/spop.js" type="text/javascript"></script>
 <!-- jQuery UI 1.10.3 -->
-<script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<script src="./js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap -->
-<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="./js/bootstrap.min.js" type="text/javascript"></script>
 <!-- daterangepicker -->
-<script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
-<script src="js/plugins/chart.js" type="text/javascript"></script>
+<script src="./js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<script src="./js/plugins/chart.js" type="text/javascript"></script>
 <!-- iCheck -->
-<script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<script src="./js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
 <!-- calendar -->
-<script src="js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+<script src="./js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
 <!-- Director App -->
-<script src="js/Director/app.js" type="text/javascript"></script>
-<script src="js/Director/dashboard.js" type="text/javascript"></script>
-<script src="js/viewsJS/reviewDocument.js"></script>
+<script src="./js/Director/app.js" type="text/javascript"></script>
+<script src="./js/Director/dashboard.js" type="text/javascript"></script>
+<script src="./departmentMemberManage/js/reviewPersonDocument.js"></script>
+<!-- Director for demo purposes -->
 </body>
+
 </html>

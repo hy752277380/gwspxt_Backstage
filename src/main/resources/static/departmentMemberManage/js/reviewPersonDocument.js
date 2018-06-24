@@ -2,11 +2,12 @@ $(function () {
 
     var data = {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
-        name: 'documentManage',
+        name: 'departmentMemberManage',
         docData: '', //所有数据
         showData: '', //显示在页面的数据
         ready: false,
         index: '',
+        reviewPersonId: sessionStorage.getItem("reviewPersonId"),
         page: {
             allRow: 1,
             totalPage: 1,
@@ -57,77 +58,6 @@ $(function () {
         docDepartment: 0,
     }
 
-    /*分页信息*/
-    var pageUtil = Vue.extend({
-        template: `<ul style="color: #606266" class="pagination">
-		<li :class="page.hasPreviousPage?'':'disabled'"><a href="javascript:" @click="next('-')"><span aria-hidden="true">&laquo;</span></a></li>
-		<li v-for="index in page.totalPage" :class="{'active' : page.currentPage == index}">
-			<a @click="btnclick(index)" href="javascript:">{{index}}</a>
-		</li>
-		<li :class="page.hasNextPage?'':'disabled'"><a href="javascript:" @click="next('+')"><span aria-hidden="true">&raquo;</span></a></li>
-		<li><input v-model="topage" style="width: 34px; height: 34px; display: inline;" type="text" class="form-control" :placeholder="page.currentPage"></li>
-		<li><strong>共{{page.allRow}}条记录,当前显示{{page.pageSize}}/页</strong></li>
-		</ul>`,
-        data() {
-            return {
-                topage: data.page.currentPage,
-            }
-        },
-        methods: {
-            btnclick(index) {
-                data.page.currentPage = index;
-            },
-            next($to) {
-                if ($to == "+") {
-                    if (data.page.hasNextPage) {
-                        data.page.currentPage++;
-                    } else {
-                        spop({
-                            template: "没有下一页了",
-                            style: "info",
-                            autoclose: 2000
-                        })
-                    }
-                }
-                if ($to == "-") {
-                    if (data.page.hasPreviousPage) {
-                        data.page.currentPage--;
-                    } else {
-                        spop({
-                            template: "没有上一页了",
-                            style: "info",
-                            autoclose: 2000
-                        })
-                    }
-                }
-                /*  更新当前页面显示  */
-                this.topage = data.page.currentPage;
-            },
-        },
-        watch: {
-            'topage': function (newVal, oldVal) {
-                var reg = /^[1-9]\d*$|^0$/;
-                if (reg.test(newVal) == true) {
-                    if (newVal <= data.page.totalPage && newVal > 0) {
-                        this.topage = newVal;
-                        data.page.currentPage = newVal;
-                    } else {
-                        this.topage = oldVal;
-                        data.page.currentPage = oldVal;
-                        spop({
-                            template: "超出总页面数",
-                            style: "info",
-                            autoclose: 2000
-                        })
-                    }
-                } else {
-                    this.topage = oldVal;
-                }
-            }
-        },
-        props: ['page'],
-    })
-
     var searchUtil = Vue.extend({
         template: `<span role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
@@ -164,6 +94,11 @@ $(function () {
                     documentManage.page.hasNextPage = response.hasNextPage;
                     documentManage.ready = true;
                 }, 'json');
+            },
+            /* 页码改变时候触发的事件，不可缺少 */
+            change(pageIndex) {
+                this.$data.page.currentPage = pageIndex;
+                this.getInfo({currentPage: pageIndex});
             },
             replaceConfidential(documentConfidential) {
                 switch (documentConfidential) {
@@ -209,14 +144,11 @@ $(function () {
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_check));
                 window.location.href = "/gwspxt/reviewDetailDocument";
             },
-            test(index) {
-                console.log(index);
-            }
         },
         mounted() {
-            this.getInfo({currentPage: 1});
-            $('[data-toggle="popover"]').popover();
+            this.getInfo({currentPage: 1, userId: data.reviewPersonId});
         },
+        watch: {},
         components: {
             'asideComponent': Layout,
             'page-util': pageUtil,

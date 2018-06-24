@@ -48,7 +48,7 @@ public interface DocumentMapper {
 
     List<DocumentCustom> findCheckingDoc(@Param("documentType")String documentType,@Param("documentConfidential")Integer documentConfidential,@Param("documentProcess") String documentProcess,@Param("documentLocation") Integer documentLocation,@Param("userDepartment") String userDepartment,@Param("documentNo") String documentNo,@Param("documentTitle")String documentTitle,@Param("userName")String userName);
 
-    List<DocumentCustom> getDocumentByDpt(@Param("documentType")String documentType,@Param("documentConfidential")Integer documentConfidential,@Param("userDepartment") String userDepartment);
+    List<DocumentCustom> getDocumentByDpt(@Param("documentType")String documentType,@Param("documentConfidential")Integer documentConfidential,@Param("documentDept") String documentDept);
 
     int countAllDocument(@Param("documentDept") String department,@Param("documentUser") String user);
 

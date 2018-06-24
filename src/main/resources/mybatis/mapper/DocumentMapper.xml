@@ -567,9 +567,6 @@ AND doc.document_process = pr.process_id
         <if test="documentConfidential!=null and documentConfidential!=0">
             and doc.document_confidential = #{documentConfidential}
         </if>
-        <if test="documentDept!=null and documentDept!=''">
-            and doc.document_dept = #{documentDept}
-        </if>
        <if test="documentNo!=null">
             and (doc.document_no like CONCAT('%',#{documentNo},'%' ) or doc.document_title like CONCAT('%',#{documentTitle},'%' ))
         </if>

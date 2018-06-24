@@ -73,4 +73,6 @@ public interface DocumentService {
     List<List<Log>> getLog(int year, String userId);
     //全部标记已读
     int allAreRead(String userId);
+
+    int deleteDoc(String[] ids, LoginCustom loginCustom);
 }

@@ -542,5 +542,33 @@ public class DocumentServiceImpl implements DocumentService {
     public int allAreRead(String userId) {
         return mobjectMapper.allAreRead(userId);
     }
+    //删除文档
+    @Override
+    public int deleteDoc(String[] ids, LoginCustom loginCustom) {
+        int result = 0;
+        if (ids==null&&"".equals(ids)){
+            return 0;
+        }else{
+            //遍历id删除
+            for (String documentId:ids){
+                Document document = new Document();
+                document.setDocumentId(documentId);
+                document.setDocumentIsdelete(1);
+                int deleteResult = documentMapper.updateByPrimaryKeySelective(document);
+                result = result + deleteResult;
+            }
+        }
+        //插入日志
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //添加操作日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setCreationTime(df.format(new Date()));
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        //根据职位id获取职位名称
+        log.setLogContent("删除了"+result+"篇草稿文档。");
+        logMapper.insert(log);
+        return result;
+    }
 
 }

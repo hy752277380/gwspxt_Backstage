@@ -261,6 +261,13 @@ public class DocumentManageController {
         QueryForPage queryForPage = documentService.findCheckingDoc(currentPage, loginCustom,searchInfo);
         return queryForPage;
     }
+    //删除草稿箱文档
+    @RequestMapping("/deleteDoc")
+    public String deleteDoc(String ids[],HttpSession httpSession){
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        int updateResult = documentService.deleteDoc(ids,loginCustom);
+        return null;
+    }
 
     /***************************文档借阅部分*****************************/
 

@@ -80,7 +80,6 @@ $(function () {
                 console.log(processNodeId);
                 $.post('/gwspxt/deleteProcessNode',{processNodeId:processNodeId}, function (response) {
                 }, 'json');
-                this.getProcessNodeInfoById({processId: data.into_processNode.process_id});
             }
         },
         mounted() {

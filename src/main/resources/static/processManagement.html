@@ -112,6 +112,7 @@
                                     </div>
                                     <table class="table table-hover">
                                         <tr>
+                                            <th><input @click="checkAll($event)" type="checkbox"></th>
                                             <th>序号</th>
                                             <th>流程名</th>
                                             <th>流程简介</th>
@@ -119,6 +120,7 @@
                                         </tr>
                                         <tbody v-cloak v-if="ready">
                                         <tr v-for="(process,index) of processData">
+                                            <td><input check="self" :process-id="process.processId" type="checkbox"></td>
                                             <td>{{index+1}}
                                             </td>
                                             <td>{{process.processName}}</td>

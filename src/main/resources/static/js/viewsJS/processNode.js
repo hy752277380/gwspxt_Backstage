@@ -2,7 +2,7 @@ $(function () {
     var data = {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
         into_processNode: JSON.parse(sessionStorage.getItem('into_processNode')),
-        name: 'positionManage',
+        name: 'processNodeManage',
         processNodeData: '', //所有数据
         showData: '', //显示在页面的数据
         ready: false,
@@ -44,12 +44,12 @@ $(function () {
         }
     }
 
-    var positionManage = new Vue({
+    var processNodeManage = new Vue({
         el: "#main",
         data: data,
         methods: {
-            getProcessNodeInfoById(param) {
-                $.post('/gwspxt/getProNodeByPro', param, function (response) {
+            getProcessNodeInfoById(processId) {
+                $.post('/gwspxt/getProNodeByPro', processId, function (response) {
                     data.processNodeData = response;
                     data.ready = true;
                 }, 'json');
@@ -73,13 +73,17 @@ $(function () {
                     dataType: "json",
                     contentType: 'application/json;charset=UTF-8',
                     data: JSON.stringify(data.processNode),
-                    success: function (response){}})
+                    success: function (res) {
+                    }
+                    })
             },
-            deleteProcessNode(index){
-                var processNodeId=data.processNodeData[index].process_node.processNodeId;
+            deleteProcessNode(index) {
+                var processNodeId = data.processNodeData[index].process_node.processNodeId;
                 console.log(processNodeId);
-                $.post('/gwspxt/deleteProcessNode',{processNodeId:processNodeId}, function (response) {
+                $.post('/gwspxt/deleteProcessNode', {processNodeId: processNodeId}).then(function (response) {
+                    processNodeManage.$options.methods.getProcessNodeInfoById({processId: data.into_processNode.process_id});
                 }, 'json');
+
             }
         },
         mounted() {

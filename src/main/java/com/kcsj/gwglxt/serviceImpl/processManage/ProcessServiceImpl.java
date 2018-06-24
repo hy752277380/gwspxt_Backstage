@@ -47,7 +47,7 @@ public class ProcessServiceImpl implements ProcessService {
         int maxStep;
         //根据流程查询流程节点
         List<ProcessNode> processNodes = processNodeMapper.getAllProcessNode(processNode.getProcessNodeProcess());
-        if(processNodes==null){
+        if(processNodes.size()==0){
             maxStep = 0;
         }else {
             maxStep = processNodeMapper.getMaxStep(processNode.getProcessNodeProcess());

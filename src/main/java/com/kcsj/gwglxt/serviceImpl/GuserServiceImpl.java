@@ -276,8 +276,25 @@ public class GuserServiceImpl implements GuserService {
     }
 
     @Override
-    public LoginCustom getUserById(String userId) {
-        return guserMapper.getPersonalInfo(userId);
+    public Guser getUserById(String userId) {
+        return guserMapper.selectByPrimaryKey(userId);
+    }
+
+    @Override
+    public int changePassword(String newPassword, LoginCustom loginCustom) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //添加操作日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setCreationTime(df.format(new Date()));
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        //根据职位id获取职位名称
+        log.setLogContent("修改了密码。");
+        logMapper.insert(log);
+        Guser guser = new Guser();
+        guser.setUserId(loginCustom.getGuser().getUserId());
+        guser.setUserPassword(newPassword);
+        return guserMapper.updateByPrimaryKeySelective(guser);
     }
 
 

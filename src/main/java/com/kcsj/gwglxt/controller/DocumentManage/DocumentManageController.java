@@ -224,7 +224,7 @@ public class DocumentManageController {
     //根据文档状态查询文档
     @RequestMapping("/getDocumentByState")
     public QueryForPage getDocumentByState(String userId,String documentType, Integer documentConfidential, Integer documentState, int currentPage, String searchInfo, HttpSession httpSession) {
-        if(userId==null&&"".equals(userId)){
+        if(userId==null||"".equals(userId)){
             //获取session内容
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
             userId=loginCustom.getGuser().getUserId();
@@ -357,12 +357,12 @@ public class DocumentManageController {
 
     //查看本人所有日志
     @RequestMapping("/getAllLog")
-    public List<Log> getAllLog(int year, String userId,HttpSession httpSession) {
+    public List<List<Log>> getAllLog(int year, String userId,HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        if (userId==null&&"".equals(userId)){
+        if (userId==null||"".equals(userId)){
             userId = loginCustom.getGuser().getUserId();
         }
-        List<Log> logs  = documentService.getLog(year,userId);
+        List<List<Log>> logs  = documentService.getLog(year,userId);
         return logs;
     }
 

@@ -107,15 +107,20 @@
                                             <th>文档编号</th>
                                             <th>文档标题</th>
                                             <th>
-                                                <search-util :query="docType" :search-name="'documentType'" @search="search"></search-util>
+                                                <search-util :query="docType" :search-name="'documentType'"
+                                                             @search="search"></search-util>
                                             </th>
                                             <th>拟稿人</th>
-                                            <th v-cloak>
-                                                <search-util :query="docConfidential"></search-util>
+                                            <th>
+                                                <search-util :query="docConfidential"
+                                                             :search-name="'documentConfidential'" @search="search">
+                                                </search-util>
                                             </th>
                                             <th>拟稿部门</th>
-                                            <th v-cloak>
-                                                <search-util :query="documentState"></search-util>
+                                            <th>
+                                                <search-util :query="docState" :search-name="'documentState'"
+                                                             @search="search">
+                                                </search-util>
                                             </th>
                                             <th>发布时间</th>
                                             <th>操作</th>

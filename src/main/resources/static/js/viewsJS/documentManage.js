@@ -38,15 +38,17 @@ $(function () {
         docConfidential: {
             name: "文档密级",
             items: [
+                {key: "", value: "全部"},
                 {key: "1", value: "绝密"},
                 {key: "2", value: "机密"},
                 {key: "3", value: "秘密"},
                 {key: "4", value: "普通"},
             ],
         },
-        documentState: {
+        docState: {
             name: "文档状态",
             items: [
+                {key: "", value: "全部"},
                 {key: "0", value: "退回"},
                 {key: "1", value: "草稿"},
                 {key: "2", value: "待审核"},
@@ -156,6 +158,7 @@ $(function () {
                     documentConfidential: data.searchData.documentConfidential,
                     documentState: data.searchData.documentState
                 })
+                console.log( data.searchData.documentType)
             },
         },
         mounted() {

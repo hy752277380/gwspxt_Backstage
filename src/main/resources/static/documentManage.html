@@ -106,8 +106,8 @@
                                             <th><input @click="checkAll($event)" type="checkbox"></th>
                                             <th>文档编号</th>
                                             <th>文档标题</th>
-                                            <th v-cloak>
-                                                <search-util :query="docType"></search-util>
+                                            <th>
+                                                <search-util :query="docType" :search-name="'documentType'" @search="search"></search-util>
                                             </th>
                                             <th>拟稿人</th>
                                             <th v-cloak>

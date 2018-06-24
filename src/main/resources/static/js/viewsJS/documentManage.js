@@ -203,48 +203,19 @@ $(function () {
             },
             checkDocument(index) {
                 var lhs_check = {
-                    "action":"check",
-                    "doc_id":this.docData[index].document.documentId
+                    "action": "check",
+                    "doc_id": this.docData[index].document.documentId
                 }
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_check));
                 window.location.href = "/gwspxt/reviewDetailDocument";
             },
-
-
+            test(index) {
+                console.log(index);
+            }
         },
-
         mounted() {
-            this.getInfo({
-                currentPage: 1
-            });
-        },
-        watch: {
-            'page.currentPage': function (newVal, oldVal) {
-                if (newVal > this.page.totalPage) {
-                    this.page.totalPage = oldVal;
-                    spop({
-                        template: "没有这个页面",
-                        style: "info",
-                        autoclose: 2000
-                    })
-                } else if (newVal < 1) {
-                    spop({
-                        template: "输入页面有误",
-                        style: "info",
-                        autoclose: 2000
-                    })
-                } else if (!(/(^[0-9]*[1-9][0-9]*$)/.test(newVal))) {
-                    spop({
-                        template: "输入正确的数字",
-                        style: "info",
-                        autoclose: 2000
-                    })
-                } else {
-                    this.getInfo({
-                        currentPage: this.page.currentPage
-                    });
-                }
-            },
+            this.getInfo({currentPage: 1});
+            $('[data-toggle="popover"]').popover();
         },
         components: {
             'asideComponent': Layout,
@@ -252,6 +223,4 @@ $(function () {
             'search-util': searchUtil,
         }
     });
-
-
 })

@@ -243,3 +243,20 @@ var userInfo = new Vue({
         'header-component': Header
     }
 })
+
+
+/*   表头的查询方法封装 */
+var searchUtil = Vue.extend({
+    template: `<span role="presentation" class="dropdown">
+                   <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
+                   <ul class="dropdown-menu">
+                       <li v-for="item in query.items"><a href="javascript:;" @click="search(item.key)" :key="item.key">{{item.value}}</a></li>
+                   </ul>
+                   </span>`,
+    methods: {
+        search(key) {
+            this.$emit('search', {key: key, searchName: this.searchName});
+        },
+    },
+    props: ['query', 'searchName'],
+});

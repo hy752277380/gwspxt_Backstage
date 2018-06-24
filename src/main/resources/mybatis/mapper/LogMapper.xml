@@ -210,6 +210,6 @@
     </update>
     <select id="getLogByUser" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
-        from log where log_user = #{userId} and MONTH(log.creation_time) = #{year} and YEAR(creation_time) = #{mouth}
+        from log where log_user = #{userId} and YEAR(log.creation_time) = #{year} and MONTH(creation_time) = #{mouth}
     </select>
 </mapper>

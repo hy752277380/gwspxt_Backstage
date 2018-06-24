@@ -1,90 +1,93 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title>文档查看</title>
-		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-		<!-- bootstrap 3.0.2 -->
-		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-		<!-- font Awesome -->
-		<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-		<!-- Ionicons -->
-		<link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
-		<!-- Morris chart -->
-		<link href="css/morris/morris.css" rel="stylesheet" type="text/css" />
-		<!-- jvectormap -->
-		<link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
-		<!-- Date Picker -->
-		<link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
-		<!-- fullCalendar -->
-		<!-- Daterange picker -->
-		<link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-		<!-- iCheck for checkboxes and radio inputs -->
-		<link href="css/iCheck/all.css" rel="stylesheet" type="text/css" />
-		<!-- bootstrap wysihtml5 - text editor -->
-		<!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
-		<!-- Theme style -->
-		<link href="css/style.css" rel="stylesheet" type="text/css" />
-		<!-- 消息通知css -->
-		<link href="css/spop.css" rel="stylesheet" type="text/css">
-		<script src="js/vue.js"></script>
-		<style>
-			[v-cloak] {
-				display: none;
-			}
-			
-			td {
-				vertical-align: initial !important;
-			}
-			/* 除去input为number时候的箭头*/
-			
-			input::-webkit-outer-spin-button,
-			input::-webkit-inner-spin-button {
-				-webkit-appearance: none !important;
-				margin: 0;
-			}
-			
-			input[type="number"] {
-				-moz-appearance: textfield;
-			}
-		</style>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <title>文档查看</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- bootstrap 3.0.2 -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- font Awesome -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Ionicons -->
+    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Morris chart -->
+    <link href="css/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <!-- jvectormap -->
+    <link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
+    <!-- Date Picker -->
+    <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
+    <!-- fullCalendar -->
+    <!-- Daterange picker -->
+    <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>
+    <!-- bootstrap wysihtml5 - text editor -->
+    <!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
+    <!-- Theme style -->
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- 消息通知css -->
+    <link href="css/spop.css" rel="stylesheet" type="text/css">
+    <script src="js/vue.js"></script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
 
-	<body class="skin-black">
-		<header id="header" class="header">
-			<a href="index.html" class="logo">公文审批系统</a>
-			<header-component></header-component>
-		</header>
-		<div id="main" class="wrapper row-offcanvas row-offcanvas-left">
-			<aside-component :user="user" :name="name"></aside-component>
-			<aside id="content" class="right-side">
-				<!-- Main content -->
-				<section class="content">
-					<div class="row">
-						<div class="col-md-12">
-							<!--breadcrumbs start -->
-							<ul class="breadcrumb">
-								<li>
-									<a href=""><i class="fa fa-home"></i> 首页</a>
-								</li>
-								<li class="active">文档查看</li>
-							</ul>
-							<!--breadcrumbs end -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<!--内容-->
-							<div class="row">
-								<div class="col-xs-12">
-									<div class="panel">
-										<div class="panel-body table-responsive">
-											<div class="box-tools m-b-15">
-												<div class="input-group">
-													<input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
-													<div class="input-group-btn">
-														<button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
+        td {
+            vertical-align: initial !important;
+        }
+
+        /* 除去input为number时候的箭头*/
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+
+<body class="skin-black">
+<header id="header" class="header">
+    <a href="index.html" class="logo">公文审批系统</a>
+    <header-component></header-component>
+</header>
+<div id="main" class="wrapper row-offcanvas row-offcanvas-left">
+    <aside-component :user="user" :name="name"></aside-component>
+    <aside id="content" class="right-side">
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!--breadcrumbs start -->
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href=""><i class="fa fa-home"></i> 首页</a>
+                        </li>
+                        <li class="active">文档查看</li>
+                    </ul>
+                    <!--breadcrumbs end -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!--内容-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel">
+                                <div class="panel-body table-responsive">
+                                    <div class="box-tools m-b-15">
+                                        <div class="input-group">
+                                            <input type="text" name="table_search"
+                                                   class="form-control input-sm pull-right" style="width: 150px;"
+                                                   placeholder="Search"/>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -97,7 +100,7 @@
                                             <th>文档标题</th>
                                             <!--<th>文档类型<span class="caret"></span></th>-->
                                             <th>
-                                                <search-util :query="docType"></search-util>
+                                                <search-util :query="docType" :search-name="'documentType'" @search="search"></search-util>
                                             </th>
                                             <th>拟稿人</th>
                                             <th>文档密级<span class="caret"></span></th>
@@ -119,16 +122,23 @@
                                             <td>{{doc.document.creationTime}}</td>
                                             <td>
                                                 <!-- 本部门文档 -->
-                                                <template v-if="user.department.departmentName==doc.department.departmentName">
-                                                    <button @click="reviewDocument(index)" type="button" class="btn btn-primary btn-sm">阅读</button>
+                                                <template
+                                                        v-if="user.department.departmentName==doc.department.departmentName">
+                                                    <button @click="reviewDocument(index)" type="button"
+                                                            class="btn btn-primary btn-sm">阅读
+                                                    </button>
                                                 </template>
                                                 <!-- 非本部门未借阅文档 -->
                                                 <template v-else-if="doc.borrowing == null">
-                                                    <button @click="applyBorrowing(index)" type="button" class="btn btn-primary btn-sm">申请查看</button>
+                                                    <button @click="applyBorrowing(index)" type="button"
+                                                            class="btn btn-primary btn-sm">申请查看
+                                                    </button>
                                                 </template>
                                                 <!-- 非本部门已有借阅文档 -->
                                                 <template v-else-if="doc.borrowing.borrowingState==2">
-                                                    <button @click="reviewDocument(index)" type="button" class="btn btn-primary btn-sm">阅读</button>
+                                                    <button @click="reviewDocument(index)" type="button"
+                                                            class="btn btn-primary btn-sm">阅读
+                                                    </button>
                                                 </template>
                                             </td>
                                         </tr>

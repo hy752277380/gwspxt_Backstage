@@ -3,7 +3,6 @@ $(function () {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
         name: 'reviewDocument',
         docData: '', //所有数据
-        showData: '', //显示在页面的数据
         ready: false,
         page: {
             allRow: 1,
@@ -16,7 +15,7 @@ $(function () {
         docType: {
             name: "文档类型",
             items: [
-                {key: "0", value: "全部"},
+                {key: "", value: "全部"},
                 {key: "1", value: "命令"},
                 {key: "2", value: "批复"},
                 {key: "3", value: "意见"},
@@ -44,19 +43,12 @@ $(function () {
             ],
         },
         docDepartment: 0,
+        searchData: {
+            documentType: 0,
+            documentConfidential: 0,
+            documentState: 0,
+        }
     }
-
-    /*   表头的查询方法封装，暂未封装完全 */
-    var searchUtil = Vue.extend({
-        template: `<span role="presentation" class="dropdown">
-                   <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
-                   <ul class="dropdown-menu">
-                       <li v-for="item in query.items"><a href="javascript:;" :key="item.key">{{item.value}}</a></li>
-                   </ul>
-                   </span>`,
-        props: ['query'],
-    });
-
 
     var reviewDocument = new Vue({
         el: "#main",
@@ -103,7 +95,12 @@ $(function () {
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
-                this.getInfo({currentPage: pageIndex});
+                this.getInfo({
+                    currentPage: pageIndex,
+                    documentType: data.searchData.documentType,
+                    documentConfidential: data.searchData.documentConfidential,
+                    documentState: data.searchData.documentState
+                });
             },
             /*申请借阅事件*/
             applyBorrowing(index) {
@@ -119,6 +116,15 @@ $(function () {
                         spop({template: `申请失败`, style: "error", autoclose: 2000});
                     }
                 }, 'json');
+            },
+            search(msg) {
+                data.searchData[msg.searchName] = msg.key;
+                this.getInfo({
+                    currentPage: 1,
+                    documentType: data.searchData.documentType,
+                    documentConfidential: data.searchData.documentConfidential,
+                    documentState: data.searchData.documentState
+                })
             },
         },
         mounted() {

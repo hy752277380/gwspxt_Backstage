@@ -63,7 +63,6 @@
                         <li>
                             <a href="#"><i class="fa fa-home"></i> 首页</a>
                         </li>
-
                         <li class="active">个人日志</li>
                     </ul>
                     <!--breadcrumbs end -->
@@ -91,17 +90,17 @@
                                     <div class="page">
                                         <div class="box">
                                             <ul class="event_year">
-                                                <li class="current"><label @click="label" for="2013">2013</label></li>
+                                                <li v-for="(logs,index) in logData" :class="index==0?'current':''">
+                                                    <label @click="label" :for="index+1">{{index+1}}</label>
+                                                </li>
                                             </ul>
                                             <ul class="event_list">
-                                                <div>
-                                                    <h3 id="2013">2013</h3>
-                                                    <li><span>5月</span>
-                                                        <p><span>站长之家专栏改版上线</span></p></li>
-                                                    <li><span>4月</span>
-                                                        <p><span>站长工具旗下产品，超级监控上线</span></p></li>
-                                                    <li><span>3月</span>
-                                                        <p><span>站长之家创业栏目上线</span></p></li>
+                                                <div v-for="(logs,index) in logData">
+                                                    <h3 :id="index+1">{{index+1}}</h3>
+                                                    <li v-for="(log,index) in logs">
+                                                        <span>{{log.creationTime}}</span>
+                                                        <p><span>{{log.logContent}}</span></p>
+                                                    </li>
                                                 </div>
                                             </ul>
                                         </div>

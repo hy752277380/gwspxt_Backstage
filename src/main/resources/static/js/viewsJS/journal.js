@@ -1,18 +1,9 @@
 $(function () {
 
-
-    /*$('label').click(function () {
-        $('.event_year>li').removeClass('current');
-        $(this).parent('li').addClass('current');
-        var year = $(this).attr('for');
-        $('#' + year).parent().prevAll('div').slideUp(800);
-        $('#' + year).parent().slideDown(800).nextAll('div').slideDown(800);
-    });*/
-
     var data = {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
         name: 'journal',
-        docData: '', //所有数据
+        logData: [], //所有数据
         ready: false,
         page: {
             allRow: 1,
@@ -34,7 +25,17 @@ $(function () {
                 var year = $($event.target).attr('for');
                 $('#' + year).parent().prevAll('div').slideUp(800);
                 $('#' + year).parent().slideDown(800).nextAll('div').slideDown(800);
+            },
+            getInfo(params) {
+                $.post('/gwspxt/getAllLog', params, function (response) {
+                    data.logData = response;
+                    data.ready = true;
+                }, 'json');
             }
+        },
+        mounted() {
+            this.getInfo({year: 2018});
+            $('[data-toggle="popover"]').popover({html: true});
         },
         components: {
             'asideComponent': Layout,

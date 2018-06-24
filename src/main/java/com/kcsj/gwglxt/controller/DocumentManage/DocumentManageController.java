@@ -203,7 +203,7 @@ public class DocumentManageController {
     //通知下一个节点操作人
     @RequestMapping("/messageNextOne")
     public String messageNextOne(String documentId) {
-        String result = null;
+        String result;
         int messageResult = documentService.insertMessage(documentId);
         if (messageResult == 0) {
             result = "updateFailed";
@@ -260,6 +260,19 @@ public class DocumentManageController {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         QueryForPage queryForPage = documentService.findCheckingDoc(currentPage, loginCustom,searchInfo);
         return queryForPage;
+    }
+    //删除草稿箱文档
+    @RequestMapping("/deleteDoc")
+    public String deleteDoc(String ids[],HttpSession httpSession){
+        String result;
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        int updateResult = documentService.deleteDoc(ids,loginCustom);
+        if (updateResult == 0) {
+            result = "updateFailed";
+        } else {
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
     }
 
     /***************************文档借阅部分*****************************/

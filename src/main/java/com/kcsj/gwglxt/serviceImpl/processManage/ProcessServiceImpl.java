@@ -43,7 +43,15 @@ public class ProcessServiceImpl implements ProcessService {
         //根据职位id获取职位名称
         log.setLogContent("添加了"+processNode.getProcessNodeName()+"流程节点。");
         logMapper.insert(log);
-        int maxStep = processNodeMapper.getMaxStep(processNode.getProcessNodeProcess());
+        //判断目标流程是否有流程节点
+        int maxStep;
+        //根据流程查询流程节点
+        List<ProcessNode> processNodes = processNodeMapper.getAllProcessNode(processNode.getProcessNodeProcess());
+        if(processNodes.size()==0){
+            maxStep = 0;
+        }else {
+            maxStep = processNodeMapper.getMaxStep(processNode.getProcessNodeProcess());
+        }
         processNode.setProcessNodeId(TeamUtil.getUuid());
         processNode.setProcessNodeStep(maxStep+1);
         processNode.setProcessNodeIsdelete(0);

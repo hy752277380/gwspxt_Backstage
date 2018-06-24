@@ -112,6 +112,7 @@
                                     </div>
                                     <table class="table table-hover">
                                         <tr>
+                                            <th><input @click="checkAll($event)" type="checkbox"></th>
                                             <th>序号</th>
                                             <th>流程名</th>
                                             <th>流程简介</th>
@@ -119,6 +120,7 @@
                                         </tr>
                                         <tbody v-cloak v-if="ready">
                                         <tr v-for="(process,index) of processData">
+                                            <td><input check="self" :process-id="process.processId" type="checkbox"></td>
                                             <td>{{index+1}}
                                             </td>
                                             <td>{{process.processName}}</td>
@@ -129,10 +131,12 @@
                                                         class="fa fa-wrench" aria-hidden="true"></i> 管理
                                                 </button>
                                                 <button href="#editPocessModal" data-toggle="modal" type="button"
-                                                        class="btn btn-warning btn-sm"  style="margin-right: 10px;" @click="editProgress(index)"><i
+                                                        class="btn btn-warning btn-sm" style="margin-right: 10px;"
+                                                        @click="editProgress(index)"><i
                                                         class="fa fa-pencil fa-fw"></i> 修改
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-sm"
+                                                        @click="deleteProcess(index)"
                                                 ><i class="fa fa-trash-o fa-fw"></i>
                                                     删除
                                                 </button>
@@ -175,18 +179,18 @@
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">流程名称</label>
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
                                 <input type="input" class="form-control" id="processName" placeholder="流程名称">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">流程简介</label>
-                            <div class="col-md-10">
+                            <div class="col-md-8">
                                 <input type="input" class="form-control" id="processIntroduction" placeholder="流程简介">
                             </div>
 
                         </div>
-                        <div class="form-group">
+                        <div class="modal-footer">
                             <div class="col-lg-offset-2 col-lg-10">
                                 <button type="submit" class="btn btn-info" onclick="addProgress()">添加</button>
                                 <button type="submit" class="btn btn-default" data-dismiss="modal">返回</button>
@@ -213,7 +217,7 @@
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">流程名称</label>
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
                                 <input type="input" class="form-control" v-model="processModalData.processName"
                                        id="editProcessName" placeholder="流程名称">
                                 <input type="hidden" class="form-control" v-model="processModalData.processId"
@@ -223,13 +227,13 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">流程简介</label>
-                            <div class="col-md-10">
+                            <div class="col-md-8">
                                 <input type="input" class="form-control" :value="processModalData.processIntroduction"
                                        id="editProcessIntroduction" placeholder="流程简介">
                             </div>
 
                         </div>
-                        <div class="form-group">
+                        <div class="modal-footer">
                             <div class="col-lg-offset-2 col-lg-10">
                                 <button type="submit" class="btn btn-info" onclick="editProgress()">修改</button>
                                 <button type="submit" class="btn btn-default" data-dismiss="modal">返回</button>

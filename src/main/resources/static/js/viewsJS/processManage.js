@@ -73,13 +73,18 @@ $(function () {
             },
             intoProgressNode(index){
                 var into_processNode = {
-                    "lhs_process":this.processData[index].processName,
-                    "process_id": this.processData[index].processId,
+                    lhs_process:this.processData[index].processName,
+                    process_id: this.processData[index].processId,
                 }
                 sessionStorage.setItem('into_processNode', JSON.stringify(into_processNode));
                 location.href = "/gwspxt/processNode";
             },
-
+          /*  deleteProcess(index){
+                var processId=data.processData[index].processId;
+                console.log(processId);
+                $.post('/gwspxt/deleteProcess',{processId:processId}, function (response) {
+                }, 'json');
+            }*/
         },
         mounted() {
             this.getProcessInfo({currentPage: 1});

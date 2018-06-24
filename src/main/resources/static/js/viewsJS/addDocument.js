@@ -15,6 +15,7 @@ $(function () {
         },
     }
 
+
     var reviewDocument = new Vue({
         el: "#main",
         data: data,
@@ -136,7 +137,7 @@ $(function () {
             data: JSON.stringify(data),
             success: function (data) {
                 if (data) {
-                      window.location.href = "/gwspxt/documentManage";
+                    window.location.href = "/gwspxt/documentManage";
                 }
                 else {
 

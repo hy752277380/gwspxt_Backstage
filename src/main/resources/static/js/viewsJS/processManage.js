@@ -73,8 +73,8 @@ $(function () {
             },
             intoProgressNode(index){
                 var into_processNode = {
-                    "lhs_process":this.processData[index].processName,
-                    "process_id": this.processData[index].processId,
+                    lhs_process:this.processData[index].processName,
+                    process_id: this.processData[index].processId,
                 }
                 sessionStorage.setItem('into_processNode', JSON.stringify(into_processNode));
                 location.href = "/gwspxt/processNode";

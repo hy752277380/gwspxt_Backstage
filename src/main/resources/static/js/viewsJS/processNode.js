@@ -7,29 +7,42 @@ $(function () {
         showData: '', //显示在页面的数据
         ready: false,
         index: '',
-        departmentData: [],
-        page: {
-            allRow: 1,
-            totalPage: 1,
-            currentPage: 1,
-            pageSize: 10,
-            hasPreviousPage: false,
-            hasNextPage: false,
-        },
+        departmentData: '',
+        posPermiData: [
+            {
+                position: {
+                    positionId: '',
+                    positionDept: '',
+                    positionPermission: '',
+                    positionName: '',
+                    positionIsdelete: 0,
+                },
+                permission: {
+                    permissionId: '',
+                    permissionLevel: '',
+                    permissionRemark: '',
+                }
+            }
 
-        docDepartment: 0,
+        ],
+        positionData: '',
+        page:
+            {
+                allRow: 1,
+                totalPage: 1,
+                currentPage: 1,
+                pageSize: 10,
+                hasPreviousPage: false,
+                hasNextPage: false,
+            }
+        ,
+        processNode: {
+            processNodeProcess: '',
+            processNodeName: "",
+            processNodeDepartment: "",
+            processNodePosition: ""
+        }
     }
-    /*   表头的查询方法封装，暂未封装完全 */
-    var searchUtil = Vue.extend({
-        template: `<span role="presentation" class="dropdown">
-                   <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
-                   <ul class="dropdown-menu">
-                       <li v-for="item in query.items"><a href="javascript:;" :key="item.key">{{item.value}}</a></li>
-                   </ul>
-                   </span>`,
-        props: ['query'],
-    });
-
 
     var positionManage = new Vue({
         el: "#main",
@@ -44,24 +57,40 @@ $(function () {
             getdepartment() {
                 $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
                     data.departmentData = response;
-                    data.ready = true;
                 }, 'json');
             },
-            editPosition(index) {
-                let posiData = data.processNodeData[index];
-                data.modifyprocessNodeData = posiData;
-                console.log(data.modifyprocessNodeData.permission.permissionId);
+            getDeptPosition() {
+                var deptId = data.processNode.processNodeDepartment;
+                $.post('/gwspxt/getPoPeByDpt', {department: deptId}, function (response) {
+                    data.posPermiData = response;
+                }, 'json');
+
             },
+            addProcessNode() {
+                $.ajax({
+                    type: "post",
+                    url: "/gwspxt/addProcessNode",
+                    dataType: "json",
+                    contentType: 'application/json;charset=UTF-8',
+                    data: JSON.stringify(data.processNode),
+                    success: function (response){}})
+            },
+            deleteProcessNode(index){
+                var processNodeId=data.processNodeData[index].process_node.processNodeId;
+                console.log(processNodeId);
+                $.post('/gwspxt/deleteProcessNode',{processNodeId:processNodeId}, function (response) {
+                }, 'json');
+                this.getProcessNodeInfoById({processId: data.into_processNode.process_id});
+            }
         },
         mounted() {
             this.getProcessNodeInfoById({processId: data.into_processNode.process_id});
             this.getdepartment({});
-            /* this.getPositionInfo({currentPage : 1});*/
+            data.processNode.processNodeProcess = data.into_processNode.process_id;
         },
         components: {
             'asideComponent': Layout,
-            'page-util': pageUtil,
-            'search-util': searchUtil
         }
     });
+
 })

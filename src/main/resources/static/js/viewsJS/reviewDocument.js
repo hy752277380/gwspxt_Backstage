@@ -44,7 +44,7 @@ $(function () {
         },
         docDepartment: 0,
         searchData: {
-            documentType: 0,
+            documentType: '',
             documentConfidential: 0,
             documentState: 0,
         }

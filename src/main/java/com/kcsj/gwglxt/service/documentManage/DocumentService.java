@@ -70,7 +70,7 @@ public interface DocumentService {
 
     List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage();
 
-    List<Object> getLog(int year, String userId);
+    List<List<Log>> getLog(int year, String userId);
     //全部标记已读
     int allAreRead(String userId);
 }

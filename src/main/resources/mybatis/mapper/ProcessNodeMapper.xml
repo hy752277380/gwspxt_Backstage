@@ -314,6 +314,7 @@ WHERE
 AND pn.process_node_department = de.department_id
 AND pn.process_node_position = po.position_id
 and pn.process_node_process =#{processId}
+and pn.process_node_isdelete = '0'
     </select>
     <select id="getOthers" resultMap="BaseResultMap">
         SELECT * FROM process_node where process_node_process = #{processNodeProcess} and process_node_step > #{processNodeStep} and process_node_isdelete = '0'

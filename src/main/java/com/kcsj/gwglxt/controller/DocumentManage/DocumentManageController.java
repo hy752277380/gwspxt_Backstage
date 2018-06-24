@@ -357,12 +357,12 @@ public class DocumentManageController {
 
     //查看本人所有日志
     @RequestMapping("/getAllLog")
-    public List<Object> getAllLog(int year, String userId,HttpSession httpSession) {
+    public List<List<Log>> getAllLog(int year, String userId,HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         if (userId==null||"".equals(userId)){
             userId = loginCustom.getGuser().getUserId();
         }
-        List<Object> logs  = documentService.getLog(year,userId);
+        List<List<Log>> logs  = documentService.getLog(year,userId);
         return logs;
     }
 

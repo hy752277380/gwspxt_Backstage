@@ -208,7 +208,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     //查询本人需要审核的文档
     @Override
-    public QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String searchInfo) {
+    public QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String searchInfo,String documentType,Integer documentConfidential) {
         String documentNo = searchInfo;
         String documentTitle = searchInfo;
         String userName = searchInfo;
@@ -219,7 +219,7 @@ public class DocumentServiceImpl implements DocumentService {
         for (ProcessNode processNode : list) {
             //用每一个processNode里面的流程名和流程位置的前一位查询文档
             //list_doc.add(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment()));
-            List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment(),documentNo,documentTitle,userName);
+            List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(documentType,documentConfidential,processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment(),documentNo,documentTitle,userName);
             System.out.println("changdu1aaaa"+documentCustoms.size());
             for (DocumentCustom documentCustom:documentCustoms){
                 list_doc.add(documentCustom);
@@ -301,9 +301,9 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //获取需要本人同意的文档借阅申请
     @Override
-    public QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage) {
+    public QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage,String documentType,Integer documentConfidential) {
         //获得本人所在的部门，查看本部门的文档
-        List<DocumentCustom> documentCustoms = documentMapper.getDocumentByDpt(loginCustom.getGuser().getUserDepartment());
+        List<DocumentCustom> documentCustoms = documentMapper.getDocumentByDpt(documentType,documentConfidential,loginCustom.getGuser().getUserDepartment());
         //分页
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数

@@ -79,13 +79,12 @@ $(function () {
                 sessionStorage.setItem('into_processNode', JSON.stringify(into_processNode));
                 location.href = "/gwspxt/processNode";
             },
-           /* deleteProcess(index){
-                var processId=data.processData[index].processNodeData;
+          /*  deleteProcess(index){
+                var processId=data.processData[index].processId;
                 console.log(processId);
                 $.post('/gwspxt/deleteProcess',{processId:processId}, function (response) {
                 }, 'json');
-            }
-*/
+            }*/
         },
         mounted() {
             this.getProcessInfo({currentPage: 1});

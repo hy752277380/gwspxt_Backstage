@@ -52,7 +52,7 @@ public interface DocumentService {
 
     QueryForPage getAllProcess(int currentPage);
 
-    int insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
+    DocumentCustom insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
 
     QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage,String documentType,Integer documentConfidential);
 

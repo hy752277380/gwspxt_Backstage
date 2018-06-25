@@ -287,9 +287,11 @@ public class DocumentManageController {
 
     //申请批阅文档
     @RequestMapping("/applyRead")
-    public void applyRead(@RequestBody DocumentCustom documentCustom, HttpSession httpSession) {
+    public DocumentCustom applyRead(@RequestBody DocumentCustom documentCustom, HttpSession httpSession) {
+        System.out.println("文档内容为："+documentCustom);
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        documentService.insertBorrowing(documentCustom, loginCustom);
+        DocumentCustom documentCustomNew = documentService.insertBorrowing(documentCustom,loginCustom);
+        return documentCustomNew;
     }
 
     //同意借阅文档

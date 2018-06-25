@@ -25,6 +25,7 @@
             <id column="document_id" property="documentId"/>
             <result column="document_title" property="documentTitle"/>
             <result column="document_no" property="documentNo"/>
+            <result column="document_dept" property="documentDept"/>
             <result column="document_confidential" property="documentConfidential"/>
             <result column="creation_time" property="creationTime"/>
         </association>
@@ -561,7 +562,7 @@ AND doc.document_process = pr.process_id
         <if test="documentState!=null and documentState!=0">
             and doc.document_state = #{documentState}
         </if>
-        <if test="documentType!=null and documentType!=''">
+        <if test="documentType!=null and documentType!='' and documentType!=0">
             and doc.document_type = #{documentType}
         </if>
         <if test="documentConfidential!=null and documentConfidential!=0">
@@ -576,6 +577,7 @@ AND doc.document_process = pr.process_id
 	doc.document_id,
 	doc.document_title,
 	doc.document_no,
+    doc.document_dept,
 	doc.document_confidential,
 	doc.creation_time,
 	gu.user_name,
@@ -595,7 +597,7 @@ AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
 and doc.document_state = '5'
 and doc.document_isdelete = '0'
-<if test="documentType!=null and documentType!=''">
+<if test="documentType!=null and documentType!=''and documentType!=0">
     and doc.document_type = #{documentType}
 </if>
 <if test="documentConfidential!=null and documentConfidential!=0">
@@ -666,7 +668,7 @@ and doc.document_dept = de.department_id
 and doc.document_type = dt.documenttype_id
 and doc.document_user = gu.user_id
 and doc.document_process = #{documentProcess} and doc.document_location =#{documentLocation} and doc.document_isdelete = '0'
-        <if test="documentType!=null and documentType!=''">
+        <if test="documentType!=null and documentType!='' and documentType!=0">
             and doc.document_type = #{documentType}
         </if>
         <if test="documentConfidential!=null and documentConfidential!=0">

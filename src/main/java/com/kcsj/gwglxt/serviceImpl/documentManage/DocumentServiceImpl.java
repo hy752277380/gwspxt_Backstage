@@ -10,6 +10,8 @@ import com.kcsj.gwglxt.util.TeamUtil;
 import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -141,7 +143,7 @@ public class DocumentServiceImpl implements DocumentService {
         int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
         int currentPages = QueryForPage.countCurrentPage(currentPage);
         int endSet = pagesize * currentPage;
-        if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
+        if (offSet + pagesize - 1 >= allRow) {
             endSet = allRow;
         }
         List<DocumentCustom> list_thisPage = list.subList(offSet, endSet);
@@ -175,13 +177,6 @@ public class DocumentServiceImpl implements DocumentService {
             }
         }
         QueryForPage queryForPage = new QueryForPage();
-        /*//设置总记录数
-        queryForPage1.setAllRow(list.size());
-        //获取当前页
-        queryForPage1.setCurrentPage(queryForPage.getCurrentPage());
-        //设置每页数据为十条
-        queryForPage.setPageSize(10);
-        queryForPage1.setList(list.subList(QueryForPage.countOffset(10,list.size()),10));*/
         int pagesize = 10;//每页记录数
         int allRow = list.size();//总记录数
         int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
@@ -251,14 +246,22 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //申请批阅
     @Override
-    public int insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom) {
+    public DocumentCustom insertBorrowing(@RequestBody DocumentCustom documentCustom, LoginCustom loginCustom) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         //从documentCustom对象中获得borrowing对象
-        Borrowing borrowing = documentCustom.getBorrowing();
+        Borrowing borrowing = new Borrowing();
         //获取该部门最高权限职称
         List<Position> positions = positionMapper.getDptManager(documentCustom.getDocument().getDocumentDept());
         //获取该职称对应的人
-        List<Guser> gusers = guserMapper.getDptManager(documentCustom.getDocument().getDocumentDept(), positions.get(0).getPositionId());
+        //List<Guser> gusers = guserMapper.getDptManager(documentCustom.getDocument().getDocumentDept(), positions.get(0).getPositionId());
+        List<Guser> gusers = new ArrayList<>();
+        //遍历所有职位
+        for(Position position:positions){
+            System.out.println("参数1"+documentCustom.getDocument().getDocumentDept());
+            System.out.println("参数2"+position.getPositionId());
+            gusers.addAll(guserMapper.getDptManager(documentCustom.getDocument().getDocumentDept(), position.getPositionId()));
+        }
+        System.out.println("审核用户"+gusers);
         //添加申请借阅记录
         borrowing.setBorrowingId(TeamUtil.getUuid());
         borrowing.setBorrowingBorrowUser(loginCustom.getGuser().getUserId());
@@ -270,6 +273,7 @@ public class DocumentServiceImpl implements DocumentService {
         borrowing.setBorrowingOvertime("");
         borrowing.setBorrowingIsdelete(0);
         int result = borrowingMapper.insert(borrowing);
+        documentCustom.setBorrowing(borrowing);
         //添加个人日志
         Log log = new Log();
         log.setLogId(TeamUtil.getUuid());
@@ -296,7 +300,7 @@ public class DocumentServiceImpl implements DocumentService {
             mobject.setMobjectIsread(0);
             mobjectMapper.insertMbj(mobject);
         }
-        return result;
+        return documentCustom;
     }
     //获取需要本人同意的文档借阅申请
     @Override

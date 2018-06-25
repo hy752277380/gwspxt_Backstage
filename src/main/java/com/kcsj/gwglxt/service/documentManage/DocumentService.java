@@ -44,7 +44,7 @@ public interface DocumentService {
     DocumentCustom documentBaseInfo(String documentId);
 
 
-    QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String searchInfo);
+    QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String searchInfo,String documentType,Integer documentConfidential);
 
     List<MessageCustom> getMyAllMessage(String userId);
 
@@ -54,7 +54,7 @@ public interface DocumentService {
 
     int insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
 
-    QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage);
+    QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage,String documentType,Integer documentConfidential);
 
     void refuseDoc(LoginCustom loginCustom, String documentId);
 

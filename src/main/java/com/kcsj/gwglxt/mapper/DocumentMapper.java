@@ -46,9 +46,9 @@ public interface DocumentMapper {
     //联合查询文档信息
     DocumentCustom documentBaseInfo(String documentId);
 
-    List<DocumentCustom> findCheckingDoc(@Param("documentProcess") String documentProcess,@Param("documentLocation") Integer documentLocation,@Param("userDepartment") String userDepartment,@Param("documentNo") String documentNo,@Param("documentTitle")String documentTitle,@Param("userName")String userName);
+    List<DocumentCustom> findCheckingDoc(@Param("documentType")String documentType,@Param("documentConfidential")Integer documentConfidential,@Param("documentProcess") String documentProcess,@Param("documentLocation") Integer documentLocation,@Param("userDepartment") String userDepartment,@Param("documentNo") String documentNo,@Param("documentTitle")String documentTitle,@Param("userName")String userName);
 
-    List<DocumentCustom> getDocumentByDpt(String userDepartment);
+    List<DocumentCustom> getDocumentByDpt(@Param("documentType")String documentType,@Param("documentConfidential")Integer documentConfidential,@Param("documentDept") String documentDept);
 
     int countAllDocument(@Param("documentDept") String department,@Param("documentUser") String user);
 

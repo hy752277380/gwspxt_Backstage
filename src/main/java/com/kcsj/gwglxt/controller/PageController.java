@@ -9,13 +9,19 @@ public class PageController {
 
     @GetMapping("/")
     public String index() {
-        return "login.html";
+        return "page-login.html";
     }
 
     //登录页面
-    @GetMapping("/login")
+   /* @GetMapping("/login")
     public String login() {
         return "login.html";
+    }*/
+
+    //登录2页面
+    @GetMapping("/login")
+    public String login2() {
+        return "page-login.html";
     }
 
     //首页

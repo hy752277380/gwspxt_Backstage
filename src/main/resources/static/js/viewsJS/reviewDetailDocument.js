@@ -71,6 +71,7 @@ $(function () {
             },
         },
         mounted() {
+            console.log(data.lhs_edit.doc_id)
             this.getInfo({documentId: this.$data.lhs_edit.doc_id});
             this.getDocType();
             this.getProcess();

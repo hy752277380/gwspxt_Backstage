@@ -95,6 +95,7 @@ $(function () {
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
+                console.log(data.page.currentPage);
                 this.getInfo({
                     currentPage: pageIndex,
                     documentType: data.searchData.documentType,
@@ -105,17 +106,48 @@ $(function () {
             /*申请借阅事件*/
             applyBorrowing(index) {
                 let documentCustom = this.$data.docData[index];
-                $.post('/gwspxt/applyRead', {documentCustom: documentCustom}, function (response) {
-                    if (response.msg == "updateSuccess") {
-                        spop({
-                            template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`,
-                            style: "success",
-                            autoclose: 2000
-                        });
-                    } else if (response.msg == "updateFailed") {
-                        spop({template: `申请失败`, style: "error", autoclose: 2000});
+                var cus = {
+                    documentCustom: documentCustom,
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/gwspxt/applyRead",
+                    dataType: "json",
+                    contentType: 'application/json;charset=UTF-8',
+                    data: JSON.stringify(cus),
+                    success: function (response) {
+                        if (response.msg == "updateSuccess") {
+                            spop({
+                                template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`,
+                                style: "success",
+                                autoclose: 2000
+                            });
+                        } else if (response.msg == "updateFailed") {
+                            spop({template: `申请失败`, style: "error", autoclose: 2000});
+                        }
+
                     }
-                }, 'json');
+                })
+                /* let documentCustom = this.$data.docData[index];
+                 $.post('/gwspxt/applyRead', {documentCustom: documentCustom}, function (response) {
+                     if (response.msg == "updateSuccess") {
+                         spop({
+                             template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`,
+                             style: "success",
+                             autoclose: 2000
+                         });
+                     } else if (response.msg == "updateFailed") {
+                         spop({template: `申请失败`, style: "error", autoclose: 2000});
+                     }
+                 }, 'json');*/
+            },
+            reviewDocument(index){
+                var lhs_edit = {
+                    "doc_id": this.docData[index].document.documentId
+                }
+                sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
+                location.href = "/gwspxt/reviewDetailDocument";
+
             },
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;

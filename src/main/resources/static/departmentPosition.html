@@ -97,14 +97,8 @@
                                 <div class="panel-body table-responsive">
                                     <div class="box-tools m-b-15">
                                         <div class="box-tools m-b-15" style="margin-bottom: 30px;">
-                                            <div v-if="ready">
+                                            <div v-cloak>
                                                 <span style="font-weight: bold;"><h4>当前位置：{{into_position.lhs_dept}}</h4></span>
-                                            </div>
-                                            <div v-else>
-                                                <span style="font-weight: bold;"><h4>当前位置： <i
-                                                        class="fa fa-spinner fa-spin">
-                                            </i></h4></span>
-
                                             </div>
                                             <div style="float: right;margin-top: -20px;">
                                                 <button href="#addPositionModal" data-toggle="modal" type="button"
@@ -161,7 +155,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                        <h4 class="modal-title">{{into_position.lhs_dept}}</h4>
+                        <h4 class="modal-title" v-cloak>{{into_position.lhs_dept}}</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal">
@@ -244,6 +238,9 @@
                 </div>
             </div>
         </div>
+        <!-- <div class="footer-main">
+            公文审批系统@2018公文审批系统开发小组
+        </div>-->
     </aside>
 </div>
 

@@ -36,7 +36,7 @@ public class ProcessController {
         }else{
             result = "addSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
     //根据流程id查询流程节点详细信息
     @RequestMapping("/getProNodeByPro")
@@ -56,7 +56,7 @@ public class ProcessController {
         }else{
             result = "addSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
     //删除流程节点
     @RequestMapping("/deleteProcessNode")
@@ -84,7 +84,7 @@ public class ProcessController {
         }else{
             result = "addSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
     //删除流程
     @RequestMapping("/deleteProcess")

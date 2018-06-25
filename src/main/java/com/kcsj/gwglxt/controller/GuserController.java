@@ -189,7 +189,7 @@ public class GuserController {
         }else {
             result = "updateSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
     /***************************8账号管理*******************************/
     //列出所有账号
@@ -211,7 +211,7 @@ public class GuserController {
         }else{
             result = "addSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
     //根据部门查询本部门职位
     @RequestMapping("/getPositionByDpt")
@@ -232,7 +232,7 @@ public class GuserController {
         }else{
             result = "updateSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
     //批量删除人员
     @RequestMapping("/batchDelete")
@@ -247,7 +247,7 @@ public class GuserController {
         }else{
             result = "updateSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
     //重置密码
     @RequestMapping("/resetPassword")
@@ -262,7 +262,7 @@ public class GuserController {
         }else{
             result = "updateSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
     //根据id查询个人信息
     @RequestMapping("/getUserById")

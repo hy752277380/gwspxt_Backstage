@@ -19,7 +19,7 @@ $(function () {
             userIsdelete: ''
         },
         modalAction: true,
-        allDepartment: {},
+        allDepartment: [],
         allDepartmentOfPosition: {},
         ready: false,
         page: {
@@ -66,8 +66,22 @@ $(function () {
                 this.$data.page.currentPage = pageIndex;
                 this.getInfo({currentPage: pageIndex});
             },
+            getAllDepartment() {
+                let that = this;
+                $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
+                    data.allDepartment = response;
+                    that.getDepartmentOfPosition();
+                }, 'json');
+            },
+            getDepartmentOfPosition() {
+                $.post('/gwspxt/getPoPeByDpt', {department: data.modalPersonData.userDepartment}, function (response) {
+                    data.allDepartmentOfPosition = response;
+                }, 'json');
+            },
             modify(index) {
+                let that = this;
                 data.modalPersonData = data.personData[index].guser;
+                that.getDepartmentOfPosition();
                 data.modalAction = false;
                 $('#myModal').modal('show');
             },
@@ -113,7 +127,23 @@ $(function () {
             modalModify() {
                 let person = data.modalPersonData;
                 const that = this;
-                $.post('/gwspxt/updateUserinfo', person, function (response) {
+                $.ajax({
+                    type: "POST",
+                    url: '/gwspxt/updateUserinfo',
+                    data: JSON.stringify(person),
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.msg == "updateSuccess") {
+                            spop({template: `修改成功`, style: "success", autoclose: 2000});
+                            that.getInfo({currentPage: data.page.currentPage})
+                        }
+                        else if (response.msg == "updateFailed") {
+                            spop({template: `修改失败`, style: "error", autoclose: 2000});
+                        }
+                    }
+                });
+               /* $.post('/gwspxt/updateUserinfo', person, function (response) {
                     if (response.msg == "updateSuccess") {
                         spop({template: `修改成功`, style: "success", autoclose: 2000});
                         that.getInfo({currentPage: data.page.currentPage})
@@ -121,11 +151,12 @@ $(function () {
                     else if (response.msg == "updateFailed") {
                         spop({template: `修改失败`, style: "error", autoclose: 2000});
                     }
-                }, 'json');
+                }, 'json');*/
             }
         },
         mounted() {
             this.getInfo({currentPage: 1});
+            this.getAllDepartment();
             $('#myModal').on('hidden.bs.modal', function () {
                 for (let item in data.modalPersonData) {
                     data.modalPersonData.item = '';

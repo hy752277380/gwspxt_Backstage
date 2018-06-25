@@ -222,7 +222,7 @@ public class GuserServiceImpl implements GuserService {
         Guser guser = new Guser();
         guser.setUserId(userId);
         guser.setUserPassword(password);
-        return guserMapper.updateByPrimaryKey(guser);
+        return guserMapper.updateByPrimaryKeySelective(guser);
     }
     //批量删除
     @Override

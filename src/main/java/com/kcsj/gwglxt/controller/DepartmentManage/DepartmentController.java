@@ -32,7 +32,7 @@ public class DepartmentController {
         }else{
             result = "addSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
     //获得所有部门
     @RequestMapping("/getAllDepartment")
@@ -70,7 +70,7 @@ public class DepartmentController {
         }else{
             result = "addSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
     //修改职位权限
     @RequestMapping("/updatePermission")
@@ -84,7 +84,7 @@ public class DepartmentController {
         }else{
             result = "addSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
     //修改部门信息
     @RequestMapping("/updateDptInfo")
@@ -98,6 +98,6 @@ public class DepartmentController {
         }else{
             result = "addSuccess";
         }
-        return result;
+        return "{\"msg\":\"" + result + "\"}";
     }
 }

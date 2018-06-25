@@ -115,7 +115,7 @@ public class GuserServiceImpl implements GuserService {
         log.setLogUser(loginCustom.getGuser().getUserId());
         //根据职位id获取职位名称
         log.setLogContent("修改了"+record.getUserName()+"的信息。");
-        return guserMapper.updateByPrimaryKey(record);
+        return guserMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
@@ -222,7 +222,7 @@ public class GuserServiceImpl implements GuserService {
         Guser guser = new Guser();
         guser.setUserId(userId);
         guser.setUserPassword(password);
-        return guserMapper.updateByPrimaryKey(guser);
+        return guserMapper.updateByPrimaryKeySelective(guser);
     }
     //批量删除
     @Override

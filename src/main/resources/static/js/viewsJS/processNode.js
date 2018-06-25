@@ -75,13 +75,18 @@ $(function () {
                     data: JSON.stringify(data.processNode),
                     success: function (res) {
                     }
-                    })
+                })
             },
             deleteProcessNode(index) {
                 var processNodeId = data.processNodeData[index].process_node.processNodeId;
-                console.log(processNodeId);
-                $.post('/gwspxt/deleteProcessNode', {processNodeId: processNodeId}).then(function (response) {
+                $.post('/gwspxt/deleteProcessNode', {processNodeId: processNodeId},function(response) {
                     processNodeManage.$options.methods.getProcessNodeInfoById({processId: data.into_processNode.process_id});
+                    if (response.msg == "updateSuccess") {
+                        spop({template: `删除成功`, style: "success", autoclose: 2000});
+                    } else if (response.msg == "updateFailed") {
+                        spop({template: `删除失败`, style: "error", autoclose: 2000});
+                    }
+
                 }, 'json');
 
             }

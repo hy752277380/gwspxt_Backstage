@@ -107,6 +107,7 @@
                                             <th>邮箱</th>
                                             <th>操作</th>
                                         </tr>
+                                        <tbody v-cloak>
                                         <tr v-for="(person,index) in personData">
                                             <td><input check="self" type="checkbox"></td>
                                             <td>{{person.guser.userAccount}}</td>
@@ -122,19 +123,34 @@
                                                         class="fa fa-pencil fa-fw"></i>
                                                     修改
                                                 </button>
-                                                <button @click="deleteP(index)" type="button"
+                                                <sure-util :btn-class="'btn btn-danger btn-sm'"
+                                                           :i-class="'fa fa-trash-o fa-fw'"
+                                                           :title="'确定删除账号?'"
+                                                           :btn-text="'删除'"
+                                                           :index="index"
+                                                           @action="deleteP">
+                                                </sure-util>
+                                               <!-- <button @click="deleteP(index)" type="button"
                                                         class="btn btn-danger btn-sm" style="margin-right: 10px;"><i
                                                         class="fa fa-trash-o fa-fw"></i>
                                                     删除
-                                                </button>
-                                                <button @click="reset(index)" type="button"
+                                                </button>-->
+                                                <sure-util :btn-class="'btn btn-warning btn-sm'"
+                                                           :i-class="'fa fa-legal'"
+                                                           :title="'确定重置密码?'"
+                                                           :btn-text="'重置'"
+                                                           :index="index"
+                                                           @action="reset">
+                                                </sure-util>
+                                               <!-- <button @click="reset(index)" type="button"
                                                         class="btn btn-warning btn-sm" style="   "><i
                                                         class="fa fa-legal"
                                                         aria-hidden="true"></i>
                                                     重置
-                                                </button>
+                                                </button>-->
                                             </td>
                                         </tr>
+                                        </tbody>
                                     </table>
                                     <div v-cloak style="float: left;">
                                         <page-util @change="change" :page="page"></page-util>
@@ -147,9 +163,9 @@
             </div>
         </section>
         <!-- /.content -->
-        <div class="footer-main">
-            Copyright &copy Director, 2014. More Templates
-        </div>
+        <!--<div class="footer-main">
+            公文审批系统@2018公文审批系统开发小组
+        </div>-->
     </aside>
     <!-- /.right-side -->
 
@@ -207,13 +223,16 @@
                         <tr>
                             <td><label>所属部门</label></td>
                             <td><select class="form-control" v-model="modalPersonData.userDepartment">
-                                <option v-for="dep in allDepartment" :value="dep.departmentId">{{dep.departmentName}}</option>
+                                <option v-for="dep in allDepartment" :value="dep.departmentId">{{dep.departmentName}}
+                                </option>
                             </select></td>
                         </tr>
                         <tr>
                             <td><label>所任职务</label></td>
                             <td><select class="form-control" v-model="modalPersonData.userPosition">
-                                <option v-for="position in allDepartmentOfPosition" :value="position.position.positionId">{{position.position.positionName}}</option>
+                                <option v-for="position in allDepartmentOfPosition"
+                                        :value="position.position.positionId">{{position.position.positionName}}
+                                </option>
                             </select></td>
                         </tr>
                     </table>

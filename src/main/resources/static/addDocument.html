@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <title>添加文档</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <meta name="description" content="Developed By M Abdur Rokib Promy">
-    <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -19,16 +17,16 @@
     <!-- Date Picker -->
     <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
     <!-- fullCalendar -->
-    <!-- <link href="css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" /> -->
     <!-- Daterange picker -->
     <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
     <!-- iCheck for checkboxes and radio inputs -->
     <link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>
     <!-- bootstrap wysihtml5 - text editor -->
-    <!-- <link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" /> -->
-    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
     <!-- Theme style -->
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- 消息通知css -->
+    <link href="css/spop.css" rel="stylesheet" type="text/css">
 
     <script src="js/vue.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -38,15 +36,9 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
-        /*.textarea {
-            BORDER-TOP: #7F9DB9 1px solid;
-            BORDER-LEFT: #7F9DB9 1px solid;
-            BORDER-RIGHT: #7F9DB9 1px solid;
-            BORDER-BOTTOM: #7F9DB9 1px solid;
-            FONT-FAMILY: "宋体", "Verdana", "Arial", "Helvetica";
-            FONT-SIZE: 12px;
-            TEXT-ALIGN: LIFT;
-        }*/
+        [v-cloak] {
+            display: none;
+        }
     </style>
 </head>
 
@@ -108,7 +100,6 @@
                                         <label class="control-label col-lg-2" style="margin-left: 25px">文本类型</label>
                                         <div class="col-md-2">
                                             <select class="form-control m-b-10" id="documentType">
-                                                <option disabled selected>请选择公文类型</option>
                                                 <option value="1">命令</option>
                                                 <option value="2">决定</option>
                                                 <option value="3">公告</option>
@@ -262,9 +253,9 @@
             </div>
         </section>
         <!-- /.content -->
-        <div class="footer-main">
-            Copyright &copy Director, 2014. More Templates
-        </div>
+       <!-- <div class="footer-main">
+            公文审批系统@2018公文审批系统开发小组
+        </div>-->
     </aside>
     <!-- /.right-side -->
 
@@ -276,28 +267,23 @@
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <!--布局的组件-->
 <script src="js/layout/layout.js"></script>
+<!-- 消息通知js -->
+<script src="js/spop.js" type="text/javascript"></script>
 <!-- jQuery UI 1.10.3 -->
 <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap -->
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 <!-- daterangepicker -->
 <script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
-
 <script src="js/plugins/chart.js" type="text/javascript"></script>
-
-<!-- datepicker
-<script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>-->
-<!-- Bootstrap WYSIHTML5
-<script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>-->
 <!-- iCheck -->
 <script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
 <!-- calendar -->
 <script src="js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
-
 <!-- Director App -->
 <script src="js/Director/app.js" type="text/javascript"></script>
-<!-- Director dashboard demo (This is only for demo purposes) -->
 <script src="js/Director/dashboard.js" type="text/javascript"></script>
+
 <script src="js/viewsJS/addDocument.js"></script>
 <!-- Director for demo purposes -->
 

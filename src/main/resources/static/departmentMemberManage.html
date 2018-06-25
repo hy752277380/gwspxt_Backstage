@@ -39,6 +39,9 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
     </style>
 </head>
 <body class="skin-black">
@@ -97,6 +100,7 @@
                                             <th>公文查看</th>
                                             <th>操作</th>
                                         </tr>
+                                        <tbody v-cloak>
                                         <tr v-for="(person,index) in personData">
                                             <td>{{index+1}}</td>
                                             <td>{{person.guser.userAccount}}</td>
@@ -122,6 +126,7 @@
                                                 </button>
                                             </td>
                                         </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                                 <div class="text-center" style="float: left;">
@@ -134,9 +139,9 @@
             </div>
         </section>
         <!-- /.content -->
-        <div class="footer-main">
-            Copyright &copy Director, 2014. More Templates
-        </div>
+        <!-- <div class="footer-main">
+            公文审批系统@2018公文审批系统开发小组
+        </div>-->
     </aside>
     <!-- /.right-side -->
     <!-- Modal -->

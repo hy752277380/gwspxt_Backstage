@@ -167,6 +167,7 @@ $(function () {
             'asideComponent': Layout,
             'page-util': pageUtil,
             //'search-util': searchUtil
+            'sure-util': sureUtil
         }
     });
 })

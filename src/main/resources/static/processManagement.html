@@ -120,7 +120,8 @@
                                         </tr>
                                         <tbody v-cloak v-if="ready">
                                         <tr v-for="(process,index) of processData">
-                                            <td><input check="self" :process-id="process.processId" type="checkbox"></td>
+                                            <td><input check="self" :process-id="process.processId" type="checkbox">
+                                            </td>
                                             <td>{{index+1}}
                                             </td>
                                             <td>{{process.processName}}</td>
@@ -135,11 +136,18 @@
                                                         @click="editProgress(index)"><i
                                                         class="fa fa-pencil fa-fw"></i> 修改
                                                 </button>
-                                                <button type="button" class="btn btn-danger btn-sm"
+                                                <sure-util :btn-class="'btn btn-danger btn-sm'"
+                                                           :i-class="'fa fa-trash-o fa-fw'"
+                                                           :title="'确定执行操作?'"
+                                                           :btn-text="'删除'"
+                                                           :index="index"
+                                                           @action="deleteProcess">
+                                                </sure-util>
+                                               <!-- <button type="button" class="btn btn-danger btn-sm"
                                                         @click="deleteProcess(index)"
                                                 ><i class="fa fa-trash-o fa-fw"></i>
                                                     删除
-                                                </button>
+                                                </button>-->
                                             </td>
                                         </tr>
                                         </tbody>
@@ -160,9 +168,9 @@
             </div>
         </section>
         <!-- /.content -->
-        <div class="footer-main">
-            Copyright &copy Director, 2014. More Templates
-        </div>
+        <!-- <div class="footer-main">
+             公文审批系统@2018公文审批系统开发小组
+         </div>-->
     </aside>
     <!-- /.right-side -->
 
@@ -286,6 +294,7 @@
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(data),
             success: function (data) {
+                spop({template: `添加成功`, style: "success", autoclose: 2000});
             }
         });
 
@@ -308,6 +317,7 @@
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(data),
             success: function (data) {
+                spop({template: `修改成功`, style: "success", autoclose: 2000});
             }
         });
 

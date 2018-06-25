@@ -154,6 +154,7 @@ $(function () {
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
+                console.log(data.page.currentPage);
                 this.getInfo({
                     currentPage: pageIndex,
                     documentType: data.searchData.documentType,

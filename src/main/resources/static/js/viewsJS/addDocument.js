@@ -51,6 +51,7 @@ $(function () {
         },
         components: {
             'asideComponent': Layout,
+            'sure-util': sureUtil
             //'page-util': pageUtil,
             //'search-util': searchUtil
         }

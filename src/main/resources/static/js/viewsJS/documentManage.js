@@ -169,6 +169,7 @@ $(function () {
                     documentConfidential: data.searchData.documentConfidential,
                     documentState: data.searchData.documentState
                 })
+
             },
         },
         mounted() {

@@ -133,7 +133,8 @@ $(function () {
         components: {
             'asideComponent': Layout,
             'page-util': pageUtil,
-            'search-util': searchUtil
+            'search-util': searchUtil,
+            'sure-util': sureUtil
         }
     });
 })

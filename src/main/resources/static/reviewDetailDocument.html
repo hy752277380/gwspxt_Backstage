@@ -107,22 +107,22 @@
                                         <div class="col-md-4">
                                             <div class="radio" style="float: left;margin-right: 10px;">
                                                 <label>
-                                                    <input type="radio" name="documentConfidential" value="1" :checked="docData.document.documentConfidential==1">绝密
+                                                    <input type="radio" name="documentConfidential" value="1" v-model="docData.document.documentConfidential">绝密
                                                 </label>
                                             </div>
                                             <div class="radio" style="float: left;margin-right: 10px;">
                                                 <label>
-                                                    <input type="radio" name="documentConfidential" value="2" :checked="docData.document.documentConfidential==2">机密
+                                                    <input type="radio" name="documentConfidential" value="2" v-model="docData.document.documentConfidential">机密
                                                 </label>
                                             </div>
                                             <div class="radio" style="float: left;margin-right: 10px;">
                                                 <label>
-                                                    <input type="radio" name="documentConfidential" value="3" :checked="docData.document.documentConfidential==3">秘密
+                                                    <input type="radio" name="documentConfidential" value="3" v-model="docData.document.documentConfidential">秘密
                                                 </label>
                                             </div>
                                             <div class="radio" style="float: left;margin-right: 10px;">
                                                 <label>
-                                                    <input type="radio" name="documentConfidential" value="4" :checked="docData.document.documentConfidential==4">普通
+                                                    <input type="radio" name="documentConfidential" value="4" v-model="docData.document.documentConfidential">普通
                                                 </label>
                                             </div>
                                         </div>
@@ -131,7 +131,7 @@
                                             <div class="col-md-4">
                                                 <div class="radio" style="float: left;margin-right: 10px;">
                                                     <label>
-                                                        <input type="radio" name="documentSpeed" value="1" :checked="docData.document.documentSpeed==1">加急
+                                                        <input type="radio" name="documentSpeed" value="1" v-model="docData.document.documentSpeed">加急
                                                     </label>
                                                 </div>
                                                 <div class="radio" style="float: left;margin-right: 10px;">

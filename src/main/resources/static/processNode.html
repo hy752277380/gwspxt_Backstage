@@ -116,10 +116,17 @@
                                                 <td>{{processNode.position.positionName}}</td>
                                                 <td>{{processNode.process_node.processNodeStep}}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                   <!-- <button type="button" class="btn btn-danger btn-sm"
                                                             @click="deleteProcessNode(index)"><i
                                                             class="fa fa-trash-o fa-fw"></i> 删除
-                                                    </button>
+                                                    </button>-->
+                                                    <sure-util :btn-class="'btn btn-danger btn-sm'"
+                                                               :i-class="'fa fa-trash-o fa-fw'"
+                                                               :title="'确定执行操作?'"
+                                                               :btn-text="'删除'"
+                                                               :index="index"
+                                                               @action="deleteProcessNode">
+                                                    </sure-util>
                                                 </td>
                                             </tr>
                                             </tbody>

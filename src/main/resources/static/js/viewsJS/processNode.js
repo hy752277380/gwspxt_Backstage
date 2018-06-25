@@ -93,6 +93,7 @@ $(function () {
         },
         components: {
             'asideComponent': Layout,
+            'sure-util': sureUtil,
         }
     });
 

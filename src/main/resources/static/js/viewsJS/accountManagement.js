@@ -67,7 +67,6 @@ $(function () {
                 this.getInfo({currentPage: pageIndex});
             },
             modify(index) {
-                console.log(data.personData[index].guser)
                 data.modalPersonData = data.personData[index].guser;
                 data.modalAction = false;
                 $('#myModal').modal('show');

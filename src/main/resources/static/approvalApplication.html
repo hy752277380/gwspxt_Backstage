@@ -89,7 +89,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>员工编号</th>
-                                            <th>姓名</th>
+                                            <th>借阅人姓名</th>
                                             <th>部门</th>
                                             <th>职称</th>
                                             <th>申请文档</th>
@@ -103,7 +103,7 @@
                                             <td>{{doc.department.departmentName}}</td>
                                             <td>{{doc.department.departmentName}}</td>
                                             <td>{{doc.document.documentTitle}}</td>
-                                            <td>{{doc.borrowing.borrowingReason}}</td>
+                                            <td v-html="showReasonDetail(doc.borrowing.borrowingReason)"></td>
                                             <td>
                                                 <button type="button" @click="accept(index)"
                                                         class="btn btn-primary btn-sm" style="margin-right: 10px;"><i

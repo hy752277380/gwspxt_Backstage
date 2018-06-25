@@ -13,6 +13,8 @@ $(function () {
             hasPreviousPage: false,
             hasNextPage: false,
         },
+        processId: '',
+        processNodeData:''
     }
 
 
@@ -25,6 +27,13 @@ $(function () {
                     data.docProcess = response;
                     data.ready = true;
                 }, 'json')
+            },
+            transProcessId(){
+                var pid=data.processId;
+                console.log(pid);
+                $.post('/gwspxt/getProNodeByPro',{processId:pid}, function (response) {
+                    data.processNodeData = response;
+                }, 'json');
             }
         },
 

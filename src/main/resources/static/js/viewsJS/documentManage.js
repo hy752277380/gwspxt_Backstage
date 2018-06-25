@@ -147,7 +147,7 @@ $(function () {
                         spop({template: `删除失败`, style: "error", autoclose: 2000});
                     }
                 }, 'json');
-            }
+            },
             test(index) {
                 console.log(index);
             },

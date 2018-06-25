@@ -58,8 +58,12 @@
                         <li>
                             <a href="#"><i class="fa fa-home"></i> 首页</a>
                         </li>
+                        <li>
+                            <a href="documentManage.html"><i class="fa fa-book fa-fw"></i> 文档管理</a>
+                        </li>
+                        <li v-if="lhs_edit.action==='edit'" class="active">编辑文档</li>
 
-                        <li class="active">查看文档</li>
+                        <li v-else class="active">查看文档</li>
                     </ul>
                     <!--breadcrumbs end -->
                 </div>
@@ -74,17 +78,18 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">文本标题</label>
                                         <div class="col-md-5">
-                                            <input class="form-control" v-model="docData.document.documentTitle" type="text">
+                                            <input class="form-control" id="documentTitle" v-model="docData.document.documentTitle" type="text">
+                                            <input class="form-control" id="documentId" v-model="docData.document.documentId" type="hidden">
                                         </div>
                                         <label class="col-sm-2 control-label">文本文号</label>
                                         <div class="col-md-3">
-                                            <input class="form-control" v-model="docData.document.documentNo" type="text">
+                                            <input class="form-control" id="documentNo" v-model="docData.document.documentNo" type="text">
                                         </div>
                                     </div>
                                     <div class="form-group" style="width: 90%;margin-left: 10px">
                                             <label class="col-sm-2 control-label">拟稿人</label>
                                         <div class="col-md-2">
-                                            <input disabled class="form-control" v-model="docData.guser.userName" type="text">
+                                            <input disabled class="form-control" id="documentUser" v-model="docData.guser.userName" type="text">
                                         </div>
                                             <label class="control-label col-lg-2" style="margin-left: -28px">拟稿部门</label>
                                         <div class="col-md-2">
@@ -92,7 +97,7 @@
                                         </div>
                                             <label class="control-label col-lg-2" style="margin-left: 25px">文本类型</label>
                                         <div class="col-md-2">
-                                            <select class="form-control m-b-10" v-model="docData.document.documentType">
+                                            <select class="form-control m-b-10" id="documentType" v-model="docData.document.documentType">
                                                 <option v-for="(item,index) in docType" :value="item.documenttypeId">{{item.documenttypeName}}</option>
                                             </select>
                                         </div>
@@ -144,20 +149,20 @@
                                         <div class="form-group" style="margin-top:5%;margin-left:0.7px;">
                                             <label class="control-label col-lg-2">文本内容</label>
                                             <div class="col-lg-10">
-                                                <textarea rows="10" cols="80" class="form-control">{{docData.document.doucmentContent}}</textarea>
+                                                <textarea rows="10" cols="80" id="doucmentContent" class="form-control">{{docData.document.doucmentContent}}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group" style="margin-left: 1px;">
                                             <label class="control-label col-lg-2">备注</label>
                                             <div class="col-lg-10">
-                                                <textarea rows="2" cols="80" class="form-control">{{docData.document.documentRemark}}</textarea>
+                                                <textarea rows="2" cols="80" id="documentRemark" class="form-control">{{docData.document.documentRemark}}</textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group" style="margin-left: 1px;">
                                         <label class="control-label col-lg-2">选择流程</label>
                                         <div class="col-lg-3">
-                                            <select class="form-control m-b-10" @change="getProcessNode" v-model="docData.document.documentProcess">
+                                            <select class="form-control m-b-10" id="documentProcess" @change="getProcessNode" v-model="docData.document.documentProcess">
                                                 <option v-for="(item,index) in docProcess" :value="item.processId">{{item.processName}}</option>
                                             </select>
                                         </div>
@@ -181,6 +186,7 @@
                                                            <th>节点名</th>
                                                            <th>操作部门</th>
                                                            <th>职称</th>
+                                                           <th>节点位置</th>
                                                        </tr>
                                                    </thead>
                                                    <tbody>
@@ -188,6 +194,7 @@
                                                             <td>{{node.process_node.processNodeName}}</td>
                                                             <td>{{node.department.departmentName}}</td>
                                                             <td>{{node.position.positionName}}</td>
+                                                            <td>{{node.process_node.processNodeStep}}</td>
                                                         </tr>
                                                    </tbody>
                                                 </table>

@@ -81,13 +81,22 @@ $(function () {
                 }, 'json');
             },
             saveModify() {
-                $.post('/gwspxt/updatePersonInfo', data.allocatePerson, function (response) {
-                    if (response.msg == "updateSuccess") {
-                        spop({template: `调配成功`, style: "success", autoclose: 2000});
-                    } else if (response.msg == "updateFailed") {
-                        spop({template: `调配失败`, style: "error", autoclose: 2000});
+                $.ajaxSetup({'Content-Type': 'application/json;charset=utf-8',});
+                $.ajax({
+                    type: "POST",
+                    url: '/gwspxt/updatePersonInfo',
+                    data: JSON.stringify(data.allocatePerson),
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.msg == "updateSuccess") {
+                            spop({template: `调配成功`, style: "success", autoclose: 2000});
+                        } else if (response.msg == "updateFailed") {
+                            spop({template: `调配失败`, style: "error", autoclose: 2000});
+                        }
                     }
-                }, 'json');
+                });
+                /*$.post('/gwspxt/updatePersonInfo', JSON.stringify(data.allocatePerson), function (response) {}, 'json');*/
             },
         },
         mounted() {

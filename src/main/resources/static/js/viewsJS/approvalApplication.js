@@ -58,9 +58,19 @@ $(function () {
                     }
                 }, 'json');
             },
+            showReasonDetail(str){
+                return `<button type="button" 
+                                 class="btn btn-sm btn-default" 
+                                 data-toggle="popover" 
+                                 title="申请理由详情" 
+                                 data-content="${str}">查看</button>`;
+            },
         },
         mounted() {
             this.getInfo({currentPage: 1});
+            setTimeout(function () {
+                $('[data-toggle="popover"]').popover();
+            },200)
         },
     });
 })

@@ -130,7 +130,9 @@ $(function () {
             deleteDocument(index) {
                 let docId = data.docData[index].document.documentId;
                 let that = this;
-                $.post('/gwspxt/getDocumentByState', {documentId: docId}, function (response) {
+                let ids = [];
+                ids.push(docId)
+                $.post('/gwspxt/deleteDoc', JSON.stringify({ids: ids}), function (response) {
                     if (response.msg == "updateSuccess") {
                         that.getInfo({currentPage: 1});
                         spop({template: `删除成功`, style: "success", autoclose: 2000});

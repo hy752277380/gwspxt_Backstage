@@ -84,6 +84,16 @@ $(function () {
                     processNodeManage.$options.methods.getProcessNodeInfoById({processId: data.into_processNode.process_id});
                 }, 'json');
 
+                /* let docId = data.docData[index].document.documentId;
+                let that = this;
+                $.post('/gwspxt/deleteDoc', {ids: [docId]}, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        that.getInfo({currentPage: 1});
+                        spop({template: `删除成功`, style: "success", autoclose: 2000});
+                    } else if (response.msg == "updateFailed") {
+                        spop({template: `删除失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json');*/
             }
         },
         mounted() {
@@ -93,6 +103,7 @@ $(function () {
         },
         components: {
             'asideComponent': Layout,
+            'sure-util': sureUtil,
         }
     });
 

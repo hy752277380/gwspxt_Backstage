@@ -180,17 +180,25 @@
                                                     </button>
                                                 </template>
                                                 <template v-else-if="doc.document.documentState==0">
-                                                    <button type="button" class="btn btn-danger btn-sm"
-                                                            @click="deleteDocument(index)"><i
-                                                            class="fa fa-trash-o fa-fw"></i> 删除
-                                                    </button>
+                                                    <sure-util :btn-class="'btn btn-danger btn-sm'"
+                                                               :i-class="'fa fa-trash-o fa-fw'"
+                                                               :title="'确定执行操作?'"
+                                                               :btn-text="'删除'"
+                                                               :index="index"
+                                                               @action="deleteDocument">
+                                                    </sure-util>
                                                 </template>
                                             </td>
                                         </tr>
-                                        </tbody>
+                                        </tbody> <tbody v-else>
+                                    <tr style="text-align: center;">
+                                        <td colspan="9"><i class="fa fa-spinner fa-spin"></i></td>
+                                    </tr>
+                                    </tbody>
+
                                     </table>
                                     <div v-cloak style="float: left;">
-                                        <page-util :page="page"></page-util>
+                                        <page-util @change="change" :page="page"></page-util>
                                     </div>
                                 </div>
                             </div>

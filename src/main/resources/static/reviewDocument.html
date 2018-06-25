@@ -130,9 +130,16 @@
                                                 </template>
                                                 <!-- 非本部门未借阅文档 -->
                                                 <template v-else-if="doc.borrowing == null">
-                                                    <button @click="applyBorrowing(index)" type="button"
+                                                    <sure-util :btn-class="'btn btn-primary btn-sm'"
+                                                               :i-class="''"
+                                                               :title="'确定执行操作?'"
+                                                               :btn-text="'申请查看'"
+                                                               :index="index"
+                                                               @action="applyBorrowing">
+                                                    </sure-util>
+                                                  <!--  <button @click="applyBorrowing(index)" type="button"
                                                             class="btn btn-primary btn-sm">申请查看
-                                                    </button>
+                                                    </button>-->
                                                 </template>
                                                 <!-- 非本部门已有借阅文档 -->
                                                 <template v-else-if="doc.borrowing.borrowingState==2">

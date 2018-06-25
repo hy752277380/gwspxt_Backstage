@@ -61,6 +61,7 @@ $(function () {
             },
             getDeptPosition() {
                 var deptId = data.processNode.processNodeDepartment;
+                console.log(deptId);
                 $.post('/gwspxt/getPoPeByDpt', {department: deptId}, function (response) {
                     data.posPermiData = response;
                 }, 'json');

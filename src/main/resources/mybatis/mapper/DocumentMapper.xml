@@ -558,14 +558,14 @@ AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
         and doc.document_isdelete = '0'
         and doc.document_user = #{documentUser}
-        <if test="documentState!=null">
+        <if test="documentState!=null and documentState!=0">
             and doc.document_state = #{documentState}
         </if>
-        <if test="documentType!=null">
-               and doc.document_type = #{documentType}
+        <if test="documentType!=null and documentType!=''">
+            and doc.document_type = #{documentType}
         </if>
-        <if test="documentConfidential!=null">
-            and doc.document_confidential=#{documentConfidential}
+        <if test="documentConfidential!=null and documentConfidential!=0">
+            and doc.document_confidential = #{documentConfidential}
         </if>
        <if test="documentNo!=null">
             and (doc.document_no like CONCAT('%',#{documentNo},'%' ) or doc.document_title like CONCAT('%',#{documentTitle},'%' ))
@@ -666,6 +666,12 @@ and doc.document_dept = de.department_id
 and doc.document_type = dt.documenttype_id
 and doc.document_user = gu.user_id
 and doc.document_process = #{documentProcess} and doc.document_location =#{documentLocation} and doc.document_dept = #{userDepartment} and doc.document_isdelete = '0'
+        <if test="documentType!=null and documentType!=''">
+            and doc.document_type = #{documentType}
+        </if>
+        <if test="documentConfidential!=null and documentConfidential!=0">
+            and doc.document_confidential = #{documentConfidential}
+        </if>
        <if test="documentNo!=null">
             and (doc.document_no like CONCAT('%',#{documentNo},'%' ) or doc.document_title like CONCAT('%',#{documentTitle},'%' ) or gu.user_name like CONCAT('%',#{userName},'%' ))
         </if>
@@ -710,6 +716,12 @@ and doc.document_type = dt.documenttype_id
 and doc.document_user = gu.user_id
 and bo.borrowing_document = doc.document_id
 and doc.document_isdelete = '0'
+        <if test="documentType!=null and documentType!=''">
+            and doc.document_type = #{documentType}
+        </if>
+        <if test="documentConfidential!=null and documentConfidential!=0">
+            and doc.document_confidential = #{documentConfidential}
+        </if>
     </select>
     <select id="countAllDocument" parameterType="java.lang.String" resultType="int">
         select count(*) from document where document_isdelete = '0'

@@ -18,33 +18,37 @@ $(function () {
         docType: {
             name: "文档类型",
             items: [
-                {key: "命令", value: "命令"},
-                {key: "批复", value: "批复"},
-                {key: "意见", value: "意见"},
-                {key: "函", value: "函"},
-                {key: "会议纪要", value: "会议纪要"},
-                {key: "决定", value: "决定"},
-                {key: "公告", value: "公告"},
-                {key: "通告", value: "通告"},
-                {key: "通知", value: "通知"},
-                {key: "通报", value: "通报"},
-                {key: "议案", value: "议案"},
-                {key: "报告", value: "报告"},
-                {key: "请示", value: "请示"},
+                {key: "", value: "全部"},
+                {key: "1", value: "命令"},
+                {key: "2", value: "批复"},
+                {key: "3", value: "意见"},
+                {key: "4", value: "函"},
+                {key: "5", value: "会议纪要"},
+                {key: "6", value: "决定"},
+                {key: "7", value: "公告"},
+                {key: "8", value: "通告"},
+                {key: "9", value: "通知"},
+                {key: "10", value: "通报"},
+                {key: "11", value: "议案"},
+                {key: "12", value: "报告"},
+                {key: "13", value: "请示"},
+                {key: "14", value: "其他"},
             ],
         },
         docConfidential: {
             name: "文档密级",
             items: [
+                {key: "", value: "全部"},
                 {key: "1", value: "绝密"},
                 {key: "2", value: "机密"},
                 {key: "3", value: "秘密"},
                 {key: "4", value: "普通"},
             ],
         },
-        documentState: {
+        docState: {
             name: "文档状态",
             items: [
+                {key: "", value: "全部"},
                 {key: "0", value: "退回"},
                 {key: "1", value: "草稿"},
                 {key: "2", value: "待审核"},
@@ -54,6 +58,11 @@ $(function () {
             ],
         },
         docDepartment: 0,
+        searchData: {
+            documentType: 0,
+            documentConfidential: 0,
+            documentState: 0,
+        }
     }
 
     var documentManage = new Vue({
@@ -141,6 +150,29 @@ $(function () {
                     }
                 }, 'json');
             }
+            test(index) {
+                console.log(index);
+            },
+            /* 页码改变时候触发的事件，不可缺少 */
+            change(pageIndex) {
+                this.$data.page.currentPage = pageIndex;
+                this.getInfo({
+                    currentPage: pageIndex,
+                    documentType: data.searchData.documentType,
+                    documentConfidential: data.searchData.documentConfidential,
+                    documentState: data.searchData.documentState
+                });
+            },
+            search(msg) {
+                data.searchData[msg.searchName] = msg.key;
+                this.getInfo({
+                    currentPage: 1,
+                    documentType: data.searchData.documentType,
+                    documentConfidential: data.searchData.documentConfidential,
+                    documentState: data.searchData.documentState
+                })
+                console.log( data.searchData.documentType)
+            },
         },
         mounted() {
             this.getInfo({currentPage: 1});

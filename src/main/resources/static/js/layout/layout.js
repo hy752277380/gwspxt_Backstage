@@ -1,6 +1,12 @@
 /*在vue.js后  和   主页面用的js前   引入*/
 
-/* 左侧的导航栏 */
+/* 左侧的导航栏
+* 1：用户信息                         **必传**
+* 2：页面名字，用来决定li的选中状态   **必传**
+* <aside-component :user="user"
+                   :name="name">
+  </aside-component>
+* */
 var Layout = Vue.extend({
     template: `<aside style="height: 712px;" class="left-side sidebar-offcanvas">
         <!-- sidebar: style can be found in sidebar.less -->
@@ -59,7 +65,13 @@ var Layout = Vue.extend({
 })
 
 
-/*分页信息*/
+/*分页信息组件
+*1：绑定父方法，查询方法，可以直接查询，判断已经在组件内部完成  **必填**
+*2：当前页码  **必传**
+* <page-util @change="change"
+             :page="page">
+  </page-util>
+* */
 var pageUtil = Vue.extend({
     template: `<ul style="color: #606266" class="pagination">
 		<li :class="pageUtil.hasPreviousPage?'':'disabled'"><a href="javascript:" @click="pre()"><span aria-hidden="true">&laquo;</span></a></li>
@@ -138,21 +150,21 @@ var Header = Vue.extend({
                 <li class="dropdown messages-menu">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope"></i>
-                        <span class="label label-success">2</span>
+                        <span class="label label-success">{{message.number}}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">2条未读消息</li>
+                        <li class="header">{{message.number}}条未读消息</li>
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
                                 <li>
                                     <!-- start message -->
-                                    <a href="">
+                                    <a v-for="(msg,index) in message.msgContent" href="">
                                         <div class="pull-left">
                                             <img src="http://www.hywebsite.cn/static/gif/rabbit.gif" class="img-circle" alt="User Image"/>
                                         </div>
-                                        <h4>Support Team</h4>
-                                        <p>Why not buy a new awesome theme?</p>
+                                        <h4>{{msg.title}}</h4>
+                                        <p>{{msg.content}}</p>
                                         <small class="pull-right"><i class="fa fa-clock-o"></i> 5 mins</small>
                                     </a>
                                 </li>
@@ -191,17 +203,147 @@ var Header = Vue.extend({
     data() {
         return {
             user: JSON.parse(sessionStorage.getItem("loginUser")),
-            message: '',
+            message: {
+                number: 0,
+                msgContent: [],
+            },
+        }
+    },
+    methods: {
+        repleace(num) {
+            switch (num) {
+                case 1 :
+                    return "批阅申请";
+                case 2 :
+                    return "申请通过";
+                case 3 :
+                    return "公文审核";
+                case 4 :
+                    return "审核通过";
+                case 5 :
+                    return "通知";
+            }
+        },
+        getMessage(that) {
+            $.post('/gwspxt/getAllMessage', {}, function (response) {
+                that.message.number = response.length;
+                let newMsgContent = [];
+                for (let item in response) {
+                    let newMsg = {
+                        title: that.repleace(response[item].message.messageType),
+                        content: response[item].message.messageContent,
+                    }
+                    newMsgContent.push(newMsg);
+                }
+                that.message.msgContent = newMsgContent;
+            }, 'json');
         }
     },
     mounted() {
+        const that = this;
+        this.getMessage(that);
+        setInterval(function () {
+            that.getMessage(that);
+        }, 10000)
     },
 })
 
-/*头部控件*/
+/*头部控件
+* 必须先声明头部控件，再引用。。
+* 上，就是对头部控件的声明
+* */
 var userInfo = new Vue({
     el: "#header",
     components: {
         'header-component': Header
+    }
+})
+
+
+/* 表头的查询方法封装
+* 使用方法
+* 1: 所要查询的数据，即下拉所包含的数据按照格式填入
+*    如 docConfidential: { name: "文档密级",items: [{key: "1", value: "绝密"}]}
+* 2: 所查询的数据类型名称，依照此查询对应数据
+* 3: 绑定父方法，通过对 2数据的判断可以更简便的使用，只需要一个父方法即可
+* <search-util :query="docType"
+               :search-name="'documentType'"
+               @search="search">
+ </search-util>
+*
+* */
+var searchUtil = Vue.extend({
+    template: `<span role="presentation" class="dropdown">
+                   <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
+                   <ul class="dropdown-menu">
+                       <li v-for="item in query.items"><a href="javascript:;" @click="search(item.key)" :key="item.key">{{item.value}}</a></li>
+                   </ul>
+                   </span>`,
+    methods: {
+        search(key) {
+            this.$emit('search', {key: key, searchName: this.searchName});
+        },
+    },
+    props: ['query', 'searchName'],
+});
+
+
+/* 操作确认框组件
+* 使用说明
+* 1:按钮的样式  ---------------   默认为 btn btn-default btn-sm
+* 2:icon图标的样式  -----------   默认为 fa fa-trash-o fa-fw
+* 3:弹出框的标题   -----------    默认为 确定执行操作吗?
+* 4:按钮的文字  ----------------  默认为 操作
+* 5:所获得的对象所在数组的下标  - **必传**
+* 6:绑定的父方法  ------------    **必填**
+*<sure-util :btn-class="''"
+            :i-class="''"
+            :title="''"
+            :btn-text="''"
+            :index="index"
+            @action="">
+*</sure-util>
+* */
+var sureUtil = Vue.extend({
+    template: `<button @click="initialize"
+            :ref="index"
+			:class="btnClass"
+			data-toggle="popover"
+			:title="title"
+			data-trigger="focus"
+			data-html="true"
+			data-placement="auto right"
+			data-content='<div id="popover" class="btn-toolbar" role="toolbar">
+                               <div class="btn-group" role="group"><button @click="sure" type="button" class="btn btn-danger">确认</button></div>
+                               <div class="btn-group" role="group"><button type="button" class="btn btn-default">取消</button></div>
+                          </div>'><i :class="iClass"></i> {{btnText}}</button>`,
+    methods: {
+        initialize() {
+            let that = this;
+            setTimeout(function () {
+                new Vue({
+                    el: "#popover",
+                    methods: {
+                        sure() {
+                            that.perform();
+                        },
+                    },
+                }, 200)
+            })
+        },
+        perform() {
+            this.$emit('action', this.index);
+        }
+    },
+    mounted() {
+        $(this.$refs[this.index]).popover();
+        /*$('[data-toggle="popover"]').popover();*/
+    },
+    props: {
+        btnClass: {default: "btn btn-default btn-sm"},
+        iClass: {default: 'fa fa-trash-o fa-fw'},
+        title: {default: '确定执行操作吗?'},
+        btnText: {default: '操作'},
+        index: {required: true}
     }
 })

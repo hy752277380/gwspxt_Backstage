@@ -13,7 +13,10 @@ $(function () {
             hasPreviousPage: false,
             hasNextPage: false,
         },
+        processId: '',
+        processNodeData: ''
     }
+
 
     var reviewDocument = new Vue({
         el: "#main",
@@ -24,6 +27,13 @@ $(function () {
                     data.docProcess = response;
                     data.ready = true;
                 }, 'json')
+            },
+            transProcessId() {
+                var pid = data.processId;
+                console.log(pid);
+                $.post('/gwspxt/getProNodeByPro', {processId: pid}, function (response) {
+                    data.processNodeData = response;
+                }, 'json');
             }
         },
 
@@ -33,6 +43,7 @@ $(function () {
         },
         components: {
             'asideComponent': Layout,
+            'sure-util': sureUtil
             //'page-util': pageUtil,
             //'search-util': searchUtil
         }
@@ -88,7 +99,11 @@ $(function () {
                                     documentId: documentId,
                                 },
                                 success: function (data) {
-                                    window.location.href = "/gwspxt/documentManage";
+                                    if (data.msg == 'updateSuccess') {
+                                        spop({template: `提交成功`, style: "success", autoclose: 2000});
+                                        window.location.href = "/gwspxt/documentManage";
+                                    }
+
                                 }
                             });
 
@@ -135,12 +150,8 @@ $(function () {
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(data),
             success: function (data) {
-                if (data) {
-                      window.location.href = "/gwspxt/documentManage";
-                }
-                else {
-
-                }
+                spop({template: `以存入草稿`, style: "success", autoclose: 2000});
+                window.location.href = "/gwspxt/documentManage";
             }
         });
 

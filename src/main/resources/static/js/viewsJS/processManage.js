@@ -5,8 +5,8 @@ $(function () {
         processData: '', //所有数据
         showData: '', //显示在页面的数据
         ready: false,
-        index:'',
-        processModalData:'',
+        index: '',
+        processModalData: '',
         page: {
             allRow: 1,
             totalPage: 1,
@@ -15,7 +15,7 @@ $(function () {
             hasPreviousPage: false,
             hasNextPage: false,
         },
-        
+
         docDepartment: 0,
     }
 
@@ -69,17 +69,30 @@ $(function () {
                 var newProgress = data.processData[index];
                 data.processModalData = newProgress;
                 console.log(data.processModalData.processId);
-               /* $('#editModal').modal("show");*/
+                /* $('#editModal').modal("show");*/
             },
-            intoProgressNode(index){
+            intoProgressNode(index) {
                 var into_processNode = {
-                    "lhs_process":this.processData[index].processName,
-                    "process_id": this.processData[index].processId,
+                    lhs_process: this.processData[index].processName,
+                    process_id: this.processData[index].processId,
                 }
                 sessionStorage.setItem('into_processNode', JSON.stringify(into_processNode));
                 location.href = "/gwspxt/processNode";
             },
 
+            deleteProcess(index) {
+                let processId = data.processData[index].processId;
+                let that = this;
+                console.log(processId);
+                $.post('/gwspxt/deleteProcess', {ids: [processId]}, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        that.getProcessInfo({currentPage: 1});
+                        spop({template: `删除成功`, style: "success", autoclose: 2000});
+                    } else if (response.msg == "updateFailed") {
+                        spop({template: `删除失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json');
+            }
         },
         mounted() {
             this.getProcessInfo({currentPage: 1});
@@ -87,7 +100,8 @@ $(function () {
         components: {
             'asideComponent': Layout,
             'page-util': pageUtil,
-            'search-util': searchUtil
+            'search-util': searchUtil,
+            'sure-util': sureUtil
         }
     });
 })

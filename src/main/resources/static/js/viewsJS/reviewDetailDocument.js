@@ -1,14 +1,37 @@
-
 $(function () {
     var data = {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
         lhs_edit: JSON.parse(sessionStorage.getItem('lhs_edit')),
-        name: 'reviewDetailDocument',
-        docData: {}, //所有数据
+        name: 'documentManage',
+        docData: {
+            document: {
+                documentId: "",
+                documentTitle: "",
+                documentType: "1",
+                documentNo: "",
+                documentDept: "1",
+                documentConfidential: 0,
+                doucmentContent: "",
+                documentRemark: "",
+                documentProcess: 0,
+                documentLocation: 0,
+                documentState: 0,
+                documentSpeed: 0,
+            },
+            documenttype: {
+                documenttypeName: "命令",
+            },
+            department: {
+                departmentName: "办公室",
+            },
+            guser: {
+                userName: "江南",
+            },
+        }, //所有数据
         docType: [],
         docProcess: [],
+        processNode: [],
         ready: false,
-        processNode:'',
         page: {
             allRow: 1,
             totalPage: 1,
@@ -16,7 +39,7 @@ $(function () {
             pageSize: 10,
             hasPreviousPage: false,
             hasNextPage: false,
-        },
+        }
     }
 
 
@@ -25,8 +48,10 @@ $(function () {
         data: data,
         methods: {
             getInfo(documentId) {
+                var that = this;
                 $.post('/gwspxt/documentBaseInfo', documentId, function (response) {
                     data.docData = response;
+                    that.getProcessNode();
                 }, 'json');
             },
             getDocType() {
@@ -37,32 +62,22 @@ $(function () {
             getProcess() {
                 $.post('/gwspxt/getAllProcessNoPage', {}, function (response) {
                     data.docProcess = response;
-                    data.ready = true;
                 }, 'json')
             },
-            getProcessNod(documentId){
-                $.post('/gwspxt/getProcessNode', documentId, function (response) {
+            getProcessNode() {
+                $.post('/gwspxt/getProNodeByPro', {processId: data.docData.document.documentProcess}, function (response) {
                     data.processNode = response;
-                    console.log(data.processNode);
                 }, 'json');
-            }
+            },
         },
-
-
         mounted() {
+            console.log(data.lhs_edit.doc_id)
             this.getInfo({documentId: this.$data.lhs_edit.doc_id});
-            this.getDocType({});
-            this.getProcess({});
-            this.getProcessNod({documentId: this.$data.lhs_edit.doc_id});
+            this.getDocType();
+            this.getProcess();
         },
         components: {
             'asideComponent': Layout,
-           /* 'page-util': pageUtil,
-            'search-util': searchUtil*/
         },
-
     })
-
-
-
 })

@@ -17,10 +17,15 @@ public class MySpringMVCConfig implements WebMvcConfigurer {
             "/",
             "/login",
             "/login/**",
+            "/page-login/**",
+            "/page-login/**",
             "/error",
             "/login.html",
+            "/page-login.html",
             "/css/**",
-            "/js/**"};
+            "/js/**",
+            "/img/**",
+            "/assets/**",};
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

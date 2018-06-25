@@ -106,16 +106,21 @@
                                             <th><input @click="checkAll($event)" type="checkbox"></th>
                                             <th>文档编号</th>
                                             <th>文档标题</th>
-                                            <th v-cloak>
-                                                <search-util :query="docType"></search-util>
+                                            <th>
+                                                <search-util :query="docType" :search-name="'documentType'"
+                                                             @search="search"></search-util>
                                             </th>
                                             <th>拟稿人</th>
-                                            <th v-cloak>
-                                                <search-util :query="docConfidential"></search-util>
+                                            <th>
+                                                <search-util :query="docConfidential"
+                                                             :search-name="'documentConfidential'" @search="search">
+                                                </search-util>
                                             </th>
                                             <th>拟稿部门</th>
-                                            <th v-cloak>
-                                                <search-util :query="documentState"></search-util>
+                                            <th>
+                                                <search-util :query="docState" :search-name="'documentState'"
+                                                             @search="search">
+                                                </search-util>
                                             </th>
                                             <th>发布时间</th>
                                             <th>操作</th>
@@ -138,13 +143,18 @@
                                                             @click="editDocument(index)"><i
                                                             class="fa fa-pencil fa-fw"></i> 编辑
                                                     </button>
-                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                    <sure-util :btn-class="'btn btn-danger btn-sm'"
+                                                               :i-class="'fa fa-trash-o fa-fw'"
+                                                               :title="'确定执行操作?'"
+                                                               :btn-text="'删除'"
+                                                               :index="index"
+                                                               @action="deleteDocument">
+                                                    </sure-util>
+                                                    <!--<button type="button" class="btn btn-danger btn-sm"
                                                             @click="deleteDocument(index)"><i
-                                                            class="fa fa-trash-o fa-fw"
-                                                            @click="deleteDocument(index)"></i> 删除
-                                                    </button>
+                                                            class="fa fa-trash-o fa-fw"></i> 删除
+                                                    </button>-->
                                                 </template>
-
                                                 <template v-else-if="doc.document.documentState==2">
                                                     <button type="button" class="btn btn-primary btn-sm"
                                                             @click="checkDocument(index)"><i
@@ -170,44 +180,27 @@
                                                     </button>
                                                 </template>
                                                 <template v-else-if="doc.document.documentState==0">
-                                                    <button type="button" class="btn btn-danger btn-sm"
-                                                            @click="deleteDocument(index)"><i
-                                                            class="fa fa-trash-o fa-fw"></i> 删除
-                                                    </button>
+                                                    <sure-util :btn-class="'btn btn-danger btn-sm'"
+                                                               :i-class="'fa fa-trash-o fa-fw'"
+                                                               :title="'确定执行操作?'"
+                                                               :btn-text="'删除'"
+                                                               :index="index"
+                                                               @action="deleteDocument">
+                                                    </sure-util>
                                                 </template>
                                             </td>
                                         </tr>
-                                        </tbody>
+                                        </tbody> <tbody v-else>
+                                    <tr style="text-align: center;">
+                                        <td colspan="9"><i class="fa fa-spinner fa-spin"></i></td>
+                                    </tr>
+                                    </tbody>
+
                                     </table>
                                     <div v-cloak style="float: left;">
-                                        <page-util :page="page"></page-util>
+                                        <page-util @change="change" :page="page"></page-util>
                                     </div>
                                 </div>
-                                <!--<div class="text-center" style="float: left;">
-                                    <ul class="pagination">
-                                        <li>
-                                            <a href="#">«</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">3</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">4</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">5</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">»</a>
-                                        </li>
-                                    </ul>
-                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -215,9 +208,9 @@
             </div>
         </section>
         <!-- /.content -->
-        <div class="footer-main">
-            Copyright &copy Director, 2014. More Templates
-        </div>
+        <!-- <div class="footer-main">
+            公文审批系统@2018公文审批系统开发小组
+        </div>-->
     </aside>
     <!-- /.right-side -->
 </div>
@@ -225,17 +218,16 @@
 
 <!-- jQuery 2.0.2 -->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>-->
-<script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="js/jquery.min.js" type="text/javascript"></script>
 <!--布局的组件-->
 <script src="js/layout/layout.js"></script>
-<!-- jQuery UI 1.10.3 -->
-<script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
 <!-- 消息通知js -->
 <script src="js/spop.js" type="text/javascript"></script>
 <!-- jQuery UI 1.10.3 -->
 <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap -->
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
+
 <!-- daterangepicker -->
 <script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
 <script src="js/plugins/chart.js" type="text/javascript"></script>

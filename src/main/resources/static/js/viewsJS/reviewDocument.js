@@ -3,7 +3,6 @@ $(function () {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
         name: 'reviewDocument',
         docData: '', //所有数据
-        showData: '', //显示在页面的数据
         ready: false,
         page: {
             allRow: 1,
@@ -16,7 +15,7 @@ $(function () {
         docType: {
             name: "文档类型",
             items: [
-                {key: "0", value: "全部"},
+                {key: "", value: "全部"},
                 {key: "1", value: "命令"},
                 {key: "2", value: "批复"},
                 {key: "3", value: "意见"},
@@ -44,19 +43,12 @@ $(function () {
             ],
         },
         docDepartment: 0,
+        searchData: {
+            documentType: '',
+            documentConfidential: 0,
+            documentState: 0,
+        }
     }
-
-    /*   表头的查询方法封装，暂未封装完全 */
-    var searchUtil = Vue.extend({
-        template: `<span role="presentation" class="dropdown">
-                   <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
-                   <ul class="dropdown-menu">
-                       <li v-for="item in query.items"><a href="javascript:;" :key="item.key">{{item.value}}</a></li>
-                   </ul>
-                   </span>`,
-        props: ['query'],
-    });
-
 
     var reviewDocument = new Vue({
         el: "#main",
@@ -103,17 +95,68 @@ $(function () {
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
-                this.getInfo({currentPage: pageIndex});
+                console.log(data.page.currentPage);
+                this.getInfo({
+                    currentPage: pageIndex,
+                    documentType: data.searchData.documentType,
+                    documentConfidential: data.searchData.documentConfidential,
+                    documentState: data.searchData.documentState
+                });
             },
-            applyBorrowing(index){
+            /*申请借阅事件*/
+            applyBorrowing(index) {
                 let documentCustom = this.$data.docData[index];
-                $.post('/gwspxt/applyRead', {documentCustom: documentCustom}, function (response) {
-                    if (response.msg == "updateSuccess") {
-                        spop({template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`, style: "success", autoclose: 2000});
-                    } else if (response.msg == "updateFailed") {
-                        spop({template: `申请失败`, style: "error", autoclose: 2000});
+                var cus = {
+                    documentCustom: documentCustom,
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/gwspxt/applyRead",
+                    dataType: "json",
+                    contentType: 'application/json;charset=UTF-8',
+                    data: JSON.stringify(cus),
+                    success: function (response) {
+                        if (response.msg == "updateSuccess") {
+                            spop({
+                                template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`,
+                                style: "success",
+                                autoclose: 2000
+                            });
+                        } else if (response.msg == "updateFailed") {
+                            spop({template: `申请失败`, style: "error", autoclose: 2000});
+                        }
+
                     }
-                }, 'json');
+                })
+                /* let documentCustom = this.$data.docData[index];
+                 $.post('/gwspxt/applyRead', {documentCustom: documentCustom}, function (response) {
+                     if (response.msg == "updateSuccess") {
+                         spop({
+                             template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`,
+                             style: "success",
+                             autoclose: 2000
+                         });
+                     } else if (response.msg == "updateFailed") {
+                         spop({template: `申请失败`, style: "error", autoclose: 2000});
+                     }
+                 }, 'json');*/
+            },
+            reviewDocument(index){
+                var lhs_edit = {
+                    "doc_id": this.docData[index].document.documentId
+                }
+                sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
+                location.href = "/gwspxt/reviewDetailDocument";
+
+            },
+            search(msg) {
+                data.searchData[msg.searchName] = msg.key;
+                this.getInfo({
+                    currentPage: 1,
+                    documentType: data.searchData.documentType,
+                    documentConfidential: data.searchData.documentConfidential,
+                    documentState: data.searchData.documentState
+                })
             },
         },
         mounted() {
@@ -122,7 +165,8 @@ $(function () {
         components: {
             'asideComponent': Layout,
             'page-util': pageUtil,
-            'search-util': searchUtil
+            'search-util': searchUtil,
+            'sure-util': sureUtil
         }
     });
 })

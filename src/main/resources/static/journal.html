@@ -30,6 +30,7 @@
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <!-- Theme style -->
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="css/journal_about.css" rel="stylesheet" type="text/css">
     <script src="js/vue.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -62,7 +63,6 @@
                         <li>
                             <a href="#"><i class="fa fa-home"></i> 首页</a>
                         </li>
-
                         <li class="active">个人日志</li>
                     </ul>
                     <!--breadcrumbs end -->
@@ -75,9 +75,8 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="panel">
-
-                                <div class="panel-body table-responsive">
-                                    <div class="box-tools m-b-15">
+                                <div class="panel-body table-responsive" style="max-height: 600px;overflow-y: auto;">
+                                    <div class="box-tools m-b-15" style="margin-top: 10px;">
                                         <div class="input-group">
                                             <input type="text" name="table_search"
                                                    class="form-control input-sm pull-right" style="width: 150px;"
@@ -88,36 +87,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <table stripe class="table table-hover"
-                                           style="width:70%;margin-left: 15%;margin-top: 30px;">
-                                        <tr>
-                                            <td>2018年6月2日，审核了对工作计划文档，修改了工作计划文档，查看了工作计划文档</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>2018年6月2日，审核了对工作计划文档，修改了工作计划文档，查看了工作计划文档</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>2018年6月2日，审核了对工作计划文档，修改了工作计划文档，查看了工作计划文档</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>2018年6月2日，审核了对工作计划文档，修改了工作计划文档，查看了工作计划文档</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>2018年6月2日，审核了对工作计划文档，修改了工作计划文档，查看了工作计划文档</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>2018年6月2日，审核了对工作计划文档，修改了工作计划文档，查看了工作计划文档</td>
-
-                                        </tr>
-                                    </table>
-
+                                    <div class="page">
+                                        <div class="box">
+                                            <ul class="event_year">
+                                                <li v-for="(logs,index) in logData" :class="index==0?'current':''">
+                                                    <label @click="label" :for="index+1">{{index+1}}</label>
+                                                </li>
+                                            </ul>
+                                            <ul class="event_list">
+                                                <div v-for="(logs,index) in logData">
+                                                    <h3 :id="index+1">{{index+1}}</h3>
+                                                    <li v-for="(log,index) in logs" v-cloak>
+                                                        <span>{{log.creationTime}}</span>
+                                                        <p><span>{{log.logContent}}</span></p>
+                                                    </li>
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -126,9 +114,9 @@
         </section>
 
         <!-- /.content -->
-        <div class="footer-main">
-            Copyright &copy Director, 2014. More Templates
-        </div>
+        <!-- <div class="footer-main">
+             公文审批系统@2018公文审批系统开发小组
+         </div>-->
     </aside>
     <!-- /.right-side -->
 
@@ -163,35 +151,8 @@
 
 <!-- Director dashboard demo (This is only for demo purposes) -->
 <script src="js/Director/dashboard.js" type="text/javascript"></script>
-<script>
-    var data = {
-        user: JSON.parse(sessionStorage.getItem("loginUser")),
-        name: 'journal',
-        docData: '', //所有数据
-        ready: false,
-        page: {
-            allRow: 1,
-            totalPage: 1,
-            currentPage: 1,
-            pageSize: 10,
-            hasPreviousPage: false,
-            hasNextPage: false,
-        },
-    }
-
-    var reviewDocument = new Vue({
-        el: "#main",
-        data: data,
-        components: {
-            'asideComponent': Layout,
-            //'page-util': pageUtil,
-            //'search-util': searchUtil
-        }
-    });
-
-</script>
+<script src="js/viewsJS/journal.js"></script>
 <!-- Director for demo purposes -->
-
 </body>
 
 </html>

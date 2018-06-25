@@ -51,92 +51,10 @@ $(function () {
                 {key: "3", value: "审核中"},
                 {key: "4", value: "已审核"},
                 {key: "5", value: "已归档"},
-
             ],
         },
         docDepartment: 0,
     }
-
-    /*分页信息*/
-    var pageUtil = Vue.extend({
-        template: `<ul style="color: #606266" class="pagination">
-		<li :class="page.hasPreviousPage?'':'disabled'"><a href="javascript:" @click="next('-')"><span aria-hidden="true">&laquo;</span></a></li>
-		<li v-for="index in page.totalPage" :class="{'active' : page.currentPage == index}">
-			<a @click="btnclick(index)" href="javascript:">{{index}}</a>
-		</li>
-		<li :class="page.hasNextPage?'':'disabled'"><a href="javascript:" @click="next('+')"><span aria-hidden="true">&raquo;</span></a></li>
-		<li><input v-model="topage" style="width: 34px; height: 34px; display: inline;" type="text" class="form-control" :placeholder="page.currentPage"></li>
-		<li><strong>共{{page.allRow}}条记录,当前显示{{page.pageSize}}/页</strong></li>
-		</ul>`,
-        data() {
-            return {
-                topage: data.page.currentPage,
-            }
-        },
-        methods: {
-            btnclick(index) {
-                data.page.currentPage = index;
-            },
-            next($to) {
-                if ($to == "+") {
-                    if (data.page.hasNextPage) {
-                        data.page.currentPage++;
-                    } else {
-                        spop({
-                            template: "没有下一页了",
-                            style: "info",
-                            autoclose: 2000
-                        })
-                    }
-                }
-                if ($to == "-") {
-                    if (data.page.hasPreviousPage) {
-                        data.page.currentPage--;
-                    } else {
-                        spop({
-                            template: "没有上一页了",
-                            style: "info",
-                            autoclose: 2000
-                        })
-                    }
-                }
-                /*  更新当前页面显示  */
-                this.topage = data.page.currentPage;
-            },
-        },
-        watch: {
-            'topage': function (newVal, oldVal) {
-                var reg = /^[1-9]\d*$|^0$/;
-                if (reg.test(newVal) == true) {
-                    if (newVal <= data.page.totalPage && newVal > 0) {
-                        this.topage = newVal;
-                        data.page.currentPage = newVal;
-                    } else {
-                        this.topage = oldVal;
-                        data.page.currentPage = oldVal;
-                        spop({
-                            template: "超出总页面数",
-                            style: "info",
-                            autoclose: 2000
-                        })
-                    }
-                } else {
-                    this.topage = oldVal;
-                }
-            }
-        },
-        props: ['page'],
-    })
-
-    var searchUtil = Vue.extend({
-        template: `<span role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
-                     <ul class="dropdown-menu">
-                         <li v-for="item in query.items"><a href="javascript:;" :key="item.key">{{item.value}}</a></li>
-                     </ul>
-                   </span>`,
-        props: ['query'],
-    });
 
     var documentManage = new Vue({
         el: "#main",
@@ -155,14 +73,14 @@ $(function () {
             },
             getInfo(params) {
                 $.post('/gwspxt/getDocumentByState', params, function (response) {
-                    documentManage.docData = response.list;
-                    documentManage.page.currentPage = response.currentPage;
-                    documentManage.page.totalPage = response.totalPage;
-                    documentManage.page.allRow = response.allRow;
-                    documentManage.page.currentPage = response.currentPage;
-                    documentManage.page.hasPreviousPage = response.hasPreviousPage;
-                    documentManage.page.hasNextPage = response.hasNextPage;
-                    documentManage.ready = true;
+                    data.docData = response.list;
+                    data.page.currentPage = response.currentPage;
+                    data.page.totalPage = response.totalPage;
+                    data.page.allRow = response.allRow;
+                    data.page.currentPage = response.currentPage;
+                    data.page.hasPreviousPage = response.hasPreviousPage;
+                    data.page.hasNextPage = response.hasNextPage;
+                    data.ready = true;
                 }, 'json');
             },
             replaceConfidential(documentConfidential) {
@@ -209,18 +127,27 @@ $(function () {
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_check));
                 window.location.href = "/gwspxt/reviewDetailDocument";
             },
-            test(index) {
-                console.log(index);
+            deleteDocument(index) {
+                let docId = data.docData[index].document.documentId;
+                let that = this;
+                $.post('/gwspxt/getDocumentByState', {documentId: docId}, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        that.getInfo({currentPage: 1});
+                        spop({template: `删除成功`, style: "success", autoclose: 2000});
+                    } else if (response.msg == "updateFailed") {
+                        spop({template: `删除失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json');
             }
         },
         mounted() {
             this.getInfo({currentPage: 1});
-            $('[data-toggle="popover"]').popover();
         },
         components: {
             'asideComponent': Layout,
             'page-util': pageUtil,
             'search-util': searchUtil,
+            'sure-util': sureUtil,
         }
     });
 })

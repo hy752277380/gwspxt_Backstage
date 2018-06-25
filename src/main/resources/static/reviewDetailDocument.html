@@ -74,29 +74,26 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">文本标题</label>
                                         <div class="col-md-5">
-                                            <input class="form-control" id="documentTitle" v-model="docData.document.documentTitle" type="text">
-                                            <input class="form-control" id="documentId" v-model="lhs_edit.doc_id" type="hidden">
-
+                                            <input class="form-control" v-model="docData.document.documentTitle" type="text">
                                         </div>
                                         <label class="col-sm-2 control-label">文本文号</label>
                                         <div class="col-md-3">
-                                            <input class="form-control" id="documentNo" v-model="docData.document.documentNo" type="text">
+                                            <input class="form-control" v-model="docData.document.documentNo" type="text">
                                         </div>
                                     </div>
                                     <div class="form-group" style="width: 90%;margin-left: 10px">
-
-                                        <label class="col-sm-2 control-label" >拟稿人</label>
+                                            <label class="col-sm-2 control-label">拟稿人</label>
                                         <div class="col-md-2">
-                                            <input disabled class="form-control" id="documentUser" v-model="docData.guser.userName" type="text">
+                                            <input disabled class="form-control" v-model="docData.guser.userName" type="text">
                                         </div>
-                                        <label class="control-label col-lg-2" style="margin-left: -28px">拟稿部门</label>
+                                            <label class="control-label col-lg-2" style="margin-left: -28px">拟稿部门</label>
                                         <div class="col-md-2">
                                             <input disabled class="form-control" v-model="docData.department.departmentName" type="text">
                                         </div>
-                                        <label class="control-label col-lg-2" style="margin-left: 25px">文本类型</label>
+                                            <label class="control-label col-lg-2" style="margin-left: 25px">文本类型</label>
                                         <div class="col-md-2">
-                                            <select  class="form-control m-b-10" id="documentType" v-model="docData.document.documentType">
-                                                <option v-for="(item,index) in docType" :value="item.documenttypeId" >{{item.documenttypeName}}</option>
+                                            <select class="form-control m-b-10" v-model="docData.document.documentType">
+                                                <option v-for="(item,index) in docType" :value="item.documenttypeId">{{item.documenttypeName}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -105,7 +102,7 @@
                                         <div class="col-md-4">
                                             <div class="radio" style="float: left;margin-right: 10px;">
                                                 <label>
-                                                    <input type="radio" value="1" :checked="docData.document.documentConfidential==1">绝密
+                                                    <input type="radio" name="documentConfidential" value="1" :checked="docData.document.documentConfidential==1">绝密
                                                 </label>
                                             </div>
                                             <div class="radio" style="float: left;margin-right: 10px;">
@@ -124,57 +121,50 @@
                                                 </label>
                                             </div>
                                         </div>
-                                         <div>
-                                        <label class="control-label col-lg-2">文档级别</label>
-                                        <div class="col-md-4">
-                                            <div class="radio" style="float: left;margin-right: 10px;">
-                                                <label></label>
-                                                <input type="radio" name="documentSpeed" value="1" :checked="docData.document.documentSpeed==1">加急
-
+                                        <div>
+                                            <label class="control-label col-lg-2">文档级别</label>
+                                            <div class="col-md-4">
+                                                <div class="radio" style="float: left;margin-right: 10px;">
+                                                    <label>
+                                                        <input type="radio" name="documentSpeed" value="1" :checked="docData.document.documentSpeed==1">加急
+                                                    </label>
+                                                </div>
+                                                <div class="radio" style="float: left;margin-right: 10px;">
+                                                    <label>
+                                                        <input type="radio" name="documentSpeed" value="2" :checked="docData.document.documentSpeed==2">特急
+                                                    </label>
+                                                </div>
+                                                <div class="radio" style="float: left;margin-right: 10px;">
+                                                    <label>
+                                                        <input type="radio" name="documentSpeed" value="3" :checked="docData.document.documentSpeed==3">平急
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="radio" style="float: left;margin-right: 10px;">
-                                                <label>
-                                                    <input type="radio" name="documentSpeed" value="2" :checked="docData.document.documentSpeed==2">特急
-                                                </label>
-                                            </div>
-                                            <div class="radio" style="float: left;margin-right: 10px;">
-                                                <label>
-                                                    <input type="radio" name="documentSpeed" value="3"  :checked="docData.document.documentSpeed==3">平急
-                                                </label>
-                                            </div>
-
                                         </div>
-                                         </div>
                                         <div class="form-group" style="margin-top:5%;margin-left:0.7px;">
                                             <label class="control-label col-lg-2">文本内容</label>
                                             <div class="col-lg-10">
-                                                <textarea rows="10" cols="80" id="doucmentContent" class="form-control">{{docData.document.doucmentContent}}</textarea>
+                                                <textarea rows="10" cols="80" class="form-control">{{docData.document.doucmentContent}}</textarea>
                                             </div>
-
                                         </div>
                                         <div class="form-group" style="margin-left: 1px;">
                                             <label class="control-label col-lg-2">备注</label>
                                             <div class="col-lg-10">
-                                                <textarea rows="2" cols="80" id="documentRemark" class="form-control">{{docData.document.documentRemark}}</textarea>
+                                                <textarea rows="2" cols="80" class="form-control">{{docData.document.documentRemark}}</textarea>
                                             </div>
-
                                         </div>
                                     </div>
-
                                     <div class="form-group" style="margin-left: 1px;">
                                         <label class="control-label col-lg-2">选择流程</label>
                                         <div class="col-lg-3">
-                                            <select  class="form-control m-b-10" id="documentProcess" v-model="docData.document.documentProcess">  <!--v-model="docData.document.documentProcess"-->
-                                                <option v-for="(item,index) in docProcess" :value="item.processId" >{{item.processName}}</option>
+                                            <select class="form-control m-b-10" @change="getProcessNode" v-model="docData.document.documentProcess">
+                                                <option v-for="(item,index) in docProcess" :value="item.processId">{{item.processName}}</option>
                                             </select>
-
                                         </div>
-                                        <div v-if="lhs_edit.action=='edit'" class="form-group" style="float:right;margin-right: 25%;">
+                                        <div v-if="lhs_edit.action==='edit'" class="form-group" style="float:right;margin-right: 25%;">
                                             <div>
                                                 <button onclick="commitDoc()" type="button" class="btn btn-success">确认</button>
-                                                <button type="button" class="btn btn-warning"
-                                                        style="margin-left: 10px;" onclick="editDraft()">草稿
-                                                </button>
+                                                <button type="button" class="btn btn-warning" style="margin-left: 10px;" onclick="editDraft()">草稿</button>
                                             </div>
                                         </div>
                                     </div>
@@ -183,52 +173,31 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="panel">
-
                                         <div class="panel-body table-responsive">
                                             <div>
                                                 <table class="table table-hover">
-                                                    <tr>
-                                                        <th>节点名</th>
-                                                        <th>操作部门</th>
-                                                        <th>职称</th>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>流程节点1</td>
-                                                        <td>人事部</td>
-                                                        <td>部长</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>流程节点1</td>
-                                                        <td>人事部</td>
-                                                        <td>部长</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>流程节点1</td>
-                                                        <td>人事部</td>
-                                                        <td>部长</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>流程节点1</td>
-                                                        <td>人事部</td>
-                                                        <td>部长</td>
-
-                                                    </tr>
+                                                   <thead>
+                                                       <tr>
+                                                           <th>节点名</th>
+                                                           <th>操作部门</th>
+                                                           <th>职称</th>
+                                                       </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                        <tr v-for="node in processNode">
+                                                            <td>{{node.process_node.processNodeName}}</td>
+                                                            <td>{{node.department.departmentName}}</td>
+                                                            <td>{{node.position.positionName}}</td>
+                                                        </tr>
+                                                   </tbody>
                                                 </table>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </section>
-
                 </div>
             </div>
         </section>
@@ -272,8 +241,8 @@
 <script src="js/viewsJS/reviewDetailDocument.js"></script>
 <!-- Director for demo purposes -->
 <script type="text/javascript">
-    function editDraft(){
-       var documentId=$('#documentId').val();
+    function editDraft() {
+        var documentId = $('#documentId').val();
         var documentTitle = $('#documentTitle').val();
         var documentNo = $('#documentNo').val();
         var documentUser = $('#documentUser').val();
@@ -319,7 +288,7 @@
     }
 
     function commitDoc() {
-        var documentId=$('#documentId').val();
+        var documentId = $('#documentId').val();
         var documentTitle = $('#documentTitle').val();
         var documentNo = $('#documentNo').val();
         var documentUser = $('#documentUser').val();
@@ -352,7 +321,7 @@
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(data),
             success: function (data) {
-                if(data) {
+                if (data) {
                     var documentId = data.documentId;
                     console.log(documentId);
                     $.ajax({
@@ -361,7 +330,7 @@
                         dataType: "json",
                         data: JSON.stringify(data),
                         contentType: 'application/json;charset=UTF-8',
-                        success: function(data) {
+                        success: function (data) {
                             $.ajax({
                                 type: "post",
                                 url: "/gwspxt/messageNextOne",
@@ -369,14 +338,14 @@
                                 data: {
                                     documentId: documentId,
                                 },
-                                success: function(data) {
+                                success: function (data) {
                                     window.location.href = "/gwspxt/documentManage";
-                        }
+                                }
                             });
 
                         }
                     });
-                }  else {
+                } else {
 
                 }
             }

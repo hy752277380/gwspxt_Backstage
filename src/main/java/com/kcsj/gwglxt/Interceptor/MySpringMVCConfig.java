@@ -20,7 +20,8 @@ public class MySpringMVCConfig implements WebMvcConfigurer {
             "/error",
             "/login.html",
             "/css/**",
-            "/js/**"};
+            "/js/**",
+            "/img/**",};
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

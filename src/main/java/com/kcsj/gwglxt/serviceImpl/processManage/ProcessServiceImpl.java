@@ -97,7 +97,7 @@ public class ProcessServiceImpl implements ProcessService {
     @Override
     public int deleteProcess(String[] ids,LoginCustom loginCustom) {
         int result = 0;
-        if (ids==null&&"".equals(ids)){
+        if (ids.length==0){
             return 0;
         }else{
             //遍历id删除

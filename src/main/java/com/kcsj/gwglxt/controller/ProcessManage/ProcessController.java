@@ -88,7 +88,7 @@ public class ProcessController {
     }
     //删除流程
     @RequestMapping("/deleteProcess")
-    public String deleteProcess(String ids[],HttpSession httpSession){
+    public String deleteProcess(@RequestParam("ids[]") String[] ids,HttpSession httpSession){
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         String result;
         int updateResult = processService.deleteProcess(ids,loginCustom);

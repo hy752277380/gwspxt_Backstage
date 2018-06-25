@@ -213,20 +213,19 @@ public class DocumentServiceImpl implements DocumentService {
         String documentTitle = searchInfo;
         String userName = searchInfo;
         List<ProcessNode> list = processNodeMapper.getProcessNodeByUser(loginCustom.getGuser().getUserDepartment(), loginCustom.getGuser().getUserPosition());
+        System.out.println("我要执行的流程节点有"+list.size());
         //定义Documentcustom集合
         List<DocumentCustom> list_doc = new ArrayList<>();
         //遍历该人员所需要任的所有流程子节点
         for (ProcessNode processNode : list) {
             //用每一个processNode里面的流程名和流程位置的前一位查询文档
-            //list_doc.add(documentMapper.findCheckingDoc(processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment()));
-            List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(documentType,documentConfidential,processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,loginCustom.getGuser().getUserDepartment(),documentNo,documentTitle,userName);
-            System.out.println("changdu1aaaa"+documentCustoms.size());
+            List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(documentType,documentConfidential,processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,documentNo,documentTitle,userName);
+            System.out.println("我要审核的"+documentCustoms.size());
             for (DocumentCustom documentCustom:documentCustoms){
                 list_doc.add(documentCustom);
             }
             System.out.println("流程是"+processNode.getProcessNodeProcess());
             System.out.println(processNode.getProcessNodeStep() - 1);
-            System.out.println(loginCustom.getGuser().getUserDepartment());
             System.out.println(list_doc.size());
         }
         QueryForPage queryForPage = new QueryForPage();
@@ -546,7 +545,7 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public int deleteDoc(String[] ids, LoginCustom loginCustom) {
         int result = 0;
-        if (ids==null&&"".equals(ids)){
+        if (ids.length==0){
             return 0;
         }else{
             //遍历id删除

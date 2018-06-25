@@ -280,6 +280,5 @@ public class GuserController {
         return queryForPage;
     }
 
-    //调配
 }
 

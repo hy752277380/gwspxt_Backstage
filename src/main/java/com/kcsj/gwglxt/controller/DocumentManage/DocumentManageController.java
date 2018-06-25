@@ -263,7 +263,7 @@ public class DocumentManageController {
     }
     //删除草稿箱文档
     @RequestMapping("/deleteDoc")
-    public String deleteDoc(String ids[],HttpSession httpSession){
+    public String deleteDoc(@RequestParam("ids[]") String[] ids,HttpSession httpSession){
         String result;
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         int updateResult = documentService.deleteDoc(ids,loginCustom);

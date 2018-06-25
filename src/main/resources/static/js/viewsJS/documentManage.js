@@ -139,7 +139,7 @@ $(function () {
             deleteDocument(index) {
                 let docId = data.docData[index].document.documentId;
                 let that = this;
-                $.post('/gwspxt/getDocumentByState', {documentId: docId}, function (response) {
+                $.post('/gwspxt/deleteDoc', {ids: [docId]}, function (response) {
                     if (response.msg == "updateSuccess") {
                         that.getInfo({currentPage: 1});
                         spop({template: `删除成功`, style: "success", autoclose: 2000});
@@ -169,7 +169,7 @@ $(function () {
                     documentConfidential: data.searchData.documentConfidential,
                     documentState: data.searchData.documentState
                 })
-                console.log( data.searchData.documentType)
+                console.log(data.searchData.documentType)
             },
         },
         mounted() {

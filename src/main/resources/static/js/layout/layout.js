@@ -306,22 +306,38 @@ var searchUtil = Vue.extend({
 * */
 var sureUtil = Vue.extend({
     template: `<button @click="initialize"
+            :ref="index"
 			:class="btnClass"
 			data-toggle="popover"
 			:title="title"
 			data-trigger="focus"
 			data-html="true"
 			data-placement="auto right"
-			data-content='<div id="HeYi" class="btn-toolbar" role="toolbar">
+			data-content='<div id="popover" class="btn-toolbar" role="toolbar">
                                <div class="btn-group" role="group"><button @click="sure" type="button" class="btn btn-danger">确认</button></div>
                                <div class="btn-group" role="group"><button type="button" class="btn btn-default">取消</button></div>
                           </div>'><i :class="iClass"></i> {{btnText}}</button>`,
     methods: {
         initialize() {
             let that = this;
-            setTimeout(function () {new Vue({el: "#HeYi", methods: {sure() {that.perform();},},}, 1000)})
+            setTimeout(function () {
+                new Vue({
+                    el: "#popover",
+                    methods: {
+                        sure() {
+                            that.perform();
+                        },
+                    },
+                }, 200)
+            })
         },
-        perform() {this.$emit('action',this.index);}
+        perform() {
+            this.$emit('action', this.index);
+        }
+    },
+    mounted() {
+        $(this.$refs[this.index]).popover();
+        /*$('[data-toggle="popover"]').popover();*/
     },
     props: {
         btnClass: {default: "btn btn-default btn-sm"},

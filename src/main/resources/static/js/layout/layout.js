@@ -171,7 +171,7 @@ var Header = Vue.extend({
                                 <!-- end message -->
                             </ul>
                         </li>
-                        <li class="footer"><a href="">查看所有信息</a></li>
+                        <li class="footer"><a href="messageManagement">查看所有信息</a></li>
                     </ul>
                 </li>
                 <!-- User Account: style can be found in dropdown.less -->
@@ -193,7 +193,7 @@ var Header = Vue.extend({
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href=""><i class="fa fa-ban fa-fw pull-right"></i> 登出</a>
+                            <a href="javascript:;" @click="showPop"><i class="fa fa-ban fa-fw pull-right"></i> 登出</a>
                         </li>
                     </ul>
                 </li>
@@ -237,6 +237,13 @@ var Header = Vue.extend({
                 }
                 that.message.msgContent = newMsgContent;
             }, 'json');
+        },
+        showPop() {
+            spop({
+                template: '<a href="loginout">确认退出当前账号</a>',
+                style: 'error',
+                autoclose: 5000
+            });
         }
     },
     mounted() {

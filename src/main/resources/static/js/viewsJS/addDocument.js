@@ -36,10 +36,18 @@ $(function () {
                 }, 'json');
             }
         },
-
-
         mounted() {
             this.getProcess({});
+            $('#doucmentContent').summernote({
+                height: 150, //set editable area's height
+                codemirror: { // codemirror options
+                    theme: 'monokai'
+                },
+                lang: 'zh-CN'
+            });
+            /*get&&set*
+             * $('#doucmentContent').summernote('code')
+             */
         },
         components: {
             'asideComponent': Layout,
@@ -48,6 +56,7 @@ $(function () {
             //'search-util': searchUtil
         }
     });
+
     $('#addDoc').click(function () {
         var documentTitle = $('#documentTitle').val();
         var documentNo = $('#documentNo').val();
@@ -117,7 +126,6 @@ $(function () {
 
     });
 
-
     $('#addDraft').click(function () {
         var documentTitle = $('#documentTitle').val();
         var documentNo = $('#documentNo').val();
@@ -142,7 +150,6 @@ $(function () {
             "documentRemark": documentRemark,
             "documentProcess": documentProcess,
         }
-
         $.ajax({
             type: "post",
             url: "/gwspxt/addDocument",

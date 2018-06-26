@@ -76,9 +76,10 @@
                                 <div class="panel-body table-responsive">
                                     <div class="box-tools m-b-15">
                                         <div class="input-group">
-                                            <input type="text" name="table_search"
+                                            <input type="text" name="table_search" placeholder="Search"
                                                    class="form-control input-sm pull-right" style="width: 150px;"
-                                                   placeholder="Search"/>
+                                                   v-model="searchData.fuzzySearch"
+                                                   @keyup="search({searchName:'fuzzySearch',key:searchData.fuzzySearch})"/>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
                                                 </button>
@@ -126,9 +127,9 @@
             </div>
         </section>
         <!-- /.content -->
-       <!-- <div class="footer-main">
-            公文审批系统@2018公文审批系统开发小组
-        </div>-->
+        <!-- <div class="footer-main">
+             公文审批系统@2018公文审批系统开发小组
+         </div>-->
     </aside>
     <!-- ./wrapper -->
 </div>

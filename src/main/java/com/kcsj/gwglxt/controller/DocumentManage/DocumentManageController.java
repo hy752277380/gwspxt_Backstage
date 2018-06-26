@@ -256,9 +256,9 @@ public class DocumentManageController {
 
     //查询本人需要审核的文档
     @RequestMapping("/findCheckDoc")
-    public QueryForPage findCheckDoc(String searchInfo,int currentPage,String documentType,Integer documentConfidential, HttpSession httpSession) {
+    public QueryForPage findCheckDoc(String fuzzySearch,int currentPage,String documentType,Integer documentConfidential, HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        QueryForPage queryForPage = documentService.findCheckingDoc(currentPage, loginCustom,searchInfo,documentType,documentConfidential);
+        QueryForPage queryForPage = documentService.findCheckingDoc(currentPage, loginCustom,fuzzySearch,documentType,documentConfidential);
         return queryForPage;
     }
     //删除草稿箱文档
@@ -279,9 +279,9 @@ public class DocumentManageController {
 
     //列出待本人批准的借阅申请
     @RequestMapping("/getAllApplyRead")
-    public QueryForPage getAllApplyRead(int currentPage,String documentType,Integer documentConfidential,HttpSession httpSession) {
+    public QueryForPage getAllApplyRead(String fuzzySearch,int currentPage,String documentType,Integer documentConfidential,HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        QueryForPage queryForPage = documentService.getAllApplyRead(loginCustom,currentPage,documentType,documentConfidential);
+        QueryForPage queryForPage = documentService.getAllApplyRead(loginCustom,currentPage,documentType,documentConfidential,fuzzySearch);
         return queryForPage;
     }
 

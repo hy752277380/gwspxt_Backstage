@@ -522,6 +522,9 @@ and user_isdelete = '0'
         AND po.position_id = g.user_position
         AND pe.permission_id = po.position_permission
         and g.user_isdelete = '0'
+        <if test="fuzzySearch!=null">
+           and (user_account like CONCAT('%',#{fuzzySearch},'%' ) or user_name like CONCAT('%',#{fuzzySearch},'%' ) or user_phonenumber like CONCAT('%',#{fuzzySearch},'%' ))
+        </if>
     </select>
     <select id="getUserByDpt" parameterType="java.lang.String" resultMap="loginFunctionMap">
         SELECT
@@ -538,5 +541,8 @@ and user_isdelete = '0'
         AND po.position_id = g.user_position
         AND pe.permission_id = po.position_permission
         and g.user_isdelete = '0'
+        <if test="fuzzySearch!=null">
+            and (user_account like CONCAT('%',#{fuzzySearch},'%' ) or user_name like CONCAT('%',#{fuzzySearch},'%' ) or user_phonenumber like CONCAT('%',#{fuzzySearch},'%' ))
+        </if>
     </select>
 </mapper>

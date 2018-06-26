@@ -234,6 +234,9 @@ FROM
 LEFT JOIN department AS de2 ON de1.department_superior = de2.department_id
 AND de1.department_isdelete = '0'*/
 select  * from department where department_isdelete = '0'
+        <if test="fuzzySearch!=null">
+            and department_name like CONCAT('%',#{fuzzySearch},'%' )
+        </if>
     </select>
     <select id="getDepartmentName" parameterType="java.lang.String" resultType="java.lang.String">
         select department_name from department where department_id = #{departmentSuperior}

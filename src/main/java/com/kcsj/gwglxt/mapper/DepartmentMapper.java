@@ -30,7 +30,7 @@ public interface DepartmentMapper {
 
     int updateByPrimaryKey(Department record);
 
-    List<Department> getAllDepartment();
+    List<Department> getAllDepartment(@Param("fuzzySearch") String fuzzySearch);
 
     String getDepartmentName(@Param("departmentSuperior") String departmentSuperior);
 }

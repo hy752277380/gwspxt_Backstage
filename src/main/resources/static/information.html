@@ -121,7 +121,7 @@
                                         <label class="col-sm-2 control-label">电话:</label>
                                         <div class="col-md-5">
                                             <input class="form-control" id="userPhonenumber"
-                                                   v-model="userData.userPhonenumber" type="text">
+                                                   v-model="userData.userPhonenumber" onblur="yz(this.value)" type="text">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -187,6 +187,15 @@
 <script src="js/Director/app.js" type="text/javascript"></script>
 <script src="js/Director/dashboard.js" type="text/javascript"></script>
 <script>
+   /* function yz(v){
+        console.log(v);
+        var a = /^((\(\d{3}\))|(\d{3}\-))?13\d{9}|15[89]\d{8}$/;
+        if( v.length!=11||!v.match(a) ){
+            alert("请输入正确的手机号码");
+        }else{
+            ;
+        }
+    }*/
     var data = {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
         name: 'information',
@@ -238,6 +247,7 @@
 
         }
 
+
         $.ajax({
             type: "post",
             url: "/gwspxt/updatePersonInfo",
@@ -247,6 +257,7 @@
             success: function (data) {
                 console.log(data);
                 if(data.msg=='updateSuccess'){
+
                     spop({template: `修改成功`, style: "success", autoclose: 2000});
                 }
             }

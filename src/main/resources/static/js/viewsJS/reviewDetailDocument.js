@@ -51,6 +51,7 @@ $(function () {
                 var that = this;
                 $.post('/gwspxt/documentBaseInfo', documentId, function (response) {
                     data.docData = response;
+                    $('#doucmentContent').summernote('code',data.docData.document.doucmentContent);
                     that.getProcessNode();
                 }, 'json');
             },
@@ -75,6 +76,16 @@ $(function () {
             this.getInfo({documentId: this.$data.lhs_edit.doc_id});
             this.getDocType();
             this.getProcess();
+            $('#doucmentContent').summernote({
+                height: 150, //set editable area's height
+                codemirror: { // codemirror options
+                    theme: 'monokai'
+                },
+                lang: 'zh-CN'
+            });
+            /*get&&set*
+             * $('#doucmentContent').summernote('code')
+             */
         },
         components: {
             'asideComponent': Layout,

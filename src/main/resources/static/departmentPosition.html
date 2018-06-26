@@ -281,6 +281,15 @@
             "positionName": positionName,
             "positionPermission": positionPermission,
         }
+        if (!positionDept) {
+            return false;
+        }
+        if (!positionName) {
+            return false;
+        }
+        if (!positionPermission) {
+            return false;
+        }
         $.ajax({
             type: "post",
             url: "/gwspxt/addPosition",
@@ -303,7 +312,15 @@
             "positionPermission": editPermission,
             "positionName": positionName,
         }
-
+        if (!positionDept) {
+            return false;
+        }
+        if (!positionName) {
+            return false;
+        }
+        if (!editPermission) {
+            return false;
+        }
         $.ajax({
             type: "post",
             url: "/gwspxt/updatePermission",

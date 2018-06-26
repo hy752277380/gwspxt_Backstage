@@ -264,6 +264,13 @@
             "departmentPhone": departmentPhone,
 
         }
+        if (!departmentName) {
+            return false;
+        }
+
+        if (!departmentPhone) {
+            return false;
+        }
 
         $.ajax({
             type: "post",
@@ -286,7 +293,12 @@
             "departmentPhone": departmentPhone,
 
         }
-
+        if (!departmentPhone) {
+            return false;
+        }
+        if (!departmentName) {
+            return false;
+        }
         $.ajax({
             type: "post",
             url: "/gwspxt/updateDptInfo",

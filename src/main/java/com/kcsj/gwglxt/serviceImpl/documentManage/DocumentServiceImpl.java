@@ -241,7 +241,7 @@ public class DocumentServiceImpl implements DocumentService {
     public DocumentCustom insertBorrowing(@RequestBody DocumentCustom documentCustom, LoginCustom loginCustom) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         //从documentCustom对象中获得borrowing对象
-        Borrowing borrowing = new Borrowing();
+        Borrowing borrowing = documentCustom.getBorrowing();
         //获取该部门最高权限职称
         List<Position> positions = positionMapper.getDptManager(documentCustom.getDocument().getDocumentDept());
         //获取该职称对应的人

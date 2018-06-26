@@ -136,16 +136,17 @@
                                                 </template>
                                                 <!-- 非本部门未借阅文档 -->
                                                 <template v-else-if="doc.borrowing == null">
-                                                    <sure-util :btn-class="'btn btn-primary btn-sm'"
+                                                    <!--<sure-util :btn-class="'btn btn-primary btn-sm'"
                                                                :i-class="''"
                                                                :title="'确定执行操作?'"
                                                                :btn-text="'申请查看'"
                                                                :index="index"
                                                                @action="applyBorrowing">
-                                                    </sure-util>
-                                                    <!--  <button @click="applyBorrowing(index)" type="button"
-                                                              class="btn btn-primary btn-sm">申请查看
-                                                      </button>-->
+                                                    </sure-util>-->
+                                                    <button @click="applyIndex = index" type="button"
+                                                            class="btn btn-primary btn-sm" data-toggle="modal"
+                                                            data-target="#ApplyReasonModal">申请查看
+                                                    </button>
                                                 </template>
                                                 <!-- 非本部门已有借阅文档 -->
                                                 <template v-else-if="doc.borrowing.borrowingState==2">
@@ -176,6 +177,31 @@
         <!-- <div class="footer-main">
             公文审批系统@2018公文审批系统开发小组
         </div>-->
+
+        <!--申请理由模态框-->
+        <div class="modal fade" id="ApplyReasonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">申请理由</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="Reason" class="control-label">填写理由:</label>
+                            <textarea class="form-control" id="Reason" v-model="applyReason"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" @click="applyBorrowing" class="btn btn-primary" data-dismiss="modal">
+                            确定
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </aside>
     <!-- /.right-side -->
 </div>

@@ -51,7 +51,7 @@ public interface GuserService {
 
     CountByMouth countPersonalDocumentByMouth(String userId);
 
-    QueryForPage getAllUser(int currentPage);
+    QueryForPage getAllUser(int currentPage,String fuzzySearch);
 
     List<Position> getPositionByDpt(String department);
 
@@ -59,7 +59,7 @@ public interface GuserService {
 
     int batchDelete(String[] userIds,LoginCustom loginCustom);
 
-    QueryForPage getUserByDpt(String userDepartment,int currentPage);
+    QueryForPage getUserByDpt(String userDepartment,int currentPage,String fuzzySearch);
 
     Guser getUserById(String userId);
 

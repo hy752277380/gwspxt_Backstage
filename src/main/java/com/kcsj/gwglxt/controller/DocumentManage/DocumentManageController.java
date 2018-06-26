@@ -26,12 +26,12 @@ public class DocumentManageController {
     /**********************************************************文档添加查询及流程模块********************************************/
     //获取全部文档
     @RequestMapping("/getAllDocument")
-    public QueryForPage getAllDocument(String searchInfo, int currentPage,String documentType,Integer documentConfidential,String documentDept, HttpSession httpSession) {
+    public QueryForPage getAllDocument(String fuzzySearch, int currentPage,String documentType,Integer documentConfidential,String documentDept, HttpSession httpSession) {
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         String departmentName = loginCustom.getDepartment().getDepartmentName();
         String userId = loginCustom.getGuser().getUserId();
-        QueryForPage queryForPage = documentService.getAllDocument(departmentName, userId, currentPage, searchInfo,documentType,documentConfidential,documentDept);
+        QueryForPage queryForPage = documentService.getAllDocument(departmentName, userId, currentPage, fuzzySearch,documentType,documentConfidential,documentDept);
         return queryForPage;
     }
 
@@ -223,13 +223,13 @@ public class DocumentManageController {
 
     //根据文档状态查询文档
     @RequestMapping("/getDocumentByState")
-    public QueryForPage getDocumentByState(String userId,String documentType, Integer documentConfidential, Integer documentState, int currentPage, String searchInfo, HttpSession httpSession) {
+    public QueryForPage getDocumentByState(String userId,String documentType, Integer documentConfidential, Integer documentState, int currentPage, String fuzzySearch, HttpSession httpSession) {
         if(userId==null||"".equals(userId)){
             //获取session内容
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
             userId=loginCustom.getGuser().getUserId();
         }
-        QueryForPage queryForPage = documentService.getDocumentByState(documentType, documentConfidential, documentState, userId, currentPage, searchInfo);
+        QueryForPage queryForPage = documentService.getDocumentByState(documentType, documentConfidential, documentState, userId, currentPage, fuzzySearch);
         return queryForPage;
     }
 
@@ -256,9 +256,9 @@ public class DocumentManageController {
 
     //查询本人需要审核的文档
     @RequestMapping("/findCheckDoc")
-    public QueryForPage findCheckDoc(String searchInfo,int currentPage,String documentType,Integer documentConfidential, HttpSession httpSession) {
+    public QueryForPage findCheckDoc(String fuzzySearch,int currentPage,String documentType,Integer documentConfidential, HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        QueryForPage queryForPage = documentService.findCheckingDoc(currentPage, loginCustom,searchInfo,documentType,documentConfidential);
+        QueryForPage queryForPage = documentService.findCheckingDoc(currentPage, loginCustom,fuzzySearch,documentType,documentConfidential);
         return queryForPage;
     }
     //删除草稿箱文档
@@ -279,9 +279,9 @@ public class DocumentManageController {
 
     //列出待本人批准的借阅申请
     @RequestMapping("/getAllApplyRead")
-    public QueryForPage getAllApplyRead(int currentPage,String documentType,Integer documentConfidential,HttpSession httpSession) {
+    public QueryForPage getAllApplyRead(String fuzzySearch,int currentPage,String documentType,Integer documentConfidential,HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        QueryForPage queryForPage = documentService.getAllApplyRead(loginCustom,currentPage,documentType,documentConfidential);
+        QueryForPage queryForPage = documentService.getAllApplyRead(loginCustom,currentPage,documentType,documentConfidential,fuzzySearch);
         return queryForPage;
     }
 

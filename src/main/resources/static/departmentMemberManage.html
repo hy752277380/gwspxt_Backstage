@@ -77,9 +77,10 @@
                                 <div class="panel-body table-responsive">
                                     <div class="box-tools m-b-15">
                                         <div class="input-group">
-                                            <input type="text" name="table_search"
+                                            <input type="text" name="table_search" placeholder="Search"
                                                    class="form-control input-sm pull-right" style="width: 150px;"
-                                                   placeholder="Search"/>
+                                                   v-model="searchData.fuzzySearch"
+                                                   @keyup="search({searchName:'fuzzySearch',key:searchData.fuzzySearch})"/>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
                                                 </button>
@@ -159,13 +160,15 @@
                             <td>
                                 <div class="form-group">
                                     <label>编号</label>
-                                    <input style="width: 200px;" disabled="disabled" type="text" :value="allocatePerson.userAccount" class="form-control" >
+                                    <input style="width: 200px;" disabled="disabled" type="text"
+                                           :value="allocatePerson.userAccount" class="form-control">
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
                                     <label>姓名</label>
-                                    <input style="width: 200px;" disabled="disabled" type="text" :value="allocatePerson.userName" class="form-control" >
+                                    <input style="width: 200px;" disabled="disabled" type="text"
+                                           :value="allocatePerson.userName" class="form-control">
                                 </div>
                             </td>
                         </tr>
@@ -173,13 +176,15 @@
                             <td>
                                 <div class="form-group">
                                     <label>性别</label>
-                                    <input style="width: 200px;" disabled="disabled" type="text" :value="allocatePerson.userSex==0?'女':'男'" class="form-control">
+                                    <input style="width: 200px;" disabled="disabled" type="text"
+                                           :value="allocatePerson.userSex==0?'女':'男'" class="form-control">
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
                                     <label>手机号</label>
-                                    <input style="width: 200px;" disabled="disabled" type="text" :value="allocatePerson.userPhonenumber" class="form-control" >
+                                    <input style="width: 200px;" disabled="disabled" type="text"
+                                           :value="allocatePerson.userPhonenumber" class="form-control">
                                 </div>
                             </td>
                         </tr>
@@ -187,16 +192,22 @@
                             <td>
                                 <div class="form-group">
                                     <label>部门</label>
-                                    <select style="width: 200px;" type="password" @change="getDepartmentOfPosition" v-model="allocatePerson.userDepartment" class="form-control">
-                                        <option v-for="department in allDepartment" :value="department.departmentId">{{department.departmentName}}</option>
+                                    <select style="width: 200px;" type="password" @change="getDepartmentOfPosition"
+                                            v-model="allocatePerson.userDepartment" class="form-control">
+                                        <option v-for="department in allDepartment" :value="department.departmentId">
+                                            {{department.departmentName}}
+                                        </option>
                                     </select>
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
                                     <label>职称</label>
-                                    <select style="width: 200px;" type="password" v-model="allocatePerson.userPosition" class="form-control">
-                                        <option v-for="position in allDepartmentOfPosition" :value="position.position.positionId">{{position.position.positionName}}</option>
+                                    <select style="width: 200px;" type="password" v-model="allocatePerson.userPosition"
+                                            class="form-control">
+                                        <option v-for="position in allDepartmentOfPosition"
+                                                :value="position.position.positionId">{{position.position.positionName}}
+                                        </option>
                                     </select>
                                 </div>
                             </td>

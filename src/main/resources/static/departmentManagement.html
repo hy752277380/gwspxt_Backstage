@@ -98,9 +98,10 @@
                                             </button>
                                         </div>
                                         <div class="input-group">
-                                            <input type="text" name="table_search"
+                                            <input type="text" name="table_search" placeholder="Search"
                                                    class="form-control input-sm pull-right" style="width: 150px;"
-                                                   placeholder="Search"/>
+                                                   v-model="searchData.fuzzySearch"
+                                                   @keyup="search({searchName:'fuzzySearch',key:searchData.fuzzySearch})"/>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
                                                 </button>
@@ -264,6 +265,13 @@
             "departmentPhone": departmentPhone,
 
         }
+        if (!departmentName) {
+            return false;
+        }
+
+        if (!departmentPhone) {
+            return false;
+        }
 
         $.ajax({
             type: "post",
@@ -286,7 +294,12 @@
             "departmentPhone": departmentPhone,
 
         }
-
+        if (!departmentPhone) {
+            return false;
+        }
+        if (!departmentName) {
+            return false;
+        }
         $.ajax({
             type: "post",
             url: "/gwspxt/updateDptInfo",

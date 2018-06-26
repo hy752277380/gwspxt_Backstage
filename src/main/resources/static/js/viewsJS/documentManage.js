@@ -62,6 +62,7 @@ $(function () {
             documentType: 0,
             documentConfidential: 0,
             documentState: 0,
+            fuzzySearch: ''
         }
     }
 
@@ -106,17 +107,17 @@ $(function () {
             },
             replaceState(documentState) {
                 switch (documentState) {
-                    case 0:
-                        return "<span class=\"label label-danger\">退回</span>";
                     case 1:
-                        return "<span class=\"label label-default\">草稿</span>";
+                        return "<span class=\"label label-danger\">退回</span>";
                     case 2:
-                        return "<span class=\"label label-warning\">待审核</span>";
+                        return "<span class=\"label label-default\">草稿</span>";
                     case 3:
-                        return "<span class=\"label label-primary\">审核中</span>";
+                        return "<span class=\"label label-warning\">待审核</span>";
                     case 4:
-                        return "<span class=\"label label-info\">已审核</span>";
+                        return "<span class=\"label label-primary\">审核中</span>";
                     case 5:
+                        return "<span class=\"label label-info\">已审核</span>";
+                    case 6:
                         return "<span class=\"label label-success\">已归档</span>";
                 }
             },
@@ -148,18 +149,15 @@ $(function () {
                     }
                 }, 'json');
             },
-            test(index) {
-                console.log(index);
-            },
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
-                console.log(data.page.currentPage);
                 this.getInfo({
                     currentPage: pageIndex,
                     documentType: data.searchData.documentType,
                     documentConfidential: data.searchData.documentConfidential,
-                    documentState: data.searchData.documentState
+                    documentState: data.searchData.documentState,
+                    fuzzySearch: data.searchData.fuzzySearch
                 });
             },
             search(msg) {
@@ -168,7 +166,8 @@ $(function () {
                     currentPage: 1,
                     documentType: data.searchData.documentType,
                     documentConfidential: data.searchData.documentConfidential,
-                    documentState: data.searchData.documentState
+                    documentState: data.searchData.documentState,
+                    fuzzySearch: data.searchData.fuzzySearch
                 })
 
             },

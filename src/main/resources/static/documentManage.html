@@ -92,9 +92,10 @@
                                             </button>
                                         </div>
                                         <div class="input-group">
-                                            <input type="text" name="table_search"
+                                            <input type="text" name="table_search" placeholder="Search"
                                                    class="form-control input-sm pull-right" style="width: 150px;"
-                                                   placeholder="Search"/>
+                                                   v-model="searchData.fuzzySearch"
+                                                   @keyup="search({searchName:'fuzzySearch',key:searchData.fuzzySearch})"/>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
                                                 </button>
@@ -138,7 +139,7 @@
                                             <td v-html="replaceState(doc.document.documentState)"></td>
                                             <td>{{doc.document.creationTime}}</td>
                                             <td>
-                                                <template v-if="doc.document.documentState==1">
+                                                <template v-if="doc.document.documentState==2">
                                                     <button type="button" class="btn btn-primary btn-sm"
                                                             @click="editDocument(index)"><i
                                                             class="fa fa-pencil fa-fw"></i> 编辑
@@ -150,16 +151,6 @@
                                                                :index="index"
                                                                @action="deleteDocument">
                                                     </sure-util>
-                                                    <!--<button type="button" class="btn btn-danger btn-sm"
-                                                            @click="deleteDocument(index)"><i
-                                                            class="fa fa-trash-o fa-fw"></i> 删除
-                                                    </button>-->
-                                                </template>
-                                                <template v-else-if="doc.document.documentState==2">
-                                                    <button type="button" class="btn btn-primary btn-sm"
-                                                            @click="checkDocument(index)"><i
-                                                            class="fa fa-pencil fa-fw"></i> 查看
-                                                    </button>
                                                 </template>
                                                 <template v-else-if="doc.document.documentState==3">
                                                     <button type="button" class="btn btn-primary btn-sm"
@@ -179,7 +170,13 @@
                                                             class="fa fa-pencil fa-fw"></i> 查看
                                                     </button>
                                                 </template>
-                                                <template v-else-if="doc.document.documentState==0">
+                                                <template v-else-if="doc.document.documentState==6">
+                                                    <button type="button" class="btn btn-primary btn-sm"
+                                                            @click="checkDocument(index)"><i
+                                                            class="fa fa-pencil fa-fw"></i> 查看
+                                                    </button>
+                                                </template>
+                                                <template v-else-if="doc.document.documentState==1">
                                                     <sure-util :btn-class="'btn btn-danger btn-sm'"
                                                                :i-class="'fa fa-trash-o fa-fw'"
                                                                :title="'确定执行操作?'"
@@ -190,11 +187,12 @@
                                                 </template>
                                             </td>
                                         </tr>
-                                        </tbody> <tbody v-else>
-                                    <tr style="text-align: center;">
-                                        <td colspan="9"><i class="fa fa-spinner fa-spin"></i></td>
-                                    </tr>
-                                    </tbody>
+                                        </tbody>
+                                        <tbody v-else>
+                                        <tr style="text-align: center;">
+                                            <td colspan="9"><i class="fa fa-spinner fa-spin"></i></td>
+                                        </tr>
+                                        </tbody>
 
                                     </table>
                                     <div v-cloak style="float: left;">

@@ -25,6 +25,9 @@ $(function () {
             hasPreviousPage: false,
             hasNextPage: false,
         },
+        searchData: {
+            fuzzySearch: '',
+        }
     }
 
     var reviewDocument = new Vue({
@@ -97,6 +100,13 @@ $(function () {
                     }
                 });
                 /*$.post('/gwspxt/updatePersonInfo', JSON.stringify(data.allocatePerson), function (response) {}, 'json');*/
+            },
+            search(msg) {
+                data.searchData[msg.searchName] = msg.key;
+                this.getInfo({
+                    currentPage: 1,
+                    fuzzySearch: data.searchData.fuzzySearch
+                })
             },
         },
         mounted() {

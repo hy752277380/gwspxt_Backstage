@@ -36,6 +36,5 @@ $(function () {
             check();
         }
     }
-
-    
+    sessionStorage.removeItem("loginUser");
 });

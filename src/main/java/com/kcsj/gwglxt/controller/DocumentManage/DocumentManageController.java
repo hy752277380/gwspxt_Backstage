@@ -330,10 +330,10 @@ public class DocumentManageController {
 
     //获取所有本人消息
     @RequestMapping("/getAllMessage")
-    public List<MessageCustom> getMyAllMessage(HttpSession httpSession) {
+    public QueryForPage getMyAllMessage(int currentPage,HttpSession httpSession) {
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        List<MessageCustom> list = documentService.getMyAllMessage(loginCustom.getGuser().getUserId());
-        return list;
+        QueryForPage queryForPage = documentService.getMyAllMessage(loginCustom.getGuser().getUserId(),currentPage);
+        return queryForPage;
     }
     //获得本人未读消息
     @RequestMapping("/getUnReadMsg")

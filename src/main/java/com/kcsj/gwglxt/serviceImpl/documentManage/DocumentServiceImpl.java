@@ -478,8 +478,27 @@ public class DocumentServiceImpl implements DocumentService {
 
 
     @Override
-    public List<MessageCustom> getMyAllMessage(String userId) {
-        return mobjectMapper.getMyAllMessage(userId);
+    public QueryForPage getMyAllMessage(String userId,int currentPage) {
+        QueryForPage queryForPage = new QueryForPage();
+        int pagesize = 10;//每页记录数
+        List<MessageCustom> messageCustoms = mobjectMapper.getMyAllMessage(userId,0,0);
+        int allRow = messageCustoms.size();//总记录数
+        int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
+        int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
+        int currentPages = QueryForPage.countCurrentPage(currentPage);
+        int endSet = pagesize * currentPage;
+        System.out.println(allRow);
+        if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
+            endSet = allRow;
+        }
+        List<MessageCustom> list_thisPage = mobjectMapper.getMyAllMessage(userId,offSet, endSet);
+        queryForPage.setList(list_thisPage);
+        queryForPage.setAllRow(allRow);
+        queryForPage.setCurrentPage(currentPages);
+        queryForPage.setPageSize(pagesize);
+        queryForPage.setTotalPage(totalPage);
+        queryForPage.init();
+        return queryForPage;
     }
 
     @Override

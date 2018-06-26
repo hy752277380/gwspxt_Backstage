@@ -46,7 +46,7 @@ public interface DocumentService {
 
     QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String searchInfo,String documentType,Integer documentConfidential);
 
-    List<MessageCustom> getMyAllMessage(String userId);
+    QueryForPage getMyAllMessage(String userId,int currentPage);
 
     List<Documenttype> getAllDocType();
 

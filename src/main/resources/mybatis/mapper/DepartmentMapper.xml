@@ -6,6 +6,7 @@
         <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
         <result column="department_phone" property="departmentPhone" jdbcType="VARCHAR" />
         <result column="department_isdelete" property="departmentIsdelete"  />
+        <result column="department_superior" property="departmentSuperior" jdbcType="CHAR" />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -69,7 +70,7 @@
     </sql>
 
     <sql id="Base_Column_List" >
-        department_id, department_name, department_phone, department_isdelete
+        department_id, department_name, department_phone, department_isdelete, department_superior
     </sql>
 
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.DepartmentExample" >
@@ -108,9 +109,9 @@
 
     <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Department" >
         insert into department (department_id, department_name, department_phone,
-            department_isdelete)
+            department_isdelete, department_superior)
         values (#{departmentId,jdbcType=CHAR}, #{departmentName,jdbcType=VARCHAR}, #{departmentPhone,jdbcType=VARCHAR},
-            #{departmentIsdelete,jdbcType=INTEGER})
+            #{departmentIsdelete,jdbcType=INTEGER}, #{departmentSuperior,jdbcType=CHAR})
     </insert>
 
     <insert id="insertSelective" parameterType="com.kcsj.gwglxt.entity.Department" >
@@ -128,6 +129,9 @@
             <if test="departmentIsdelete != null" >
                 department_isdelete,
             </if>
+            <if test="departmentSuperior != null" >
+                department_superior,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="departmentId != null" >
@@ -141,6 +145,9 @@
             </if>
             <if test="departmentIsdelete != null" >
                 #{departmentIsdelete,jdbcType=INTEGER},
+            </if>
+            <if test="departmentSuperior != null" >
+                #{departmentSuperior,jdbcType=CHAR},
             </if>
         </trim>
     </insert>
@@ -167,6 +174,9 @@
             <if test="record.departmentIsdelete != null" >
                 department_isdelete = #{record.departmentIsdelete,jdbcType=INTEGER},
             </if>
+            <if test="record.departmentSuperior != null" >
+                department_superior = #{record.departmentSuperior,jdbcType=CHAR},
+            </if>
         </set>
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
@@ -178,7 +188,8 @@
         set department_id = #{record.departmentId,jdbcType=CHAR},
         department_name = #{record.departmentName,jdbcType=VARCHAR},
         department_phone = #{record.departmentPhone,jdbcType=VARCHAR},
-        department_isdelete = #{record.departmentIsdelete,jdbcType=INTEGER}
+        department_isdelete = #{record.departmentIsdelete,jdbcType=INTEGER}，
+        department_superior = #{record.departmentSuperior,jdbcType=CHAR}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -196,6 +207,9 @@
             <if test="departmentIsdelete != null" >
                 department_isdelete = #{departmentIsdelete,jdbcType=INTEGER},
             </if>
+            <if test="departmentSuperior != null" >
+                department_superior = #{departmentSuperior,jdbcType=CHAR},
+            </if>
         </set>
         where department_id = #{departmentId,jdbcType=CHAR}
     </update>
@@ -204,10 +218,27 @@
         update department
         set department_name = #{departmentName,jdbcType=VARCHAR},
             department_phone = #{departmentPhone,jdbcType=VARCHAR},
-            department_isdelete = #{departmentIsdelete,jdbcType=INTEGER}
+            department_isdelete = #{departmentIsdelete,jdbcType=INTEGER},
+            department_superior = #{departmentSuperior,jdbcType=CHAR}
         where department_id = #{departmentId,jdbcType=CHAR}
     </update>
     <select id="getAllDepartment" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/> from department where department_isdelete = '0'
+/*        SELECT
+	de1.department_id,
+	de1.department_name,
+	de1.department_phone,
+	de1.department_isdelete,
+	de2.department_name
+FROM
+	department AS de1
+LEFT JOIN department AS de2 ON de1.department_superior = de2.department_id
+AND de1.department_isdelete = '0'*/
+select  * from department where department_isdelete = '0'
+        <if test="fuzzySearch!=null">
+            and department_name like CONCAT('%',#{fuzzySearch},'%' )
+        </if>
+    </select>
+    <select id="getDepartmentName" parameterType="java.lang.String" resultType="java.lang.String">
+        select department_name from department where department_id = #{departmentSuperior}
     </select>
 </mapper>

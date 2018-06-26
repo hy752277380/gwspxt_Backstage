@@ -34,7 +34,7 @@ public interface DepartmentService {
 
     int updateByPrimaryKey(Department record);
 
-    QueryForPage getAllDepartment(int currentPage,String searchInfo);
+    QueryForPage getAllDepartment(int currentPage,String fuzzySearch);
 
     List<PositionPermission> getPoPeByDpt(String department);
 

@@ -95,13 +95,15 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public QueryForPage getAllDepartment(int currentPage,String searchInfo) {
+    public QueryForPage getAllDepartment(int currentPage,String fuzzySearch) {
         //查询得到所有部门
-        List<Department> list = departmentMapper.getAllDepartment();
+        List<Department> list = departmentMapper.getAllDepartment(fuzzySearch);
         //遍历每一个查询结果，使用id查询人员表得到该部门人数
         for (Department departmentOne:list){
             int count = guserMapper.countByDepartment(departmentOne.getDepartmentId());
+            String superiorName = departmentMapper.getDepartmentName(departmentOne.getDepartmentSuperior());
             departmentOne.setMemberCount(count);
+            departmentOne.setSiperiorName(superiorName);
         }
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
@@ -179,6 +181,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Department> getAllDepartmentNoPage() {
-        return departmentMapper.getAllDepartment();
+        String fuzzySearch = null;
+        return departmentMapper.getAllDepartment(fuzzySearch);
     }
 }

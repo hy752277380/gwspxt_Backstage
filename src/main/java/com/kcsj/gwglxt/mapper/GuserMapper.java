@@ -47,7 +47,7 @@ public interface GuserMapper {
 
     int countAllUser();
 
-    List<LoginCustom> getAllUser();
+    List<LoginCustom> getAllUser(@Param("fuzzySearch") String fuzzySearch);
 
-    List<LoginCustom> getUserByDpt(String userDepartment);
+    List<LoginCustom> getUserByDpt(@Param("userDepartment") String userDepartment,@Param("fuzzySearch") String fuzzySearch);
 }

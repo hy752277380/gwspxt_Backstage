@@ -36,8 +36,8 @@ public class DepartmentController {
     }
     //获得所有部门
     @RequestMapping("/getAllDepartment")
-    public QueryForPage getAllDepartment(int currentPage, String searchInfo){
-        QueryForPage queryForPage = departmentService.getAllDepartment(currentPage,searchInfo);
+    public QueryForPage getAllDepartment(int currentPage, String fuzzySearch){
+        QueryForPage queryForPage = departmentService.getAllDepartment(currentPage,fuzzySearch);
         return queryForPage;
     }
     //获得所有部门（不分页）

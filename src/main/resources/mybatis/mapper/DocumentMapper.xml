@@ -568,8 +568,8 @@ AND doc.document_process = pr.process_id
         <if test="documentConfidential!=null and documentConfidential!=0">
             and doc.document_confidential = #{documentConfidential}
         </if>
-       <if test="documentNo!=null">
-            and (doc.document_no like CONCAT('%',#{documentNo},'%' ) or doc.document_title like CONCAT('%',#{documentTitle},'%' ))
+       <if test="fuzzySearch!=null">
+            and (doc.document_no like CONCAT('%',#{fuzzySearch},'%' ) or doc.document_title like CONCAT('%',#{fuzzySearch},'%' ))
         </if>
     </select>
     <select id="getAllDocument" resultMap="DocumentBaseInfo">
@@ -595,7 +595,7 @@ WHERE
 AND doc.document_dept = de.department_id
 AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
-and doc.document_state = '5'
+and doc.document_state = '6'
 and doc.document_isdelete = '0'
 <if test="documentType!=null and documentType!=''and documentType!=0">
     and doc.document_type = #{documentType}
@@ -606,8 +606,8 @@ and doc.document_isdelete = '0'
 <if test="documentDept!=null and documentDept!=''">
      and doc.document_dept = #{documentDept}
 </if>
-        <if test="documentNo!=null">
-            and (doc.document_no like CONCAT('%',#{documentNo},'%' ) or doc.document_title like CONCAT('%',#{documentTitle},'%' ) or gu.user_name like CONCAT('%',#{userName},'%' ))
+        <if test="fuzzySearch!=null">
+            and (doc.document_no like CONCAT('%',#{fuzzySearch},'%' ) or doc.document_title like CONCAT('%',#{fuzzySearch},'%' ) or gu.user_name like CONCAT('%',#{fuzzySearch},'%' ))
         </if>
     </select>
     <select id="documentBaseInfo" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
@@ -674,8 +674,8 @@ and doc.document_process = #{documentProcess} and doc.document_location =#{docum
         <if test="documentConfidential!=null and documentConfidential!=0">
             and doc.document_confidential = #{documentConfidential}
         </if>
-       <if test="documentNo!=null">
-            and (doc.document_no like CONCAT('%',#{documentNo},'%' ) or doc.document_title like CONCAT('%',#{documentTitle},'%' ) or gu.user_name like CONCAT('%',#{userName},'%' ))
+        <if test="fuzzySearch!=null">
+            and (doc.document_no like CONCAT('%',#{fuzzySearch},'%' ) or doc.document_title like CONCAT('%',#{fuzzySearch},'%' ) or gu.user_name like CONCAT('%',#{fuzzySearch},'%' ))
         </if>
     </select>
     <select id="getDocumentByDpt" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
@@ -723,6 +723,9 @@ and doc.document_isdelete = '0'
         </if>
         <if test="documentConfidential!=null and documentConfidential!=0">
             and doc.document_confidential = #{documentConfidential}
+        </if>
+        <if test="fuzzySearch!=null">
+            and (doc.document_no like CONCAT('%',#{fuzzySearch},'%' ) or doc.document_title like CONCAT('%',#{fuzzySearch},'%' ) or gu.user_name like CONCAT('%',#{fuzzySearch},'%' ))
         </if>
     </select>
     <select id="countAllDocument" parameterType="java.lang.String" resultType="int">

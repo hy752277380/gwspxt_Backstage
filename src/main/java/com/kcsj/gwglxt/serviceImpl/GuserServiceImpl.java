@@ -180,8 +180,8 @@ public class GuserServiceImpl implements GuserService {
     }
 
     @Override
-    public QueryForPage getAllUser(int currentPage,String fuzzySearch) {
-        List<LoginCustom>  users = guserMapper.getAllUser(fuzzySearch);
+    public QueryForPage getAllUser(int currentPage,String fuzzySearch,LoginCustom loginCustom) {
+        List<LoginCustom>  users = guserMapper.getAllUser(fuzzySearch,loginCustom.getGuser().getUserId());
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
         int allRow = users.size();//总记录数
@@ -253,8 +253,8 @@ public class GuserServiceImpl implements GuserService {
     }
 
     @Override
-    public QueryForPage getUserByDpt(String userDepartment,int currentPage,String fuzzySearch) {
-        List<LoginCustom> loginCustoms = guserMapper.getUserByDpt(userDepartment,fuzzySearch);
+    public QueryForPage getUserByDpt(String userDepartment,int currentPage,String fuzzySearch,String  userId) {
+        List<LoginCustom> loginCustoms = guserMapper.getUserByDpt(userDepartment,fuzzySearch,userId);
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
         int allRow = loginCustoms.size();//总记录数

@@ -246,14 +246,22 @@ public class DocumentManageController {
 
     //文档审核选择拒绝
     @RequestMapping("/refuseDoc")
-    public void refuseDoc(String documentId, HttpSession httpSession) {
+    public String refuseDoc(String documentId,String refuseReason, HttpSession httpSession) {
+        String result;
+        int updayeResult = 0;
         try {
             //获取session内容
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            documentService.refuseDoc(loginCustom, documentId);
+            updayeResult = documentService.refuseDoc(loginCustom, documentId,refuseReason);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (updayeResult == 0) {
+            result = "updateFailed";
+        } else {
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
     }
 
     //根据文档状态查询文档
@@ -392,13 +400,13 @@ public class DocumentManageController {
 
     //拒绝借阅文档
     @RequestMapping("/refuseApply")
-    public String refuseApply(@RequestBody  DocumentCustom documentCustom, HttpSession httpSession) {
+    public String refuseApply(@RequestBody  DocumentCustom documentCustom,String refuseReason, HttpSession httpSession) {
         String result;
         int updateResult = 0;
         try {
             //定义result
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            updateResult = documentService.refuseApply(documentCustom,loginCustom);
+            updateResult = documentService.refuseApply(documentCustom,loginCustom,refuseReason);
         } catch (Exception e) {
             e.printStackTrace();
         }

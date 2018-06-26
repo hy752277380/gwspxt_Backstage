@@ -245,10 +245,12 @@ public class GuserController {
     /***************************8账号管理*******************************/
     //列出所有账号
     @RequestMapping("/getAllUser")
-    public QueryForPage getAllUser(int currentPage,String fuzzySearch){
+    public QueryForPage getAllUser(int currentPage,String fuzzySearch,HttpSession httpSession){
         QueryForPage users = null;
         try {
-            users = guserService.getAllUser(currentPage,fuzzySearch);
+            //获取session内容
+            LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+            users = guserService.getAllUser(currentPage,fuzzySearch,loginCustom);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -365,7 +367,7 @@ public class GuserController {
         try {
             //获取session内容
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            queryForPage = guserService.getUserByDpt(loginCustom.getGuser().getUserDepartment(),currentPage,fuzzySearch);
+            queryForPage = guserService.getUserByDpt(loginCustom.getGuser().getUserDepartment(),currentPage,fuzzySearch,loginCustom.getGuser().getUserId());
         } catch (Exception e) {
             e.printStackTrace();
         }

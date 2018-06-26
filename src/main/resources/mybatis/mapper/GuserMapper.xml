@@ -522,6 +522,7 @@ and user_isdelete = '0'
         AND po.position_id = g.user_position
         AND pe.permission_id = po.position_permission
         and g.user_isdelete = '0'
+        and g.user_id!=#{userId}
         <if test="fuzzySearch!=null">
            and (user_account like CONCAT('%',#{fuzzySearch},'%' ) or user_name like CONCAT('%',#{fuzzySearch},'%' ) or user_phonenumber like CONCAT('%',#{fuzzySearch},'%' ))
         </if>
@@ -541,6 +542,7 @@ and user_isdelete = '0'
         AND po.position_id = g.user_position
         AND pe.permission_id = po.position_permission
         and g.user_isdelete = '0'
+        and g.user_id!=#{userId}
         <if test="fuzzySearch!=null">
             and (user_account like CONCAT('%',#{fuzzySearch},'%' ) or user_name like CONCAT('%',#{fuzzySearch},'%' ) or user_phonenumber like CONCAT('%',#{fuzzySearch},'%' ))
         </if>

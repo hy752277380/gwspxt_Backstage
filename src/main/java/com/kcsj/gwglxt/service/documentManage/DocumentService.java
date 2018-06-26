@@ -56,11 +56,11 @@ public interface DocumentService {
 
     QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage,String documentType,Integer documentConfidential,String fuzzySearch);
 
-    void refuseDoc(LoginCustom loginCustom, String documentId);
+    int refuseDoc(LoginCustom loginCustom, String documentId,String refuseReason);
 
     int acceptApply(DocumentCustom documentCustom, LoginCustom loginCustom);
 
-    int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom);
+    int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom,String refuseReason);
 
     List<ProcessNode> getProcessNodeByPro(String process);
 

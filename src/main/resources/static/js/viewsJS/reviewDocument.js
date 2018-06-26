@@ -147,7 +147,6 @@ $(function () {
                 }
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
                 location.href = "/gwspxt/reviewContent";
-
             },
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;

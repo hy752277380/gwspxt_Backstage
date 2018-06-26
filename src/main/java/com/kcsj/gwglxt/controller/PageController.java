@@ -118,6 +118,11 @@ public class PageController {
     @RequestMapping("/reviewContent")
     public String reviewContent() {
         return "reviewContent.html";
+
+    /*查看本人全部消息通知*/
+    @RequestMapping("/messageManagement")
+    public String messageManagement() {
+        return "messageManagement.html";
     }
 }
 

@@ -410,7 +410,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //拒绝批阅申请
     @Override
-    public int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom) {
+    public int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom,String refuseReason) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         //首先改变该文档及改人的借阅记录的借阅状态
         //获取该条documentCustom记录的borrowing的id
@@ -435,7 +435,7 @@ public class DocumentServiceImpl implements DocumentService {
             Message message = new Message();
             String messageId = TeamUtil.getUuid();
             message.setMessageId(messageId);
-            message.setMessageContent("您申请批阅的"+documentCustom.getDocument().getDocumentTitle()+"已被拒绝。");
+            message.setMessageContent("您申请批阅的"+documentCustom.getDocument().getDocumentTitle()+"已被拒绝，拒绝理由："+refuseReason+"。");
             message.setMessageTime(df.format(new Date()));
             message.setMessageIsdelete(0);
             message.setMessageType(1);

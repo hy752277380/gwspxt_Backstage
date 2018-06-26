@@ -392,13 +392,13 @@ public class DocumentManageController {
 
     //拒绝借阅文档
     @RequestMapping("/refuseApply")
-    public String refuseApply(@RequestBody  DocumentCustom documentCustom, HttpSession httpSession) {
+    public String refuseApply(@RequestBody  DocumentCustom documentCustom,String refuseReason, HttpSession httpSession) {
         String result;
         int updateResult = 0;
         try {
             //定义result
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            updateResult = documentService.refuseApply(documentCustom,loginCustom);
+            updateResult = documentService.refuseApply(documentCustom,loginCustom,refuseReason);
         } catch (Exception e) {
             e.printStackTrace();
         }

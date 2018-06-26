@@ -101,7 +101,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         //遍历每一个查询结果，使用id查询人员表得到该部门人数
         for (Department departmentOne:list){
             int count = guserMapper.countByDepartment(departmentOne.getDepartmentId());
+            String superiorName = departmentMapper.getDepartmentName(departmentOne.getDepartmentSuperior());
             departmentOne.setMemberCount(count);
+            departmentOne.setSiperiorName(superiorName);
         }
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数

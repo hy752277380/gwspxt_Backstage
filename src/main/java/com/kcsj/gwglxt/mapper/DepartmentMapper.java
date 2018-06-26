@@ -31,4 +31,6 @@ public interface DepartmentMapper {
     int updateByPrimaryKey(Department record);
 
     List<Department> getAllDepartment();
+
+    String getDepartmentName(@Param("departmentSuperior") String departmentSuperior);
 }

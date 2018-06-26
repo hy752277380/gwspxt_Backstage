@@ -51,6 +51,9 @@ $(function () {
                 var that = this;
                 $.post('/gwspxt/documentBaseInfo', documentId, function (response) {
                     data.docData = response;
+                    $('#doucmentContent').summernote('code',data.docData.document.doucmentContent);
+                    $('.documentDetailContent').summernote('code',data.docData.document.doucmentContent);
+                    $('.documentDetailContent').summernote('destroy');
                     that.getProcessNode();
                 }, 'json');
             },
@@ -75,6 +78,32 @@ $(function () {
             this.getInfo({documentId: this.$data.lhs_edit.doc_id});
             this.getDocType();
             this.getProcess();
+            $('#doucmentContent').summernote({
+                height: 150, //set editable area's height
+                codemirror: { // codemirror options
+                    theme: 'monokai'
+                },
+                lang: 'zh-CN'
+            });
+            $(".documentDetailContent").summernote({
+                height: 500,
+                toolbar: false,
+                hint: {
+                    mentions: ['jayden', 'sam', 'alvin', 'david'],
+                    match: /\B@(\w*)$/,
+                    search: function (keyword, callback) {
+                        callback($.grep(this.mentions, function (item) {
+                            return item.indexOf(keyword) == 0;
+                        }));
+                    },
+                    content: function (item) {
+                        return '@' + item;
+                    }
+                }
+            });
+            /*get&&set*
+             * $('#doucmentContent').summernote('code')
+             */
         },
         components: {
             'asideComponent': Layout,

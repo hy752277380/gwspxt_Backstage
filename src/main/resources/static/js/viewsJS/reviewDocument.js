@@ -107,15 +107,12 @@ $(function () {
             /*申请借阅事件*/
             applyBorrowing(index) {
                 let documentCustom = this.$data.docData[index];
-                var cus = {
-                    documentCustom: documentCustom,
-                }
                 $.ajax({
                     type: "post",
                     url: "/gwspxt/applyRead",
                     dataType: "json",
                     contentType: 'application/json;charset=UTF-8',
-                    data: JSON.stringify(cus),
+                    data: JSON.stringify(documentCustom),
                     success: function (response) {
                         if (response.msg == "updateSuccess") {
                             spop({
@@ -145,7 +142,7 @@ $(function () {
             reviewDocument(index) {
                 var lhs_edit = {"doc_id": this.docData[index].document.documentId}
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
-                location.href = "/gwspxt/reviewDetailDocument";
+                location.href = "/gwspxt/reviewContent";
             },
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;

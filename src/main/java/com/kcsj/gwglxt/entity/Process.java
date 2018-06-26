@@ -47,4 +47,14 @@ public class Process {
     public void setProcessName(String processName) {
         this.processName = processName == null ? null : processName.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Process{" +
+                "processId='" + processId + '\'' +
+                ", processIntroduction='" + processIntroduction + '\'' +
+                ", processName='" + processName + '\'' +
+                ", processIsdelete=" + processIsdelete +
+                '}';
+    }
 }

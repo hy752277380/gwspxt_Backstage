@@ -52,8 +52,10 @@ public class GuserServiceImpl implements GuserService {
     public int insertUser(Guser record,LoginCustom loginCustom) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         record.setUserId(TeamUtil.getUuid());
+        record.setUserPassword(md5.GetMD5Code("111111"));
         record.setCreationTime(df.format(new Date()));
         record.setUserIsdelete(0);
+        record.setUserPicture("1.gif");
         int result = guserMapper.insert(record);
         //添加操作日志
         Log log = new Log();
@@ -300,8 +302,8 @@ public class GuserServiceImpl implements GuserService {
 
     @Override
     public boolean getUserByAcc(String userAccount) {
-        Guser user = guserMapper.getUserByAcc(userAccount);
-        if (user==null){
+        List<Guser> user = guserMapper.getUserByAcc(userAccount);
+        if (user.size()==0){
             return true;
         }else {
             return false;

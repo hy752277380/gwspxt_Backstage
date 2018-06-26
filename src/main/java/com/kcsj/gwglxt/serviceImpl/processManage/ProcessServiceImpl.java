@@ -153,8 +153,8 @@ public class ProcessServiceImpl implements ProcessService {
 
     @Override
     public boolean getProcessByName(String processName) {
-        Process process = processMapper.getProcessByName(processName);
-        if(process==null){
+        List<Process> process = processMapper.getProcessByName(processName);
+        if(process.size()==0){
             return true;
         }else {
             return false;

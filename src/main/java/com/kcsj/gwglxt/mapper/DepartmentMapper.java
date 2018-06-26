@@ -34,5 +34,5 @@ public interface DepartmentMapper {
 
     String getDepartmentName(@Param("departmentSuperior") String departmentSuperior);
 
-    Department getDptByName(@Param("departmentName") String departmentName);
+    List<Department> getDptByName(@Param("departmentName") String departmentName);
 }

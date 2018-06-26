@@ -213,7 +213,7 @@
         values (#{userId,jdbcType=CHAR}, #{userAccount,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
             #{userName,jdbcType=VARCHAR}, #{userSex,jdbcType=CHAR}, #{userDepartment,jdbcType=CHAR},
             #{userPosition,jdbcType=CHAR}, #{userPhonenumber,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},
-            #{userIntroduction,jdbcType=VARCHAR}, #{userPicture,jdbcType=VARCHAR}, #{creationTime,jdbcType=VARCHAR}
+            #{userIntroduction,jdbcType=VARCHAR}, #{userPicture,jdbcType=VARCHAR}, #{creationTime,jdbcType=VARCHAR},
             #{userIsdelete,jdbcType=INTEGER}
             )
     </insert>
@@ -550,6 +550,6 @@ and user_isdelete = '0'
         </if>
     </select>
     <select id="getUserByAcc" parameterType="java.lang.String" resultType="com.kcsj.gwglxt.entity.Guser">
-        select * from guser where user_account = #{userAccount}
+        select <include refid="Base_Column_List"/> from guser where user_account = #{userAccount}
     </select>
 </mapper>

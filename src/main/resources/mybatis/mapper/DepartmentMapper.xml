@@ -241,4 +241,7 @@ select  * from department where department_isdelete = '0'
     <select id="getDepartmentName" parameterType="java.lang.String" resultType="java.lang.String">
         select department_name from department where department_id = #{departmentSuperior}
     </select>
+    <select id="getDptByName" parameterType="java.lang.String" resultType="com.kcsj.gwglxt.entity.Department">
+        select * from department where  department_name = #{departmentName}
+    </select>
 </mapper>

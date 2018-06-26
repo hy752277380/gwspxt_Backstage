@@ -47,4 +47,8 @@ public interface DepartmentService {
     int updateDptInfo(Department department,LoginCustom loginCustom);
 
     List<Department> getAllDepartmentNoPage();
+
+    boolean getPosotionName(String positionName);
+
+    boolean getDptByName(String departmentName);
 }

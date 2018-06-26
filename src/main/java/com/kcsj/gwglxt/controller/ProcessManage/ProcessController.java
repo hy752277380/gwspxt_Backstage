@@ -28,20 +28,26 @@ public class ProcessController {
     @RequestMapping("/addProcess")
     public String addProcess(@RequestBody Process process, HttpSession httpSession){
         String result;
-        int addResult = 0;
-        try {
-            LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            addResult = processService.addProcess(process,loginCustom);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(processService.getProcessByName(process.getProcessName())){
+            int addResult = 0;
+            try {
+                LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+                addResult = processService.addProcess(process,loginCustom);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+            if (addResult == 0) {
+                result = "addFailed";
+            }else{
+                result = "addSuccess";
+            }
+            return "{\"msg\":\"" + result + "\"}";
+        }else {
+            result = "processExist";
+            return "{\"msg\":\"" + result + "\"}";
         }
-        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
-        if (addResult == 0) {
-            result = "addFailed";
-        }else{
-            result = "addSuccess";
-        }
-        return "{\"msg\":\"" + result + "\"}";
+
     }
     //根据流程id查询流程节点详细信息
     @RequestMapping("/getProNodeByPro")

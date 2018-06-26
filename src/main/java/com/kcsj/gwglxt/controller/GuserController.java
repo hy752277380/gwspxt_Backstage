@@ -260,21 +260,26 @@ public class GuserController {
     @RequestMapping("/andUser")
     public String andUser(Guser guser,HttpSession httpSession){
         String result;
-        int insertResult = 0;
-        try {
-            //获取session内容
-            LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            insertResult = guserService.insertUser(guser,loginCustom);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(guserService.getUserByAcc(guser.getUserAccount())) {
+            int insertResult = 0;
+            try {
+                //获取session内容
+                LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+                insertResult = guserService.insertUser(guser, loginCustom);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //判断执行文档添加操作返回的结果,返回结果为数据库中受影响行数
+            if (insertResult == 0) {
+                result = "addFailed";
+            } else {
+                result = "addSuccess";
+            }
+            return "{\"msg\":\"" + result + "\"}";
+        }else {
+            result = "accountExist";
+            return "{\"msg\":\""+result+"\"}";
         }
-        //判断执行文档添加操作返回的结果,返回结果为数据库中受影响行数
-        if (insertResult == 0) {
-            result = "addFailed";
-        }else{
-            result = "addSuccess";
-        }
-        return "{\"msg\":\"" + result + "\"}";
     }
     //根据部门查询本部门职位
     @RequestMapping("/getPositionByDpt")
@@ -367,7 +372,14 @@ public class GuserController {
         try {
             //获取session内容
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            queryForPage = guserService.getUserByDpt(loginCustom.getGuser().getUserDepartment(),currentPage,fuzzySearch,loginCustom.getGuser().getUserId());
+            String userDepartment;
+            if (loginCustom.getPermission().getPermissionLevel()==4){
+                userDepartment=null;
+            }
+            else {
+                userDepartment=loginCustom.getDepartment().getDepartmentId();
+            }
+            queryForPage = guserService.getUserByDpt(userDepartment,currentPage,fuzzySearch,loginCustom.getGuser().getUserId());
         } catch (Exception e) {
             e.printStackTrace();
         }

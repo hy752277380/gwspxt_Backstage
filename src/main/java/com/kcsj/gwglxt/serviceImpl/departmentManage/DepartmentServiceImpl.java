@@ -184,4 +184,24 @@ public class DepartmentServiceImpl implements DepartmentService {
         String fuzzySearch = null;
         return departmentMapper.getAllDepartment(fuzzySearch);
     }
+
+    @Override
+    public boolean getPosotionName(String positionName) {
+        Position position = positionMapper.getPosotionByName(positionName);
+        if(position==null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean getDptByName(String departmentName) {
+        Department department = departmentMapper.getDptByName(departmentName);
+        if(department==null){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

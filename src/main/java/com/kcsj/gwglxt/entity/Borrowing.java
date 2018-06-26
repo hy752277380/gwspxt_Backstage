@@ -107,4 +107,20 @@ public class Borrowing {
     public void setBorrowingIsdelete(Integer borrowingIsdelete) {
         this.borrowingIsdelete = borrowingIsdelete;
     }
+
+    @Override
+    public String toString() {
+        return "Borrowing{" +
+                "borrowingId='" + borrowingId + '\'' +
+                ", borrowingBorrowUser='" + borrowingBorrowUser + '\'' +
+                ", borrowingLendUser='" + borrowingLendUser + '\'' +
+                ", borrowingDocument='" + borrowingDocument + '\'' +
+                ", borrowingApplicationdate='" + borrowingApplicationdate + '\'' +
+                ", borrowingState=" + borrowingState +
+                ", borrowingBegintime='" + borrowingBegintime + '\'' +
+                ", borrowingOvertime='" + borrowingOvertime + '\'' +
+                ", borrowingReason='" + borrowingReason + '\'' +
+                ", borrowingIsdelete=" + borrowingIsdelete +
+                '}';
+    }
 }

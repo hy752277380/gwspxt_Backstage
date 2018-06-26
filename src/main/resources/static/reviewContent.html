@@ -72,167 +72,23 @@
                     <!--breadcrumbs end -->
                 </div>
             </div>
-            <div class="row">
+            <div  v-cloak class="row">
                 <div class="col-md-12">
                     <!--内容-->
                     <section class="panel">
                         <div class="panel-body">
-                            <!-- <div style="float: left;width: 100%;margin-left: -10%;">
-                                 <form class="form-horizontal tasi-form" method="get">
-                                     <div class="form-group">
-                                         <label class="col-sm-2 control-label">文本标题</label>
-                                         <div class="col-md-5">
-                                             <input class="form-control" id="documentTitle" v-model="docData.document.documentTitle" type="text">
-                                             <input class="form-control" id="documentId" v-model="docData.document.documentId" type="hidden">
-                                         </div>
-                                         <label class="col-sm-2 control-label">文本文号</label>
-                                         <div class="col-md-3">
-                                             <input class="form-control" id="documentNo" v-model="docData.document.documentNo" type="text">
-                                         </div>
-                                     </div>
-                                     <div class="form-group" style="width: 90%;margin-left: 10px">
-                                             <label class="col-sm-2 control-label">拟稿人</label>
-                                         <div class="col-md-2">
-                                             <input disabled class="form-control" id="documentUser" v-model="docData.guser.userName" type="text">
-                                         </div>
-                                             <label class="control-label col-lg-2" style="margin-left: -28px">拟稿部门</label>
-                                         <div class="col-md-2">
-                                             <input disabled class="form-control" v-model="docData.department.departmentName" type="text">
-                                         </div>
-                                             <label class="control-label col-lg-2" style="margin-left: 25px">文本类型</label>
-                                         <div class="col-md-2">
-                                             <select class="form-control m-b-10" id="documentType" v-model="docData.document.documentType">
-                                                 <option v-for="(item,index) in docType" :value="item.documenttypeId">{{item.documenttypeName}}</option>
-                                             </select>
-                                         </div>
-                                     </div>
-                                     <div class="form-group" style="margin-bottom: 30px;">
-                                         <label class="control-label col-lg-2">文档密级</label>
-                                         <div class="col-md-4">
-                                             <div class="radio" style="float: left;margin-right: 10px;">
-                                                 <label>
-                                                     <input type="radio" name="documentConfidential" value="1" v-model="docData.department.departmentName">绝密
-                                                 </label>
-                                             </div>
-                                             <div class="radio" style="float: left;margin-right: 10px;">
-                                                 <label>
-                                                     <input type="radio" name="documentConfidential" value="2" v-model="docData.document.documentConfidential">机密
-                                                 </label>
-                                             </div>
-                                             <div class="radio" style="float: left;margin-right: 10px;">
-                                                 <label>
-                                                     <input type="radio" name="documentConfidential" value="3" v-model="docData.document.documentConfidential">秘密
-                                                 </label>
-                                             </div>
-                                             <div class="radio" style="float: left;margin-right: 10px;">
-                                                 <label>
-                                                     <input type="radio" name="documentConfidential" value="4" v-model="docData.document.documentConfidential">普通
-                                                 </label>
-                                             </div>
-                                         </div>
-                                         <div>
-                                             <label class="control-label col-lg-2">文档级别</label>
-                                             <div class="col-md-4">
-                                                 <div class="radio" style="float: left;margin-right: 10px;">
-                                                     <label>
-                                                         <input type="radio" name="documentSpeed" value="1" v-model="docData.document.documentSpeed">加急
-                                                     </label>
-                                                 </div>
-                                                 <div class="radio" style="float: left;margin-right: 10px;">
-                                                     <label>
-                                                         <input type="radio" name="documentSpeed" value="2" :checked="docData.document.documentSpeed==2">特急
-                                                     </label>
-                                                 </div>
-                                                 <div class="radio" style="float: left;margin-right: 10px;">
-                                                     <label>
-                                                         <input type="radio" name="documentSpeed" value="3" :checked="docData.document.documentSpeed==3">平急
-                                                     </label>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                         &lt;!&ndash;<div class="form-group" style="margin-top:5%;margin-left:0.7px;">
-                                             <label class="control-label col-lg-2">文本内容</label>
-                                             <div class="col-lg-10">
-                                                 <textarea rows="10" cols="80" id="doucmentContent" class="form-control" >{{docData.document.doucmentContent}}</textarea>
-                                             </div>
-                                         </div>&ndash;&gt;
-                                         <div class="form-group">
-                                             <label class="col-sm-2 control-label">部门:</label>
-                                             <div class="col-md-10">
-                                             <span class="form-control" id="departmentName"
-                                                   style="border:0;background:transparent;">{{docData.document.doucmentContent}}</span>
-
-                                                 &lt;!&ndash;
-                                                                                             <input class="form-control" :value="user.department.departmentName"  style="border:0;background:transparent;" type="text">
-                                                     &ndash;&gt;
-                                             </div>
-
-                                         </div>
-                                         <div class="form-group" style="margin-left: 1px;">
-                                             <label class="control-label col-lg-2">备注</label>
-                                             <div class="col-lg-10">
-                                                 <textarea rows="2" cols="80" id="documentRemark" class="form-control">{{docData.document.documentRemark}}</textarea>
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div class="form-group" style="margin-left: 1px;">
-                                         <label class="control-label col-lg-2">选择流程</label>
-                                         <div class="col-lg-3">
-                                             <select class="form-control m-b-10" id="documentProcess" @change="getProcessNode" v-model="docData.document.documentProcess">
-                                                 <option v-for="(item,index) in docProcess" :value="item.processId">{{item.processName}}</option>
-                                             </select>
-                                         </div>
-                                         <div v-if="lhs_edit.action==='edit'" class="form-group" style="float:right;margin-right: 25%;">
-                                             <div>
-                                                 <button onclick="commitDoc()" type="button" class="btn btn-success">确认</button>
-                                                 <button type="button" class="btn btn-warning" style="margin-left: 10px;" onclick="editDraft()">草稿</button>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </form>
-                             </div>
-                             <div class="row">
-                                 <div class="col-xs-12">
-                                     <div class="panel">
-                                         <div class="panel-body table-responsive">
-                                             <div>
-                                                 <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>节点名</th>
-                                                            <th>操作部门</th>
-                                                            <th>职称</th>
-                                                            <th>节点位置</th>
-                                                        </tr>
-                                                    </thead>
-                                                     <tbody v-cloak>
-                                                         <tr v-for="node in processNode">
-                                                             <td>{{node.process_node.processNodeName}}</td>
-                                                             <td>{{node.department.departmentName}}</td>
-                                                             <td>{{node.position.positionName}}</td>
-                                                             <td>{{node.process_node.processNodeStep}}</td>
-                                                         </tr>
-                                                    </tbody>
-                                                 </table>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>-->
-
                             <div style="padding-top:30px">
                                 <div>
                                     <h3 style="text-align:center">{{docData.document.documentTitle}}</h3>
                                 </div>
                                 <div style="margin-top: 20px;">
-                                    <p style="text-align:center">时间：{{docData.document.creationTime}} |
-                                        作者：{{docData.guser.userName}} | 部门：{{docData.department.departmentName}} |
-                                        文号：{{docData.document.documentNo}} |
-                                        类型：{{docData.documenttype.documenttypeName}}
+                                    <p style="text-align:center">作者：{{docData.guser.userName}}&nbsp;| &nbsp;部门：&nbsp;{{docData.department.departmentName}}&nbsp;|
+                                        &nbsp; 文号：{{docData.document.documentNo}} &nbsp;|&nbsp;
+                                        类型：{{docData.documenttype.documenttypeName}}&nbsp;|&nbsp;时间：{{docData.document.creationTime}}
                                         <!--文档密级{{docData.document.documentConfidential}}--></p>
                                 </div>
                                 <hr/>
-                                {{docData.document.doucmentContent}}
+                                <div class="documentDetailContent"></div>
                             </div>
                         </div>
                     </section>
@@ -274,119 +130,6 @@
 <script src="js/Director/app.js" type="text/javascript"></script>
 <script src="js/Director/dashboard.js" type="text/javascript"></script>
 <script src="js/viewsJS/reviewDetailDocument.js"></script>
-<!-- Director for demo purposes -->
-<script type="text/javascript">
-    function editDraft() {
-        var documentId = $('#documentId').val();
-        var documentTitle = $('#documentTitle').val();
-        var documentNo = $('#documentNo').val();
-        var documentUser = $('#documentUser').val();
-        var doucmentContent = $('#doucmentContent').val();
-        var documentRemark = $('#documentRemark').val();
-        var documentType = $("#documentType  option:selected").val();
-        var documentDept = 1;
-        var documentSpeed = $('input[type=radio][name=documentSpeed]:checked').val();
-        var documentConfidential = $('input[type=radio][name=documentConfidential]:checked').val();
-        var documentProcess = $("#documentProcess  option:selected").val();
-
-        var data = {
-            "documentId": documentId,
-            "documentTitle": documentTitle,
-            "documentNo": documentNo,
-            "documentUser": documentUser,
-            "documentType": documentType,
-            "documentDept": documentDept,
-            "documentSpeed": documentSpeed,
-            "documentConfidential": documentConfidential,
-            "doucmentContent": doucmentContent,
-            "documentRemark": documentRemark,
-            "documentProcess": documentProcess,
-        }
-
-        $.ajax({
-            type: "post",
-            url: "/gwspxt/updateDocument",
-            dataType: "json",
-            contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify(data),
-            success: function (data) {
-                spop({template: '修改成功', style: "success", autoclose: 2000});
-                window.location.href = "/gwspxt/documentManage";
-            }
-        });
-
-    }
-
-    function commitDoc() {
-        var documentId = $('#documentId').val();
-        var documentTitle = $('#documentTitle').val();
-        var documentNo = $('#documentNo').val();
-        var documentUser = $('#documentUser').val();
-        var doucmentContent = $('#doucmentContent').val();
-        var documentRemark = $('#documentRemark').val();
-        var documentType = $("#documentType  option:selected").val();
-        var documentDept = 1;
-        var documentSpeed = $('input[type=radio][name=documentSpeed]:checked').val();
-        var documentConfidential = $('input[type=radio][name=documentConfidential]:checked').val();
-        var documentProcess = $("#documentProcess  option:selected").val();
-
-        var data = {
-            "documentId": documentId,
-            "documentTitle": documentTitle,
-            "documentNo": documentNo,
-            "documentUser": documentUser,
-            "documentType": documentType,
-            "documentDept": documentDept,
-            "documentSpeed": documentSpeed,
-            "documentConfidential": documentConfidential,
-            "doucmentContent": doucmentContent,
-            "documentRemark": documentRemark,
-            "documentProcess": documentProcess,
-        }
-
-        $.ajax({
-            type: "post",
-            url: "/gwspxt/updateDocument",
-            dataType: "json",
-            contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify(data),
-            success: function (data) {
-                if (data) {
-                    var documentId = data.documentId;
-                    console.log(documentId);
-                    $.ajax({
-                        type: "post",
-                        url: "/gwspxt/updateDocumentState",
-                        dataType: "json",
-                        data: JSON.stringify(data),
-                        contentType: 'application/json;charset=UTF-8',
-                        success: function (data) {
-                            $.ajax({
-                                type: "post",
-                                url: "/gwspxt/messageNextOne",
-                                dataType: "json",
-                                data: {
-                                    documentId: documentId,
-                                },
-                                success: function (data) {
-                                    if (data.msg == 'updateSuccess') {
-                                        spop({template: `提交成功`, style: "success", autoclose: 2000});
-                                        window.location.href = "/gwspxt/documentManage";
-                                    }
-                                }
-                            });
-
-                        }
-                    });
-                } else {
-
-                }
-            }
-        });
-
-
-    }
-</script>
 </body>
 
 </html>

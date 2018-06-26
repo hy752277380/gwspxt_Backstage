@@ -118,6 +118,7 @@ public class PageController {
     @RequestMapping("/reviewContent")
     public String reviewContent() {
         return "reviewContent.html";
+    }
 
     }
 

@@ -41,7 +41,7 @@ public interface GuserMapper {
 
     int countByDepartment(String departmentId);
 
-    List<Guser> getDptManager(String documentDept,String position);
+    List<Guser> getDptManager(@Param("userDepartment") String userDepartment,@Param("userPosition") String userPosition);
 
     CountByMouth countUserByMouth(String year);
 

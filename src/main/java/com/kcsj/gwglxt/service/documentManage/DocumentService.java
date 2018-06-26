@@ -46,13 +46,13 @@ public interface DocumentService {
 
     QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String searchInfo,String documentType,Integer documentConfidential);
 
-    List<MessageCustom> getMyAllMessage(String userId);
+    QueryForPage getMyAllMessage(String userId,int currentPage);
 
     List<Documenttype> getAllDocType();
 
     QueryForPage getAllProcess(int currentPage);
 
-    int insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
+    DocumentCustom insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
 
     QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage,String documentType,Integer documentConfidential);
 

@@ -236,8 +236,9 @@ public class GuserController {
     }
     //批量删除人员
     @RequestMapping("/batchDelete")
-    public String batchDelete(String userIds[],HttpSession httpSession){
+    public String batchDelete(@RequestParam("userIds[]") String[] userIds,HttpSession httpSession){
         //获取session内容
+        System.out.println("数组内容为"+userIds);
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         String result;
         int updateResult = guserService.batchDelete(userIds,loginCustom);

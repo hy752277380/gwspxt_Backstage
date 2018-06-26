@@ -323,7 +323,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //拒绝文档申请
     @Override
-    public void refuseDoc(LoginCustom loginCustom, String documentId) {
+    public void refuseDoc(LoginCustom loginCustom, String documentId,String refuseReason) {
         //根据id获取文档信息，目的是得到文档的流程开始时间
         Document document = documentMapper.selectByPrimaryKey(documentId);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -350,7 +350,7 @@ public class DocumentServiceImpl implements DocumentService {
         Message message = new Message();
         String messageId = TeamUtil.getUuid();
         message.setMessageId(messageId);
-        message.setMessageContent(loginCustom.getGuser().getUserName()+"拒绝了对你的"+document.getDocumentTitle()+"的申请");
+        message.setMessageContent(loginCustom.getGuser().getUserName()+"拒绝了对你的"+document.getDocumentTitle()+"的申请,拒绝理由："+refuseReason+"。");
         message.setMessageTime(df.format(new Date()));
         message.setMessageIsdelete(0);
         message.setMessageType(3);

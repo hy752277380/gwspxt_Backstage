@@ -246,11 +246,11 @@ public class DocumentManageController {
 
     //文档审核选择拒绝
     @RequestMapping("/refuseDoc")
-    public void refuseDoc(String documentId, HttpSession httpSession) {
+    public void refuseDoc(String documentId,String refuseReason, HttpSession httpSession) {
         try {
             //获取session内容
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            documentService.refuseDoc(loginCustom, documentId);
+            documentService.refuseDoc(loginCustom, documentId,refuseReason);
         } catch (Exception e) {
             e.printStackTrace();
         }

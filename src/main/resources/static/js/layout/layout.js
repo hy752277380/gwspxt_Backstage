@@ -61,7 +61,7 @@ var Layout = Vue.extend({
     </section>
     <!-- /.sidebar -->
     </aside>`,
-    props: ['user', 'name'],
+    props: ['user', 'name']
 })
 
 
@@ -225,7 +225,7 @@ var Header = Vue.extend({
             }
         },
         getMessage(that) {
-            $.post('/gwspxt/getAllMessage', {}, function (response) {
+            $.post('/gwspxt/getUnReadMsg', {}, function (response) {
                 that.message.number = response.length;
                 let newMsgContent = [];
                 for (let item in response) {

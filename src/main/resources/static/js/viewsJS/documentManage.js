@@ -107,17 +107,17 @@ $(function () {
             },
             replaceState(documentState) {
                 switch (documentState) {
-                    case 0:
-                        return "<span class=\"label label-danger\">退回</span>";
                     case 1:
-                        return "<span class=\"label label-default\">草稿</span>";
+                        return "<span class=\"label label-danger\">退回</span>";
                     case 2:
-                        return "<span class=\"label label-warning\">待审核</span>";
+                        return "<span class=\"label label-default\">草稿</span>";
                     case 3:
-                        return "<span class=\"label label-primary\">审核中</span>";
+                        return "<span class=\"label label-warning\">待审核</span>";
                     case 4:
-                        return "<span class=\"label label-info\">已审核</span>";
+                        return "<span class=\"label label-primary\">审核中</span>";
                     case 5:
+                        return "<span class=\"label label-info\">已审核</span>";
+                    case 6:
                         return "<span class=\"label label-success\">已归档</span>";
                 }
             },

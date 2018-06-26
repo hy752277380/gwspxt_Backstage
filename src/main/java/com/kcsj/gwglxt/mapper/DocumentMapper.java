@@ -40,7 +40,7 @@ public interface DocumentMapper {
     //根据id查询该文档当前流程子节点位置
     int getDocumentLocation(String documentId);
 
-    List<DocumentCustom> getDocumentByState(@Param("documentType") String documentType,@Param("documentConfidential") Integer documentConfidential,@Param("documentState") Integer documentState,@Param("documentUser") String documentUser,@Param("documentNo") String documentNo,@Param("documentTitle")String documentTitle);
+    List<DocumentCustom> getDocumentByState(@Param("documentType") String documentType,@Param("documentConfidential") Integer documentConfidential,@Param("documentState") Integer documentState,@Param("documentUser") String documentUser,@Param("fuzzySearch") String fuzzySearch);
     //查询所有文档
     List<DocumentCustom> getAllDocument(@Param("documentType")String documentType,@Param("documentConfidential")Integer documentConfidential,@Param("documentDept")String documentDept,@Param("fuzzySearch") String fuzzySearch);
     //联合查询文档信息

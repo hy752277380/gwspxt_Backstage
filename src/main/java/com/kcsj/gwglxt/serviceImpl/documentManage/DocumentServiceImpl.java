@@ -11,7 +11,6 @@ import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -132,10 +131,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //根据文档状态查询
     @Override
-    public QueryForPage getDocumentByState(String documentType,Integer documentConfidential,Integer documentState, String documentUser, int currentPage,String searchInfo) {
-        String documentNo = searchInfo;
-        String documentTitle = searchInfo;
-        List<DocumentCustom> list = documentMapper.getDocumentByState(documentType,documentConfidential,documentState, documentUser,documentNo,documentTitle);
+    public QueryForPage getDocumentByState(String documentType,Integer documentConfidential,Integer documentState, String documentUser, int currentPage,String fuzzySearch) {
+        List<DocumentCustom> list = documentMapper.getDocumentByState(documentType,documentConfidential,documentState, documentUser,fuzzySearch);
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
         int allRow = list.size();//总记录数

@@ -24,20 +24,26 @@ public class DepartmentController {
     @RequestMapping("/addDepartment")
     public String addDepartment(@RequestBody Department department,HttpSession httpSession){
         String result;
-        int addResult = 0;
-        try {
-            LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            addResult = departmentService.insert(department,loginCustom);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(departmentService.getDptByName(department.getDepartmentName())){
+            int addResult = 0;
+            try {
+                LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+                addResult = departmentService.insert(department,loginCustom);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+            if (addResult == 0) {
+                result = "addFailed";
+            }else{
+                result = "addSuccess";
+            }
+            return "{\"msg\":\"" + result + "\"}";
+        }else {
+            result = "departmenntExist";
+            return "{\"msg\":\"" + result + "\"}";
         }
-        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
-        if (addResult == 0) {
-            result = "addFailed";
-        }else{
-            result = "addSuccess";
-        }
-        return "{\"msg\":\"" + result + "\"}";
+
     }
     //获得所有部门
     @RequestMapping("/getAllDepartment")
@@ -87,20 +93,26 @@ public class DepartmentController {
     @RequestMapping("/addPosition")
     public String addPosition(@RequestBody Position position,HttpSession httpSession){
         String result;
-        int addResult = 0;
-        try {
-            LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            addResult = departmentService.insertPosition(position,loginCustom);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(departmentService.getPosotionName(position.getPositionName())){
+            int addResult = 0;
+            try {
+                LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+                addResult = departmentService.insertPosition(position,loginCustom);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+            if (addResult == 0) {
+                result = "addFailed";
+            }else{
+                result = "addSuccess";
+            }
+            return "{\"msg\":\"" + result + "\"}";
+        }else {
+            result = "positionExist";
+            return "{\"msg\":\"" + result + "\"}";
         }
-        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
-        if (addResult == 0) {
-            result = "addFailed";
-        }else{
-            result = "addSuccess";
-        }
-        return "{\"msg\":\"" + result + "\"}";
+
     }
     //修改职位权限
     @RequestMapping("/updatePermission")

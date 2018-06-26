@@ -50,4 +50,6 @@ public interface GuserMapper {
     List<LoginCustom> getAllUser(@Param("fuzzySearch") String fuzzySearch,@Param("userId") String userId);
 
     List<LoginCustom> getUserByDpt(@Param("userDepartment") String userDepartment,@Param("fuzzySearch") String fuzzySearch,@Param("userId") String userId);
+
+    Guser getUserByAcc(@Param("userAccount") String userAccount);
 }

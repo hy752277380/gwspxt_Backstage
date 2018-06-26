@@ -54,6 +54,7 @@ public class GuserServiceImpl implements GuserService {
         record.setUserId(TeamUtil.getUuid());
         record.setCreationTime(df.format(new Date()));
         record.setUserIsdelete(0);
+        int result = guserMapper.insert(record);
         //添加操作日志
         Log log = new Log();
         log.setLogId(TeamUtil.getUuid());
@@ -62,7 +63,7 @@ public class GuserServiceImpl implements GuserService {
         //根据职位id获取职位名称
         log.setLogContent("删除了"+record.getUserName()+"流程。");
         logMapper.insert(log);
-        return guserMapper.insert(record);
+        return result;
     }
 
     @Override
@@ -295,6 +296,16 @@ public class GuserServiceImpl implements GuserService {
         guser.setUserId(loginCustom.getGuser().getUserId());
         guser.setUserPassword(md5.GetMD5Code(newPassword));
         return guserMapper.updateByPrimaryKeySelective(guser);
+    }
+
+    @Override
+    public boolean getUserByAcc(String userAccount) {
+        Guser user = guserMapper.getUserByAcc(userAccount);
+        if (user==null){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 

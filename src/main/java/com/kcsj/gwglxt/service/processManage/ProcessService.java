@@ -20,6 +20,8 @@ public interface ProcessService {
     int updateProcessInfo(Process process,LoginCustom loginCustom);
 
     int addProcess(Process process, LoginCustom loginCustom);
+
+    boolean getProcessByName(String processName);
     /*//获取所有流程
     List<Process> getAllProcess();*/
 }

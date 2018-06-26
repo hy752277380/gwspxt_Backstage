@@ -64,4 +64,7 @@ public interface GuserService {
     Guser getUserById(String userId);
 
     int changePassword(String newPassword, LoginCustom loginCustom);
+
+    //根据账号查询用户
+    boolean getUserByAcc(String userAccount);
 }

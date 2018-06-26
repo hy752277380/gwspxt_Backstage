@@ -33,4 +33,6 @@ public interface DepartmentMapper {
     List<Department> getAllDepartment(@Param("fuzzySearch") String fuzzySearch);
 
     String getDepartmentName(@Param("departmentSuperior") String departmentSuperior);
+
+    Department getDptByName(@Param("departmentName") String departmentName);
 }

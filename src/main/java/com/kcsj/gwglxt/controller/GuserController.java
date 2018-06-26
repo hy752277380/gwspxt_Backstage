@@ -1,19 +1,20 @@
 package com.kcsj.gwglxt.controller;
 
+import com.kcsj.gwglxt.DTO.CountByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.DTO.LoginCustom;
+import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.service.GuserService;
 import com.kcsj.gwglxt.util.md5;
+import com.kcsj.gwglxt.vo.QueryForPage;
 import com.kcsj.gwglxt.vo.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.UUID;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -80,17 +81,204 @@ public class GuserController {
     }
     //登出
     @RequestMapping("/loginout")
-    public String loginout(){
-        return "";
+    public void loginout(HttpSession httpSession, HttpServletRequest request,HttpServletResponse response) throws Exception{
+        httpSession.removeAttribute("LoginInformation");
+        httpSession.invalidate();
+        String path = request.getContextPath();
+        //拼接跳转路径
+        String basePath = request.getScheme()+ "://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+        response.sendRedirect(basePath);
     }
-    //登陆检测
-    public boolean LoginInterceptor (HttpSession httpSession){
+    //更改密码
+    @RequestMapping("/changePassword")
+    public String changePassword(String password,String newPassword,HttpSession httpSession){
+        String result;
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        if(loginCustom==null){
-
-            return false;
-        }return true;
+        if (password==loginCustom.getGuser().getUserPassword()){
+            int updateResult = guserService.changePassword(newPassword,loginCustom);
+            //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+            if (updateResult == 0) {
+                result = "updateFailed";
+            }else{
+                result = "updateSuccess";
+            }
+            return result;
+        }else{
+            return "oldPasswordError";
+        }
     }
+    /************************************首页数据*******************************/
+    //首页月份人数统计
+    @RequestMapping("/countUserByMouth")
+    public CountByMouth countUserByMouth(){
+        CountByMouth countByMouth = guserService.countUserByMouth();
+        return countByMouth;
+    }
+
+    //计算总人数
+    @RequestMapping("/countAllUser")
+    public int countAllUser(){
+        int result = guserService.countAllUser();
+        return result;
+    }
+
+    //计算总数文档
+    @RequestMapping("/countAllDocument")
+    public int countAllDocument(){
+        String department = null;
+        String user = null;
+        int result = guserService.countAllDocument(department,user);
+        return result;
+    }
+
+    //计算部门文档
+    @RequestMapping("/countDptDocument")
+    public int countDptDocument(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        String department = loginCustom.getGuser().getUserDepartment();
+        String user = null;
+        int result = guserService.countAllDocument(department,user);
+        return result;
+    }
+
+    //计算个人文档
+    @RequestMapping("/countPersonalDocument")
+    public int countPersonalDocument(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        String department = null;
+        String user = loginCustom.getGuser().getUserId();
+        int result = guserService.countAllDocument(department,user);
+        return result;
+    }
+    //计算月份文档数
+    @RequestMapping("/countDocumentByMouth")
+    public CountByMouth countDocumentByMouth(){
+        CountByMouth countByMouth = guserService.countDocumentByMouth();
+        return countByMouth;
+    }
+    //部门文档月份统计
+    @RequestMapping("/countDptDocumentByMouth")
+    public CountByMouth countDptDocumentByMouth(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        CountByMouth countByMouth = guserService.countDptDocumentByMouth(loginCustom.getGuser().getUserDepartment());
+        return countByMouth;
+    }
+    //个人文档月份统计
+    @RequestMapping("/countPersonalDocumentByMouth")
+    public CountByMouth countPersonalDocumentByMouth(HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        CountByMouth countByMouth = guserService.countPersonalDocumentByMouth(loginCustom.getGuser().getUserId());
+        return countByMouth;
+    }
+    /***************************个人信息管理****************************/
+    //修改个人信息
+    @RequestMapping("/updatePersonInfo")
+    public String updatePersonInfo(@RequestBody Guser guser,HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        String result;
+        int updateResult = guserService.updateByPrimaryKeySelective(guser,loginCustom);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        }else {
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
+    }
+    /***************************8账号管理*******************************/
+    //列出所有账号
+    @RequestMapping("/getAllUser")
+    public QueryForPage getAllUser(int currentPage){
+        QueryForPage users = guserService.getAllUser(currentPage);
+        return users;
+    }
+    //添加账号
+    @RequestMapping("/andUser")
+    public String andUser(Guser guser,HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        String result;
+        int insertResult = guserService.insertUser(guser,loginCustom);
+        //判断执行文档添加操作返回的结果,返回结果为数据库中受影响行数
+        if (insertResult == 0) {
+            result = "addFailed";
+        }else{
+            result = "addSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
+    }
+    //根据部门查询本部门职位
+    @RequestMapping("/getPositionByDpt")
+    public List<Position> getPositionByDpt(String department){
+        List<Position> positions = guserService.getPositionByDpt(department);
+        return positions;
+    }
+    //修改人员信息
+    @RequestMapping("/updateUserinfo")
+    public String updateUserinfo(@RequestBody Guser guser,HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        String result;
+        int updateResult = guserService.updateByPrimaryKey(guser,loginCustom);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        }else{
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
+    }
+    //批量删除人员
+    @RequestMapping("/batchDelete")
+    public String batchDelete(String userIds[],HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        String result;
+        int updateResult = guserService.batchDelete(userIds,loginCustom);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        }else{
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
+    }
+    //重置密码
+    @RequestMapping("/resetPassword")
+    public String resetPassword(String userId,HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        String result;
+        int updateResult = guserService.resetPassword(userId,loginCustom);
+        //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
+        if (updateResult == 0) {
+            result = "updateFailed";
+        }else{
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
+    }
+    //根据id查询个人信息
+    @RequestMapping("/getUserById")
+    public Guser getUserById(String userId){
+        Guser guser = guserService.getUserById(userId);
+        return guser;
+    }
+    /*******************************************部门成员管理************************************/
+    //列出本部门成员
+    @RequestMapping("/getUserByDpt")
+    public QueryForPage getUserByDpt(int currentPage,HttpSession httpSession){
+        //获取session内容
+        LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+        QueryForPage queryForPage = guserService.getUserByDpt(loginCustom.getGuser().getUserDepartment(),currentPage);
+        return queryForPage;
+    }
+
 }
 

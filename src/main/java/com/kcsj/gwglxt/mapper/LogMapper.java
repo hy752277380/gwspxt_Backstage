@@ -28,5 +28,5 @@ public interface LogMapper {
 
     int updateByPrimaryKey(Log record);
 
-    List<Log> getAllLog(String userId);
+    List<Log> getLogByUser(@Param("year") int year,@Param("userId") String userId,@Param("mouth") int mouth);
 }

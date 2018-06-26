@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kcsj.gwglxt.mapper.DocumentMapper" >
-
     <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Document" >
         <id column="document_id" property="documentId"/>
         <result column="document_title" property="documentTitle"/>
@@ -45,6 +44,31 @@
             <result column="borrowing_state" property="borrowingState"/>
         </association>
     </resultMap>
+    <resultMap id="DocumentInfo" type="com.kcsj.gwglxt.DTO.DocumentCustom">
+        <association property="document" javaType="com.kcsj.gwglxt.entity.Document">
+            <id column="document_id" property="documentId"/>
+            <result column="document_title" property="documentTitle"/>
+            <result column="document_no" property="documentNo"/>
+            <result column="document_confidential" property="documentConfidential"/>
+            <result column="creation_time" property="creationTime"/>
+            <result column="document_state" property="documentState"/>
+        </association>
+        <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
+            <result column="user_name" property="userName"/>
+        </association>
+        <association property="documenttype" javaType="com.kcsj.gwglxt.entity.Documenttype">
+            <result column="documenttype_name" property="documenttypeName"/>
+        </association>
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <result column="department_name" property="departmentName"/>
+        </association>
+        <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
+            <result column="process_name" property="processName"/>
+        </association>
+        <association property="borrowing" javaType="com.kcsj.gwglxt.entity.Borrowing">
+            <result column="borrowing_state" property="borrowingState"/>
+        </association>
+    </resultMap>
     <resultMap id="DocumentDetailInfo" type="com.kcsj.gwglxt.DTO.DocumentCustom">
         <association property="document" javaType="com.kcsj.gwglxt.entity.Document">
             <id column="document_id" property="documentId"/>
@@ -57,6 +81,9 @@
             <result column="document_process_begin" property="documentProcessBegin"   />
             <result column="document_process_finish" property="documentProcessFinish"   />
             <result column="document_state" property="documentState"  />
+            <result column="document_dept" property="documentDept"  />
+            <result column="document_type" property="documentType"  />
+            <result column="document_process" property="documentProcess"  />
             <result column="document_speed" property="documentSpeed"  />
             <result column="creation_time" property="creationTime"/>
         </association>
@@ -72,6 +99,26 @@
         <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
             <result column="process_name" property="processName"/>
         </association>
+        <association property="borrowing" javaType="com.kcsj.gwglxt.entity.Borrowing">
+            <id column="borrowing_id" property="borrowingId"/>
+            <result column="borrowing_borrow_user" property="borrowingBorrowUser"/>
+            <result column="borrowing_reason" property="borrowingReason"/>
+            <result column="borrowing_state" property="borrowingState"/>
+        </association>
+    </resultMap>
+    <resultMap id="MouthResultMap" type="com.kcsj.gwglxt.DTO.CountByMouth">
+        <result column="January" property="Jan"/>
+        <result column="February" property="Feb"/>
+        <result column="March" property="Mar"/>
+        <result column="April" property="Apr"/>
+        <result column="May" property="May"/>
+        <result column="June" property="Jun"/>
+        <result column="July" property="Jul"/>
+        <result column="August" property="Aug"/>
+        <result column="September" property="Sep"/>
+        <result column="October" property="Oct"/>
+        <result column="November" property="Nov"/>
+        <result column="December" property="Dec"/>
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -468,30 +515,32 @@
         where document_id = #{documentId,jdbcType=CHAR}
     </update>
     <update id="updateDocumentState">
-        UPDATE document SET document_state = #{documentState},
+        UPDATE document SET document_state = #{documentState}
         <if test="documentProcessBegin!=null">
-            document_process_begin=#{documentProcessBegin},
+            ,document_process_begin=#{documentProcessBegin}
         </if>
         <if test="documentProcessFinish!=null">
-            document_process_finish=#{documentProcessFinish}
-        </if>WHERE document_id = #{documentId}
+            ,document_process_finish=#{documentProcessFinish}
+        </if>
+        WHERE document_id = #{documentId}
     </update>
     <select id="getDocumentName" parameterType="java.lang.String" resultType="java.lang.String">
-        SELECT document_title FROM document WHERE document_id = #{documentId}
+        SELECT document_title FROM document WHERE document_id = #{documentId} and document_isdelete = '0'
     </select>
     <update id="updateDocumentLocation">
         UPDATE document SET document_location = #{documentLocation} WHERE document_id = #{documentId}
     </update>
     <select id="getDocumentLocation" parameterType="java.lang.String" resultType="int">
-        SELECT document_location FROM document WHERE document_id = #{documentId}
+        SELECT document_location FROM document WHERE document_id = #{documentId} and document_isdelete = '0'
     </select>
-    <select id="getDocumentByState" resultMap="DocumentBaseInfo">
+    <select id="getDocumentByState" resultMap="DocumentInfo">
 select
         doc.document_id,
 	doc.document_title,
 	doc.document_no,
 	doc.document_confidential,
 	doc.creation_time,
+    doc.document_state,
 	gu.user_name,
 	dt.documenttype_name,
 	de.department_name,
@@ -507,8 +556,20 @@ WHERE
 AND doc.document_dept = de.department_id
 AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
-AND doc.document_state = #{documentState}
-and doc.document_user = #{documentUser}
+        and doc.document_isdelete = '0'
+        and doc.document_user = #{documentUser}
+        <if test="documentState!=null and documentState!=0">
+            and doc.document_state = #{documentState}
+        </if>
+        <if test="documentType!=null and documentType!=''">
+            and doc.document_type = #{documentType}
+        </if>
+        <if test="documentConfidential!=null and documentConfidential!=0">
+            and doc.document_confidential = #{documentConfidential}
+        </if>
+       <if test="documentNo!=null">
+            and (doc.document_no like CONCAT('%',#{documentNo},'%' ) or doc.document_title like CONCAT('%',#{documentTitle},'%' ))
+        </if>
     </select>
     <select id="getAllDocument" resultMap="DocumentBaseInfo">
         SELECT
@@ -526,16 +587,26 @@ FROM
 	documenttype dt,
 	department de,
 	guser gu,
-	process pr,
+	process pr
 WHERE
 	doc.document_type = dt.documenttype_id
 AND doc.document_dept = de.department_id
 AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
 and doc.document_state = '5'
-<if test="searchInfo!=null">
-    and (doc.document_title like '${searchInfo}' or doc.document_no like '${searchInfo}' or gu.user_name like '${searchInfo}' or dt.documenttype_name like '${searchInfo}' or de.department_name like '${searchInfo}')
+and doc.document_isdelete = '0'
+<if test="documentType!=null and documentType!=''">
+    and doc.document_type = #{documentType}
 </if>
+<if test="documentConfidential!=null and documentConfidential!=0">
+    and doc.document_confidential = #{documentConfidential}
+</if>
+<if test="documentDept!=null and documentDept!=''">
+     and doc.document_dept = #{documentDept}
+</if>
+        <if test="documentNo!=null">
+            and (doc.document_no like CONCAT('%',#{documentNo},'%' ) or doc.document_title like CONCAT('%',#{documentTitle},'%' ) or gu.user_name like CONCAT('%',#{userName},'%' ))
+        </if>
     </select>
     <select id="documentBaseInfo" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
         SELECT
@@ -551,6 +622,9 @@ and doc.document_state = '5'
     doc.document_state,
     doc.document_speed,
 	doc.creation_time,
+	doc.document_dept,
+	doc.document_type,
+	doc.document_process,
 	gu.user_name,
 	dt.documenttype_name,
 	de.department_name,
@@ -567,10 +641,11 @@ AND doc.document_dept = de.department_id
 AND doc.document_user = gu.user_id
 AND doc.document_process = pr.process_id
 and doc.document_id = #{documentId,jdbcType=CHAR}
+and doc.document_isdelete = '0'
     </select>
     <select id="findCheckingDoc" resultMap="DocumentBaseInfo">
         SELECT
-         doc.document_id,
+	doc.document_id,
 	doc.document_title,
 	doc.document_no,
 	doc.document_confidential,
@@ -579,12 +654,105 @@ and doc.document_id = #{documentId,jdbcType=CHAR}
 	dt.documenttype_name,
 	de.department_name,
 	pr.process_name
-         FROM
-          document doc,
+FROM
+	document doc,
 	documenttype dt,
 	department de,
 	guser gu,
 	process pr
-          WHERE document_process = #{documentProcess} and document_location =#{documentLocation}
+WHERE
+ doc.document_process = pr.process_id
+and doc.document_dept = de.department_id
+and doc.document_type = dt.documenttype_id
+and doc.document_user = gu.user_id
+and doc.document_process = #{documentProcess} and doc.document_location =#{documentLocation} and doc.document_isdelete = '0'
+        <if test="documentType!=null and documentType!=''">
+            and doc.document_type = #{documentType}
+        </if>
+        <if test="documentConfidential!=null and documentConfidential!=0">
+            and doc.document_confidential = #{documentConfidential}
+        </if>
+       <if test="documentNo!=null">
+            and (doc.document_no like CONCAT('%',#{documentNo},'%' ) or doc.document_title like CONCAT('%',#{documentTitle},'%' ) or gu.user_name like CONCAT('%',#{userName},'%' ))
+        </if>
+    </select>
+    <select id="getDocumentByDpt" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
+        SELECT
+doc.document_id,
+	doc.document_title,
+	doc.document_no,
+	doc.document_confidential,
+    doc.doucment_content,
+    doc.document_remark,
+    doc.document_location,
+    doc.document_process_begin,
+    doc.document_process_finish,
+    doc.document_state,
+    doc.document_speed,
+	doc.creation_time,
+	doc.document_dept,
+	doc.document_type,
+	doc.document_process,
+	gu.user_name,
+	dt.documenttype_name,
+	de.department_name,
+	pr.process_name,
+	bo.borrowing_borrow_user,
+	bo.borrowing_reason,
+	bo.borrowing_id,
+	bo.borrowing_state
+FROM
+	document doc,
+	documenttype dt,
+	department de,
+	guser gu,
+	process pr,
+	borrowing bo
+	where doc.document_dept = #{documentDept}
+and bo.borrowing_state = '1'
+and doc.document_process = pr.process_id
+and doc.document_dept = de.department_id
+and doc.document_type = dt.documenttype_id
+and bo.borrowing_borrow_user = gu.user_id
+and bo.borrowing_document = doc.document_id
+and doc.document_isdelete = '0'
+        <if test="documentType!=null and documentType!=''">
+            and doc.document_type = #{documentType}
+        </if>
+        <if test="documentConfidential!=null and documentConfidential!=0">
+            and doc.document_confidential = #{documentConfidential}
+        </if>
+    </select>
+    <select id="countAllDocument" parameterType="java.lang.String" resultType="int">
+        select count(*) from document where document_isdelete = '0'
+            <if test="documentDept!=null">
+                and document_dept = #{documentDept}
+            </if>
+            <if test="documentUser!=null">
+                and document_user = #{documentUser}
+            </if>
+    </select>
+    <select id="countDocumentByMouth" parameterType="java.lang.String" resultMap="MouthResultMap">
+         select
+sum(case month(document.creation_time) when '1' then 1 else 0 end) as January,
+sum(case month(document.creation_time) when '2' then 1 else 0 end) as February,
+sum(case month(document.creation_time) when '3' then 1 else 0 end) as March,
+sum(case month(document.creation_time) when '4' then 1 else 0 end) as April,
+sum(case month(document.creation_time) when '5' then 1 else 0 end) as May,
+sum(case month(document.creation_time) when '6' then 1 else 0 end) as June,
+sum(case month(document.creation_time) when '7' then 1 else 0 end) as July,
+sum(case month(document.creation_time) when '8' then 1 else 0 end) as August,
+sum(case month(document.creation_time) when '9' then 1 else 0 end) as September,
+sum(case month(document.creation_time) when '10' then 1 else 0 end) as October,
+sum(case month(document.creation_time) when '11' then 1 else 0 end) as November,
+sum(case month(document.creation_time) when '12' then 1 else 0 end) as December
+from document
+where year(document.creation_time)=#{year} and document_isdelete = '0'
+<if test="department!=null">
+    and document.document_dept = #{department}
+</if>
+<if test="userId!=null">
+     and document.document_user = #{userId}
+</if>
     </select>
 </mapper>

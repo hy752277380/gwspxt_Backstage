@@ -242,5 +242,27 @@ FROM
 WHERE
 	mo.mobject_message = me.message_id
 AND mo.mobject_user = #{mobjectUser}
+and me.message_isdelete= '0'
     </select>
+    <select id="getUnReadMsg" parameterType="java.lang.String" resultMap="messageInfo">
+        SELECT
+	mo.mobject_id,
+	mo.mobject_user,
+	mo.mobject_message,
+	mo.mobject_isread,
+	me.message_content,
+	me.message_time,
+	me.message_type
+FROM
+	mobject mo,
+	message me
+WHERE
+	mo.mobject_message = me.message_id
+AND mo.mobject_user = #{mobjectUser}
+and mo.mobject_isread = '0'
+and me.message_isdelete= '0'
+    </select>
+    <update id="allAreRead" parameterType="java.lang.String">
+        UPDATE mobject set mobject_isread = '1' where mobject_user = #{userId}
+    </update>
 </mapper>

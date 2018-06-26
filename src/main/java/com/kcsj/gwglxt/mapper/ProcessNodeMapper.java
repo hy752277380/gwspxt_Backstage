@@ -1,5 +1,6 @@
 package com.kcsj.gwglxt.mapper;
 
+import com.kcsj.gwglxt.DTO.ProcessInfo;
 import com.kcsj.gwglxt.entity.Department;
 import com.kcsj.gwglxt.entity.Position;
 import com.kcsj.gwglxt.entity.ProcessNode;
@@ -38,4 +39,11 @@ public interface ProcessNodeMapper {
     List<ProcessNode> getAllProcessNode(String processNodeProcess);
 
     List<ProcessNode> getProcessNodeByUser(@Param("processNodeDepartment") String processNodeDepartment,@Param("processNodePosition") String processNodePosition);
+
+    List<ProcessNode> getProcessNodeByPro(String process);
+
+    //根据流程id查询流程节点详细信息
+    List<ProcessInfo> getProNodeByPro(String processId);
+
+    List<ProcessNode> getOthers(@Param("processNodeProcess") String processNodeProcess,@Param("processNodeStep") Integer processNodeStep);
 }

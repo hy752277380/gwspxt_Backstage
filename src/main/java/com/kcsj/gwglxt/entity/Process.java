@@ -14,6 +14,16 @@ public class Process {
 
     private String processName;
 
+    private Integer processIsdelete;
+
+    public Integer getProcessIsdelete() {
+        return processIsdelete;
+    }
+
+    public void setProcessIsdelete(Integer processIsdelete) {
+        this.processIsdelete = processIsdelete;
+    }
+
     public String getProcessId() {
         return processId;
     }

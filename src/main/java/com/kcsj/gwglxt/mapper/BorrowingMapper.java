@@ -31,4 +31,6 @@ public interface BorrowingMapper {
     int updateByPrimaryKey(Borrowing record);
 
     Borrowing borrowingState(@Param("borrowingDocument") String documentId,@Param("borrowingBorrowUser") String userId);
+
+    List<Borrowing> getDocuments(String userId);
 }

@@ -3,6 +3,7 @@ package com.kcsj.gwglxt.mapper;
 
 import java.util.List;
 
+import com.kcsj.gwglxt.DTO.CountByMouth;
 import com.kcsj.gwglxt.entity.Guser;
 import com.kcsj.gwglxt.entity.GuserExample;
 import com.kcsj.gwglxt.DTO.LoginCustom;
@@ -34,7 +35,19 @@ public interface GuserMapper {
     LoginCustom loginInfo(String userId);
     LoginCustom loginFunction(String userAccount);
     //根据职位查询人员
-    Guser getUserByPosition(@Param("userPosition") String userPosition,@Param("userDepartment") String userDepartment);
+    List<Guser> getUserByPosition(@Param("userPosition") String userPosition,@Param("userDepartment") String userDepartment);
     //查询个人信息
     LoginCustom getPersonalInfo(String userId);
+
+    int countByDepartment(String departmentId);
+
+    List<Guser> getDptManager(String documentDept,String position);
+
+    CountByMouth countUserByMouth(String year);
+
+    int countAllUser();
+
+    List<LoginCustom> getAllUser();
+
+    List<LoginCustom> getUserByDpt(String userDepartment);
 }

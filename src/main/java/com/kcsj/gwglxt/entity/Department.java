@@ -16,6 +16,17 @@ public class Department {
 
     private Integer departmentIsdelete;
 
+    private int memberCount;
+
+
+    public int getMemberCount() {
+        return memberCount;
+    }
+
+    public void setMemberCount(int memberCount) {
+        this.memberCount = memberCount;
+    }
+
     public String getDepartmentId() {
         return departmentId;
     }

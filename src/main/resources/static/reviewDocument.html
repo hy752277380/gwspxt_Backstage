@@ -154,6 +154,12 @@
                                                             class="btn btn-primary btn-sm">阅读
                                                     </button>
                                                 </template>
+                                                <!-- 申请中状态 -->
+                                                <template v-else-if="doc.borrowing.borrowingState==1">
+                                                    <button type="button" class="btn btn-primary btn-sm">
+                                                        <i class="fa fa-spinner fa-spin"></i>阅读
+                                                    </button>
+                                                </template>
                                             </td>
                                         </tr>
                                         </tbody>

@@ -113,6 +113,7 @@ $(function () {
             applyBorrowing() {
                 let that = this;
                 let documentCustom = this.$data.docData[data.applyIndex];
+                documentCustom.borrowing = {borrowingReason: data.applyReason};
                 $.ajax({
                     type: "post",
                     url: "/gwspxt/applyRead",
@@ -130,7 +131,6 @@ $(function () {
                         } else if (response.msg == "updateFailed") {
                             spop({template: `申请失败`, style: "error", autoclose: 2000});
                         }
-
                     }
                 })
                 /* let documentCustom = this.$data.docData[index];
@@ -164,6 +164,9 @@ $(function () {
         },
         mounted() {
             this.getInfo({currentPage: 1});
+            $('#ApplyReasonModal').on('hidden.bs.modal', function () {
+                data.applyReason = '';
+            });
         },
         components: {
             'asideComponent': Layout,

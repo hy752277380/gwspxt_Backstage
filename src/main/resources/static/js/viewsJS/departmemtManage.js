@@ -70,7 +70,7 @@ $(function () {
             },
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;
-                this.getInfo({
+                this.getDeptInfo({
                     currentPage: 1,
                     fuzzySearch: data.searchData.fuzzySearch
                 })

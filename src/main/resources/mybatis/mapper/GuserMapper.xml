@@ -208,12 +208,13 @@
         insert into guser (user_id, user_account, user_password,
             user_name, user_sex, user_department,
             user_position, user_phonenumber, user_email,
-            user_introduction, user_picture, creation_time
+            user_introduction, user_picture, creation_time,user_isdelete
             )
         values (#{userId,jdbcType=CHAR}, #{userAccount,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
             #{userName,jdbcType=VARCHAR}, #{userSex,jdbcType=CHAR}, #{userDepartment,jdbcType=CHAR},
             #{userPosition,jdbcType=CHAR}, #{userPhonenumber,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},
             #{userIntroduction,jdbcType=VARCHAR}, #{userPicture,jdbcType=VARCHAR}, #{creationTime,jdbcType=VARCHAR}
+            #{userIsdelete,jdbcType=INTEGER}
             )
     </insert>
 
@@ -256,6 +257,9 @@
             <if test="creationTime != null" >
                 creation_time,
             </if>
+            <if test="userIsdelete != null" >
+                user_isdelete,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="userId != null" >
@@ -293,6 +297,9 @@
             </if>
             <if test="creationTime != null" >
                 #{creationTime,jdbcType=VARCHAR},
+            </if>
+            <if test="userIsdelete != null" >
+                #{userIsdelete,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -343,6 +350,9 @@
             <if test="record.creationTime != null" >
                 creation_time = #{record.creationTime,jdbcType=VARCHAR},
             </if>
+            <if test="record.userIsdelete != null" >
+                user_isdelete = #{record.userIsdelete,jdbcType=INTEGER},
+            </if>
         </set>
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
@@ -362,7 +372,8 @@
         user_email = #{record.userEmail,jdbcType=VARCHAR},
         user_introduction = #{record.userIntroduction,jdbcType=VARCHAR},
         user_picture = #{record.userPicture,jdbcType=VARCHAR},
-        creation_time = #{record.creationTime,jdbcType=VARCHAR}
+        creation_time = #{record.creationTime,jdbcType=VARCHAR},
+        user_isdelete = #{record.userIsdelete,jdbcType=INTEGER}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -403,6 +414,9 @@
             </if>
             <if test="creationTime != null" >
                 creation_time = #{creationTime,jdbcType=VARCHAR},
+            </if>
+            <if test="userIsdelete !=null">
+                user_isdelete = #{userIsdelete}
             </if>
         </set>
         where user_id = #{userId,jdbcType=CHAR}

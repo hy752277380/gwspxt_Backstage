@@ -31,7 +31,7 @@ public interface MobjectMapper {
 
     int insertMbj(Mobject mobject);
 
-    List<MessageCustom> getMyAllMessage(String mobjectUser);
+    List<MessageCustom> getMyAllMessage(@Param("mobjectUser") String mobjectUser,@Param("begin")int begin,@Param("end")int end);
 
     List<MessageCustom> getUnReadMsg(String userId);
 

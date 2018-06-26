@@ -113,7 +113,7 @@ $(function () {
             deleteP(index) {
                 let person = data.personData[index].guser;
                 const that = this;
-                $.post('/gwspxt/batchDelete', {userId: [person.userId]}, function (response) {
+                $.post('/gwspxt/batchDelete', {userIds: [person.userId]}, function (response) {
                     if (response.msg == "updateSuccess") {
                         spop({template: `删除成功`, style: "success", autoclose: 2000});
                         that.getInfo({currentPage: data.page.currentPage})

@@ -47,4 +47,14 @@ public class Documenttype {
     public void setDocumenttypeIsdelete(Integer documenttypeIsdelete) {
         this.documenttypeIsdelete = documenttypeIsdelete;
     }
+
+    @Override
+    public String toString() {
+        return "Documenttype{" +
+                "documenttypeId='" + documenttypeId + '\'' +
+                ", documenttypeName='" + documenttypeName + '\'' +
+                ", documenttypeRemark='" + documenttypeRemark + '\'' +
+                ", documenttypeIsdelete=" + documenttypeIsdelete +
+                '}';
+    }
 }

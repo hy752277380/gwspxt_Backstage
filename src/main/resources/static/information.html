@@ -76,7 +76,7 @@
                                         <div class="col-md-2">
                                             <span class="form-control" style="border:0;background:transparent;">{{userData.userAccount}}</span>
                                             <input class="form-control" id="userId"
-                                                       style="border:0;background:transparent;" v-model="userData.userId"
+                                                   style="border:0;background:transparent;" v-model="userData.userId"
                                                    type="hidden">
 
                                         </div>
@@ -121,7 +121,8 @@
                                         <label class="col-sm-2 control-label">电话:</label>
                                         <div class="col-md-5">
                                             <input class="form-control" id="userPhonenumber"
-                                                   v-model="userData.userPhonenumber" type="text">
+                                                   v-model="userData.userPhonenumber" onclick="checkMobile()"
+                                                   type="text">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -135,7 +136,8 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">简介:</label>
                                         <div class="col-md-5">
-                                            <textarea rows="4" id="userIntroduction" class="form-control" type="text" v-model="userData.userIntroduction"></textarea>
+                                            <textarea rows="4" id="userIntroduction" class="form-control" type="text"
+                                                      v-model="userData.userIntroduction"></textarea>
                                         </div>
 
                                     </div>
@@ -201,22 +203,19 @@
             hasNextPage: false,
         },
     }
-    console.log(data.user.guser);
-    console.log(data.user.department);
-    console.log(data.user.position);
     var reviewDocument = new Vue({
         el: "#main",
         data: data,
-        methods:{
-            getUserInfo(pramas){
-              $.post('/gwspxt/getUserById',pramas,function (response) {
-                  data.userData=response;
-              })
+        methods: {
+            getUserInfo(pramas) {
+                $.post('/gwspxt/getUserById', pramas, function (response) {
+                    data.userData = response;
+                })
             },
 
         },
-        mounted(){
-          this.getUserInfo({userId:data.user.guser.userId})
+        mounted() {
+            this.getUserInfo({userId: data.user.guser.userId})
         },
         components: {
             'asideComponent': Layout,
@@ -230,14 +229,31 @@
         var userEmail = $('#userEmail').val();
         var userIntroduction = $('#userIntroduction').val();
         var userId = $('#userId').val();
+
+        if (!userPhonenumber) {
+            spop({template: `手机号不能为空`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (userPhonenumber && !/^1[3|4|5|8]\d{9}$/.test(userPhonenumber)) {
+            spop({template: `手机格式不正确`, style: "error", autoclose: 2000});
+            return;
+        }
+
+        if (!userEmail) {
+            spop({template: `邮箱不能为空`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (userEmail && !userEmail.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) {
+            spop({template: `邮箱格式不正确`, style: "error", autoclose: 2000});
+            return;
+        }
+
         var data = {
             "userId": userId,
             "userPhonenumber": userPhonenumber,
             "userEmail": userEmail,
             "userIntroduction": userIntroduction,
-
         }
-
         $.ajax({
             type: "post",
             url: "/gwspxt/updatePersonInfo",
@@ -245,8 +261,7 @@
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(data),
             success: function (data) {
-                console.log(data);
-                if(data.msg=='updateSuccess'){
+                if (data.msg == 'updateSuccess') {
                     spop({template: `修改成功`, style: "success", autoclose: 2000});
                 }
             }

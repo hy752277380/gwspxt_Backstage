@@ -35,32 +35,46 @@ var Layout = Vue.extend({
     <ul class="sidebar-menu">
     <li :class="name=='index'?'active':''"><a href="index.html"><i class="fa fa-home fa-fw"></i><span>首页</span></a></li>
     
-    <li :class="name=='approvalApplication'?'active':''"><a href="approvalApplication.html"><i class="fa fa-pencil-square-o fa-fw"></i><span>批阅申请</span></a></li>
+    <li v-if="permission([2,4,5])" :class="name=='approvalApplication'?'active':''"><a href="approvalApplication.html"><i class="fa fa-pencil-square-o fa-fw"></i><span>批阅申请</span></a></li>
     
-    <li :class="name=='addDocument'?'active':''"><a href="addDocument.html"><i class="fa fa-clipboard fa-fw"></i><span>添加文档</span></a></li>
+    <li v-if="permission([1,2,3,4,5])" :class="name=='addDocument'?'active':''"><a href="addDocument.html"><i class="fa fa-clipboard fa-fw"></i><span>添加文档</span></a></li>
     
-    <li :class="name=='reviewDocument'?'active':''"><a href="reviewDocument.html"> <i class="fa fa-th-list fa-fw"></i><span>文档查看</span></a></li>
+    <li v-if="permission([1,2,3,4,5])" :class="name=='reviewDocument'?'active':''"><a href="reviewDocument.html"> <i class="fa fa-th-list fa-fw"></i><span>文档查看</span></a></li>
     
-    <li :class="name=='documentManage'?'active':''"><a href="documentManage.html"><i class="fa fa-book fa-fw"></i><span>文档管理</span></a></li>
+    <li v-if="permission([1,2,3,4,5])" :class="name=='documentManage'?'active':''"><a href="documentManage.html"><i class="fa fa-book fa-fw"></i><span>文档管理</span></a></li>
     
-    <li :class="name=='checkDocument'?'active':''"><a href="checkDocument.html"><i class="fa fa-book fa-fw"></i><span>审核文档</span></a></li>
+    <li v-if="permission([2,4,5])" :class="name=='checkDocument'?'active':''"><a href="checkDocument.html"><i class="fa fa-book fa-fw"></i><span>审核文档</span></a></li>
     
-    <li :class="name=='information'?'active':''"><a href="information.html"><i class="fa fa-meh-o fa-fw"></i><span>个人信息</span></a></li>
+    <li v-if="permission([1,2,3,4,5])" :class="name=='information'?'active':''"><a href="information.html"><i class="fa fa-meh-o fa-fw"></i><span>个人信息</span></a></li>
 
-    <li :class="name=='journal'?'active':''"><a href="journal.html"><i class="fa fa-location-arrow fa-fw"></i><span>查看日志</span></a></li>
+    <li v-if="permission([1,2,3,4,5])" :class="name=='journal'?'active':''"><a href="journal.html"><i class="fa fa-location-arrow fa-fw"></i><span>查看日志</span></a></li>
     
-    <li :class="name=='departmentMemberManage'?'active':''"><a href="departmentMemberManage.html"><i class="fa fa-male fa-fw"></i><span>部门成员管理</span></a></li>
+    <li v-if="permission([2,4,5])" :class="name=='departmentMemberManage'?'active':''"><a href="departmentMemberManage.html"><i class="fa fa-male fa-fw"></i><span>部门成员管理</span></a></li>
     
-    <li :class="name=='accountManagement'?'active':''"><a href="accountManagement.html"><i class="fa fa-user fa-fw"></i><span>账号管理</span></a></li>
+    <li v-if="permission([5])" :class="name=='accountManagement'?'active':''"><a href="accountManagement.html"><i class="fa fa-user fa-fw"></i><span>账号管理</span></a></li>
     
-    <li :class="name=='departmentManagement'?'active':''"><a href="departmentManagement.html"><i class="fa fa-gavel fa-fw"></i><span>部门管理</span></a></li>
+    <li v-if="permission([5])" :class="name=='departmentManagement'?'active':''"><a href="departmentManagement.html"><i class="fa fa-gavel fa-fw"></i><span>部门管理</span></a></li>
     
-    <li :class="name=='processManagement'?'active':''"><a href="processManagement.html"><i class="fa fa-sitemap fa-fw"></i><span>流程管理</span></a></li>
+    <li v-if="permission([5])" :class="name=='processManagement'?'active':''"><a href="processManagement.html"><i class="fa fa-sitemap fa-fw"></i><span>流程管理</span></a></li>
     
     </ul>
     </section>
     <!-- /.sidebar -->
     </aside>`,
+    data() {
+        return {
+            permissionLevel: this.user.permission.permissionLevel
+        }
+    },
+    mounted() {
+        //console.log(JSON.parse(sessionStorage.getItem("loginUser")))
+    },
+    methods: {
+        permission(arr) {
+            var that = this;
+            return $.inArray(that.permissionLevel, arr) >= 0;
+        }
+    },
     props: ['user', 'name']
 })
 

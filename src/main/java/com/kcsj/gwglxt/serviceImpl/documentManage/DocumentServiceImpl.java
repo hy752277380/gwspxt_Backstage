@@ -164,11 +164,8 @@ public class DocumentServiceImpl implements DocumentService {
 
     //按阅读权限整理出所有文档
     @Override
-    public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String searchInfo,String documentType,Integer documentConfidential,String documentDept) {
-        String documentNo = searchInfo;
-        String documentTitle = searchInfo;
-        String userName = searchInfo;
-        List<DocumentCustom> list = documentMapper.getAllDocument(documentType,documentConfidential,documentDept,documentNo,documentTitle,userName);
+    public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String fuzzySearch,String documentType,Integer documentConfidential,String documentDept) {
+        List<DocumentCustom> list = documentMapper.getAllDocument(documentType,documentConfidential,documentDept,fuzzySearch);
         Borrowing borrowing;
         for (DocumentCustom documentCustom : list) {
             if (documentCustom.getDepartment().getDepartmentName() != departmentName) {

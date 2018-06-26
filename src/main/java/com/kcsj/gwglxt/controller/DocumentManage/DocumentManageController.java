@@ -26,12 +26,12 @@ public class DocumentManageController {
     /**********************************************************文档添加查询及流程模块********************************************/
     //获取全部文档
     @RequestMapping("/getAllDocument")
-    public QueryForPage getAllDocument(String searchInfo, int currentPage,String documentType,Integer documentConfidential,String documentDept, HttpSession httpSession) {
+    public QueryForPage getAllDocument(String fuzzySearch, int currentPage,String documentType,Integer documentConfidential,String documentDept, HttpSession httpSession) {
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
         String departmentName = loginCustom.getDepartment().getDepartmentName();
         String userId = loginCustom.getGuser().getUserId();
-        QueryForPage queryForPage = documentService.getAllDocument(departmentName, userId, currentPage, searchInfo,documentType,documentConfidential,documentDept);
+        QueryForPage queryForPage = documentService.getAllDocument(departmentName, userId, currentPage, fuzzySearch,documentType,documentConfidential,documentDept);
         return queryForPage;
     }
 

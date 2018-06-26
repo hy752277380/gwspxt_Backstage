@@ -42,7 +42,7 @@ public interface DocumentMapper {
 
     List<DocumentCustom> getDocumentByState(@Param("documentType") String documentType,@Param("documentConfidential") Integer documentConfidential,@Param("documentState") Integer documentState,@Param("documentUser") String documentUser,@Param("documentNo") String documentNo,@Param("documentTitle")String documentTitle);
     //查询所有文档
-    List<DocumentCustom> getAllDocument(@Param("documentType")String documentType,@Param("documentConfidential")Integer documentConfidential,@Param("documentDept")String documentDept,@Param("documentNo") String documentNo,@Param("documentTitle")String documentTitle,@Param("userName")String userName);
+    List<DocumentCustom> getAllDocument(@Param("documentType")String documentType,@Param("documentConfidential")Integer documentConfidential,@Param("documentDept")String documentDept,@Param("fuzzySearch") String fuzzySearch);
     //联合查询文档信息
     DocumentCustom documentBaseInfo(String documentId);
 

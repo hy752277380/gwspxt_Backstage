@@ -39,7 +39,7 @@ public interface DocumentService {
     //查询该文档所走流程的每一个流程节点
     List<ProcessNode> getAllProcessNode(String processNodeProcess);
     //查询所有文档
-    QueryForPage getAllDocument(String deaprtmentName, String userId, int currentPage,String searchInfo,String documentType,Integer documentConfidential,String documentDept);
+    QueryForPage getAllDocument(String deaprtmentName, String userId, int currentPage,String fuzzySearch,String documentType,Integer documentConfidential,String documentDept);
     //联合查询文档信息
     DocumentCustom documentBaseInfo(String documentId);
 

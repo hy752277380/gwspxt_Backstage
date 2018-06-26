@@ -606,8 +606,8 @@ and doc.document_isdelete = '0'
 <if test="documentDept!=null and documentDept!=''">
      and doc.document_dept = #{documentDept}
 </if>
-        <if test="documentNo!=null">
-            and (doc.document_no like CONCAT('%',#{documentNo},'%' ) or doc.document_title like CONCAT('%',#{documentTitle},'%' ) or gu.user_name like CONCAT('%',#{userName},'%' ))
+        <if test="fuzzySearch!=null">
+            and (doc.document_no like CONCAT('%',#{fuzzySearch},'%' ) or doc.document_title like CONCAT('%',#{fuzzySearch},'%' ) or gu.user_name like CONCAT('%',#{fuzzySearch},'%' ))
         </if>
     </select>
     <select id="documentBaseInfo" parameterType="java.lang.String" resultMap="DocumentDetailInfo">

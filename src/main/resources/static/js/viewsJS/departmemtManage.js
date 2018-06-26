@@ -5,8 +5,8 @@ $(function () {
         deptData: '', //所有数据
         showData: '', //显示在页面的数据
         ready: false,
-        index:'',
-        modifyModalData:'',
+        index: '',
+        modifyModalData: '',
         page: {
             allRow: 1,
             totalPage: 1,
@@ -15,21 +15,11 @@ $(function () {
             hasPreviousPage: false,
             hasNextPage: false,
         },
-        
+        searchData: {
+            fuzzySearch: '',
+        },
         docDepartment: 0,
     }
-
-    /*   表头的查询方法封装，暂未封装完全 */
-    var searchUtil = Vue.extend({
-        template: `<span role="presentation" class="dropdown">
-                   <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
-                   <ul class="dropdown-menu">
-                       <li v-for="item in query.items"><a href="javascript:;" :key="item.key">{{item.value}}</a></li>
-                   </ul>
-                   </span>`,
-        props: ['query'],
-    });
-
 
     var deptManage = new Vue({
         el: "#main",
@@ -50,14 +40,14 @@ $(function () {
             /* 获取数据 */
             getDeptInfo(params) {
                 $.post('/gwspxt/getAllDepartment', params, function (response) {
-                    deptManage.deptData = response.list;
-                    deptManage.page.currentPage = response.currentPage;
-                    deptManage.page.totalPage = response.totalPage;
-                    deptManage.page.allRow = response.allRow;
-                    deptManage.page.currentPage = response.currentPage;
-                    deptManage.page.hasPreviousPage = response.hasPreviousPage;
-                    deptManage.page.hasNextPage = response.hasNextPage;
-                    deptManage.ready = true;
+                    data.deptData = response.list;
+                    data.page.currentPage = response.currentPage;
+                    data.page.totalPage = response.totalPage;
+                    data.page.allRow = response.allRow;
+                    data.page.currentPage = response.currentPage;
+                    data.page.hasPreviousPage = response.hasPreviousPage;
+                    data.page.hasNextPage = response.hasNextPage;
+                    data.ready = true;
                 }, 'json');
             },
             /* 页码改变时候触发的事件，不可缺少 */
@@ -68,17 +58,23 @@ $(function () {
             editDepartment(index) {
                 var newDept = data.deptData[index];
                 data.modifyModalData = newDept;
-               /* $('#editModal').modal("show");*/
+                /* $('#editModal').modal("show");*/
             },
-            intoPosition(index){
+            intoPosition(index) {
                 var into_position = {
-                    "lhs_dept":this.deptData[index].departmentName,
+                    "lhs_dept": this.deptData[index].departmentName,
                     "dept_id": this.deptData[index].departmentId,
                 }
                 sessionStorage.setItem('into_position', JSON.stringify(into_position));
                 location.href = "/gwspxt/departmentPosition";
             },
-
+            search(msg) {
+                data.searchData[msg.searchName] = msg.key;
+                this.getInfo({
+                    currentPage: 1,
+                    fuzzySearch: data.searchData.fuzzySearch
+                })
+            },
         },
         mounted() {
             this.getDeptInfo({currentPage: 1});

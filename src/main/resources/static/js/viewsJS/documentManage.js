@@ -62,6 +62,7 @@ $(function () {
             documentType: 0,
             documentConfidential: 0,
             documentState: 0,
+            fuzzySearch: ''
         }
     }
 
@@ -148,9 +149,6 @@ $(function () {
                     }
                 }, 'json');
             },
-            test(index) {
-                console.log(index);
-            },
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
@@ -159,7 +157,8 @@ $(function () {
                     currentPage: pageIndex,
                     documentType: data.searchData.documentType,
                     documentConfidential: data.searchData.documentConfidential,
-                    documentState: data.searchData.documentState
+                    documentState: data.searchData.documentState,
+                    fuzzySearch: data.searchData.fuzzySearch
                 });
             },
             search(msg) {
@@ -168,7 +167,8 @@ $(function () {
                     currentPage: 1,
                     documentType: data.searchData.documentType,
                     documentConfidential: data.searchData.documentConfidential,
-                    documentState: data.searchData.documentState
+                    documentState: data.searchData.documentState,
+                    fuzzySearch: data.searchData.fuzzySearch
                 })
 
             },

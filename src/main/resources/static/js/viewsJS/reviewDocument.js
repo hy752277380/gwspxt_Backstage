@@ -47,6 +47,7 @@ $(function () {
             documentType: '',
             documentConfidential: 0,
             documentState: 0,
+            fuzzySearch: '',
         }
     }
 
@@ -95,12 +96,12 @@ $(function () {
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
-                console.log(data.page.currentPage);
                 this.getInfo({
                     currentPage: pageIndex,
                     documentType: data.searchData.documentType,
                     documentConfidential: data.searchData.documentConfidential,
-                    documentState: data.searchData.documentState
+                    documentState: data.searchData.documentState,
+                    fuzzySearch: data.searchData.fuzzySearch
                 });
             },
             /*申请借阅事件*/
@@ -141,13 +142,10 @@ $(function () {
                      }
                  }, 'json');*/
             },
-            reviewDocument(index){
-                var lhs_edit = {
-                    "doc_id": this.docData[index].document.documentId
-                }
+            reviewDocument(index) {
+                var lhs_edit = {"doc_id": this.docData[index].document.documentId}
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
                 location.href = "/gwspxt/reviewDetailDocument";
-
             },
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;
@@ -155,7 +153,8 @@ $(function () {
                     currentPage: 1,
                     documentType: data.searchData.documentType,
                     documentConfidential: data.searchData.documentConfidential,
-                    documentState: data.searchData.documentState
+                    documentState: data.searchData.documentState,
+                    fuzzySearch: data.searchData.fuzzySearch
                 })
             },
         },

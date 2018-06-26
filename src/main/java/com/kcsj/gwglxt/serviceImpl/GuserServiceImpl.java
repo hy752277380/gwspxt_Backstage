@@ -293,7 +293,7 @@ public class GuserServiceImpl implements GuserService {
         logMapper.insert(log);
         Guser guser = new Guser();
         guser.setUserId(loginCustom.getGuser().getUserId());
-        guser.setUserPassword(newPassword);
+        guser.setUserPassword(md5.GetMD5Code(newPassword));
         return guserMapper.updateByPrimaryKeySelective(guser);
     }
 

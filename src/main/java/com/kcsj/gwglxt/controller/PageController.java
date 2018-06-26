@@ -114,6 +114,11 @@ public class PageController {
         return "departmentMemberManage/reviewPersonJournal.html";
     }
 
+    /*查看文本内容*/
+    @RequestMapping("/reviewContent")
+    public String reviewContent() {
+        return "reviewContent.html";
+
     /*查看本人全部消息通知*/
     @RequestMapping("/messageManagement")
     public String messageManagement() {

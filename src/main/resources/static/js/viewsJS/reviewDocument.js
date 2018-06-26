@@ -146,8 +146,7 @@ $(function () {
                     "doc_id": this.docData[index].document.documentId
                 }
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
-                location.href = "/gwspxt/reviewDetailDocument";
-
+                location.href = "/gwspxt/reviewContent";
             },
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;

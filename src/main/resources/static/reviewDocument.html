@@ -83,9 +83,10 @@
                                 <div class="panel-body table-responsive">
                                     <div class="box-tools m-b-15">
                                         <div class="input-group">
-                                            <input type="text" name="table_search"
+                                            <input type="text" name="table_search" placeholder="Search"
                                                    class="form-control input-sm pull-right" style="width: 150px;"
-                                                   placeholder="Search"/>
+                                                   v-model="searchData.fuzzySearch"
+                                                   @keyup="search({searchName:'fuzzySearch',key:searchData.fuzzySearch})"/>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
                                                 </button>
@@ -100,10 +101,15 @@
                                             <th>文档标题</th>
                                             <!--<th>文档类型<span class="caret"></span></th>-->
                                             <th>
-                                                <search-util :query="docType" :search-name="'documentType'" @search="search"></search-util>
+                                                <search-util :query="docType" :search-name="'documentType'"
+                                                             @search="search"></search-util>
                                             </th>
                                             <th>拟稿人</th>
-                                            <th><search-util :query="docConfidential" :search-name="'documentConfidential'" @search="search"></search-util></th>
+                                            <th>
+                                                <search-util :query="docConfidential"
+                                                             :search-name="'documentConfidential'"
+                                                             @search="search"></search-util>
+                                            </th>
                                             <th>拟稿部门<span class="caret"></span></th>
                                             <th>发布时间</th>
                                             <th>操作</th>
@@ -137,9 +143,9 @@
                                                                :index="index"
                                                                @action="applyBorrowing">
                                                     </sure-util>
-                                                  <!--  <button @click="applyBorrowing(index)" type="button"
-                                                            class="btn btn-primary btn-sm">申请查看
-                                                    </button>-->
+                                                    <!--  <button @click="applyBorrowing(index)" type="button"
+                                                              class="btn btn-primary btn-sm">申请查看
+                                                      </button>-->
                                                 </template>
                                                 <!-- 非本部门已有借阅文档 -->
                                                 <template v-else-if="doc.borrowing.borrowingState==2">

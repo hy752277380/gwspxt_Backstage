@@ -15,21 +15,11 @@ $(function () {
             hasPreviousPage: false,
             hasNextPage: false,
         },
-
+        searchData: {
+            fuzzySearch: '',
+        },
         docDepartment: 0,
     }
-
-    /*   表头的查询方法封装，暂未封装完全 */
-    var searchUtil = Vue.extend({
-        template: `<span role="presentation" class="dropdown">
-                   <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
-                   <ul class="dropdown-menu">
-                       <li v-for="item in query.items"><a href="javascript:;" :key="item.key">{{item.value}}</a></li>
-                   </ul>
-                   </span>`,
-        props: ['query'],
-    });
-
 
     var processManage = new Vue({
         el: "#main",
@@ -63,7 +53,10 @@ $(function () {
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
-                this.getProcessInfo({currentPage: pageIndex});
+                this.getProcessInfo({
+                    currentPage: pageIndex,
+                    fuzzySearch: data.searchData.fuzzySearch
+                });
             },
             editProgress(index) {
                 var newProgress = data.processData[index];
@@ -79,7 +72,6 @@ $(function () {
                 sessionStorage.setItem('into_processNode', JSON.stringify(into_processNode));
                 location.href = "/gwspxt/processNode";
             },
-
             deleteProcess(index) {
                 let processId = data.processData[index].processId;
                 let that = this;
@@ -95,7 +87,10 @@ $(function () {
             }
         },
         mounted() {
-            this.getProcessInfo({currentPage: 1});
+            this.getProcessInfo({
+                currentPage: 1,
+                fuzzySearch: data.searchData.fuzzySearch
+            });
         },
         components: {
             'asideComponent': Layout,

@@ -3,7 +3,22 @@ $(function () {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
         name: 'accountManagement',
         personData: [], //所有数据
-        modalPersonData: {
+        modalModifyPersonData: {
+            userId: '',
+            userAccount: '',
+            userPassword: '',
+            userName: '',
+            userSex: '',
+            userDepartment: '',
+            userPosition: '',
+            userPhonenumber: '',
+            userEmail: '',
+            userIntroduction: '',
+            userPicture: '',
+            creationTime: '',
+            userIsdelete: ''
+        },
+        modalAddPersonData: {
             userId: '',
             userAccount: '',
             userPassword: '',
@@ -22,6 +37,9 @@ $(function () {
         allDepartment: [],
         allDepartmentOfPosition: {},
         ready: false,
+        searchData: {
+            fuzzySearch: '',
+        },
         page: {
             allRow: 1,
             totalPage: 1,
@@ -73,17 +91,24 @@ $(function () {
                     that.getDepartmentOfPosition();
                 }, 'json');
             },
-            getDepartmentOfPosition() {
-                $.post('/gwspxt/getPoPeByDpt', {department: data.modalPersonData.userDepartment}, function (response) {
+            getDepartmentOfPosition(action) {
+                let dep = {};
+                if (action == "modify") {
+                    dep = data.modalModifyPersonData.userDepartment;
+                } else if (action == "add") {
+                    dep = data.modalAddPersonData.userDepartment;
+                } else {
+                    dep = null;
+                }
+                $.post('/gwspxt/getPoPeByDpt', {department: dep}, function (response) {
                     data.allDepartmentOfPosition = response;
                 }, 'json');
             },
             modify(index) {
-                let that = this;
-                data.modalPersonData = data.personData[index].guser;
-                that.getDepartmentOfPosition();
+                data.modalModifyPersonData = data.personData[index].guser;
+                this.getDepartmentOfPosition('modify');
                 data.modalAction = false;
-                $('#myModal').modal('show');
+                $('#modalModify').modal('show');
             },
             deleteP(index) {
                 let person = data.personData[index].guser;
@@ -112,7 +137,7 @@ $(function () {
                 }, 'json');
             },
             modalAdd() {
-                let person = data.modalPersonData;
+                let person = data.modalAddPersonData;
                 const that = this;
                 $.post('/gwspxt/andUser', person, function (response) {
                     if (response.msg == "updateSuccess") {
@@ -125,7 +150,7 @@ $(function () {
                 }, 'json');
             },
             modalModify() {
-                let person = data.modalPersonData;
+                let person = data.modalModifyPersonData;
                 const that = this;
                 $.ajax({
                     type: "POST",
@@ -143,23 +168,30 @@ $(function () {
                         }
                     }
                 });
-               /* $.post('/gwspxt/updateUserinfo', person, function (response) {
-                    if (response.msg == "updateSuccess") {
-                        spop({template: `修改成功`, style: "success", autoclose: 2000});
-                        that.getInfo({currentPage: data.page.currentPage})
-                    }
-                    else if (response.msg == "updateFailed") {
-                        spop({template: `修改失败`, style: "error", autoclose: 2000});
-                    }
-                }, 'json');*/
-            }
+                /* $.post('/gwspxt/updateUserinfo', person, function (response) {
+                     if (response.msg == "updateSuccess") {
+                         spop({template: `修改成功`, style: "success", autoclose: 2000});
+                         that.getInfo({currentPage: data.page.currentPage})
+                     }
+                     else if (response.msg == "updateFailed") {
+                         spop({template: `修改失败`, style: "error", autoclose: 2000});
+                     }
+                 }, 'json');*/
+            },
+            search(msg) {
+                data.searchData[msg.searchName] = msg.key;
+                this.getInfo({
+                    currentPage: 1,
+                    fuzzySearch: data.searchData.fuzzySearch
+                })
+            },
         },
         mounted() {
             this.getInfo({currentPage: 1});
             this.getAllDepartment();
-            $('#myModal').on('hidden.bs.modal', function () {
-                for (let item in data.modalPersonData) {
-                    data.modalPersonData.item = '';
+            $('#modalAdd').on('hidden.bs.modal', function () {
+                for (let item in data.modalAddPersonData) {
+                    data.modalAddPersonData[item] = '';
                 }
             })
         },

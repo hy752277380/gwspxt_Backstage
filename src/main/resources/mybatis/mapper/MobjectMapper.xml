@@ -243,6 +243,10 @@ WHERE
 	mo.mobject_message = me.message_id
 AND mo.mobject_user = #{mobjectUser}
 and me.message_isdelete= '0'
+order by message_time DESC
+<if test="begin!=0||end!=0">
+    limit #{begin},#{end}
+</if>
     </select>
     <select id="getUnReadMsg" parameterType="java.lang.String" resultMap="messageInfo">
         SELECT

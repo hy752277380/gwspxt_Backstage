@@ -58,4 +58,15 @@ public class Department {
     public void setDepartmentIsdelete(Integer departmentIsdelete) {
         this.departmentIsdelete = departmentIsdelete;
     }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "departmentId='" + departmentId + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", departmentPhone='" + departmentPhone + '\'' +
+                ", departmentIsdelete=" + departmentIsdelete +
+                ", memberCount=" + memberCount +
+                '}';
+    }
 }

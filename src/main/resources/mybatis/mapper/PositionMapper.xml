@@ -237,7 +237,21 @@
         where position_id = #{positionId,jdbcType=CHAR}
     </update>
     <select id="getDptManager" parameterType="java.lang.String" resultMap="BaseResultMap">
-        SELECT MAX(position_permission) FROM position where position_dept = #{positionDept} and po.position_isdelete = '0'
+        SELECT
+	*
+FROM
+	position
+WHERE
+	position_permission = (
+		SELECT
+			MAX(position_permission)
+		FROM
+			position
+		WHERE
+			position_dept = #{positionDept}
+		AND position_isdelete = '0'
+	)and position_dept = #{positionDept}
+		AND position_isdelete = '0'
     </select>
     <select id="getPositionByDpt" parameterType="java.lang.String" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>

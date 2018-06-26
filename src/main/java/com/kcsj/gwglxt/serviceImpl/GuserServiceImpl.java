@@ -228,7 +228,7 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public int batchDelete(String[] userIds,LoginCustom loginCustom) {
         int result = 0;
-        if (userIds==null&&"".equals(userIds)){
+        if (userIds.length==0){
             return 0;
         }else{
             //遍历id删除

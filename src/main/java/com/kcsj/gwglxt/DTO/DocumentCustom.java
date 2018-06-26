@@ -59,4 +59,15 @@ public class DocumentCustom {
         this.borrowing = borrowing;
     }
 
+    @Override
+    public String toString() {
+        return "DocumentCustom{" +
+                "document=" + document +
+                ", documenttype=" + documenttype +
+                ", department=" + department +
+                ", guser=" + guser +
+                ", process=" + process +
+                ", borrowing=" + borrowing +
+                '}';
+    }
 }

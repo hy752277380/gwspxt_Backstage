@@ -7,6 +7,7 @@ $(function () {
         ready: false,
         index: '',
         modifyModalData: '',
+        departmentData:'',
         page: {
             allRow: 1,
             totalPage: 1,
@@ -50,6 +51,11 @@ $(function () {
                     data.ready = true;
                 }, 'json');
             },
+            getdepartment() {
+                $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
+                    data.departmentData = response;
+                }, 'json');
+            },
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
@@ -78,6 +84,7 @@ $(function () {
         },
         mounted() {
             this.getDeptInfo({currentPage: 1});
+            this.getdepartment({});
         },
         components: {
             'asideComponent': Layout,

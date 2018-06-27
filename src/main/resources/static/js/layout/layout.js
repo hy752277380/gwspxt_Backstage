@@ -368,7 +368,7 @@ var sureUtil = Vue.extend({
                             that.perform();
                         },
                     },
-                }, 200)
+                }, 10)
             })
         },
         perform() {
@@ -377,7 +377,7 @@ var sureUtil = Vue.extend({
     },
     mounted() {
         $(this.$refs[this.index]).popover();
-        /*$('[data-toggle="popover"]').popover();*/
+        $('[data-toggle="popover"]').popover();
     },
     props: {
         btnClass: {default: "btn btn-default btn-sm"},

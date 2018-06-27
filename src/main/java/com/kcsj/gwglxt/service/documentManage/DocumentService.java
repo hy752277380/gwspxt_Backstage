@@ -50,7 +50,7 @@ public interface DocumentService {
 
     List<Documenttype> getAllDocType();
 
-    QueryForPage getAllProcess(int currentPage);
+    QueryForPage getAllProcess(int currentPage,String fuzzySearch);
 
     DocumentCustom insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
 

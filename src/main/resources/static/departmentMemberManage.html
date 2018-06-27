@@ -102,7 +102,8 @@
                                             <th>操作</th>
                                         </tr>
                                         <tbody v-cloak>
-                                        <tr v-for="(person,index) in personData">
+                                        <tr v-for="(person,index) in personData"
+                                            v-if="person.permission.permissionLevel!=5">
                                             <td>{{index+1}}</td>
                                             <td>{{person.guser.userAccount}}</td>
                                             <td>{{person.guser.userName}}</td>
@@ -202,10 +203,11 @@
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <label>职称</label>
+                                    <label>职务</label>
                                     <select style="width: 200px;" type="password" v-model="allocatePerson.userPosition"
                                             class="form-control">
                                         <option v-for="position in allDepartmentOfPosition"
+                                                v-if="position.position.positionPermission<=user.permission.permissionLevel"
                                                 :value="position.position.positionId">{{position.position.positionName}}
                                         </option>
                                     </select>

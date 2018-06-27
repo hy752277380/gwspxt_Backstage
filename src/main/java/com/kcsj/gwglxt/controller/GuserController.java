@@ -101,7 +101,8 @@ public class GuserController {
         String result;
         //获取session内容
         LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-        if (password==md5.GetMD5Code(loginCustom.getGuser().getUserPassword())){
+        LoginCustom userInfo = guserService.getPersonalInfo(loginCustom.getGuser().getUserId());
+        if (md5.GetMD5Code(password).equals(userInfo.getGuser().getUserPassword())){
             int updateResult = guserService.changePassword(newPassword,loginCustom);
             //判断执行文档添加操作返回的结果，返回结果为数据库中受影响行数
             if (updateResult == 0) {
@@ -125,7 +126,12 @@ public class GuserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return countByMouth;
+        if(countByMouth==null){
+            CountByMouth countByMouth1 = new CountByMouth();
+            return countByMouth1.allZero();
+        }else {
+            return countByMouth;
+        }
     }
 
     //计算总人数
@@ -194,7 +200,12 @@ public class GuserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return countByMouth;
+        if(countByMouth==null){
+            CountByMouth countByMouth1 = new CountByMouth();
+            return countByMouth1.allZero();
+        }else {
+            return countByMouth;
+        }
     }
     //部门文档月份统计
     @RequestMapping("/countDptDocumentByMouth")
@@ -207,7 +218,12 @@ public class GuserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return countByMouth;
+        if(countByMouth==null){
+            CountByMouth countByMouth1 = new CountByMouth();
+            return countByMouth1.allZero();
+        }else {
+            return countByMouth;
+        }
     }
     //个人文档月份统计
     @RequestMapping("/countPersonalDocumentByMouth")

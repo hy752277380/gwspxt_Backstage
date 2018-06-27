@@ -252,7 +252,7 @@
                     }, response => {
                         if (response.msg == "updateSuccess") {
                             spop({template: `更改密码成功`, style: "success", autoclose: 2000});
-                            $('#ModifyPassword').modal('hidden');
+                            $('#ModifyPassword').modal('hide');
                         } else if (response.msg == "updateFailed") {
                             spop({template: `更改密码失败`, style: "error", autoclose: 2000});
                         } else if (response.msg == "oldPasswordError") {
@@ -264,11 +264,12 @@
         },
         mounted() {
             this.getUserInfo({userId: data.user.guser.userId})
-            $('#ModifyPassword').on('hidden.bs.modal', () => {
-                data.newPassword1 = '';
-                data.oldPassword = '';
-                data.newPassword2 = '';
-            });
+            $('#ModifyPassword').on('hidden.bs.modal', function () {
+                    data.newPassword1 = '';
+                    data.oldPassword = '';
+                    data.newPassword2 = '';
+                }
+            );
         },
         components: {
             'asideComponent': Layout,

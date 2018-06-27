@@ -128,7 +128,7 @@
                                         </tr>
                                         <tbody v-cloak v-if="ready">
                                         <tr v-for="(doc,index) of docData">
-                                            <td><input check="self" :doc-id="doc.document.documentId" type="checkbox">
+                                            <td><input name="checkID" check="self" :doc-id="doc.document.documentId" type="checkbox">
                                             </td>
                                             <td>{{doc.document.documentNo}}</td>
                                             <td>{{doc.document.documentTitle}}</td>
@@ -200,10 +200,10 @@
                                         <page-util @change="change" :page="page"></page-util>
                                     </div>
                                         <div style="float: right;margin-right: 70px;margin-top: 20px">
-                                            <button type="button" class="btn btn-danger"
-                                                    @click="deleteChooseDocument"><i
+                                            <!--<button type="button" class="btn btn-danger"
+                                                    @click="deleteBatchDocument"><i
                                                     class="fa fa-trash-o fa-fw"></i> 批量删除
-                                            </button>
+                                            </button>-->
                                         </div>
                                     </div>
                                 </div>

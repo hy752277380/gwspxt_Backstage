@@ -510,10 +510,10 @@ public class DocumentManageController {
 
     //获取所有流程
     @RequestMapping("/getAllProcess")
-    public QueryForPage getAllProcess(int currentPage) {
+    public QueryForPage getAllProcess(int currentPage,String fuzzySearch) {
         QueryForPage queryForPage = null;
         try {
-            queryForPage = documentService.getAllProcess(currentPage);
+            queryForPage = documentService.getAllProcess(currentPage,fuzzySearch);
         } catch (Exception e) {
             e.printStackTrace();
         }

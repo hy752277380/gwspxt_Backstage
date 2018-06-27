@@ -126,7 +126,12 @@ public class GuserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return countByMouth;
+        if(countByMouth==null){
+            CountByMouth countByMouth1 = new CountByMouth();
+            return countByMouth1.allZero();
+        }else {
+            return countByMouth;
+        }
     }
 
     //计算总人数
@@ -195,7 +200,12 @@ public class GuserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return countByMouth;
+        if(countByMouth==null){
+            CountByMouth countByMouth1 = new CountByMouth();
+            return countByMouth1.allZero();
+        }else {
+            return countByMouth;
+        }
     }
     //部门文档月份统计
     @RequestMapping("/countDptDocumentByMouth")
@@ -208,7 +218,12 @@ public class GuserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return countByMouth;
+        if(countByMouth==null){
+            CountByMouth countByMouth1 = new CountByMouth();
+            return countByMouth1.allZero();
+        }else {
+            return countByMouth;
+        }
     }
     //个人文档月份统计
     @RequestMapping("/countPersonalDocumentByMouth")

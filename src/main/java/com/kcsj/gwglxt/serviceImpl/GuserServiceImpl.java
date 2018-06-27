@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class GuserServiceImpl implements GuserService {
@@ -51,11 +52,13 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public int insertUser(Guser record,LoginCustom loginCustom) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        Random random = new Random();
+        int num = random.nextInt(10);
         record.setUserId(TeamUtil.getUuid());
         record.setUserPassword(md5.GetMD5Code("111111"));
         record.setCreationTime(df.format(new Date()));
         record.setUserIsdelete(0);
-        record.setUserPicture("1.gif");
+        record.setUserPicture(num+1+".gif");
         int result = guserMapper.insert(record);
         //添加操作日志
         Log log = new Log();

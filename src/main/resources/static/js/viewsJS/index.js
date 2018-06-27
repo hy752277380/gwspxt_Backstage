@@ -83,6 +83,10 @@ $(function () {
                 var that = this;
                 /*公司人数总数*/
                 $.post('/gwspxt/countUserByMouth', {}, function (response) {
+                    if (!response) {
+                        data.companyMemberState = true;
+                        return;
+                    }
                     let label = lineChartData.labels;
                     let num = 0;
                     let sum = 0;
@@ -98,6 +102,10 @@ $(function () {
                 }, 'json');
                 /*公司文档总数*/
                 $.post('/gwspxt/countDocumentByMouth', {}, function (response) {
+                    if (!response) {
+                        data.companyDocumentState = true;
+                        return;
+                    }
                     let label = lineChartData.labels;
                     let num = 0;
                     let sum = 0;
@@ -113,6 +121,10 @@ $(function () {
                 }, 'json');
                 /*部门文档总数*/
                 $.post('/gwspxt/countDptDocumentByMouth', {}, function (response) {
+                    if (!response) {
+                        data.departmentDocumentState = true;
+                        return;
+                    }
                     let label = lineChartData.labels;
                     let num = 0;
                     let sum = 0;
@@ -128,6 +140,10 @@ $(function () {
                 }, 'json');
                 /*个人文档总数*/
                 $.post('/gwspxt/countPersonalDocumentByMouth', {}, function (response) {
+                    if (!response) {
+                        data.personalDocumentState = true;
+                        return;
+                    }
                     let label = lineChartData.labels;
                     let num = 0;
                     let sum = 0;

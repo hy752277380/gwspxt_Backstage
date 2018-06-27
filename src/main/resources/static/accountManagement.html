@@ -227,13 +227,15 @@
                                 </option>
                             </select></td>
                         </tr>
-                        <tr colspan="4">
-                            <td>
+
+                        <tr>
+                            <td colspan="4">
                                 <p v-if="errors.length">
                                     <b>帐号信息包含以下错误，请检验帐号信息</b>
-                                <ul>
+                                <ol>
                                     <li v-for="error in errors"><span style="color: red;">{{ error }}</span></li>
-                                </ul>
+                                </ol>
+
                                 </p>
                             </td>
                         </tr>
@@ -307,9 +309,9 @@
                             <td colspan="4">
                                 <p v-if="errors.length">
                                     <b>帐号信息包含以下错误，请检验帐号信息</b>
-                                <ul>
+                                <ol>
                                     <li v-for="error in errors"><span style="color: red;">{{ error }}</span></li>
-                                </ul>
+                                </ol>
                                 </p>
                             </td>
                         </tr>

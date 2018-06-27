@@ -303,7 +303,7 @@
             borrowing_isdelete = #{borrowingIsdelete,jdbcType=INTEGER}
         where borrowing_id = #{borrowingId,jdbcType=CHAR}
     </update>
-    <select id="borrowingState" resultType="com.kcsj.gwglxt.entity.Borrowing">
+    <select id="borrowingState" resultMap="BaseResultMap">
         SELECT
 	*
 FROM

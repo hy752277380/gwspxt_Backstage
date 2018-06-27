@@ -62,7 +62,7 @@ public class DocumentManageController {
             document.setDocumentLocation(0);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             document.setCreationTime(df.format(new Date()));
-            document.setDocumentState(1);
+            document.setDocumentState(2);
             document.setDocumentSpeed(document.getDocumentSpeed());
             document.setDocumentIsdelete(0);
             //将对象存入数据库
@@ -103,7 +103,7 @@ public class DocumentManageController {
             log.setLogContent("修改了"+document.getDocumentTitle()+"文档内容。");
             documentService.insertLog(log);
             document.setDocumentLocation(0);
-            document.setDocumentState(1);
+            document.setDocumentState(2);
             document.setCreationTime(df.format(new Date()));
             document.setDocumentIsdelete(0);
             document.setDocumentUser(loginCustom.getGuser().getUserId());
@@ -128,7 +128,7 @@ public class DocumentManageController {
             //根据文档id修改文档状态
             String documentId = document.getDocumentId();
             //定义当前文档类型
-            Integer documentState = 2;
+            Integer documentState = 3;
             //根据得到的文档id获得文档信息
             Document document1 = documentService.selectByPrimaryKey(documentId);
             //更新文档状态为2
@@ -191,11 +191,11 @@ public class DocumentManageController {
             //根据流程所处不同节点改变文档状态：当前流程所处节点为1是文档状态改为3，当前流程所处节点位置为最后一位是文档状态改为4
             if (documentLocation == 1) {
                 documentProcessBegin = df.format(new Date());
-                documentService.updateDocumentState(3, documentProcessBegin, documentProcessFinish, documentId);
+                documentService.updateDocumentState(4, documentProcessBegin, documentProcessFinish, documentId);
                 System.out.println("1111111111");
             } else if (documentLocation == maxStep) {
                 documentProcessFinish = df.format(new Date());
-                documentService.updateDocumentState(4, documentProcessBegin, documentProcessFinish, documentId);
+                documentService.updateDocumentState(5, documentProcessBegin, documentProcessFinish, documentId);
                 System.out.println("2");
                 Message message = new Message();
                 String messageId = TeamUtil.getUuid();
@@ -365,7 +365,8 @@ public class DocumentManageController {
 
     //申请批阅文档
     @RequestMapping("/applyRead")
-    public DocumentCustom applyRead(@RequestBody DocumentCustom documentCustom, HttpSession httpSession) {
+    public String applyRead(@RequestBody DocumentCustom documentCustom, HttpSession httpSession) {
+        String result;
         DocumentCustom documentCustomNew = null;
         try {
             System.out.println("文档内容为："+documentCustom);
@@ -374,7 +375,13 @@ public class DocumentManageController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return documentCustomNew;
+        if(documentCustomNew!=null){
+            result = "applySuccess";
+            return "{\"msg\":\"" + result + "\"}";
+        }else {
+            result = "applyFailed";
+            return "{\"msg\":\"" + result + "\"}";
+        }
     }
 
     //同意借阅文档

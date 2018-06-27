@@ -155,10 +155,12 @@ $(function () {
                 }
             },
             modify(index) {
-                data.modalModifyPersonData = data.personData[index].guser;
-                this.getDepartmentOfPosition('modify');
-                data.modalAction = false;
-                $('#modalModify').modal('show');
+                $.post('/gwspxt/getUserById', {userId: data.personData[index].guser.userId}, response => {
+                    data.modalModifyPersonData = response;
+                    this.getDepartmentOfPosition('modify');
+                    data.modalAction = false;
+                    $('#modalModify').modal('show');
+                }, 'json');
             },
             modalModify() {
                 this.errors = [];

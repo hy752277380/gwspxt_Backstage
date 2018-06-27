@@ -4,6 +4,7 @@ $(function () {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
         name: 'journal',
         logData: [], //所有数据
+        logMonthNumber: [],
         ready: false,
         page: {
             allRow: 1,
@@ -19,23 +20,41 @@ $(function () {
         el: "#main",
         data: data,
         methods: {
-            label($event) {
-                $('.event_year>li').removeClass('current');
-                $($event.target).parent('li').addClass('current');
-                var year = $($event.target).attr('for');
-                $('#' + year).parent().prevAll('div').slideUp(800);
-                $('#' + year).parent().slideDown(800).nextAll('div').slideDown(800);
-            },
             getInfo(params) {
-                $.post('/gwspxt/getAllLog', params, function (response) {
+                $.post('/gwspxt/getAllLog', params, response => {
                     data.logData = response;
                     data.ready = true;
+                    for (let item in response) {
+                        data.logMonthNumber.push(response[item].length);
+                    }
+                    this.renderChart();
                 }, 'json');
-            }
+            },
+            renderChart() {
+                let that = this;
+                var ctx = document.getElementById("journalChart");
+                var myChart = new Chart(ctx, {
+                    type: 'polarArea',
+                    data: {
+                        datasets: [
+                            {data: data.logMonthNumber, backgroundColor: that.randomColor(),}
+                        ],
+                        labels: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'],
+
+                    },
+                    options: {}
+                });
+            },
+            randomColor() {
+                let color = [];
+                for (let i = 10; i--;) {
+                    color.push('#' + Math.floor(Math.random() * 0xffffff).toString(16));
+                }
+                return color;
+            },
         },
         mounted() {
             this.getInfo({year: 2018});
-            $('[data-toggle="popover"]').popover({html: true});
         },
         components: {
             'asideComponent': Layout,

@@ -164,10 +164,9 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String fuzzySearch,String documentType,Integer documentConfidential,String documentDept) {
         List<DocumentCustom> list = documentMapper.getAllDocument(documentType,documentConfidential,documentDept,fuzzySearch);
-        List<Borrowing> borrowing;
         for (DocumentCustom documentCustom : list) {
             if (documentCustom.getDepartment().getDepartmentName() != departmentName) {
-                borrowing = borrowingMapper.borrowingState(documentCustom.getDocument().getDocumentId(), userId);
+                List<Borrowing> borrowing = borrowingMapper.borrowingState(documentCustom.getDocument().getDocumentId(), userId);
                 if (borrowing.size()!=0){
                     documentCustom.setBorrowing(borrowing.get(0));
                 }else {
@@ -342,7 +341,7 @@ public class DocumentServiceImpl implements DocumentService {
             documentProcessBegin = document.getDocumentProcessBegin();
         }
         //将文档状态更改为退回状态
-        int result = documentMapper.updateDocumentState(0,documentProcessBegin,documentProcessFinish,documentId);
+        int result = documentMapper.updateDocumentState(1,documentProcessBegin,documentProcessFinish,documentId);
         //生成审核人日志
         Log log = new Log();
         log.setLogId(TeamUtil.getUuid());

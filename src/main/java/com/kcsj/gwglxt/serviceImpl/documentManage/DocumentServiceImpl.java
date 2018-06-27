@@ -91,22 +91,17 @@ public class DocumentServiceImpl implements DocumentService {
     public int insertMessage(String documentId) {
         //根据id查询文档
         Document document = documentMapper.selectByPrimaryKey(documentId);
-        System.out.println("拿到的文档" + document);
         int location = document.getDocumentLocation();
         if (location == processNodeMapper.getMaxStep(document.getDocumentProcess())) {
-            System.out.println("流程审核完成。");
             return 0;
         }else{
             Integer nextLocation = location + 1;
             //利用当前文档所走流程和流程子节点步骤锁定下一个流程节点操作人所在的部门和所需要的职位
-            //System.out.println("我是两个参数"+document.getDocumentProcess()+"我他妈是分隔符"+nextLocation);
             ProcessNode processNode = processNodeMapper.getNextOne(document.getDocumentProcess(), nextLocation);
-            System.out.println("查出的流程节点" + processNode);
             if (processNode != null) {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                 //根据职位和部门查出人员
                 List<Guser> users = guserMapper.getUserByPosition(processNode.getProcessNodePosition(), processNode.getProcessNodeDepartment());
-                System.out.println("查出的用户" + users.get(0));
                 //遍历users
                 for(Guser guser:users){
                     Message message = new Message();
@@ -203,30 +198,23 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String fuzzySearch,String documentType,Integer documentConfidential) {
         List<ProcessNode> list = processNodeMapper.getProcessNodeByUser(loginCustom.getGuser().getUserDepartment(), loginCustom.getGuser().getUserPosition());
-        System.out.println("我要执行的流程节点有"+list.size());
         //定义Documentcustom集合
         List<DocumentCustom> list_doc = new ArrayList<>();
         //遍历该人员所需要任的所有流程子节点
         for (ProcessNode processNode : list) {
             //用每一个processNode里面的流程名和流程位置的前一位查询文档
             List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(documentType,documentConfidential,processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,fuzzySearch);
-            System.out.println("我要审核的"+documentCustoms.size());
             for (DocumentCustom documentCustom:documentCustoms){
                 list_doc.add(documentCustom);
             }
-            System.out.println("流程是"+processNode.getProcessNodeProcess());
-            System.out.println(processNode.getProcessNodeStep() - 1);
-            System.out.println(list_doc.size());
         }
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
-        System.out.println("我的長度是"+list_doc.size());
         int allRow = list_doc.size();//总记录数
         int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
         int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
         int currentPages = QueryForPage.countCurrentPage(currentPage);
         int endSet = pagesize * currentPage;
-        System.out.println(allRow);
         if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
             endSet = allRow;
         }
@@ -252,11 +240,8 @@ public class DocumentServiceImpl implements DocumentService {
         List<Guser> gusers = new ArrayList<>();
         //遍历所有职位
         for(Position position:positions){
-            System.out.println("参数1"+documentCustom.getDocument().getDocumentDept());
-            System.out.println("参数2"+position.getPositionId());
             gusers.addAll(guserMapper.getDptManager(documentCustom.getDocument().getDocumentDept(), position.getPositionId()));
         }
-        System.out.println("审核用户"+gusers);
         //添加申请借阅记录
         borrowing.setBorrowingId(TeamUtil.getUuid());
         borrowing.setBorrowingBorrowUser(loginCustom.getGuser().getUserId());
@@ -305,13 +290,11 @@ public class DocumentServiceImpl implements DocumentService {
         //分页
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
-        System.out.println("我的長度是"+documentCustoms.size());
         int allRow = documentCustoms.size();//总记录数
         int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
         int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
         int currentPages = QueryForPage.countCurrentPage(currentPage);
         int endSet = pagesize * currentPage;
-        System.out.println(allRow);
         if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
             endSet = allRow;
         }
@@ -483,7 +466,6 @@ public class DocumentServiceImpl implements DocumentService {
         int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
         int currentPages = QueryForPage.countCurrentPage(currentPage);
         int endSet = pagesize * currentPage;
-        System.out.println(allRow);
         if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
             endSet = allRow;
         }
@@ -507,13 +489,11 @@ public class DocumentServiceImpl implements DocumentService {
         List<com.kcsj.gwglxt.entity.Process> processes = processMapper.getAllProcess();
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
-        System.out.println("我的長度是"+processes.size());
         int allRow = processes.size();//总记录数
         int totalPage = QueryForPage.countTotalPage(pagesize, allRow);//总页数
         int offSet = QueryForPage.countOffset(pagesize, currentPage);//当前页开始记录数
         int currentPages = QueryForPage.countCurrentPage(currentPage);
         int endSet = pagesize * currentPage;
-        System.out.println(allRow);
         if (offSet + pagesize - 1 > allRow || offSet + pagesize - 1 == allRow) {
             endSet = allRow;
         }

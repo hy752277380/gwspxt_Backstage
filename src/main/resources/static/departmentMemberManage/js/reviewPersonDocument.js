@@ -58,16 +58,6 @@ $(function () {
         docDepartment: 0,
     }
 
-    var searchUtil = Vue.extend({
-        template: `<span role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{query.name}}<span class="caret"></span></a>
-                     <ul class="dropdown-menu">
-                         <li v-for="item in query.items"><a href="javascript:;" :key="item.key">{{item.value}}</a></li>
-                     </ul>
-                   </span>`,
-        props: ['query'],
-    });
-
     var documentManage = new Vue({
         el: "#main",
         data: data,
@@ -98,7 +88,7 @@ $(function () {
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
-                this.getInfo({currentPage: pageIndex});
+                this.getInfo({currentPage: pageIndex, userId: data.user.userId});
             },
             replaceConfidential(documentConfidential) {
                 switch (documentConfidential) {

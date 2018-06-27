@@ -40,7 +40,9 @@
     <![endif]-->
 
     <style type="text/css">
-
+        [v-cloak] {
+            display: none;
+        }
     </style>
 </head>
 
@@ -89,17 +91,19 @@
                                     </div>
                                     <div class="col-md-6">
 
-                                        <div class="panel-group" id="accordion" role="tablist"
+                                        <div v-cloak class="panel-group" id="accordion" role="tablist"
                                              aria-multiselectable="true">
 
-                                            <div class="panel panel-default" v-for="(logs,index) in logData">
+                                            <div style="margin-top: 10px" class="panel panel-default"
+                                                 v-for="(logs,index) in logData">
                                                 <div class="panel-heading" role="tab" :id="'heading'+index">
                                                     <h4 class="panel-title">
                                                         <a role="button" data-toggle="collapse" data-parent="#accordion"
                                                            :href="'#collapse'+index" aria-controls="'collapse'+index"
                                                            aria-expanded="true">
-                                                            <span class="badge">{{logs.lenght}}</span>
-                                                            {{index+1}}月份的日志记录
+                                                            {{index+1}}月份的日志
+                                                            <span style="float: right"
+                                                                  class="badge">{{logs.length}}</span>
                                                         </a>
                                                     </h4>
                                                 </div>

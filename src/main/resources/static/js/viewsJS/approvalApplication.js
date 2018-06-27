@@ -87,7 +87,7 @@ $(function () {
                     url: "/gwspxt/refuseApply",
                     dataType: "json",
                     contentType: 'application/json;charset=UTF-8',
-                    data: JSON.stringify({documentCustom}),
+                    data: JSON.stringify(documentCustom),
                     success: response => {
                         if (response.msg == "updateSuccess") {
                             spop({

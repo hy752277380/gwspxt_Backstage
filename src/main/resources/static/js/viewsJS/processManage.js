@@ -96,7 +96,6 @@ $(function () {
             deleteProcess(index) {
                 let processId = data.processData[index].processId;
                 let that = this;
-                console.log(processId);
                 $.post('/gwspxt/deleteProcess', {ids: [processId]}, function (response) {
                     if (response.msg == "updateSuccess") {
                         that.getProcessInfo({currentPage: 1});
@@ -105,7 +104,14 @@ $(function () {
                         spop({template: `删除失败`, style: "error", autoclose: 2000});
                     }
                 }, 'json');
-            }
+            },
+            search(msg) {
+                data.searchData[msg.searchName] = msg.key;
+                this.getProcessInfo({
+                    currentPage: 1,
+                    fuzzySearch: data.searchData.fuzzySearch
+                })
+            },
         },
         mounted() {
             this.getProcessInfo({

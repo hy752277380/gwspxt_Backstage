@@ -485,8 +485,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public QueryForPage getAllProcess(int currentPage) {
-        List<com.kcsj.gwglxt.entity.Process> processes = processMapper.getAllProcess();
+    public QueryForPage getAllProcess(int currentPage,String fuzzySearch) {
+        List<com.kcsj.gwglxt.entity.Process> processes = processMapper.getAllProcess(fuzzySearch);
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
         int allRow = processes.size();//总记录数

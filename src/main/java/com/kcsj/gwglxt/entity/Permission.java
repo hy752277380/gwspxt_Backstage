@@ -37,4 +37,13 @@ public class Permission {
     public void setPermissionRemark(String permissionRemark) {
         this.permissionRemark = permissionRemark == null ? null : permissionRemark.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "permissionId='" + permissionId + '\'' +
+                ", permissionLevel=" + permissionLevel +
+                ", permissionRemark='" + permissionRemark + '\'' +
+                '}';
+    }
 }

@@ -54,6 +54,7 @@ public class GuserServiceImpl implements GuserService {
         record.setUserId(TeamUtil.getUuid());
         record.setCreationTime(df.format(new Date()));
         record.setUserIsdelete(0);
+        int result = guserMapper.insert(record);
         //添加操作日志
         Log log = new Log();
         log.setLogId(TeamUtil.getUuid());
@@ -62,7 +63,7 @@ public class GuserServiceImpl implements GuserService {
         //根据职位id获取职位名称
         log.setLogContent("删除了"+record.getUserName()+"流程。");
         logMapper.insert(log);
-        return guserMapper.insert(record);
+        return result;
     }
 
     @Override
@@ -180,8 +181,8 @@ public class GuserServiceImpl implements GuserService {
     }
 
     @Override
-    public QueryForPage getAllUser(int currentPage,String fuzzySearch) {
-        List<LoginCustom>  users = guserMapper.getAllUser(fuzzySearch);
+    public QueryForPage getAllUser(int currentPage,String fuzzySearch,LoginCustom loginCustom) {
+        List<LoginCustom>  users = guserMapper.getAllUser(fuzzySearch,loginCustom.getGuser().getUserId());
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
         int allRow = users.size();//总记录数
@@ -253,8 +254,8 @@ public class GuserServiceImpl implements GuserService {
     }
 
     @Override
-    public QueryForPage getUserByDpt(String userDepartment,int currentPage,String fuzzySearch) {
-        List<LoginCustom> loginCustoms = guserMapper.getUserByDpt(userDepartment,fuzzySearch);
+    public QueryForPage getUserByDpt(String userDepartment,int currentPage,String fuzzySearch,String  userId) {
+        List<LoginCustom> loginCustoms = guserMapper.getUserByDpt(userDepartment,fuzzySearch,userId);
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
         int allRow = loginCustoms.size();//总记录数
@@ -293,8 +294,18 @@ public class GuserServiceImpl implements GuserService {
         logMapper.insert(log);
         Guser guser = new Guser();
         guser.setUserId(loginCustom.getGuser().getUserId());
-        guser.setUserPassword(newPassword);
+        guser.setUserPassword(md5.GetMD5Code(newPassword));
         return guserMapper.updateByPrimaryKeySelective(guser);
+    }
+
+    @Override
+    public boolean getUserByAcc(String userAccount) {
+        Guser user = guserMapper.getUserByAcc(userAccount);
+        if (user==null){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 

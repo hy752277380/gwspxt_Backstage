@@ -140,12 +140,15 @@ $(function () {
                 let person = data.modalAddPersonData;
                 const that = this;
                 $.post('/gwspxt/andUser', person, function (response) {
-                    if (response.msg == "updateSuccess") {
+                    if (response.msg == "addSuccess") {
                         spop({template: `添加成功`, style: "success", autoclose: 2000});
+                        $('#modalAdd').modal('hide');
                         that.getInfo({currentPage: data.page.currentPage})
                     }
-                    else if (response.msg == "updateFailed") {
+                    else if (response.msg == "addFailed") {
                         spop({template: `添加失败`, style: "error", autoclose: 2000});
+                    } else if (response.msg == "accountExist") {
+                        spop({template: `员工编号已存在`, style: "error", autoclose: 2000});
                     }
                 }, 'json');
             },

@@ -11,13 +11,15 @@ $(function () {
             currentPage: 1,
             pageSize: 10,
             hasPreviousPage: false,
-            hasNextPage: false,
+            hasNextPage: false
         },
+        refuseReason: '',
+        refuseIndex: '',
         searchData: {
             documentType: '',
             documentConfidential: 0,
             documentState: 0,
-            fuzzySearch: '',
+            fuzzySearch: ''
         },
         docType: {
             name: "文档类型",
@@ -49,7 +51,6 @@ $(function () {
                 {key: "4", value: "普通"}
             ],
         },
-        docDepartment: 0,
     }
 
 
@@ -96,6 +97,11 @@ $(function () {
                 let documentId = this.$data.docData[index].document.documentId;
                 $.post('/gwspxt/updateDocumentLocation', {documentId}, function (response) {
                     if (response.msg == "updateSuccess") {
+                        spop({
+                            template: "审核失败！",
+                            style: "danger",
+                            autoclose: 3000
+                        })
                         $.post('/gwspxt/messageNextOne', {documentId}, '', 'json');
                     }
                     else if (response.msg == "updateFailed") {
@@ -107,8 +113,25 @@ $(function () {
                     }
                 }, 'json');
             },
-            refuse(index) {
-
+            refuse() {
+                let that = this;
+                /*  文档ID   拒绝理由 */
+                let params = {
+                    documentId: this.$data.docData[data.refuseIndex].document.documentId,
+                    refuseReason: this.refuseReason
+                }
+                $.post('/gwspxt/refuseDoc', params, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        that.getInfo({currentPage: 1})
+                        spop({
+                            template: `您已拒绝对${data.docData[data.refuseIndex].document.documentTitle}的审核`,
+                            style: "success",
+                            autoclose: 2000
+                        });
+                    } else if (response.msg == "updateFailed") {
+                        spop({template: `拒绝失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json')
             },
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;
@@ -134,7 +157,8 @@ $(function () {
         components: {
             'asideComponent': Layout,
             'page-util': pageUtil,
-            'search-util': searchUtil
+            'search-util': searchUtil,
+            'sure-util': sureUtil
         }
     });
 })

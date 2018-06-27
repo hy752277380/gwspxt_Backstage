@@ -550,6 +550,6 @@ and user_isdelete = '0'
         </if>
     </select>
     <select id="getUserByAcc" parameterType="java.lang.String" resultType="com.kcsj.gwglxt.entity.Guser">
-        select <include refid="Base_Column_List"/> from guser where user_account = #{userAccount}
+        select <include refid="Base_Column_List"/> from guser where user_account = #{userAccount} and user_isdelete = '0'
     </select>
 </mapper>

@@ -219,7 +219,12 @@ public class GuserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return countByMouth;
+        if(countByMouth==null){
+            CountByMouth countByMouth1 = new CountByMouth();
+            return countByMouth1.allZero();
+        }else {
+            return countByMouth;
+        }
     }
     /***************************个人信息管理****************************/
     //修改个人信息

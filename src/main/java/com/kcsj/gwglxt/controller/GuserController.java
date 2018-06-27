@@ -109,9 +109,10 @@ public class GuserController {
             }else{
                 result = "updateSuccess";
             }
-            return result;
+            return "{\"msg\":\"" + result + "\"}";
         }else{
-            return "oldPasswordError";
+            result = "oldPasswordError";
+            return "{\"msg\":\"" + result + "\"}";
         }
     }
     /************************************首页数据*******************************/

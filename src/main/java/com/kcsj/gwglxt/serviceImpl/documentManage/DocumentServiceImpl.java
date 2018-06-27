@@ -522,7 +522,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage() {
-        return processMapper.getAllProcess();
+        return processMapper.getAllProcess(null);
     }
 
     @Override

@@ -81,7 +81,38 @@ $(function () {
             "documentRemark": documentRemark,
             "documentProcess": documentProcess,
         }
-
+        if (!documentTitle) {
+            spop({template: `标题不能为空`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentNo) {
+            spop({template: `文本文号不能为空`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentType) {
+            spop({template: `请选择文本类型`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentConfidential) {
+            spop({template: `请选择文档密级`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentSpeed) {
+            spop({template: `请选择文档级别`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!doucmentContent) {
+            spop({template: `文档内容不能为空`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentRemark) {
+            spop({template: `备注不能为空`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentProcess) {
+            spop({template: `请选择流程`, style: "error", autoclose: 2000});
+            return;
+        }
         $.ajax({
             type: "post",
             url: "/gwspxt/addDocument",
@@ -149,6 +180,38 @@ $(function () {
             "doucmentContent": doucmentContent,
             "documentRemark": documentRemark,
             "documentProcess": documentProcess,
+        }
+        if (!documentTitle) {
+            spop({template: `标题不能为空`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentNo) {
+            spop({template: `文本文号不能为空`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentType) {
+            spop({template: `请选择文本类型`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentConfidential) {
+            spop({template: `请选择文档密级`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentSpeed) {
+            spop({template: `请选择文档级别`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!doucmentContent) {
+            spop({template: `文档内容不能为空`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentRemark) {
+            spop({template: `备注不能为空`, style: "error", autoclose: 2000});
+            return;
+        }
+        if (!documentProcess) {
+            spop({template: `请选择流程`, style: "error", autoclose: 2000});
+            return;
         }
         $.ajax({
             type: "post",

@@ -140,6 +140,7 @@ $(function () {
             deleteDocument(index) {
                 let docId = data.docData[index].document.documentId;
                 let that = this;
+                console.log(docId),
                 $.post('/gwspxt/deleteDoc', {ids: [docId]}, function (response) {
                     if (response.msg == "updateSuccess") {
                         that.getInfo({currentPage: 1});
@@ -148,6 +149,14 @@ $(function () {
                         spop({template: `删除失败`, style: "error", autoclose: 2000});
                     }
                 }, 'json');
+            },
+            deleteBatchDocument(){
+                let arrId=[];
+                  $('input[chef="self"]').each(function () {
+
+                  });
+
+
             },
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {

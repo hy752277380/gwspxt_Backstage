@@ -187,8 +187,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public boolean getPosotionName(String positionName) {
-        Position position = positionMapper.getPosotionByName(positionName);
-        if(position==null){
+        List<Position> position = positionMapper.getPosotionByName(positionName);
+        if(position.size()==0){
             return true;
         }else {
             return false;
@@ -197,8 +197,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public boolean getDptByName(String departmentName) {
-        Department department = departmentMapper.getDptByName(departmentName);
-        if(department==null){
+        List<Department> department = departmentMapper.getDptByName(departmentName);
+        if(department.size()==0){
             return true;
         }else {
             return false;

@@ -35,5 +35,5 @@ public interface PositionMapper {
 
     List<PositionPermission> getPoPeByDpt(String department);
 
-    Position getPosotionByName(@Param("positionName") String positionName);
+    List<Position> getPosotionByName(@Param("positionName") String positionName);
 }

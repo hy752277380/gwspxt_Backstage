@@ -106,6 +106,7 @@ $(function () {
             },
             pass(index) {
                 let documentId = this.$data.docData[index].document.documentId;
+                let that = this;
                 $.post('/gwspxt/updateDocumentLocation', {documentId}, function (response) {
                     if (response.msg == "updateSuccess") {
                         spop({
@@ -113,6 +114,7 @@ $(function () {
                             style: "danger",
                             autoclose: 3000
                         })
+                        that.getInfo({currentPage: 1});
                         $.post('/gwspxt/messageNextOne', {documentId}, '', 'json');
                     }
                     else if (response.msg == "updateFailed") {

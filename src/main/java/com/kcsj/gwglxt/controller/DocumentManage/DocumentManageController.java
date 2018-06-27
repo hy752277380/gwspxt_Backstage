@@ -365,7 +365,8 @@ public class DocumentManageController {
 
     //申请批阅文档
     @RequestMapping("/applyRead")
-    public DocumentCustom applyRead(@RequestBody DocumentCustom documentCustom, HttpSession httpSession) {
+    public String applyRead(@RequestBody DocumentCustom documentCustom, HttpSession httpSession) {
+        String result;
         DocumentCustom documentCustomNew = null;
         try {
             System.out.println("文档内容为："+documentCustom);
@@ -374,7 +375,13 @@ public class DocumentManageController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return documentCustomNew;
+        if(documentCustomNew!=null){
+            result = "applySuccess";
+            return "{\"msg\":\"" + result + "\"}";
+        }else {
+            result = "applyFailed";
+            return "{\"msg\":\"" + result + "\"}";
+        }
     }
 
     //同意借阅文档

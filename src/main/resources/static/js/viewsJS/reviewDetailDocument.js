@@ -79,7 +79,7 @@ $(function () {
             this.getDocType();
             this.getProcess();
             $('#doucmentContent').summernote({
-                height: 150, //set editable area's height
+                height: 350, //set editable area's height
                 codemirror: { // codemirror options
                     theme: 'monokai'
                 },

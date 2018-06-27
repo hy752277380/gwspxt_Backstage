@@ -183,7 +183,6 @@ public class DocumentManageController {
             log1.setCreationTime(df.format(new Date()));
             documentService.insertLog(log1);
             int documentLocation = document.getDocumentLocation() + 1;
-            System.out.println(documentLocation);
             //获取当前所走流程的最大步骤
             int maxStep = documentService.getMaxStep(document.getDocumentProcess());
             String documentProcessBegin = null;
@@ -192,11 +191,9 @@ public class DocumentManageController {
             if (documentLocation == 1) {
                 documentProcessBegin = df.format(new Date());
                 documentService.updateDocumentState(4, documentProcessBegin, documentProcessFinish, documentId);
-                System.out.println("1111111111");
             } else if (documentLocation == maxStep) {
                 documentProcessFinish = df.format(new Date());
                 documentService.updateDocumentState(5, documentProcessBegin, documentProcessFinish, documentId);
-                System.out.println("2");
                 Message message = new Message();
                 String messageId = TeamUtil.getUuid();
                 message.setMessageId(messageId);
@@ -213,7 +210,6 @@ public class DocumentManageController {
                 documentService.insertMbj(mobject);
             }
             updateLocationResult = documentService.updateDocumentLocation(documentLocation, documentId);
-            System.out.println("3111");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -369,7 +365,6 @@ public class DocumentManageController {
         String result;
         DocumentCustom documentCustomNew = null;
         try {
-            System.out.println("文档内容为："+documentCustom);
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
             documentCustomNew = documentService.insertBorrowing(documentCustom,loginCustom);
         } catch (Exception e) {

@@ -80,7 +80,6 @@ public class ProcessServiceImpl implements ProcessService {
         List<ProcessNode> processNodes = processNodeMapper.getOthers(newProcesNode.getProcessNodeProcess(),newProcesNode.getProcessNodeStep());
         //判断是否还有其他节点
         if(processNodes==null&&"".equals(processNodes)){
-            System.out.println("已经是最后一个节点");
         }
         else {
             //遍历processNodes

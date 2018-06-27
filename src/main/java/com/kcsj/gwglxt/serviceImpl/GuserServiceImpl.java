@@ -130,8 +130,6 @@ public class GuserServiceImpl implements GuserService {
     public LoginCustom loginFunction(String userAccount) {
 
         LoginCustom ll = guserMapper.loginFunction(userAccount);
-        System.out.println(userAccount);
-        System.out.println(ll);
         return ll;
 }
 

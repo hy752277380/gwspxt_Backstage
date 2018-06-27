@@ -324,7 +324,6 @@ public class GuserController {
         int updateResult = 0;
         try {
             //获取session内容
-            System.out.println("数组内容为"+userIds);
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
             updateResult = guserService.batchDelete(userIds,loginCustom);
         } catch (Exception e) {

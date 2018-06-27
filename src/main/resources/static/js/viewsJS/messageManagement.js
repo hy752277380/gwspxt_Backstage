@@ -9,10 +9,10 @@ $(function () {
         el: "#main",
         data: data,
         methods: {
-            getInfo() {
+            getInfo(params) {
                 var that = this;
-                $.post('/gwspxt/getAllMessage', {}, function (response) {
-                    data.allMessageData = response;
+                $.post('/gwspxt/getAllMessage', params, function (response) {
+                    data.allMessageData = response.list;
                 }, 'json')
             },
             change($event, index) {
@@ -27,20 +27,38 @@ $(function () {
             },
             isRead(index) {
                 var that = this;
+                console.log(index)
                 let id = data.allMessageData[index].mobject.mobjectMessage;
-                $.post('/gwspxt/getAllMessage', {MobjectId: id}, function (response) {
-                    that.getInfo();
+                $.post('/gwspxt/isRead', {MobjectId: id}, function (response) {
+                    if (response.msg == "updateSuccess") {
+                        that.getInfo({currentPage: 1})
+                    } else if (response.msg == "updateFailed") {
+                    }
                 }, 'json')
             },
             allAreRead() {
                 let that = this;
-                $.post('/gwspxt/getAllMessage', {}, function (response) {
+                $.post('/gwspxt/allAreRead', {}, function (response) {
                     that.getInfo();
                 }, 'json')
             },
+            replaceMessageType(type) {
+                switch (type) {
+                    case 1:
+                        return "<span class=\"label label-default\">批阅申请</span>";
+                    case 2:
+                        return "<span class=\"label label-warning\">申请通过</span>";
+                    case 3:
+                        return "<span class=\"label label-info\">公文审核</span>";
+                    case 4:
+                        return "<span class=\"label label-primary\">审核通过</span>";
+                    case 5:
+                        return "<span class=\"label label-danger\">通知</span>";
+                }
+            }
         },
         mounted() {
-            this.getInfo();
+            this.getInfo({currentPage: 1});
         },
         components: {
             'asideComponent': Layout,

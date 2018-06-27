@@ -1,7 +1,7 @@
 $(function () {
     var data = {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
-        name: 'deptManage',
+        name: 'departmentManagement',
         deptData: '', //所有数据
         showData: '', //显示在页面的数据
         ready: false,

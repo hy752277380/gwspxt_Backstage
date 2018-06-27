@@ -180,16 +180,14 @@
                     <h4 class="modal-title">修改账号</h4>
                 </div>
                 <div class="modal-body">
-                    <table style="width: 80%;margin: auto;">
+                    <table style="width: 100%;margin: auto;">
                         <tr>
                             <td><label>员工编号</label></td>
                             <td><input type="input" class="form-control" v-model="modalModifyPersonData.userAccount"
-                                       placeholder="员工编号"></td>
-                        </tr>
-                        <tr>
+                                       placeholder="员工编号" style="width: 80%"></td>
                             <td><label>姓名</label></td>
                             <td><input type="input" class="form-control" v-model="modalModifyPersonData.userName"
-                                       placeholder="姓名"></td>
+                                       placeholder="姓名" style="width: 80%"></td>
                         </tr>
                         <tr>
                             <td><label>性别</label></td>
@@ -205,37 +203,44 @@
                                     </label>
                                 </div>
                             </td>
-                        </tr>
-                        <tr>
                             <td><label>手机号</label></td>
                             <td><input type="input" class="form-control" v-model="modalModifyPersonData.userPhonenumber"
-                                       placeholder="手机号"></td>
+                                       placeholder="手机号" style="width: 80%"></td>
                         </tr>
                         <tr>
                             <td><label>邮箱</label></td>
                             <td><input type="email" class="form-control" v-model="modalModifyPersonData.userEmail"
-                                       placeholder="邮箱"></td>
-                        </tr>
-                        <tr>
+                                       placeholder="邮箱" style="width: 80%"></td>
                             <td><label>所属部门</label></td>
                             <td><select class="form-control" v-model="modalModifyPersonData.userDepartment"
-                                        @change="getDepartmentOfPosition('modify')">
+                                        @change="getDepartmentOfPosition('modify')" style="width: 80%">
                                 <option v-for="dep in allDepartment" :value="dep.departmentId">{{dep.departmentName}}
                                 </option>
                             </select></td>
                         </tr>
                         <tr>
                             <td><label>所任职务</label></td>
-                            <td><select class="form-control" v-model="modalModifyPersonData.userPosition">
+                            <td><select class="form-control" v-model="modalModifyPersonData.userPosition"
+                                        style="width: 80%">
                                 <option v-for="position in allDepartmentOfPosition"
                                         :value="position.position.positionId">{{position.position.positionName}}
                                 </option>
                             </select></td>
                         </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p v-if="errors.length">
+                                    <b>帐号信息包含以下错误，请检验帐号信息</b>
+                                <ol>
+                                    <li v-for="error in errors"><span style="color: red;">{{ error }}</span></li>
+                                </ol>
+                                </p>
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button @click="modalModify" type="submit" class="btn btn-info" data-dismiss="modal">修改</button>
+                    <button @click="modalModify" type="submit" class="btn btn-info">修改</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 </div>
             </div>
@@ -251,16 +256,14 @@
                     <h4 class="modal-title">添加账号</h4>
                 </div>
                 <div class="modal-body">
-                    <table style="width: 80%;margin: auto;">
+                    <table style="width: 100%;margin: auto;">
                         <tr>
                             <td><label>员工编号</label></td>
-                            <td><input type="input" class="form-control" v-model="modalAddPersonData.userAccount"
-                                       placeholder="员工编号"></td>
-                        </tr>
-                        <tr>
+                            <td><input type="input" class="form-control" v-model.number="modalAddPersonData.userAccount"
+                                       placeholder="员工编号" style="width: 80%;"></td>
                             <td><label>姓名</label></td>
                             <td><input type="input" class="form-control" v-model="modalAddPersonData.userName"
-                                       placeholder="姓名"></td>
+                                       placeholder="姓名" style="width: 80%;"></td>
                         </tr>
                         <tr>
                             <td><label>性别</label></td>
@@ -276,37 +279,44 @@
                                     </label>
                                 </div>
                             </td>
-                        </tr>
-                        <tr>
                             <td><label>手机号</label></td>
                             <td><input type="input" class="form-control" v-model="modalAddPersonData.userPhonenumber"
-                                       placeholder="手机号"></td>
+                                       placeholder="手机号" style="width: 80%;"></td>
                         </tr>
                         <tr>
                             <td><label>邮箱</label></td>
                             <td><input type="email" class="form-control" v-model="modalAddPersonData.userEmail"
-                                       placeholder="邮箱"></td>
-                        </tr>
-                        <tr>
+                                       placeholder="邮箱" style="width: 80%;"></td>
                             <td><label>所属部门</label></td>
                             <td><select class="form-control" v-model="modalAddPersonData.userDepartment"
-                                        @change="getDepartmentOfPosition('add')">
+                                        @change="getDepartmentOfPosition('add')" style="width: 80%;">
                                 <option v-for="dep in allDepartment" :value="dep.departmentId">{{dep.departmentName}}
                                 </option>
                             </select></td>
                         </tr>
                         <tr>
                             <td><label>所任职务</label></td>
-                            <td><select class="form-control" v-model="modalAddPersonData.userPosition">
+                            <td><select class="form-control" v-model="modalAddPersonData.userPosition"
+                                        style="width: 80%; margin-top: 3px;">
                                 <option v-for="position in allDepartmentOfPosition"
                                         :value="position.position.positionId">{{position.position.positionName}}
                                 </option>
                             </select></td>
                         </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p v-if="errors.length">
+                                    <b>帐号信息包含以下错误，请检验帐号信息</b>
+                                <ol>
+                                    <li v-for="error in errors"><span style="color: red;">{{ error }}</span></li>
+                                </ol>
+                                </p>
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button @click="modalAdd" type="submit" class="btn btn-info" data-dismiss="modal">添加</button>
+                    <button @click="modalAdd" type="submit" class="btn btn-info">添加</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 </div>
             </div>

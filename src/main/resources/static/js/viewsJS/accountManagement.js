@@ -40,6 +40,7 @@ $(function () {
         searchData: {
             fuzzySearch: '',
         },
+        errors: [],
         page: {
             allRow: 1,
             totalPage: 1,
@@ -104,12 +105,6 @@ $(function () {
                     data.allDepartmentOfPosition = response;
                 }, 'json');
             },
-            modify(index) {
-                data.modalModifyPersonData = data.personData[index].guser;
-                this.getDepartmentOfPosition('modify');
-                data.modalAction = false;
-                $('#modalModify').modal('show');
-            },
             deleteP(index) {
                 let person = data.personData[index].guser;
                 const that = this;
@@ -137,46 +132,62 @@ $(function () {
                 }, 'json');
             },
             modalAdd() {
-                let person = data.modalAddPersonData;
-                const that = this;
-                $.post('/gwspxt/andUser', person, function (response) {
-                    if (response.msg == "updateSuccess") {
-                        spop({template: `添加成功`, style: "success", autoclose: 2000});
-                        that.getInfo({currentPage: data.page.currentPage})
-                    }
-                    else if (response.msg == "updateFailed") {
-                        spop({template: `添加失败`, style: "error", autoclose: 2000});
-                    }
+                this.errors = [];
+                if (!/^[0-9]{8}$/.test(data.modalAddPersonData.userAccount)) this.errors.push("帐号信息错误");
+                if (!/^((13|14|15|17|18)[0-9]{1}\d{8})$/.test(data.modalAddPersonData.userPhonenumber)) this.errors.push("手机号格式错误");
+                if (!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(data.modalAddPersonData.userEmail)) this.errors.push("邮箱格式错误");
+                if (!this.errors.length) {
+                    let person = data.modalAddPersonData;
+                    const that = this;
+                    $.post('/gwspxt/andUser', person, function (response) {
+                        if (response.msg == "addSuccess") {
+                            spop({template: `添加成功`, style: "success", autoclose: 2000});
+                            $('#modalAdd').modal('hide');
+                            that.getInfo({currentPage: data.page.currentPage})
+                            that.errors = [];
+                        }
+                        else if (response.msg == "addFailed") {
+                            spop({template: `添加失败`, style: "error", autoclose: 2000});
+                        } else if (response.msg == "accountExist") {
+                            spop({template: `员工编号已存在`, style: "error", autoclose: 2000});
+                        }
+                    }, 'json');
+                }
+            },
+            modify(index) {
+                $.post('/gwspxt/getUserById', {userId: data.personData[index].guser.userId}, response => {
+                    data.modalModifyPersonData = response;
+                    this.getDepartmentOfPosition('modify');
+                    data.modalAction = false;
+                    $('#modalModify').modal('show');
                 }, 'json');
             },
             modalModify() {
-                let person = data.modalModifyPersonData;
-                const that = this;
-                $.ajax({
-                    type: "POST",
-                    url: '/gwspxt/updateUserinfo',
-                    data: JSON.stringify(person),
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        if (response.msg == "updateSuccess") {
-                            spop({template: `修改成功`, style: "success", autoclose: 2000});
-                            that.getInfo({currentPage: data.page.currentPage})
+                this.errors = [];
+                if (!/^[0-9]{8}$/.test(data.modalModifyPersonData.userAccount)) this.errors.push("帐号信息错误");
+                if (!/^((13|14|15|17|18)[0-9]{1}\d{8})$/.test(data.modalModifyPersonData.userPhonenumber)) this.errors.push("手机号格式错误");
+                if (!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(data.modalModifyPersonData.userEmail)) this.errors.push("邮箱格式错误");
+                if (!this.errors.length) {
+                    let person = data.modalModifyPersonData;
+                    const that = this;
+                    $.ajax({
+                        type: "POST",
+                        url: '/gwspxt/updateUserinfo',
+                        data: JSON.stringify(person),
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.msg == "updateSuccess") {
+                                spop({template: `修改成功`, style: "success", autoclose: 2000});
+                                that.getInfo({currentPage: data.page.currentPage})
+                                this.errors = [];
+                            }
+                            else if (response.msg == "updateFailed") {
+                                spop({template: `修改失败`, style: "error", autoclose: 2000});
+                            }
                         }
-                        else if (response.msg == "updateFailed") {
-                            spop({template: `修改失败`, style: "error", autoclose: 2000});
-                        }
-                    }
-                });
-                /* $.post('/gwspxt/updateUserinfo', person, function (response) {
-                     if (response.msg == "updateSuccess") {
-                         spop({template: `修改成功`, style: "success", autoclose: 2000});
-                         that.getInfo({currentPage: data.page.currentPage})
-                     }
-                     else if (response.msg == "updateFailed") {
-                         spop({template: `修改失败`, style: "error", autoclose: 2000});
-                     }
-                 }, 'json');*/
+                    });
+                }
             },
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;
@@ -192,7 +203,11 @@ $(function () {
             $('#modalAdd').on('hidden.bs.modal', function () {
                 for (let item in data.modalAddPersonData) {
                     data.modalAddPersonData[item] = '';
+                    data.errors = [];
                 }
+            })
+            $('#modalModify').on('hidden.bs.modal', function () {
+                data.errors = [];
             })
         },
         components: {

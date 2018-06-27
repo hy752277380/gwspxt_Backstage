@@ -52,8 +52,10 @@ public class GuserServiceImpl implements GuserService {
     public int insertUser(Guser record,LoginCustom loginCustom) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         record.setUserId(TeamUtil.getUuid());
+        record.setUserPassword(md5.GetMD5Code("111111"));
         record.setCreationTime(df.format(new Date()));
         record.setUserIsdelete(0);
+        record.setUserPicture("1.gif");
         int result = guserMapper.insert(record);
         //添加操作日志
         Log log = new Log();
@@ -141,7 +143,6 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public CountByMouth countUserByMouth() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         return guserMapper.countUserByMouth(df.format(new Date()));
     }
     //计算总人数
@@ -160,14 +161,12 @@ public class GuserServiceImpl implements GuserService {
         String department = null;
         String userId = null;
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
     }
 
     @Override
     public CountByMouth countDptDocumentByMouth(String department) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         String userId = null;
         return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
     }
@@ -175,7 +174,6 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public CountByMouth countPersonalDocumentByMouth(String userId) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         String department = null;
         return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
     }
@@ -300,8 +298,8 @@ public class GuserServiceImpl implements GuserService {
 
     @Override
     public boolean getUserByAcc(String userAccount) {
-        Guser user = guserMapper.getUserByAcc(userAccount);
-        if (user==null){
+        List<Guser> user = guserMapper.getUserByAcc(userAccount);
+        if (user.size()==0){
             return true;
         }else {
             return false;

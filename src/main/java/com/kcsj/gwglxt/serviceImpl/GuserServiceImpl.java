@@ -161,14 +161,12 @@ public class GuserServiceImpl implements GuserService {
         String department = null;
         String userId = null;
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
     }
 
     @Override
     public CountByMouth countDptDocumentByMouth(String department) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         String userId = null;
         return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
     }
@@ -176,7 +174,6 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public CountByMouth countPersonalDocumentByMouth(String userId) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         String department = null;
         return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
     }

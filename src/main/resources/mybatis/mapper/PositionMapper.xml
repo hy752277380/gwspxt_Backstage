@@ -270,6 +270,6 @@ WHERE
          from position po,permission pe WHERE po.position_permission = pe.permission_id and po.position_dept = #{department} and po.position_isdelete = '0'
     </select>
     <select id="getPosotionByName" parameterType="java.lang.String" resultType="com.kcsj.gwglxt.entity.Position">
-        select * from position where position_name = #{positionName}
+        select * from position where position_name = #{positionName} and position_isdelete = '0'
     </select>
 </mapper>

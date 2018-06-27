@@ -113,6 +113,7 @@
                                             <th>序号</th>
                                             <th>部门名称</th>
                                             <th>部门号码</th>
+                                            <th>上级部门</th>
                                             <th>操作</th>
                                         </tr>
                                         <tbody v-cloak v-if="ready">
@@ -121,6 +122,7 @@
                                             </td>
                                             <td>{{dept.departmentName}}</td>
                                             <td>{{dept.departmentPhone}}</td>
+                                            <td v-if="dept.siperiorName">{{dept.siperiorName}}</td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm"
                                                         style="margin-right: 10px;" @click="intoPosition(index)"><i
@@ -176,6 +178,12 @@
                             <label class="col-lg-2 col-sm-2 control-label">部门号码</label>
                             <div class="col-lg-8">
                                 <input type="input" class="form-control" id="departmentPhone" placeholder="部门号码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-sm-2 control-label">上级部门</label>
+                            <div class="col-lg-8">
+                                <input type="input" class="form-control" id="departmentSuperior" placeholder="上级部门">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -260,9 +268,12 @@
     function addDepartment() {
         var departmentName = $('#departmentName').val();
         var departmentPhone = $('#departmentPhone').val();
+        var departmentSuperior = $('#departmentSuperior').val();
+        console.log(departmentSuperior);
         var data = {
             "departmentName": departmentName,
             "departmentPhone": departmentPhone,
+            "departmentSuperior": departmentSuperior,
 
         }
         if (!departmentName) {
@@ -272,6 +283,10 @@
         if (!departmentPhone) {
             return false;
         }
+        if (!departmentSuperior) {
+            return false;
+        }
+
 
         $.ajax({
             type: "post",

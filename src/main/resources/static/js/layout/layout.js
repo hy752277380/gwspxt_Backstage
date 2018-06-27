@@ -15,7 +15,7 @@ var Layout = Vue.extend({
     <div class="user-panel">
         <div class="pull-left image">
         <!--用户头像图片位置----------->  <!--暂时不改动，使用固定头像-->
-        <img src="http://www.hywebsite.cn/static/gif/rabbit.gif" class="img-circle" alt="User Image"/>
+        <img :src="'http://www.hywebsite.cn/static/gif/'+user.guser.userPicture" class="img-circle" alt="User Image"/>
         </div>
         <div class="pull-left info">
         <!--用户名字位置--------------->
@@ -191,7 +191,7 @@ var Header = Vue.extend({
                                     <!-- start message -->
                                     <a v-for="(msg,index) in message.msgContent" href="">
                                         <div class="pull-left" style="width: 100%;">
-                                            <img style="display: block;float: left" src="http://www.hywebsite.cn/static/gif/rabbit.gif" class="img-circle" alt="User Image"/>
+                                            <img style="display: block;float: left" :src="'http://www.hywebsite.cn/static/gif/'+user.guser.userPicture" class="img-circle" alt="User Image"/>
                                             <div style="width: 70%; float: left;">
                                                 <small style="float: right;" class="pull-right"><i class="fa fa-clock-o"></i> 5 mins</small>
                                                 <a>{{msg.title}}</a>

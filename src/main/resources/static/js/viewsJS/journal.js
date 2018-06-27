@@ -19,13 +19,13 @@ $(function () {
         el: "#main",
         data: data,
         methods: {
-            label($event) {
+            /*label($event) {
                 $('.event_year>li').removeClass('current');
                 $($event.target).parent('li').addClass('current');
                 var year = $($event.target).attr('for');
                 $('#' + year).parent().prevAll('div').slideUp(800);
                 $('#' + year).parent().slideDown(800).nextAll('div').slideDown(800);
-            },
+            },*/
             getInfo(params) {
                 $.post('/gwspxt/getAllLog', params, function (response) {
                     data.logData = response;

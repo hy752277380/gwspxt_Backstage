@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kcsj.gwglxt.mapper.DepartmentMapper" >
+    <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Department" >
+        <id column="department_id" property="departmentId"   />
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="department_phone" property="departmentPhone" jdbcType="VARCHAR" />
+        <result column="department_isdelete" property="departmentIsdelete"  />
+        <result column="department_superior" property="departmentSuperior" jdbcType="CHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        department_id, department_name, department_phone, department_isdelete, department_superior
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.DepartmentExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from department
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from department
+        where department_id = #{departmentId,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from department
+        where department_id = #{departmentId,jdbcType=CHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.kcsj.gwglxt.entity.DepartmentExample" >
+        delete from department
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Department" >
+        insert into department (department_id, department_name, department_phone,
+            department_isdelete, department_superior)
+        values (#{departmentId,jdbcType=CHAR}, #{departmentName,jdbcType=VARCHAR}, #{departmentPhone,jdbcType=VARCHAR},
+            #{departmentIsdelete,jdbcType=INTEGER}, #{departmentSuperior,jdbcType=CHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.kcsj.gwglxt.entity.Department" >
+        insert into department
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="departmentId != null" >
+                department_id,
+            </if>
+            <if test="departmentName != null" >
+                department_name,
+            </if>
+            <if test="departmentPhone != null" >
+                department_phone,
+            </if>
+            <if test="departmentIsdelete != null" >
+                department_isdelete,
+            </if>
+            <if test="departmentSuperior != null" >
+                department_superior,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="departmentId != null" >
+                #{departmentId,jdbcType=CHAR},
+            </if>
+            <if test="departmentName != null" >
+                #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentPhone != null" >
+                #{departmentPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentIsdelete != null" >
+                #{departmentIsdelete,jdbcType=INTEGER},
+            </if>
+            <if test="departmentSuperior != null" >
+                #{departmentSuperior,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.kcsj.gwglxt.entity.DepartmentExample" resultType="java.lang.Integer" >
+        select count(*) from department
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update department
+        <set >
+            <if test="record.departmentId != null" >
+                department_id = #{record.departmentId,jdbcType=CHAR},
+            </if>
+            <if test="record.departmentName != null" >
+                department_name = #{record.departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.departmentPhone != null" >
+                department_phone = #{record.departmentPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.departmentIsdelete != null" >
+                department_isdelete = #{record.departmentIsdelete,jdbcType=INTEGER},
+            </if>
+            <if test="record.departmentSuperior != null" >
+                department_superior = #{record.departmentSuperior,jdbcType=CHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update department
+        set department_id = #{record.departmentId,jdbcType=CHAR},
+        department_name = #{record.departmentName,jdbcType=VARCHAR},
+        department_phone = #{record.departmentPhone,jdbcType=VARCHAR},
+        department_isdelete = #{record.departmentIsdelete,jdbcType=INTEGER}，
+        department_superior = #{record.departmentSuperior,jdbcType=CHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.kcsj.gwglxt.entity.Department" >
+        update department
+        <set >
+            <if test="departmentName != null" >
+                department_name = #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentPhone != null" >
+                department_phone = #{departmentPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentIsdelete != null" >
+                department_isdelete = #{departmentIsdelete,jdbcType=INTEGER},
+            </if>
+            <if test="departmentSuperior != null" >
+                department_superior = #{departmentSuperior,jdbcType=CHAR},
+            </if>
+        </set>
+        where department_id = #{departmentId,jdbcType=CHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.kcsj.gwglxt.entity.Department" >
+        update department
+        set department_name = #{departmentName,jdbcType=VARCHAR},
+            department_phone = #{departmentPhone,jdbcType=VARCHAR},
+            department_isdelete = #{departmentIsdelete,jdbcType=INTEGER},
+            department_superior = #{departmentSuperior,jdbcType=CHAR}
+        where department_id = #{departmentId,jdbcType=CHAR}
+    </update>
+    <select id="getAllDepartment" parameterType="java.lang.String" resultMap="BaseResultMap">
+/*        SELECT
+	de1.department_id,
+	de1.department_name,
+	de1.department_phone,
+	de1.department_isdelete,
+	de2.department_name
+FROM
+	department AS de1
+LEFT JOIN department AS de2 ON de1.department_superior = de2.department_id
+AND de1.department_isdelete = '0'*/
+select  * from department where department_isdelete = '0'
+        <if test="fuzzySearch!=null">
+            and department_name like CONCAT('%',#{fuzzySearch},'%' )
+        </if>
+    </select>
+    <select id="getDepartmentName" parameterType="java.lang.String" resultType="java.lang.String">
+        select department_name from department where department_id = #{departmentSuperior}
+    </select>
+    <select id="getDptByName" parameterType="java.lang.String" resultType="com.kcsj.gwglxt.entity.Department">
+        select * from department where  department_name = #{departmentName} and department_isdelete = '0'
+    </select>
+</mapper>

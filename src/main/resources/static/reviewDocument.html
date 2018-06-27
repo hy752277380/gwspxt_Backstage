@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>文档查看</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- bootstrap 3.0.2 -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- font Awesome -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Ionicons -->
+    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Morris chart -->
+    <link href="css/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <!-- jvectormap -->
+    <link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
+    <!-- Date Picker -->
+    <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
+    <!-- fullCalendar -->
+    <!-- Daterange picker -->
+    <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>
+    <!-- bootstrap wysihtml5 - text editor -->
+    <!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
+    <!-- Theme style -->
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- 消息通知css -->
+    <link href="css/spop.css" rel="stylesheet" type="text/css">
+    <script src="js/vue.js"></script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        td {
+            vertical-align: initial !important;
+        }
+
+        /* 除去input为number时候的箭头*/
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+
+<body class="skin-black">
+<header id="header" class="header">
+    <a href="index.html" class="logo">公文审批系统</a>
+    <header-component></header-component>
+</header>
+<div id="main" class="wrapper row-offcanvas row-offcanvas-left">
+    <aside-component :user="user" :name="name"></aside-component>
+    <aside id="content" class="right-side">
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!--breadcrumbs start -->
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href=""><i class="fa fa-home"></i> 首页</a>
+                        </li>
+                        <li class="active">文档查看</li>
+                    </ul>
+                    <!--breadcrumbs end -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!--内容-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel">
+                                <div class="panel-body table-responsive">
+                                    <div class="box-tools m-b-15">
+                                        <div class="input-group">
+                                            <input type="text" name="table_search" placeholder="Search"
+                                                   class="form-control input-sm pull-right" style="width: 150px;"
+                                                   v-model="searchData.fuzzySearch"
+                                                   @keyup="search({searchName:'fuzzySearch',key:searchData.fuzzySearch})"/>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>#<!--<input @click="checkAll($event)" type="checkbox">--></th>
+                                            <th>文档编号</th>
+                                            <th>文档标题</th>
+                                            <!--<th>文档类型<span class="caret"></span></th>-->
+                                            <th>
+                                                <search-util :query="docType" :search-name="'documentType'"
+                                                             @search="search"></search-util>
+                                            </th>
+                                            <th>拟稿人</th>
+                                            <th>
+                                                <search-util :query="docConfidential"
+                                                             :search-name="'documentConfidential'"
+                                                             @search="search"></search-util>
+                                            </th>
+                                            <th>
+                                                <search-util :query="docDepartment"
+                                                             :search-name="'documentDepartment'"
+                                                             @search="search"></search-util>
+                                            </th>
+                                          <!--  <th>拟稿部门<span class="caret"></span></th>-->
+                                            <th>发布时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody v-cloak v-if="ready">
+                                        <tr v-for="(doc,index) in docData">
+                                            <td>{{index+1}}
+                                                <!--<input check="self" :doc-id="doc.document.documentId" type="checkbox">--></td>
+                                            <td>{{doc.document.documentNo}}</td>
+                                            <td>{{doc.document.documentTitle}}</td>
+                                            <td>{{doc.documenttype.documenttypeName}}</td>
+                                            <td>{{doc.guser.userName}}</td>
+                                            <td v-html="replaceConfidential(doc.document.documentConfidential)"></td>
+                                            <td>{{doc.department.departmentName}}</td>
+                                            <td>{{doc.document.creationTime}}</td>
+                                            <td>
+                                                <!-- 本部门文档 -->
+                                                <template
+                                                        v-if="user.department.departmentName==doc.department.departmentName">
+                                                    <button @click="reviewDocument(index)" type="button"
+                                                            class="btn btn-primary btn-sm">阅读
+                                                    </button>
+                                                </template>
+                                                <!-- 非本部门未借阅文档 -->
+                                                <template v-else-if="doc.borrowing == null">
+                                                    <!--<sure-util :btn-class="'btn btn-primary btn-sm'"
+                                                               :i-class="''"
+                                                               :title="'确定执行操作?'"
+                                                               :btn-text="'申请查看'"
+                                                               :index="index"
+                                                               @action="applyBorrowing">
+                                                    </sure-util>-->
+                                                    <button @click="applyIndex = index" type="button"
+                                                            class="btn btn-primary btn-sm" data-toggle="modal"
+                                                            data-target="#ApplyReasonModal">申请查看
+                                                    </button>
+                                                </template>
+                                                <!-- 非本部门已有借阅文档 -->
+                                                <template v-else-if="doc.borrowing.borrowingState==2">
+                                                    <button @click="reviewDocument(index)" type="button"
+                                                            class="btn btn-primary btn-sm">阅读
+                                                    </button>
+                                                </template>
+                                                <!-- 申请中状态 -->
+                                                <template v-else-if="doc.borrowing.borrowingState==1">
+                                                    <button type="button" class="btn btn-primary btn-sm">
+                                                        <i class="fa fa-spinner fa-spin"></i>申请中
+                                                    </button>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tbody v-else>
+                                        <tr style="text-align: center;">
+                                            <td colspan="9"><i class="fa fa-spinner fa-spin"></i></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div v-cloak style="float: left;">
+                                        <page-util @change="change" :page="page"></page-util>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+        <!-- <div class="footer-main">
+            公文审批系统@2018公文审批系统开发小组
+        </div>-->
+
+        <!--申请理由模态框-->
+        <div class="modal fade" id="ApplyReasonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">申请理由</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="Reason" class="control-label">填写理由:</label>
+                            <textarea class="form-control" id="Reason" v-model="applyReason"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" @click="applyBorrowing" class="btn btn-primary" data-dismiss="modal">
+                            确定
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- jQuery 2.0.2 -->
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<!--布局的组件-->
+<script src="js/layout/layout.js"></script>
+<!-- 消息通知js -->
+<script src="js/spop.js" type="text/javascript"></script>
+<!-- jQuery UI 1.10.3 -->
+<script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<!-- daterangepicker -->
+<script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<script src="js/plugins/chart.js" type="text/javascript"></script>
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<!-- calendar -->
+<script src="js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+<!-- Director App -->
+<script src="js/Director/app.js" type="text/javascript"></script>
+<script src="js/Director/dashboard.js" type="text/javascript"></script>
+<script src="js/viewsJS/reviewDocument.js"></script>
+</body>
+</html>

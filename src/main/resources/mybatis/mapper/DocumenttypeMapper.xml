@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kcsj.gwglxt.mapper.DocumenttypeMapper" >
+
+    <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Documenttype" >
+        <id column="documenttype_id" property="documenttypeId"   />
+        <result column="documenttype_name" property="documenttypeName" jdbcType="VARCHAR" />
+        <result column="documenttype_remark" property="documenttypeRemark" jdbcType="VARCHAR" />
+        <result column="documenttype_isdelete" property="documenttypeIsdelete"  />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        documenttype_id, documenttype_name, documenttype_remark, documenttype_isdelete
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.DocumenttypeExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from documenttype
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from documenttype
+        where documenttype_id = #{documenttypeId,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from documenttype
+        where documenttype_id = #{documenttypeId,jdbcType=CHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.kcsj.gwglxt.entity.DocumenttypeExample" >
+        delete from documenttype
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Documenttype" >
+        insert into documenttype (documenttype_id, documenttype_name, documenttype_remark, 
+            documenttype_isdelete)
+        values (#{documenttypeId,jdbcType=CHAR}, #{documenttypeName,jdbcType=VARCHAR}, #{documenttypeRemark,jdbcType=VARCHAR},
+            #{documenttypeIsdelete,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.kcsj.gwglxt.entity.Documenttype" >
+        insert into documenttype
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="documenttypeId != null" >
+                documenttype_id,
+            </if>
+            <if test="documenttypeName != null" >
+                documenttype_name,
+            </if>
+            <if test="documenttypeRemark != null" >
+                documenttype_remark,
+            </if>
+            <if test="documenttypeIsdelete != null" >
+                documenttype_isdelete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="documenttypeId != null" >
+                #{documenttypeId,jdbcType=CHAR},
+            </if>
+            <if test="documenttypeName != null" >
+                #{documenttypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="documenttypeRemark != null" >
+                #{documenttypeRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="documenttypeIsdelete != null" >
+                #{documenttypeIsdelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.kcsj.gwglxt.entity.DocumenttypeExample" resultType="java.lang.Integer" >
+        select count(*) from documenttype
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update documenttype
+        <set >
+            <if test="record.documenttypeId != null" >
+                documenttype_id = #{record.documenttypeId,jdbcType=CHAR},
+            </if>
+            <if test="record.documenttypeName != null" >
+                documenttype_name = #{record.documenttypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.documenttypeRemark != null" >
+                documenttype_remark = #{record.documenttypeRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.documenttypeIsdelete != null" >
+                documenttype_isdelete = #{record.documenttypeIsdelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update documenttype
+        set documenttype_id = #{record.documenttypeId,jdbcType=CHAR},
+            documenttype_name = #{record.documenttypeName,jdbcType=VARCHAR},
+            documenttype_remark = #{record.documenttypeRemark,jdbcType=VARCHAR},
+            documenttype_isdelete = #{record.documenttypeIsdelete,jdbcType=INTEGER}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.kcsj.gwglxt.entity.Documenttype" >
+        update documenttype
+        <set >
+            <if test="documenttypeName != null" >
+                documenttype_name = #{documenttypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="documenttypeRemark != null" >
+                documenttype_remark = #{documenttypeRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="documenttypeIsdelete != null" >
+                documenttype_isdelete = #{documenttypeIsdelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where documenttype_id = #{documenttypeId,jdbcType=CHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.kcsj.gwglxt.entity.Documenttype" >
+        update documenttype
+        set documenttype_name = #{documenttypeName,jdbcType=VARCHAR},
+            documenttype_remark = #{documenttypeRemark,jdbcType=VARCHAR},
+            documenttype_isdelete = #{documenttypeIsdelete,jdbcType=INTEGER}
+        where documenttype_id = #{documenttypeId,jdbcType=CHAR}
+    </update>
+    <select id="getAllDocType" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from documenttype where documenttype_isdelete = '0'
+    </select>
+</mapper>

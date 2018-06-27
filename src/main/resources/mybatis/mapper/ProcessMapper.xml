@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kcsj.gwglxt.mapper.ProcessMapper" >
+
+    <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Process" >
+        <id column="process_id" property="processId"   />
+        <result column="process_introduction" property="processIntroduction" jdbcType="VARCHAR" />
+        <result column="process_name" property="processName" jdbcType="VARCHAR" />
+        <result column="process_isdelete" property="processIsdelete" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        process_id, process_introduction, process_name, process_isdelete
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.ProcessExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from process
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from process
+        where process_id = #{processId,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from process
+        where process_id = #{processId,jdbcType=CHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.kcsj.gwglxt.entity.ProcessExample" >
+        delete from process
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Process" >
+        insert into process (process_id, process_introduction, process_name,process_isdelete)
+        values (#{processId,jdbcType=CHAR}, #{processIntroduction,jdbcType=VARCHAR}, #{processName,jdbcType=VARCHAR}
+            ,#{processIsdelete,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.kcsj.gwglxt.entity.Process" >
+        insert into process
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="processId != null" >
+                process_id,
+            </if>
+            <if test="processIntroduction != null" >
+                process_introduction,
+            </if>
+            <if test="processName != null" >
+                process_name,
+            </if>
+            <if test="processIsdelete != null" >
+                process_isdelete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="processId != null" >
+                #{processId,jdbcType=CHAR},
+            </if>
+            <if test="processIntroduction != null" >
+                #{processIntroduction,jdbcType=VARCHAR},
+            </if>
+            <if test="processName != null" >
+                #{processName,jdbcType=VARCHAR},
+            </if>
+            <if test="processIsdelete != null" >
+                #{processIsdelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.kcsj.gwglxt.entity.ProcessExample" resultType="java.lang.Integer" >
+        select count(*) from process
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update process
+        <set >
+            <if test="record.processId != null" >
+                process_id = #{record.processId,jdbcType=CHAR},
+            </if>
+            <if test="record.processIntroduction != null" >
+                process_introduction = #{record.processIntroduction,jdbcType=VARCHAR},
+            </if>
+            <if test="record.processName != null" >
+                process_name = #{record.processName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.processIsdelete != null" >
+                process_isdelete = #{record.processIsdelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update process
+        set process_id = #{record.processId,jdbcType=CHAR},
+            process_introduction = #{record.processIntroduction,jdbcType=VARCHAR},
+            process_name = #{record.processName,jdbcType=VARCHAR},
+            process_isdelete = #{record.processIsdelete,jdbcType=INTEGER}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.kcsj.gwglxt.entity.Process" >
+        update process
+        <set >
+            <if test="processIntroduction != null" >
+                process_introduction = #{processIntroduction,jdbcType=VARCHAR},
+            </if>
+            <if test="processName != null" >
+                process_name = #{processName,jdbcType=VARCHAR},
+            </if>
+            <if test="processIsdelete != null" >
+                process_isdelete = #{processIsdelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where process_id = #{processId,jdbcType=CHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.kcsj.gwglxt.entity.Process" >
+        update process
+        set process_introduction = #{processIntroduction,jdbcType=VARCHAR},
+            process_name = #{processName,jdbcType=VARCHAR},
+            process_isdelete = #{processIsdelete,jdbcType=INTEGER}
+        where process_id = #{processId,jdbcType=CHAR}
+    </update>
+    <select id="getAllProcess" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from process where process_isdelete = '0'
+    </select>
+    <select id="getProcessByName" parameterType="java.lang.String" resultType="com.kcsj.gwglxt.entity.Process">
+        select * from process where process_name = #{processName} and process_isdelete = '0'
+    </select>
+</mapper>

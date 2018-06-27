@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>流程节点管理</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- bootstrap 3.0.2 -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- font Awesome -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Ionicons -->
+    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Morris chart -->
+    <link href="css/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <!-- jvectormap -->
+    <link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
+    <!-- Date Picker -->
+    <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
+    <!-- fullCalendar -->
+    <!-- Daterange picker -->
+    <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>
+    <!-- bootstrap wysihtml5 - text editor -->
+    <!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
+    <!-- Theme style -->
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- 消息通知css -->
+    <link href="css/spop.css" rel="stylesheet" type="text/css">
+    <script src="js/vue.js"></script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        td {
+            vertical-align: initial !important;
+        }
+
+        /* 除去input为number时候的箭头*/
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="skin-black">
+<!-- header logo: style can be found in header.less -->
+<header id="header" class="header">
+    <a href="index.html" class="logo">公文审批系统</a>
+    <header-component></header-component>
+</header>
+<div id="main" class="wrapper row-offcanvas row-offcanvas-left">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside-component :user="user" :name="name"></aside-component>
+    <aside class="right-side">
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!--breadcrumbs start -->
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="#"><i class="fa fa-home"></i> 首页</a>
+                        </li>
+                        <li>
+                            <a href="processManagement.html"><i class="fa fa-sitemap fa-fw"></i> 流程管理</a>
+                        </li>
+                        <li class="active">流程节点</li>
+                    </ul>
+                    <!--breadcrumbs end -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!--内容-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel">
+
+                                <div class="panel-body table-responsive">
+
+                                    <div class="box-tools m-b-15" style="margin-bottom: 30px;">
+                                        <div>
+                                            <span style="font-weight: bold;"><h4>当前位置：{{into_processNode.lhs_process}}</h4></span>
+                                        </div>
+                                        <div style="float: right;margin-top: -30px;">
+                                            <button href="#myModal" data-toggle="modal" type="button"
+                                                    class="btn btn-primary"><i class="fa fa-plus"
+                                                                               aria-hidden="true"></i> 添加流程节点
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 5%;">
+                                        <table class="table table-hover">
+                                            <tr>
+                                                <th>节点名</th>
+                                                <th>操作部门</th>
+                                                <th>职称</th>
+                                                <th>节点位置</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            <tbody v-cloak v-if="ready">
+                                            <tr v-for="(processNode,index) of processNodeData">
+                                                <td>{{processNode.process_node.processNodeName}}</td>
+                                                <td>{{processNode.department.departmentName}}</td>
+                                                <td>{{processNode.position.positionName}}</td>
+                                                <td>{{processNode.process_node.processNodeStep}}</td>
+                                                <td>
+                                                   <!-- <button type="button" class="btn btn-danger btn-sm"
+                                                            @click="deleteProcessNode(index)"><i
+                                                            class="fa fa-trash-o fa-fw"></i> 删除
+                                                    </button>-->
+                                                    <sure-util :btn-class="'btn btn-danger btn-sm'"
+                                                               :i-class="'fa fa-trash-o fa-fw'"
+                                                               :title="'确定执行操作?'"
+                                                               :btn-text="'删除'"
+                                                               :index="index"
+                                                               @action="deleteProcessNode">
+                                                    </sure-util>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <tbody v-else>
+                                            <tr style="text-align: center;">
+                                                <td colspan="9"><i class="fa fa-spinner fa-spin"></i></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+        <!-- <div class="footer-main">
+             公文审批系统@2018公文审批系统开发小组
+         </div>-->
+    </aside>
+    <!-- /.right-side -->
+
+    <!-- ./wrapper -->
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 class="modal-title">添加流程节点</h4>
+                </div>
+                <div class="modal-body">
+
+
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 col-sm-2 control-label">节点名称</label>
+                            <div class="col-lg-8">
+                                <input type="input" class="form-control" v-model="processNode.processNodeName"
+                                       placeholder="节点名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-sm-2 control-label">部门名称</label>
+                            <div class="col-lg-5">
+                                <select class="form-control m-b-10" v-model="processNode.processNodeDepartment"
+                                        @change="getDeptPosition">
+                                    <option v-for="(item,index) in departmentData" :value="item.departmentId">
+                                        {{item.departmentName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label col-lg-2">部门职称</label>
+                            <div class="col-lg-5">
+                                <select class="form-control m-b-10" v-model="processNode.processNodePosition">
+                                    <option v-for="(item,index) in posPermiData" :value="item.position.positionId">
+                                        {{item.position.positionName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="submit" class="btn btn-primary" @click="addProcessNode">
+                              添加
+                            </button>
+
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- jQuery 2.0.2 -->
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>-->
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<!--布局的组件-->
+<script src="js/layout/layout.js"></script>
+<!-- 消息通知js -->
+<script src="js/spop.js" type="text/javascript"></script>
+<!-- jQuery UI 1.10.3 -->
+<script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<!-- daterangepicker -->
+<script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<script src="js/plugins/chart.js" type="text/javascript"></script>
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<!-- calendar -->
+<script src="js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+<!-- Director App -->
+<script src="js/Director/app.js" type="text/javascript"></script>
+<script src="js/Director/dashboard.js" type="text/javascript"></script>
+<script src="js/viewsJS/processNode.js" type="text/javascript"></script>
+<script type="text/javascript">
+</script>
+<!-- Director for demo purposes -->
+</body>
+
+</html>

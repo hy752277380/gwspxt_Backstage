@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kcsj.gwglxt.mapper.DocumentMapper" >
+    <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Document" >
+        <id column="document_id" property="documentId"/>
+        <result column="document_title" property="documentTitle"/>
+        <result column="document_type" property="documentType"/>
+        <result column="document_no" property="documentNo"/>
+        <result column="document_dept" property="documentDept"/>
+        <result column="document_user" property="documentUser"/>
+        <result column="document_confidential" property="documentConfidential"/>
+        <result column="doucment_content" property="doucmentContent"/>
+        <result column="document_remark" property="documentRemark"/>
+        <result column="document_process" property="documentProcess"/>
+        <result column="document_location" property="documentLocation"  />
+        <result column="document_process_begin" property="documentProcessBegin"   />
+        <result column="document_process_finish" property="documentProcessFinish"   />
+        <result column="document_state" property="documentState"  />
+        <result column="document_speed" property="documentSpeed"  />
+        <result column="creation_time" property="creationTime"   />
+        <result column="document_isdelete" property="documentIsdelete"  />
+    </resultMap>
+    <resultMap id="DocumentBaseInfo" type="com.kcsj.gwglxt.DTO.DocumentCustom">
+        <association property="document" javaType="com.kcsj.gwglxt.entity.Document">
+            <id column="document_id" property="documentId"/>
+            <result column="document_title" property="documentTitle"/>
+            <result column="document_no" property="documentNo"/>
+            <result column="document_dept" property="documentDept"/>
+            <result column="document_confidential" property="documentConfidential"/>
+            <result column="creation_time" property="creationTime"/>
+        </association>
+        <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
+            <result column="user_name" property="userName"/>
+        </association>
+        <association property="documenttype" javaType="com.kcsj.gwglxt.entity.Documenttype">
+            <result column="documenttype_name" property="documenttypeName"/>
+        </association>
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <result column="department_name" property="departmentName"/>
+        </association>
+        <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
+            <result column="process_name" property="processName"/>
+        </association>
+        <association property="borrowing" javaType="com.kcsj.gwglxt.entity.Borrowing">
+            <result column="borrowing_state" property="borrowingState"/>
+        </association>
+    </resultMap>
+    <resultMap id="DocumentInfo" type="com.kcsj.gwglxt.DTO.DocumentCustom">
+        <association property="document" javaType="com.kcsj.gwglxt.entity.Document">
+            <id column="document_id" property="documentId"/>
+            <result column="document_title" property="documentTitle"/>
+            <result column="document_no" property="documentNo"/>
+            <result column="document_confidential" property="documentConfidential"/>
+            <result column="creation_time" property="creationTime"/>
+            <result column="document_state" property="documentState"/>
+        </association>
+        <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
+            <result column="user_name" property="userName"/>
+        </association>
+        <association property="documenttype" javaType="com.kcsj.gwglxt.entity.Documenttype">
+            <result column="documenttype_name" property="documenttypeName"/>
+        </association>
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <result column="department_name" property="departmentName"/>
+        </association>
+        <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
+            <result column="process_name" property="processName"/>
+        </association>
+        <association property="borrowing" javaType="com.kcsj.gwglxt.entity.Borrowing">
+            <result column="borrowing_state" property="borrowingState"/>
+        </association>
+    </resultMap>
+    <resultMap id="DocumentDetailInfo" type="com.kcsj.gwglxt.DTO.DocumentCustom">
+        <association property="document" javaType="com.kcsj.gwglxt.entity.Document">
+            <id column="document_id" property="documentId"/>
+            <result column="document_title" property="documentTitle"/>
+            <result column="document_no" property="documentNo"/>
+            <result column="document_confidential" property="documentConfidential"/>
+            <result column="doucment_content" property="doucmentContent"/>
+            <result column="document_remark" property="documentRemark"/>
+            <result column="document_location" property="documentLocation"  />
+            <result column="document_process_begin" property="documentProcessBegin"   />
+            <result column="document_process_finish" property="documentProcessFinish"   />
+            <result column="document_state" property="documentState"  />
+            <result column="document_dept" property="documentDept"  />
+            <result column="document_type" property="documentType"  />
+            <result column="document_process" property="documentProcess"  />
+            <result column="document_speed" property="documentSpeed"  />
+            <result column="creation_time" property="creationTime"/>
+        </association>
+        <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
+            <result column="user_name" property="userName"/>
+        </association>
+        <association property="documenttype" javaType="com.kcsj.gwglxt.entity.Documenttype">
+            <result column="documenttype_name" property="documenttypeName"/>
+        </association>
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <result column="department_name" property="departmentName"/>
+        </association>
+        <association property="process" javaType="com.kcsj.gwglxt.entity.Process">
+            <result column="process_name" property="processName"/>
+        </association>
+        <association property="borrowing" javaType="com.kcsj.gwglxt.entity.Borrowing">
+            <id column="borrowing_id" property="borrowingId"/>
+            <result column="borrowing_borrow_user" property="borrowingBorrowUser"/>
+            <result column="borrowing_reason" property="borrowingReason"/>
+            <result column="borrowing_state" property="borrowingState"/>
+        </association>
+    </resultMap>
+    <resultMap id="MouthResultMap" type="com.kcsj.gwglxt.DTO.CountByMouth">
+        <result column="January" property="Jan"/>
+        <result column="February" property="Feb"/>
+        <result column="March" property="Mar"/>
+        <result column="April" property="Apr"/>
+        <result column="May" property="May"/>
+        <result column="June" property="Jun"/>
+        <result column="July" property="Jul"/>
+        <result column="August" property="Aug"/>
+        <result column="September" property="Sep"/>
+        <result column="October" property="Oct"/>
+        <result column="November" property="Nov"/>
+        <result column="December" property="Dec"/>
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        document_id, document_title, document_type, document_no, document_dept, document_user,
+        document_confidential, doucment_content, document_remark, document_process, document_location,
+        document_process_begin, document_process_finish, document_state, document_speed,
+        creation_time, document_isdelete
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.DocumentExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from document
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from document
+        where document_id = #{documentId,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from document
+        where document_id = #{documentId,jdbcType=CHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.kcsj.gwglxt.entity.DocumentExample" >
+        delete from document
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Document" >
+        insert into document (document_id, document_title, document_type,
+            document_no, document_dept, document_user,
+            document_confidential, doucment_content,
+            document_remark, document_process, document_location,
+            document_process_begin, document_process_finish,
+            document_state, document_speed, creation_time,
+            document_isdelete)
+        values (#{documentId,jdbcType=CHAR}, #{documentTitle,jdbcType=VARCHAR}, #{documentType,jdbcType=CHAR},
+            #{documentNo,jdbcType=VARCHAR}, #{documentDept,jdbcType=CHAR}, #{documentUser,jdbcType=CHAR},
+            #{documentConfidential,jdbcType=INTEGER}, #{doucmentContent,jdbcType=LONGVARCHAR},
+            #{documentRemark,jdbcType=VARCHAR}, #{documentProcess,jdbcType=CHAR}, #{documentLocation,jdbcType=INTEGER},
+            #{documentProcessBegin,jdbcType=CHAR}, #{documentProcessFinish,jdbcType=CHAR},
+            #{documentState,jdbcType=INTEGER}, #{documentSpeed,jdbcType=INTEGER}, #{creationTime,jdbcType=CHAR},
+            #{documentIsdelete,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.kcsj.gwglxt.entity.Document" >
+        insert into document
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="documentId != null" >
+                document_id,
+            </if>
+            <if test="documentTitle != null" >
+                document_title,
+            </if>
+            <if test="documentType != null" >
+                document_type,
+            </if>
+            <if test="documentNo != null" >
+                document_no,
+            </if>
+            <if test="documentDept != null" >
+                document_dept,
+            </if>
+            <if test="documentUser != null" >
+                document_user,
+            </if>
+            <if test="documentConfidential != null" >
+                document_confidential,
+            </if>
+            <if test="doucmentContent != null" >
+                doucment_content,
+            </if>
+            <if test="documentRemark != null" >
+                document_remark,
+            </if>
+            <if test="documentProcess != null" >
+                document_process,
+            </if>
+            <if test="documentLocation != null" >
+                document_location,
+            </if>
+            <if test="documentProcessBegin != null" >
+                document_process_begin,
+            </if>
+            <if test="documentProcessFinish != null" >
+                document_process_finish,
+            </if>
+            <if test="documentState != null" >
+                document_state,
+            </if>
+            <if test="documentSpeed != null" >
+                document_speed,
+            </if>
+            <if test="creationTime != null" >
+                creation_time,
+            </if>
+            <if test="documentIsdelete != null" >
+                document_isdelete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="documentId != null" >
+                #{documentId,jdbcType=CHAR},
+            </if>
+            <if test="documentTitle != null" >
+                #{documentTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="documentType != null" >
+                #{documentType,jdbcType=CHAR},
+            </if>
+            <if test="documentNo != null" >
+                #{documentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="documentDept != null" >
+                #{documentDept,jdbcType=CHAR},
+            </if>
+            <if test="documentUser != null" >
+                #{documentUser,jdbcType=CHAR},
+            </if>
+            <if test="documentConfidential != null" >
+                #{documentConfidential,jdbcType=INTEGER},
+            </if>
+            <if test="doucmentContent != null" >
+                #{doucmentContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="documentRemark != null" >
+                #{documentRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="documentProcess != null" >
+                #{documentProcess,jdbcType=CHAR},
+            </if>
+            <if test="documentLocation != null" >
+                #{documentLocation,jdbcType=INTEGER},
+            </if>
+            <if test="documentProcessBegin != null" >
+                #{documentProcessBegin,jdbcType=CHAR},
+            </if>
+            <if test="documentProcessFinish != null" >
+                #{documentProcessFinish,jdbcType=CHAR},
+            </if>
+            <if test="documentState != null" >
+                #{documentState,jdbcType=INTEGER},
+            </if>
+            <if test="documentSpeed != null" >
+                #{documentSpeed,jdbcType=INTEGER},
+            </if>
+            <if test="creationTime != null" >
+                #{creationTime,jdbcType=CHAR},
+            </if>
+            <if test="documentIsdelete != null" >
+                #{documentIsdelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.kcsj.gwglxt.entity.DocumentExample" resultType="java.lang.Integer" >
+        select count(*) from document
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update document
+        <set >
+            <if test="record.documentId != null" >
+                document_id = #{record.documentId,jdbcType=CHAR},
+            </if>
+            <if test="record.documentTitle != null" >
+                document_title = #{record.documentTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.documentType != null" >
+                document_type = #{record.documentType,jdbcType=CHAR},
+            </if>
+            <if test="record.documentNo != null" >
+                document_no = #{record.documentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.documentDept != null" >
+                document_dept = #{record.documentDept,jdbcType=CHAR},
+            </if>
+            <if test="record.documentUser != null" >
+                document_user = #{record.documentUser,jdbcType=CHAR},
+            </if>
+            <if test="record.documentConfidential != null" >
+                document_confidential = #{record.documentConfidential,jdbcType=INTEGER},
+            </if>
+            <if test="record.doucmentContent != null" >
+                doucment_content = #{record.doucmentContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.documentRemark != null" >
+                document_remark = #{record.documentRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.documentProcess != null" >
+                document_process = #{record.documentProcess,jdbcType=CHAR},
+            </if>
+            <if test="record.documentLocation != null" >
+                document_location = #{record.documentLocation,jdbcType=INTEGER},
+            </if>
+            <if test="record.documentProcessBegin != null" >
+                document_process_begin = #{record.documentProcessBegin,jdbcType=CHAR},
+            </if>
+            <if test="record.documentProcessFinish != null" >
+                document_process_finish = #{record.documentProcessFinish,jdbcType=CHAR},
+            </if>
+            <if test="record.documentState != null" >
+                document_state = #{record.documentState,jdbcType=INTEGER},
+            </if>
+            <if test="record.documentSpeed != null" >
+                document_speed = #{record.documentSpeed,jdbcType=INTEGER},
+            </if>
+            <if test="record.creationTime != null" >
+                creation_time = #{record.creationTime,jdbcType=CHAR},
+            </if>
+            <if test="record.documentIsdelete != null" >
+                document_isdelete = #{record.documentIsdelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update document
+        set document_id = #{record.documentId,jdbcType=CHAR},
+        document_title = #{record.documentTitle,jdbcType=VARCHAR},
+        document_type = #{record.documentType,jdbcType=CHAR},
+        document_no = #{record.documentNo,jdbcType=VARCHAR},
+        document_dept = #{record.documentDept,jdbcType=CHAR},
+        document_user = #{record.documentUser,jdbcType=CHAR},
+        document_confidential = #{record.documentConfidential,jdbcType=INTEGER},
+        doucment_content = #{record.doucmentContent,jdbcType=LONGVARCHAR},
+        document_remark = #{record.documentRemark,jdbcType=VARCHAR},
+        document_process = #{record.documentProcess,jdbcType=CHAR},
+        document_location = #{record.documentLocation,jdbcType=INTEGER},
+        document_process_begin = #{record.documentProcessBegin,jdbcType=CHAR},
+        document_process_finish = #{record.documentProcessFinish,jdbcType=CHAR},
+        document_state = #{record.documentState,jdbcType=INTEGER},
+        document_speed = #{record.documentSpeed,jdbcType=INTEGER},
+        creation_time = #{record.creationTime,jdbcType=CHAR},
+        document_isdelete = #{record.documentIsdelete,jdbcType=INTEGER}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.kcsj.gwglxt.entity.Document" >
+        update document
+        <set >
+            <if test="documentTitle != null" >
+                document_title = #{documentTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="documentType != null" >
+                document_type = #{documentType,jdbcType=CHAR},
+            </if>
+            <if test="documentNo != null" >
+                document_no = #{documentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="documentDept != null" >
+                document_dept = #{documentDept,jdbcType=CHAR},
+            </if>
+            <if test="documentUser != null" >
+                document_user = #{documentUser,jdbcType=CHAR},
+            </if>
+            <if test="documentConfidential != null" >
+                document_confidential = #{documentConfidential,jdbcType=INTEGER},
+            </if>
+            <if test="doucmentContent != null" >
+                doucment_content = #{doucmentContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="documentRemark != null" >
+                document_remark = #{documentRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="documentProcess != null" >
+                document_process = #{documentProcess,jdbcType=CHAR},
+            </if>
+            <if test="documentLocation != null" >
+                document_location = #{documentLocation,jdbcType=INTEGER},
+            </if>
+            <if test="documentProcessBegin != null" >
+                document_process_begin = #{documentProcessBegin,jdbcType=CHAR},
+            </if>
+            <if test="documentProcessFinish != null" >
+                document_process_finish = #{documentProcessFinish,jdbcType=CHAR},
+            </if>
+            <if test="documentState != null" >
+                document_state = #{documentState,jdbcType=INTEGER},
+            </if>
+            <if test="documentSpeed != null" >
+                document_speed = #{documentSpeed,jdbcType=INTEGER},
+            </if>
+            <if test="creationTime != null" >
+                creation_time = #{creationTime,jdbcType=CHAR},
+            </if>
+            <if test="documentIsdelete != null" >
+                document_isdelete = #{documentIsdelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where document_id = #{documentId,jdbcType=CHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.kcsj.gwglxt.entity.Document" >
+        update document
+        set document_title = #{documentTitle,jdbcType=VARCHAR},
+            document_type = #{documentType,jdbcType=CHAR},
+            document_no = #{documentNo,jdbcType=VARCHAR},
+            document_dept = #{documentDept,jdbcType=CHAR},
+            document_user = #{documentUser,jdbcType=CHAR},
+            document_confidential = #{documentConfidential,jdbcType=INTEGER},
+            doucment_content = #{doucmentContent,jdbcType=LONGVARCHAR},
+            document_remark = #{documentRemark,jdbcType=VARCHAR},
+            document_process = #{documentProcess,jdbcType=CHAR},
+            document_location = #{documentLocation,jdbcType=INTEGER},
+            document_process_begin = #{documentProcessBegin,jdbcType=CHAR},
+            document_process_finish = #{documentProcessFinish,jdbcType=CHAR},
+            document_state = #{documentState,jdbcType=INTEGER},
+            document_speed = #{documentSpeed,jdbcType=INTEGER},
+            creation_time = #{creationTime,jdbcType=CHAR},
+            document_isdelete = #{documentIsdelete,jdbcType=INTEGER}
+        where document_id = #{documentId,jdbcType=CHAR}
+    </update>
+    <update id="updateDocumentState">
+        UPDATE document SET document_state = #{documentState}
+        <if test="documentProcessBegin!=null">
+            ,document_process_begin=#{documentProcessBegin}
+        </if>
+        <if test="documentProcessFinish!=null">
+            ,document_process_finish=#{documentProcessFinish}
+        </if>
+        WHERE document_id = #{documentId}
+    </update>
+    <select id="getDocumentName" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT document_title FROM document WHERE document_id = #{documentId} and document_isdelete = '0'
+    </select>
+    <update id="updateDocumentLocation">
+        UPDATE document SET document_location = #{documentLocation} WHERE document_id = #{documentId}
+    </update>
+    <select id="getDocumentLocation" parameterType="java.lang.String" resultType="int">
+        SELECT document_location FROM document WHERE document_id = #{documentId} and document_isdelete = '0'
+    </select>
+    <select id="getDocumentByState" resultMap="DocumentInfo">
+select
+        doc.document_id,
+	doc.document_title,
+	doc.document_no,
+	doc.document_confidential,
+	doc.creation_time,
+    doc.document_state,
+	gu.user_name,
+	dt.documenttype_name,
+	de.department_name,
+	pr.process_name
+FROM
+	document doc,
+	documenttype dt,
+	department de,
+	guser gu,
+	process pr
+WHERE
+	doc.document_type = dt.documenttype_id
+AND doc.document_dept = de.department_id
+AND doc.document_user = gu.user_id
+AND doc.document_process = pr.process_id
+        and doc.document_isdelete = '0'
+        and doc.document_user = #{documentUser}
+        <if test="documentState!=null and documentState!=0">
+            and doc.document_state = #{documentState}
+        </if>
+        <if test="documentType!=null and documentType!='' and documentType!=0">
+            and doc.document_type = #{documentType}
+        </if>
+        <if test="documentConfidential!=null and documentConfidential!=0">
+            and doc.document_confidential = #{documentConfidential}
+        </if>
+       <if test="fuzzySearch!=null">
+            and (doc.document_no like CONCAT('%',#{fuzzySearch},'%' ) or doc.document_title like CONCAT('%',#{fuzzySearch},'%' ))
+        </if>
+    </select>
+    <select id="getAllDocument" resultMap="DocumentBaseInfo">
+        SELECT
+	doc.document_id,
+	doc.document_title,
+	doc.document_no,
+    doc.document_dept,
+	doc.document_confidential,
+	doc.creation_time,
+	gu.user_name,
+	dt.documenttype_name,
+	de.department_name,
+	pr.process_name
+FROM
+	document doc,
+	documenttype dt,
+	department de,
+	guser gu,
+	process pr
+WHERE
+	doc.document_type = dt.documenttype_id
+AND doc.document_dept = de.department_id
+AND doc.document_user = gu.user_id
+AND doc.document_process = pr.process_id
+and doc.document_state = '6'
+and doc.document_isdelete = '0'
+<if test="documentType!=null and documentType!=''and documentType!=0">
+    and doc.document_type = #{documentType}
+</if>
+<if test="documentConfidential!=null and documentConfidential!=0">
+    and doc.document_confidential = #{documentConfidential}
+</if>
+<if test="documentDept!=null and documentDept!=''">
+     and doc.document_dept = #{documentDept}
+</if>
+        <if test="fuzzySearch!=null">
+            and (doc.document_no like CONCAT('%',#{fuzzySearch},'%' ) or doc.document_title like CONCAT('%',#{fuzzySearch},'%' ) or gu.user_name like CONCAT('%',#{fuzzySearch},'%' ))
+        </if>
+    </select>
+    <select id="documentBaseInfo" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
+        SELECT
+	doc.document_id,
+	doc.document_title,
+	doc.document_no,
+	doc.document_confidential,
+    doc.doucment_content,
+    doc.document_remark,
+    doc.document_location,
+    doc.document_process_begin,
+    doc.document_process_finish,
+    doc.document_state,
+    doc.document_speed,
+	doc.creation_time,
+	doc.document_dept,
+	doc.document_type,
+	doc.document_process,
+	gu.user_name,
+	dt.documenttype_name,
+	de.department_name,
+	pr.process_name
+FROM
+	document doc,
+	documenttype dt,
+	department de,
+	guser gu,
+	process pr
+WHERE
+	doc.document_type = dt.documenttype_id
+AND doc.document_dept = de.department_id
+AND doc.document_user = gu.user_id
+AND doc.document_process = pr.process_id
+and doc.document_id = #{documentId,jdbcType=CHAR}
+and doc.document_isdelete = '0'
+    </select>
+    <select id="findCheckingDoc" resultMap="DocumentBaseInfo">
+        SELECT
+	doc.document_id,
+	doc.document_title,
+	doc.document_no,
+	doc.document_confidential,
+	doc.creation_time,
+	gu.user_name,
+	dt.documenttype_name,
+	de.department_name,
+	pr.process_name
+FROM
+	document doc,
+	documenttype dt,
+	department de,
+	guser gu,
+	process pr
+WHERE
+ doc.document_process = pr.process_id
+and doc.document_dept = de.department_id
+and doc.document_type = dt.documenttype_id
+and doc.document_user = gu.user_id
+and doc.document_process = #{documentProcess} and doc.document_location =#{documentLocation} and doc.document_isdelete = '0'
+        <if test="documentType!=null and documentType!='' and documentType!=0">
+            and doc.document_type = #{documentType}
+        </if>
+        <if test="documentConfidential!=null and documentConfidential!=0">
+            and doc.document_confidential = #{documentConfidential}
+        </if>
+        <if test="fuzzySearch!=null">
+            and (doc.document_no like CONCAT('%',#{fuzzySearch},'%' ) or doc.document_title like CONCAT('%',#{fuzzySearch},'%' ) or gu.user_name like CONCAT('%',#{fuzzySearch},'%' ))
+        </if>
+    </select>
+    <select id="getDocumentByDpt" parameterType="java.lang.String" resultMap="DocumentDetailInfo">
+        SELECT
+doc.document_id,
+	doc.document_title,
+	doc.document_no,
+	doc.document_confidential,
+    doc.doucment_content,
+    doc.document_remark,
+    doc.document_location,
+    doc.document_process_begin,
+    doc.document_process_finish,
+    doc.document_state,
+    doc.document_speed,
+	doc.creation_time,
+	doc.document_dept,
+	doc.document_type,
+	doc.document_process,
+	gu.user_name,
+	dt.documenttype_name,
+	de.department_name,
+	pr.process_name,
+	bo.borrowing_borrow_user,
+	bo.borrowing_reason,
+	bo.borrowing_id,
+	bo.borrowing_state
+FROM
+	document doc,
+	documenttype dt,
+	department de,
+	guser gu,
+	process pr,
+	borrowing bo
+	where doc.document_dept = #{documentDept}
+and bo.borrowing_state = '1'
+and doc.document_process = pr.process_id
+and doc.document_dept = de.department_id
+and doc.document_type = dt.documenttype_id
+and bo.borrowing_borrow_user = gu.user_id
+and bo.borrowing_document = doc.document_id
+and doc.document_isdelete = '0'
+        <if test="documentType!=null and documentType!=''">
+            and doc.document_type = #{documentType}
+        </if>
+        <if test="documentConfidential!=null and documentConfidential!=0">
+            and doc.document_confidential = #{documentConfidential}
+        </if>
+        <if test="fuzzySearch!=null">
+            and (doc.document_no like CONCAT('%',#{fuzzySearch},'%' ) or doc.document_title like CONCAT('%',#{fuzzySearch},'%' ) or gu.user_name like CONCAT('%',#{fuzzySearch},'%' ))
+        </if>
+    </select>
+    <select id="countAllDocument" parameterType="java.lang.String" resultType="int">
+        select count(*) from document where document_isdelete = '0'
+            <if test="documentDept!=null">
+                and document_dept = #{documentDept}
+            </if>
+            <if test="documentUser!=null">
+                and document_user = #{documentUser}
+            </if>
+    </select>
+    <select id="countDocumentByMouth" parameterType="java.lang.String" resultMap="MouthResultMap">
+         select
+sum(case month(document.creation_time) when '1' then 1 else 0 end) as January,
+sum(case month(document.creation_time) when '2' then 1 else 0 end) as February,
+sum(case month(document.creation_time) when '3' then 1 else 0 end) as March,
+sum(case month(document.creation_time) when '4' then 1 else 0 end) as April,
+sum(case month(document.creation_time) when '5' then 1 else 0 end) as May,
+sum(case month(document.creation_time) when '6' then 1 else 0 end) as June,
+sum(case month(document.creation_time) when '7' then 1 else 0 end) as July,
+sum(case month(document.creation_time) when '8' then 1 else 0 end) as August,
+sum(case month(document.creation_time) when '9' then 1 else 0 end) as September,
+sum(case month(document.creation_time) when '10' then 1 else 0 end) as October,
+sum(case month(document.creation_time) when '11' then 1 else 0 end) as November,
+sum(case month(document.creation_time) when '12' then 1 else 0 end) as December
+from document
+where year(document.creation_time)=#{year} and document_isdelete = '0'
+<if test="department!=null">
+    and document.document_dept = #{department}
+</if>
+<if test="userId!=null">
+     and document.document_user = #{userId}
+</if>
+    </select>
+</mapper>

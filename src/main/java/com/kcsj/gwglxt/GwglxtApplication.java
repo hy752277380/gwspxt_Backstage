@@ -10,5 +10,5 @@ public class GwglxtApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GwglxtApplication.class, args);
+        }
     }
-}

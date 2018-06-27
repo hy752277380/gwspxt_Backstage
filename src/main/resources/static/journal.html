@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>个人日志</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta name="description" content="Developed By M Abdur Rokib Promy">
+    <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
+    <!-- bootstrap 3.0.2 -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- font Awesome -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Ionicons -->
+    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Morris chart -->
+    <link href="css/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <!-- jvectormap -->
+    <link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
+    <!-- Date Picker -->
+    <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
+    <!-- fullCalendar -->
+    <!-- <link href="css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" /> -->
+    <!-- Daterange picker -->
+    <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>
+    <!-- bootstrap wysihtml5 - text editor -->
+    <!-- <link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" /> -->
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <!-- Theme style -->
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="css/journal_about.css" rel="stylesheet" type="text/css">
+    <script src="js/vue.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="skin-black">
+<!-- header logo: style can be found in header.less -->
+<header id="header" class="header">
+    <a href="index.html" class="logo">公文审批系统</a>
+    <header-component></header-component>
+</header>
+<div id="main" class="wrapper row-offcanvas row-offcanvas-left">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside-component :user="user" :name="name"></aside-component>
+    <aside class="right-side">
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!--breadcrumbs start -->
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="#"><i class="fa fa-home"></i> 首页</a>
+                        </li>
+                        <li class="active">个人日志</li>
+                    </ul>
+                    <!--breadcrumbs end -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!--内容-->
+                    <div v-cloak class="row">
+                        <div class="col-xs-12">
+                            <div class="panel">
+                                <div class="panel-body table-responsive">
+                                    <div class="box-tools m-b-15">
+                                        <div class="input-group">
+                                            <input type="text" name="table_search" placeholder="Search"
+                                                   class="form-control input-sm pull-right" style="width: 150px;"/>
+                                            <!-- v-model="searchData.fuzzySearch"
+                                             @keyup="search({searchName:'fuzzySearch',key:searchData.fuzzySearch})"-->
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div v-cloak class="panel-group" id="accordion" role="tablist"
+                                             aria-multiselectable="true">
+
+                                            <div style="margin-top: 10px" class="panel panel-default"
+                                                 v-for="(logs,index) in logData">
+                                                <div class="panel-heading" role="tab" :id="'heading'+index">
+                                                    <h4 class="panel-title">
+                                                        <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                                           :href="'#collapse'+index" aria-controls="'collapse'+index"
+                                                           aria-expanded="true">
+                                                            {{index+1}}月份的日志
+                                                            <span style="float: right"
+                                                                  class="badge">{{logs.length}}</span>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+
+                                                <div :id="'collapse'+index" class="panel-collapse collapse"
+                                                     role="tabpanel"
+                                                     :aria-labelledby="'heading'+index">
+                                                    <div class="panel-body">
+                                                        <ul class="list-group">
+                                                            <li v-for="(log,index) in logs" class="list-group-item">
+                                                                <span class="label label-primary">{{log.creationTime}}</span>
+                                                                {{log.logContent}}
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div style="position: relative;">
+                                            <canvas id="journalChart" height="400" width="400"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-xs-12">
+                             <div class="panel">
+                                 <div class="panel-body table-responsive" style="max-height: 600px;overflow-y: auto;">
+                                     <div class="box-tools m-b-15" style="margin-top: 10px;">
+                                         <div class="input-group">
+                                             <input type="text" name="table_search"
+                                                    class="form-control input-sm pull-right" style="width: 150px;"
+                                                    placeholder="Search"/>
+                                             <div class="input-group-btn">
+                                                 <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>
+                                                 </button>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="page">
+                                         <div class="box">
+                                             <ul class="event_year">
+                                                 <li v-for="(logs,index) in logData" :class="index==0?'current':''">
+                                                     <label @click="label" :for="index+1">{{index+1}}</label>
+                                                 </li>
+                                             </ul>
+                                             <ul class="event_list">
+                                                 <div v-for="(logs,index) in logData">
+                                                     <h3 :id="index+1">{{index+1}}</h3>
+                                                     <li v-for="(log,index) in logs" v-cloak>
+                                                         <span>{{log.creationTime}}</span>
+                                                         <p><span>{{log.logContent}}</span></p>
+                                                     </li>
+                                                 </div>
+                                             </ul>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>-->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+        <!-- <div class="footer-main">
+             公文审批系统@2018公文审批系统开发小组
+         </div>-->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.0.2 -->
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>-->
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<!--布局的组件-->
+<script src="js/layout/layout.js"></script>
+<!-- jQuery UI 1.10.3 -->
+<script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<!-- daterangepicker -->
+<script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<script src="js/plugins/chart.js" type="text/javascript"></script>
+<!-- datepicker
+<script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>-->
+<!-- Bootstrap WYSIHTML5
+<script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>-->
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<!-- calendar -->
+<script src="js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+<!-- Director App -->
+<script src="js/Director/app.js" type="text/javascript"></script>
+<!-- Director dashboard demo (This is only for demo purposes) -->
+<script src="js/Director/dashboard.js" type="text/javascript"></script>
+<script src="js/viewsJS/journal.js"></script>
+<!-- Director for demo purposes -->
+</body>
+
+</html>

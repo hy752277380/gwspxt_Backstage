@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kcsj.gwglxt.mapper.GuserMapper" >
+
+    <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Guser" >
+        <id column="user_id" property="userId"   />
+        <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
+        <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="user_sex" property="userSex"   />
+        <result column="user_department" property="userDepartment"   />
+        <result column="user_position" property="userPosition"   />
+        <result column="user_phonenumber" property="userPhonenumber" jdbcType="VARCHAR" />
+        <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+        <result column="user_introduction" property="userIntroduction" jdbcType="VARCHAR" />
+        <result column="user_picture" property="userPicture" jdbcType="VARCHAR" />
+        <result column="creation_time" property="creationTime" jdbcType="VARCHAR" />
+        <result column="user_isdelete" property="userIsdelete" jdbcType="INTEGER" />
+    </resultMap>
+
+    <!--依据用户登录给的user_account user_password信息书写的登录用户loginCustom的映射
+    -->
+    <resultMap id="loginFunctionMap" type="com.kcsj.gwglxt.DTO.LoginCustom">
+        <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
+            <id column="user_id"  property="userId" jdbcType="CHAR"/>
+            <result column="user_account" property="userAccount" jdbcType="CHAR" />
+            <result column="user_password" property="userPassword" jdbcType="CHAR"/>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+            <result column="user_sex" property="userSex" jdbcType="INTEGER"/>
+            <result column="user_department" property="userDepartment" jdbcType="CHAR"/>
+            <result column="user_position" property="userPosition" jdbcType="CHAR"/>
+            <result column="user_phonenumber" property="userPhonenumber" jdbcType="VARCHAR"/>
+            <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+            <result column="user_introduction" property="userIntroduction" jdbcType="VARCHAR"/>
+            <result column="user_picture" property="userPicture" jdbcType="VARCHAR"/>
+            <result column="creationTime" property="creationTime" jdbcType="CHAR"/>
+            <result column="user_isdelete" property="userIsdelete" jdbcType="INTEGER"/>
+        </association>
+
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <id column="user_department" property="departmentId" jdbcType="CHAR" />
+            <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
+        <!--<result column="department_id" property="departmentId" jdbcType="CHAR"/>-->
+        </association>
+        <association property="position" javaType="com.kcsj.gwglxt.entity.Position">
+            <result column="position_name" property="positionName" jdbcType="VARCHAR"/>
+        </association>
+        <association property="permission" javaType="com.kcsj.gwglxt.entity.Permission">
+            <result column="permission_level" property="permissionLevel" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+    <!--<resultMap id="userLogin" type="" >
+
+    </resultMap>-->
+    <resultMap id="MouthResultMap" type="com.kcsj.gwglxt.DTO.CountByMouth">
+        <result column="January" property="Jan"/>
+        <result column="February" property="Feb"/>
+        <result column="March" property="Mar"/>
+        <result column="April" property="Apr"/>
+        <result column="May" property="May"/>
+        <result column="June" property="Jun"/>
+        <result column="July" property="Jul"/>
+        <result column="August" property="Aug"/>
+        <result column="September" property="Sep"/>
+        <result column="October" property="Oct"/>
+        <result column="November" property="Nov"/>
+        <result column="December" property="Dec"/>
+    </resultMap>
+    <resultMap id="loginResultMap" type="com.kcsj.gwglxt.DTO.LoginCustom">
+        <association property="guser" javaType="com.kcsj.gwglxt.entity.Guser">
+            <id column="user_id"  property="userId" jdbcType="CHAR"/>
+            <result column="user_account" property="userAccount" jdbcType="CHAR" />
+            <result column="user_password" property="userPassword" jdbcType="CHAR"/>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+            <result column="user_sex" property="userSex" jdbcType="INTEGER"/>
+            <result column="user_department" property="userDepartment" jdbcType="CHAR"/>
+            <result column="user_position" property="userPosition" jdbcType="CHAR"/>
+            <result column="user_phonenumber" property="userPhonenumber" jdbcType="VARCHAR"/>
+            <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+            <result column="user_introduction" property="userIntroduction" jdbcType="VARCHAR"/>
+            <result column="user_picture" property="userPicture" jdbcType="VARCHAR"/>
+            <result column="creationTime" property="creationTime" jdbcType="CHAR"/>
+            <result column="user_isdelete" property="userIsdelete" jdbcType="INTEGER"/>
+        </association>
+        <association property="department" javaType="com.kcsj.gwglxt.entity.Department">
+            <id column="user_department" property="departmentId"   />
+            <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        </association>
+        <association property="permission" javaType="com.kcsj.gwglxt.entity.Permission">
+            <result column="permission_level" property="permissionLevel" />
+        </association>
+        <association property="position" javaType="com.kcsj.gwglxt.entity.Position">
+            <id column="position_id" property="positionId"   />
+            <result column="position_name" property="positionName" />
+        </association>
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        user_id, user_account, user_password, user_name, user_sex, user_department, user_position,
+        user_phonenumber, user_email, user_introduction, user_picture, creation_time, user_isdelete
+    </sql>
+
+    <sql id="user_login_info">
+        g.user_id,g.user_account,g.user_password,g.user_name,d.department_name,po.position_name,pe.permission_level
+    </sql>
+    <sql id="user_login_condition">
+        guser g,
+	department d,
+	permission pe,
+	position po
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.GuserExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from guser
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from guser
+        where user_id = #{userId,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from guser
+        where user_id = #{userId,jdbcType=CHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.kcsj.gwglxt.entity.GuserExample" >
+        delete from guser
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Guser" >
+        insert into guser (user_id, user_account, user_password,
+            user_name, user_sex, user_department,
+            user_position, user_phonenumber, user_email,
+            user_introduction, user_picture, creation_time,user_isdelete
+            )
+        values (#{userId,jdbcType=CHAR}, #{userAccount,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
+            #{userName,jdbcType=VARCHAR}, #{userSex,jdbcType=CHAR}, #{userDepartment,jdbcType=CHAR},
+            #{userPosition,jdbcType=CHAR}, #{userPhonenumber,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},
+            #{userIntroduction,jdbcType=VARCHAR}, #{userPicture,jdbcType=VARCHAR}, #{creationTime,jdbcType=VARCHAR},
+            #{userIsdelete,jdbcType=INTEGER}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.kcsj.gwglxt.entity.Guser" >
+        insert into guser
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="userAccount != null" >
+                user_account,
+            </if>
+            <if test="userPassword != null" >
+                user_password,
+            </if>
+            <if test="userName != null" >
+                user_name,
+            </if>
+            <if test="userSex != null" >
+                user_sex,
+            </if>
+            <if test="userDepartment != null" >
+                user_department,
+            </if>
+            <if test="userPosition != null" >
+                user_position,
+            </if>
+            <if test="userPhonenumber != null" >
+                user_phonenumber,
+            </if>
+            <if test="userEmail != null" >
+                user_email,
+            </if>
+            <if test="userIntroduction != null" >
+                user_introduction,
+            </if>
+            <if test="userPicture != null" >
+                user_picture,
+            </if>
+            <if test="creationTime != null" >
+                creation_time,
+            </if>
+            <if test="userIsdelete != null" >
+                user_isdelete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+                #{userId,jdbcType=CHAR},
+            </if>
+            <if test="userAccount != null" >
+                #{userAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null" >
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null" >
+                #{userSex,jdbcType=CHAR},
+            </if>
+            <if test="userDepartment != null" >
+                #{userDepartment,jdbcType=CHAR},
+            </if>
+            <if test="userPosition != null" >
+                #{userPosition,jdbcType=CHAR},
+            </if>
+            <if test="userPhonenumber != null" >
+                #{userPhonenumber,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null" >
+                #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="userIntroduction != null" >
+                #{userIntroduction,jdbcType=VARCHAR},
+            </if>
+            <if test="userPicture != null" >
+                #{userPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="creationTime != null" >
+                #{creationTime,jdbcType=VARCHAR},
+            </if>
+            <if test="userIsdelete != null" >
+                #{userIsdelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.kcsj.gwglxt.entity.GuserExample" resultType="java.lang.Integer" >
+        select count(*) from guser
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update guser
+        <set >
+            <if test="record.userId != null" >
+                user_id = #{record.userId,jdbcType=CHAR},
+            </if>
+            <if test="record.userAccount != null" >
+                user_account = #{record.userAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userPassword != null" >
+                user_password = #{record.userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userName != null" >
+                user_name = #{record.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userSex != null" >
+                user_sex = #{record.userSex,jdbcType=CHAR},
+            </if>
+            <if test="record.userDepartment != null" >
+                user_department = #{record.userDepartment,jdbcType=CHAR},
+            </if>
+            <if test="record.userPosition != null" >
+                user_position = #{record.userPosition,jdbcType=CHAR},
+            </if>
+            <if test="record.userPhonenumber != null" >
+                user_phonenumber = #{record.userPhonenumber,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userEmail != null" >
+                user_email = #{record.userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userIntroduction != null" >
+                user_introduction = #{record.userIntroduction,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userPicture != null" >
+                user_picture = #{record.userPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="record.creationTime != null" >
+                creation_time = #{record.creationTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userIsdelete != null" >
+                user_isdelete = #{record.userIsdelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update guser
+        set user_id = #{record.userId,jdbcType=CHAR},
+        user_account = #{record.userAccount,jdbcType=VARCHAR},
+        user_password = #{record.userPassword,jdbcType=VARCHAR},
+        user_name = #{record.userName,jdbcType=VARCHAR},
+        user_sex = #{record.userSex,jdbcType=CHAR},
+        user_department = #{record.userDepartment,jdbcType=CHAR},
+        user_position = #{record.userPosition,jdbcType=CHAR},
+        user_phonenumber = #{record.userPhonenumber,jdbcType=VARCHAR},
+        user_email = #{record.userEmail,jdbcType=VARCHAR},
+        user_introduction = #{record.userIntroduction,jdbcType=VARCHAR},
+        user_picture = #{record.userPicture,jdbcType=VARCHAR},
+        creation_time = #{record.creationTime,jdbcType=VARCHAR},
+        user_isdelete = #{record.userIsdelete,jdbcType=INTEGER}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.kcsj.gwglxt.entity.Guser" >
+        update guser
+        <set >
+            <if test="userAccount != null" >
+                user_account = #{userAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null" >
+                user_password = #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null" >
+                user_sex = #{userSex,jdbcType=CHAR},
+            </if>
+            <if test="userDepartment != null" >
+                user_department = #{userDepartment,jdbcType=CHAR},
+            </if>
+            <if test="userPosition != null" >
+                user_position = #{userPosition,jdbcType=CHAR},
+            </if>
+            <if test="userPhonenumber != null" >
+                user_phonenumber = #{userPhonenumber,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null" >
+                user_email = #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="userIntroduction != null" >
+                user_introduction = #{userIntroduction,jdbcType=VARCHAR},
+            </if>
+            <if test="userPicture != null" >
+                user_picture = #{userPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="creationTime != null" >
+                creation_time = #{creationTime,jdbcType=VARCHAR},
+            </if>
+            <if test="userIsdelete !=null">
+                user_isdelete = #{userIsdelete}
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=CHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.kcsj.gwglxt.entity.Guser" >
+        update guser
+        set user_account = #{userAccount,jdbcType=VARCHAR},
+            user_password = #{userPassword,jdbcType=VARCHAR},
+            user_name = #{userName,jdbcType=VARCHAR},
+            user_sex = #{userSex,jdbcType=CHAR},
+            user_department = #{userDepartment,jdbcType=CHAR},
+            user_position = #{userPosition,jdbcType=CHAR},
+            user_phonenumber = #{userPhonenumber,jdbcType=VARCHAR},
+            user_email = #{userEmail,jdbcType=VARCHAR},
+            user_introduction = #{userIntroduction,jdbcType=VARCHAR},
+            user_picture = #{userPicture,jdbcType=VARCHAR},
+            creation_time = #{creationTime,jdbcType=VARCHAR}
+        where user_id = #{userId,jdbcType=CHAR}
+    </update>
+
+    <select id="loginInfo" parameterType="java.lang.String" resultMap="loginResultMap">
+        select
+        <include refid="user_login_info"/>
+        from
+        <include refid="user_login_condition"/>
+        where g.user_department = d.department_id
+        AND g.user_position = po.position_id
+        AND po.position_permission = pe.permission_id
+        AND g.user_id = #{userId}
+        and g.user_isdelete = '0'
+    </select>
+    <select id="loginFunction" parameterType="java.lang.String" resultMap="loginResultMap">
+        SELECT
+        user_id,user_account,user_password,user_name,user_sex,user_department,user_position,user_phonenumber,user_email,
+        user_introduction,user_picture,creation_time,user_isdelete,department_id,department_name,position_permission,position_id,permission_id,position_name,permission_level
+        FROM
+        guser g,
+        department de,
+        position po,
+        permission pe
+        WHERE
+        g.user_account = #{userAccount}
+        AND de.department_id = g.user_department
+        AND po.position_id = g.user_position
+        AND pe.permission_id = po.position_permission
+        and g.user_isdelete = '0'
+    </select>
+    <select id="getUserByPosition" resultMap="BaseResultMap">
+        SELECT
+         <include refid="Base_Column_List"/>
+         FROM guser WHERE user_position = #{userPosition} and user_department = #{userDepartment} and user_isdelete = '0'
+    </select>
+    <select id="getPersonalInfo" parameterType="java.lang.String" resultMap="loginResultMap">
+        select
+        g.user_id,g.user_account,g.user_password,g.user_name,g.user_phonenumber,g.user_email,g.user_introduction,g.user_picture,d.department_id,d.department_name,po.position_id,po.position_name,pe.permission_level
+        from
+        <include refid="user_login_condition"/>
+        where g.user_department = d.department_id
+        AND g.user_position = po.position_id
+        AND po.position_permission = pe.permission_id
+        AND g.user_id = #{userId}
+        and g.user_isdelete = '0'
+    </select>
+    <select id="countByDepartment" parameterType="java.lang.String" resultType="int">
+        SELECT COUNT(*) FROM guser WHERE user_department = #{userDepartment} and user_isdelete = '0'
+    </select>
+    <select id="getDptManager" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM guser where user_department = #{userDepartment}  AND user_position = #{userPosition} and user_isdelete = '0'
+    </select>
+    <select id="countUserByMouth" parameterType="java.lang.String" resultMap="MouthResultMap">
+        select
+sum(case month(guser.creation_time) when '1' then 1 else 0 end) as January,
+sum(case month(guser.creation_time) when '2' then 1 else 0 end) as February,
+sum(case month(guser.creation_time) when '3' then 1 else 0 end) as March,
+sum(case month(guser.creation_time) when '4' then 1 else 0 end) as April,
+sum(case month(guser.creation_time) when '5' then 1 else 0 end) as May,
+sum(case month(guser.creation_time) when '6' then 1 else 0 end) as June,
+sum(case month(guser.creation_time) when '7' then 1 else 0 end) as July,
+sum(case month(guser.creation_time) when '8' then 1 else 0 end) as August,
+sum(case month(guser.creation_time) when '9' then 1 else 0 end) as September,
+sum(case month(guser.creation_time) when '10' then 1 else 0 end) as October,
+sum(case month(guser.creation_time) when '11' then 1 else 0 end) as November,
+sum(case month(guser.creation_time) when '12' then 1 else 0 end) as December
+from guser
+where year(guser.creation_time)=#{year}
+and user_isdelete = '0'
+    </select>
+    <select id="countAllUser" resultType="int">
+        select count(*) from guser where user_isdelete = '0'
+    </select>
+    <select id="getAllUser" resultMap="loginFunctionMap">
+        SELECT
+        user_id,user_account,user_password,user_name,user_sex,user_department,user_position,user_phonenumber,user_email,
+        user_introduction,user_picture,creation_time,user_isdelete,department_id,department_name,position_permission,position_id,permission_id,position_name,permission_level
+        FROM
+        guser g,
+        department de,
+        position po,
+        permission pe
+         WHERE
+       de.department_id = g.user_department
+        AND po.position_id = g.user_position
+        AND pe.permission_id = po.position_permission
+        and g.user_isdelete = '0'
+        and g.user_id!=#{userId}
+        <if test="fuzzySearch!=null">
+           and (user_account like CONCAT('%',#{fuzzySearch},'%' ) or user_name like CONCAT('%',#{fuzzySearch},'%' ) or user_phonenumber like CONCAT('%',#{fuzzySearch},'%' ))
+        </if>
+    </select>
+    <select id="getUserByDpt" parameterType="java.lang.String" resultMap="loginFunctionMap">
+        SELECT
+        user_id,user_account,user_password,user_name,user_sex,user_department,user_position,user_phonenumber,user_email,
+        user_introduction,user_picture,creation_time,user_isdelete,department_id,department_name,position_permission,position_id,permission_id,position_name,permission_level
+        FROM
+        guser g,
+        department de,
+        position po,
+        permission pe
+        WHERE
+         de.department_id = g.user_department
+        AND po.position_id = g.user_position
+        AND pe.permission_id = po.position_permission
+        and g.user_isdelete = '0'
+        and g.user_id!=#{userId}
+        <if test="userDepartment!=null">
+            and g.user_department = #{userDepartment}
+        </if>
+        <if test="fuzzySearch!=null">
+            and (user_account like CONCAT('%',#{fuzzySearch},'%' ) or user_name like CONCAT('%',#{fuzzySearch},'%' ) or user_phonenumber like CONCAT('%',#{fuzzySearch},'%' ))
+        </if>
+    </select>
+    <select id="getUserByAcc" parameterType="java.lang.String" resultType="com.kcsj.gwglxt.entity.Guser">
+        select <include refid="Base_Column_List"/> from guser where user_account = #{userAccount} and user_isdelete = '0'
+    </select>
+</mapper>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>查看文档</title>
+		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+		<meta name="description" content="Developed By M Abdur Rokib Promy">
+		<meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
+		<!-- bootstrap 3.0.2 -->
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<!-- font Awesome -->
+		<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<!-- Ionicons -->
+		<link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
+		<!-- Morris chart -->
+		<link href="css/morris/morris.css" rel="stylesheet" type="text/css" />
+		<!-- jvectormap -->
+		<link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+		<!-- Date Picker -->
+		<link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+		<!-- fullCalendar -->
+		<!-- <link href="css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" /> -->
+		<!-- Daterange picker -->
+		<link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+		<!-- iCheck for checkboxes and radio inputs -->
+		<link href="css/iCheck/all.css" rel="stylesheet" type="text/css" />
+		<!-- bootstrap wysihtml5 - text editor -->
+		<!-- <link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" /> -->
+		<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+		<!-- Theme style -->
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<script src="js/vue.js"></script>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+		<style type="text/css">
+		</style>
+	</head>
+
+	<body class="skin-black">
+		<!-- header logo: style can be found in header.less -->
+		<header id="header" class="header">
+			<a href="#" class="logo">
+				公文审批系统
+			</a>
+			<!-- Header Navbar: style can be found in header.less -->
+			<nav class="navbar navbar-static-top" role="navigation">
+				<!-- Sidebar toggle button-->
+				<a href="" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<div class="navbar-right">
+					<ul class="nav navbar-nav">
+						<!-- Messages: style can be found in dropdown.less-->
+						<li class="dropdown messages-menu">
+							<a href="" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-envelope"></i>
+								<span class="label label-success">2</span>
+							</a>
+							<ul class="dropdown-menu">
+								<li class="header">2条未读消息</li>
+								<li>
+									<!-- inner menu: contains the actual data -->
+									<ul class="menu">
+										<li>
+											<!-- start message -->
+											<a href="">
+												<div class="pull-left">
+													<img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80" class="img-circle" alt="User Image" />
+												</div>
+												<h4>
+													Support Team
+												</h4>
+												<p>Why not buy a new awesome theme?</p>
+												<small class="pull-right"><i class="fa fa-clock-o"></i> 5 mins</small>
+											</a>
+										</li>
+										<!-- end message -->
+										<li>
+											<a href="">
+												<div class="pull-left">
+													<img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80" class="img-circle" alt="user image" />
+												</div>
+												<h4>
+													Director Design Team
+												</h4>
+												<p>Why not buy a new awesome theme?</p>
+												<small class="pull-right"><i class="fa fa-clock-o"></i> 2 hours</small>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="footer">
+									<a href="">查看文档信息</a>
+								</li>
+							</ul>
+						</li>
+						<!-- User Account: style can be found in dropdown.less -->
+						<li class="dropdown user user-menu">
+							<a class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-user"></i>
+								<span>{{H_user.guser.userName}}<i class="caret"></i></span>
+							</a>
+							<ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+								<li class="dropdown-header text-center">帐号</li>
+								<li class="divider"></li>
+								<li>
+									<a href="javascript:;">
+										<i class="fa fa-user fa-fw pull-right"></i> 帐号
+									</a>
+									<a data-toggle="modal" href="#modal-user-settings">
+										<i class="fa fa-cog fa-fw pull-right"></i> 设置
+									</a>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<a href=""><i class="fa fa-ban fa-fw pull-right"></i> 登出</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<div id="main" class="wrapper row-offcanvas row-offcanvas-left">
+			<!-- Left side column. contains the logo and sidebar -->
+			<aside class="left-side sidebar-offcanvas">
+				<!-- sidebar: style can be found in sidebar.less -->
+				<section class="sidebar">
+					<!-- Sidebar user panel -->
+					<div class="user-panel">
+						<div class="pull-left image">
+							<img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80" class="img-circle" alt="User Image" />
+						</div>
+						<div class="pull-left info">
+							<p v-cloak>{{user.guser.userName}}</p>
+							<a href=""><i class="fa fa-circle text-success"></i> Online</a>
+						</div>
+					</div>
+					<!-- search form -->
+					<form action="#" method="get" class="sidebar-form">
+						<div class="input-group">
+							<input type="text" name="q" class="form-control" placeholder="Search..." />
+							<span class="input-group-btn">
+                                  <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i
+                                          class="fa fa-search"></i></button>
+                                    </span>
+						</div>
+					</form>
+					<!-- /.search form -->
+					<!-- sidebar menu: : style can be found in sidebar.less -->
+					<ul class="sidebar-menu">
+						<li>
+							<a href="index.html">
+								<i class="fa fa-home fa-fw"></i> <span>首页</span>
+							</a>
+						</li>
+						<li>
+							<a href="approvalApplication.html">
+								<i class="fa fa-pencil-square-o"></i> <span>批阅申请</span>
+							</a>
+						</li>
+						<li>
+							<a href="addDocument.html">
+								<i class="fa fa-clipboard"></i> <span>添加文档</span>
+							</a>
+						</li>
+						<li>
+							<a href="reviewDocument.html">
+								<i class="fa fa-th-list" aria-hidden="true"></i><span>查看文档</span>
+							</a>
+						</li>
+						<li>
+							<a href="documentManage.html">
+								<i class="fa fa-book fa-fw"></i> <span>文档管理</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="information.html">
+								<i class="fa fa-meh-o"></i> <span>个人信息</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="journal.html">
+								<i class="fa fa-location-arrow"></i> <span>查看日志</span>
+							</a>
+						</li>
+						<li>
+							<a href="departmentMemberManage.html">
+								<i class="fa fa-male"></i> <span>部门成员管理</span>
+							</a>
+						</li>
+						<li>
+							<a href="accountManagement.html">
+								<i class="fa fa-user"></i> <span>账号管理</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="departmentManagement.html">
+								<i class="fa fa-gavel"></i> <span>部门管理</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="processManagement.html">
+								<i class="fa fa-sitemap"></i> <span>流程管理</span>
+							</a>
+						</li>
+
+					</ul>
+				</section>
+				<!-- /.sidebar -->
+			</aside>
+
+			<aside class="right-side">
+
+				<!-- Main content -->
+				<section class="content">
+					<div class="row">
+						<div class="col-md-12">
+							<!--breadcrumbs start -->
+							<ul class="breadcrumb">
+								<li>
+									<a href="#"><i class="fa fa-home"></i> 首页</a>
+								</li>
+
+								<li class="active">添加文档</li>
+							</ul>
+							<!--breadcrumbs end -->
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<!--内容-->
+
+							<section class="panel">
+								<div class="panel-body">
+									<div style="float: left;width: 100%;margin-left: -10%;">
+										<form class="form-horizontal tasi-form" method="get">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">文本标题</label>
+												<div class="col-md-4">
+													<input class="form-control" id="documentTitle" type="text">
+												</div>
+												<label class="col-sm-2 control-label">文本文号</label>
+												<div class="col-md-4">
+													<input class="form-control" id="documentNo" type="text">
+												</div>
+
+											</div>
+											<div class="form-group">
+												<label class="control-label col-lg-2">文本类型</label>
+												<div class="col-md-2">
+													<select class="form-control m-b-10" id="documentType">
+														<option selected>-请选择公文类型-</option>
+														<option value="1">命令</option>
+														<option value="2">决定</option>
+														<option value="3">公告</option>
+														<option value="4">通告</option>
+														<option value="5">通知</option>
+														<option value="6">通报</option>
+														<option value="7">议案</option>
+														<option value="8">报告</option>
+														<option value="9">请示</option>
+														<option value="10">批复</option>
+														<option value="11">意见</option>
+														<option value="12">函</option>
+														<option value="13">会议纪要</option>
+													</select>
+
+												</div>
+												<label class="col-sm-2 control-label">拟稿人</label>
+												<div class="col-md-2">
+													<input class="form-control" id="documentUser" type="text">
+												</div>
+												<label class="control-label col-lg-2">拟稿部门</label>
+												<div class="col-md-2">
+													<select class="form-control m-b-10" id="documentDept">
+														<option selected>-请选择部门-</option>
+														<option value="1">新闻部</option>
+														<option value="2">人事部</option>
+														<option value="3">办公室</option>
+														<option value="4">财务部</option>
+													</select>
+
+												</div>
+											</div>
+											<div class="form-group" style="margin-bottom: 30px;">
+												<label class="control-label col-lg-2">文档密级</label>
+												<div class="col-md-4">
+													<div class="radio" style="float: left;margin-right: 10px;">
+														<label>
+                                                    <input type="radio" name="documentConfidential"
+                                                           id="documentConfidential" value="1">绝密
+                                                </label>
+													</div>
+													<div class="radio" style="float: left;margin-right: 10px;">
+														<label>
+                                                    <input type="radio" name="documentConfidential" value="2">机密
+                                                </label>
+													</div>
+													<div class="radio" style="float: left;margin-right: 10px;">
+														<label>
+                                                    <input type="radio" name="documentConfidential" value="3">秘密
+                                                </label>
+													</div>
+													<div class="radio" style="float: left;margin-right: 10px;">
+														<label>
+                                                    <input type="radio" name="documentConfidential" value="4">普通
+                                                </label>
+													</div>
+												</div>
+
+												<label class="control-label col-lg-2">文档级别</label>
+												<div class="col-md-4">
+													<div class="radio" style="float: left;margin-right: 10px;">
+														<label>
+                                                    <input type="radio" name="documentSpeed" id="documentSpeed"
+                                                           value="1">加急
+                                                </label>
+													</div>
+													<div class="radio" style="float: left;margin-right: 10px;">
+														<label>
+                                                    <input type="radio" name="documentSpeed" value="2">特急
+                                                </label>
+													</div>
+													<div class="radio" style="float: left;margin-right: 10px;">
+														<label>
+                                                    <input type="radio" name="documentSpeed" value="3">平急
+                                                </label>
+
+													</div>
+
+												</div>
+
+												<div class="form-group" style="margin-top:5%;margin-left: 1px;">
+													<label class="control-label col-lg-2">文本内容</label>
+													<div class="col-lg-10">
+														<textarea rows="10" cols="100" id="doucmentContent" class="textarea"></textarea>
+													</div>
+
+												</div>
+												<div class="form-group" style="margin-left: 1px;">
+													<label class="control-label col-lg-2">备注</label>
+													<div class="col-lg-10">
+														<textarea rows="2" cols="100" id="documentRemark" class="textarea"></textarea>
+													</div>
+
+												</div>
+
+											</div>
+
+											<div class="form-group" style="margin-left: 1px;">
+												<label class="control-label col-lg-2">选择流程</label>
+												<div class="col-lg-3">
+													<select class="form-control m-b-10" id="documentProcess">
+														<option selected>-请选择流程-</option>
+														<option value="1">流程一</option>
+														<option value="2">流程二</option>
+														<option value="3">流程三</option>
+														<option value="4">流程四</option>
+														<option value="5">流程一</option>
+														<option value="6">流程二</option>
+														<option value="7">流程三</option>
+														<option value="8">流程四</option>
+														<option value="9">流程一</option>
+														<option value="10">流程二</option>
+														<option value="11">流程三</option>
+
+													</select>
+
+												</div>
+												<div class="form-group" style="float:right;margin-right: 25%;">
+													<div>
+														<button type="button" class="btn btn-success" id="addDoc">确认</button>
+														<button type="button" class="btn btn-warning" style="margin-left: 10px;">草稿
+                                                </button>
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="row">
+										<div class="col-xs-12">
+											<div class="panel">
+
+												<div class="panel-body table-responsive">
+													<div>
+														<table class="table table-hover">
+															<tr>
+																<th>节点名</th>
+																<th>操作部门</th>
+																<th>职称</th>
+
+															</tr>
+															<tr>
+																<td>流程节点1</td>
+																<td>人事部</td>
+																<td>部长</td>
+
+															</tr>
+															<tr>
+																<td>流程节点1</td>
+																<td>人事部</td>
+																<td>部长</td>
+
+															</tr>
+															<tr>
+																<td>流程节点1</td>
+																<td>人事部</td>
+																<td>部长</td>
+
+															</tr>
+															<tr>
+																<td>流程节点1</td>
+																<td>人事部</td>
+																<td>部长</td>
+
+															</tr>
+														</table>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+							</section>
+
+						</div>
+					</div>
+				</section>
+				<!-- /.content -->
+				<div class="footer-main">
+					Copyright &copy Director, 2014. More Templates
+				</div>
+			</aside>
+			<!-- /.right-side -->
+
+		</div>
+		<!-- ./wrapper -->
+
+		<!-- jQuery 2.0.2 -->
+		<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>-->
+		<script src="js/jquery.min.js" type="text/javascript"></script>
+		<!-- jQuery UI 1.10.3 -->
+		<script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+		<!-- Bootstrap -->
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<!-- daterangepicker -->
+		<script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+
+		<script src="js/plugins/chart.js" type="text/javascript"></script>
+
+		<!-- datepicker
+<script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>-->
+		<!-- Bootstrap WYSIHTML5
+<script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>-->
+		<!-- iCheck -->
+		<script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+		<!-- calendar -->
+		<script src="js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+
+		<!-- Director App -->
+		<script src="js/Director/app.js" type="text/javascript"></script>
+
+		<!-- Director dashboard demo (This is only for demo purposes) -->
+		<script src="js/Director/dashboard.js" type="text/javascript"></script>
+		<script src="js/viewsJS/reviewDetailDocument.js"></script>
+		<script src="js/viewsJS/userInfoVue.js"></script>
+		<!-- Director for demo purposes -->
+
+	</body>
+
+</html>

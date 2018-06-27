@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kcsj.gwglxt.mapper.MessageMapper" >
+
+    <resultMap id="BaseResultMap" type="com.kcsj.gwglxt.entity.Message" >
+        <id column="message_id" property="messageId"   />
+        <result column="message_content" property="messageContent" jdbcType="VARCHAR" />
+        <result column="message_time" property="messageTime" jdbcType="VARCHAR" />
+        <result column="message_isdelete" property="messageIsdelete"  />
+        <result column="message_type" property="messageType"  />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        message_id, message_content, message_time, message_isdelete, message_type
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kcsj.gwglxt.entity.MessageExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from message
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from message
+        where message_id = #{messageId,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from message
+        where message_id = #{messageId,jdbcType=CHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.kcsj.gwglxt.entity.MessageExample" >
+        delete from message
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.kcsj.gwglxt.entity.Message" >
+        insert into message (message_id, message_content,
+            message_time, message_isdelete, message_type
+            )
+        values (#{messageId,jdbcType=CHAR}, #{messageContent,jdbcType=VARCHAR},
+            #{messageTime,jdbcType=VARCHAR}, #{messageIsdelete,jdbcType=INTEGER}, #{messageType,jdbcType=INTEGER}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.kcsj.gwglxt.entity.Message" >
+        insert into message
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="messageId != null" >
+                message_id,
+            </if>
+            <if test="messageContent != null" >
+                message_content,
+            </if>
+            <if test="messageTime != null" >
+                message_time,
+            </if>
+            <if test="messageIsdelete != null" >
+                message_isdelete,
+            </if>
+            <if test="messageType != null" >
+                message_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="messageId != null" >
+                #{messageId,jdbcType=CHAR},
+            </if>
+            <if test="messageContent != null" >
+                #{messageContent,jdbcType=VARCHAR},
+            </if>
+            <if test="messageTime != null" >
+                #{messageTime,jdbcType=VARCHAR},
+            </if>
+            <if test="messageIsdelete != null" >
+                #{messageIsdelete,jdbcType=INTEGER},
+            </if>
+            <if test="messageType != null" >
+                #{messageType,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.kcsj.gwglxt.entity.MessageExample" resultType="java.lang.Integer" >
+        select count(*) from message
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update message
+        <set >
+            <if test="record.messageId != null" >
+                message_id = #{record.messageId,jdbcType=CHAR},
+            </if>
+            <if test="record.messageContent != null" >
+                message_content = #{record.messageContent,jdbcType=VARCHAR},
+            </if>
+            <if test="record.messageTime != null" >
+                message_time = #{record.messageTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.messageIsdelete != null" >
+                message_isdelete = #{record.messageIsdelete,jdbcType=INTEGER},
+            </if>
+            <if test="record.messageType != null" >
+                message_type = #{record.messageType,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update message
+        set message_id = #{record.messageId,jdbcType=CHAR},
+            message_content = #{record.messageContent,jdbcType=VARCHAR},
+            message_time = #{record.messageTime,jdbcType=VARCHAR},
+            message_isdelete = #{record.messageIsdelete,jdbcType=INTEGER},
+            message_type = #{record.messageType,jdbcType=INTEGER}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.kcsj.gwglxt.entity.Message" >
+        update message
+        <set >
+            <if test="messageContent != null" >
+                message_content = #{messageContent,jdbcType=VARCHAR},
+            </if>
+            <if test="messageTime != null" >
+                message_time = #{messageTime,jdbcType=VARCHAR},
+            </if>
+            <if test="messageIsdelete != null" >
+                message_isdelete = #{messageIsdelete,jdbcType=INTEGER},
+            </if>
+            <if test="messageType != null" >
+                message_type = #{messageType,jdbcType=INTEGER},
+            </if>
+        </set>
+        where message_id = #{messageId,jdbcType=CHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.kcsj.gwglxt.entity.Message" >
+        update message
+        set message_content = #{messageContent,jdbcType=VARCHAR},
+            message_time = #{messageTime,jdbcType=VARCHAR},
+            message_isdelete = #{messageIsdelete,jdbcType=INTEGER},
+            message_type = #{messageType,jdbcType=INTEGER}
+        where message_id = #{messageId,jdbcType=CHAR}
+    </update>
+    <insert id="insertMsg" parameterType="com.kcsj.gwglxt.entity.Message" >
+        insert into message (message_id, message_content,
+            message_time, message_isdelete, message_type
+            )
+        values (#{messageId,jdbcType=CHAR}, #{messageContent,jdbcType=VARCHAR},
+            #{messageTime,jdbcType=VARCHAR}, #{messageIsdelete,jdbcType=INTEGER}, #{messageType,jdbcType=INTEGER}
+            )
+    </insert>
+</mapper>

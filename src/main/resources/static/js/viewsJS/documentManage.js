@@ -141,23 +141,40 @@ $(function () {
                 let docId = data.docData[index].document.documentId;
                 let that = this;
                 console.log(docId),
-                $.post('/gwspxt/deleteDoc', {ids: [docId]}, function (response) {
-                    if (response.msg == "updateSuccess") {
-                        that.getInfo({currentPage: 1});
-                        spop({template: `删除成功`, style: "success", autoclose: 2000});
-                    } else if (response.msg == "updateFailed") {
-                        spop({template: `删除失败`, style: "error", autoclose: 2000});
+                    $.post('/gwspxt/deleteDoc', {ids: [docId]}, function (response) {
+                        if (response.msg == "updateSuccess") {
+                            that.getInfo({currentPage: 1});
+                            spop({template: `删除成功`, style: "success", autoclose: 2000});
+                        } else if (response.msg == "updateFailed") {
+                            spop({template: `删除失败`, style: "error", autoclose: 2000});
+                        }
+                    }, 'json');
+            },
+          /*  deleteBatchDocument() {
+                let arrId = [];
+                $('input[name="checkID"]').each(function () {
+                    if ($(this).attr('checked')) {
+                        arrId.push($(this).attr('doc-id'));
                     }
-                }, 'json');
-            },
-            deleteBatchDocument(){
-                let arrId=[];
-                  $('input[chef="self"]').each(function () {
 
-                  });
+                });
+                $('input[checked="checked"]:checkbox').each(function () {
+                    $(this).removeAttr('checked');
+                });
+                $.post('/gwspxt/deleteDoc', {ids: arrId}, response => {
+                        if (response.msg == "updateSuccess") {
+                            this.getInfo({currentPage: 1});
+                            spop({template: `删除成功`, style: "success", autoclose: 2000});
+                        } else if (response.msg == "updateFailed") {
+                            spop({template: `删除失败`, style: "error", autoclose: 2000});
+                        }
+                    }
+                    ,
+                    'json'
+                )
+                ;
 
-
-            },
+            },*/
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;

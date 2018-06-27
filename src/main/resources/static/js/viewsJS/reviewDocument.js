@@ -42,13 +42,14 @@ $(function () {
                 {key: "4", value: "普通"},
             ],
         },
-       /* docDepartment: {
+        department:'',
+        docDepartment: {
             name:"拟稿部门",
             items: [
                 {key: "", value: ""},
             ],
 
-        },*/
+        },
         searchData: {
             documentType: '',
             documentConfidential: 0,
@@ -155,11 +156,9 @@ $(function () {
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
                 location.href = "/gwspxt/reviewContent";
             },
-          /*  getdepartment() {
+           /* getdepartment() {
                 $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
                     data.department = response;
-                    data.docDepartment.items.key=data.department.department;
-                    data.docDepartment.items.value=data.department.departmentName;
                 }, 'json');
             },*/
             search(msg) {

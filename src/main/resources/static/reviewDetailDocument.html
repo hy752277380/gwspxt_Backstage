@@ -83,13 +83,14 @@
                                         <label class="col-sm-2 control-label">文本标题</label>
                                         <div class="col-md-5">
                                             <input class="form-control" id="documentTitle"
-                                                   v-model="docData.document.documentTitle" type="text">
+                                                   v-model="docData.document.documentTitle" maxlength="20" type="text">
                                             <input class="form-control" id="documentId"
                                                    v-model="docData.document.documentId" type="hidden">
                                         </div>
                                         <label class="col-sm-2 control-label">文本文号</label>
                                         <div class="col-md-3">
                                             <input class="form-control" id="documentNo"
+                                                   onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="20"
                                                    v-model="docData.document.documentNo" type="text">
                                         </div>
                                     </div>

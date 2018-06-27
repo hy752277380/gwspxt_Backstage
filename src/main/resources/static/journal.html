@@ -15,22 +15,25 @@
     <link href="css/ionicons.min.css" rel="stylesheet" type="text/css"/>
     <!-- Morris chart -->
     <link href="css/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="css/bs-datetimepicker/bootstrap-datetimepicker.min.css">-->
     <!-- jvectormap -->
-    <link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>-->
     <!-- Date Picker -->
     <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
     <!-- fullCalendar -->
     <!-- <link href="css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" /> -->
     <!-- Daterange picker -->
-    <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>-->
     <!-- iCheck for checkboxes and radio inputs -->
-    <link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="css/iCheck/all.css" rel="stylesheet" type="text/css"/>-->
     <!-- bootstrap wysihtml5 - text editor -->
     <!-- <link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" /> -->
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <!-- Theme style -->
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
     <link href="css/journal_about.css" rel="stylesheet" type="text/css">
+    <!-- 消息通知css -->
+    <link href="css/spop.css" rel="stylesheet" type="text/css">
     <script src="js/vue.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -79,8 +82,9 @@
                                 <div class="panel-body table-responsive">
                                     <div class="box-tools m-b-15">
                                         <div class="input-group">
-                                            <input type="text" name="table_search" placeholder="Search"
-                                                   class="form-control input-sm pull-right" style="width: 150px;"/>
+                                            <input type="text" name="table_search" placeholder="Search" id="searchDate"
+                                                   class="form-control input-sm pull-right" style="width: 150px;"
+                                                   v-model="checkYearNum" @change="checkYear"/>
                                             <!-- v-model="searchData.fuzzySearch"
                                              @keyup="search({searchName:'fuzzySearch',key:searchData.fuzzySearch})"-->
                                             <div class="input-group-btn">
@@ -89,11 +93,48 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
 
+                                    <div class="col-lg-6">
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1"><i
+                                                    class="fa fa-search"></i></span>
+                                            <input type="text" class="form-control" @keyup="grepInLogs"
+                                                   aria-describedby="basic-addon1">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">选择月份 <span class="caret"></span></button>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li v-for="(logs,index) in logData"><a href="javascript:;"
+                                                                                           @click="checkMonth(index)">{{index+1}}月份<span
+                                                            class="badge">{{logs.length}}</span></a></li>
+                                                </ul>
+                                            </div><!-- /btn-group -->
+                                        </div><!-- /input-group -->
+
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <p class="panel-title">{{checkMonthNum+1}}月份的日志信息内容<span
+                                                        style="float: right" class="label label-primary">{{inCheckMonthNumAllLogs.length}}</span>
+                                                </p>
+                                            </div>
+                                            <div class="panel-body"
+                                                 style="min-height:50px; max-height:431.4px;overflow: auto;">
+                                                <!-- List group -->
+                                                <ul class="list-group">
+                                                    <li class="list-group-item" v-for="log in inCheckMonthNumAllLogs">
+                                                        <span class="label label-primary">{{log.creationTime}}</span>{{log.logContent}}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div><!-- /.col-lg-6 -->
+
+                                    <!--<div class="col-md-6">
                                         <div v-cloak class="panel-group" id="accordion" role="tablist"
                                              aria-multiselectable="true">
-
                                             <div style="margin-top: 10px" class="panel panel-default"
                                                  v-for="(logs,index) in logData">
                                                 <div class="panel-heading" role="tab" :id="'heading'+index">
@@ -107,7 +148,6 @@
                                                         </a>
                                                     </h4>
                                                 </div>
-
                                                 <div :id="'collapse'+index" class="panel-collapse collapse"
                                                      role="tabpanel"
                                                      :aria-labelledby="'heading'+index">
@@ -122,7 +162,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
+
                                     <div class="col-md-6">
                                         <div style="position: relative;">
                                             <canvas id="journalChart" height="400" width="400"></canvas>
@@ -181,28 +222,33 @@
 
 <!-- jQuery 2.0.2 -->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>-->
-<script src="js/jquery.min.js" type="text/javascript"></script>
+<!--<script src="js/jquery.min.js" type="text/javascript"></script>-->
+<script src="js/jquery-3.1.1.min.js"></script>
 <!--布局的组件-->
 <script src="js/layout/layout.js"></script>
+<!-- 消息通知js -->
+<script src="js/spop.js" type="text/javascript"></script>
 <!-- jQuery UI 1.10.3 -->
 <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap -->
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 <!-- daterangepicker -->
-<script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<!--<script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>-->
 <script src="js/plugins/chart.js" type="text/javascript"></script>
-<!-- datepicker
-<script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>-->
+<!--<script src="js/plugins/bs-datetimepicker/bootstrap-datetimepicker.js"></script>-->
+<!-- datepicker-->
+<script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="js/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
 <!-- Bootstrap WYSIHTML5
 <script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>-->
 <!-- iCheck -->
-<script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<!--<script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>-->
 <!-- calendar -->
-<script src="js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+<!--<script src="js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>-->
 <!-- Director App -->
 <script src="js/Director/app.js" type="text/javascript"></script>
 <!-- Director dashboard demo (This is only for demo purposes) -->
-<script src="js/Director/dashboard.js" type="text/javascript"></script>
+<!--<script src="js/Director/dashboard.js" type="text/javascript"></script>-->
 <script src="js/viewsJS/journal.js"></script>
 <!-- Director for demo purposes -->
 </body>

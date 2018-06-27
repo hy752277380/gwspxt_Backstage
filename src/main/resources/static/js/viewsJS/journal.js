@@ -4,8 +4,11 @@ $(function () {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
         name: 'journal',
         logData: [], //所有数据
-        logMonthNumber: [],
+        logMonthNumber: [],//画图使用的数组
         ready: false,
+        checkYearNum: 2018,
+        checkMonthNum: 0,
+        inCheckMonthNumAllLogs: [],
         page: {
             allRow: 1,
             totalPage: 1,
@@ -30,6 +33,27 @@ $(function () {
                     this.renderChart();
                 }, 'json');
             },
+            checkMonth(index) {
+                data.checkMonthNum = index;
+                data.inCheckMonthNumAllLogs = data.logData[index];
+            },
+            checkYear($event) {
+                data.checkYearNum = $event.target.value;
+                this.getInfo({year: data.checkYearNum});
+            },
+            grepInLogs($event) {
+                let key = $event.target.value;
+                if (key) {
+                    let grepResult = $.grep(data.logData[data.checkMonthNum], (log, i) => {
+                        if (log.logContent.search(key) != -1 || log.creationTime.search(key) != -1) {
+                            return log;
+                        }
+                    }, false)
+                    data.inCheckMonthNumAllLogs = grepResult;
+                } else {
+                    data.inCheckMonthNumAllLogs = data.logData[data.checkMonthNum];
+                }
+            },
             renderChart() {
                 let that = this;
                 var ctx = document.getElementById("journalChart");
@@ -51,10 +75,19 @@ $(function () {
                     color.push('#' + Math.floor(Math.random() * 0xffffff).toString(16));
                 }
                 return color;
-            },
+            }
         },
         mounted() {
-            this.getInfo({year: 2018});
+            this.getInfo({year: data.checkYearNum});
+            $('#searchDate').datepicker({
+                language: "zh-CN",
+                todayHighlight: true,
+                format: 'yyyy',
+                autoclose: true,
+                startView: 'years',
+                maxViewMode: 'years',
+                minViewMode: 'years'
+            });
         },
         components: {
             'asideComponent': Layout,

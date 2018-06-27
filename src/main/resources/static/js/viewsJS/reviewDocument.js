@@ -46,7 +46,7 @@ $(function () {
         docDepartment: {
             name:"拟稿部门",
             items: [
-                {key: "", value: ""},
+                /*{key: "", value: ""},*/
             ],
 
         },

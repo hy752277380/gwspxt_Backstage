@@ -113,9 +113,6 @@ $(function () {
                     fuzzySearch: data.searchData.fuzzySearch
                 });
             },
-            applyBorrowingModal() {
-
-            },
             /*申请借阅事件*/
             applyBorrowing() {
                 let that = this;

@@ -264,11 +264,12 @@
         },
         mounted() {
             this.getUserInfo({userId: data.user.guser.userId})
-            $('#ModifyPassword').on('hidden.bs.modal', () => {
-                data.newPassword1 = '';
-                data.oldPassword = '';
-                data.newPassword2 = '';
-            });
+            $('#ModifyPassword').on('hidden.bs.modal', function () {
+                    data.newPassword1 = '';
+                    data.oldPassword = '';
+                    data.newPassword2 = '';
+                }
+            );
         },
         components: {
             'asideComponent': Layout,

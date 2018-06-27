@@ -164,11 +164,15 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String fuzzySearch,String documentType,Integer documentConfidential,String documentDept) {
         List<DocumentCustom> list = documentMapper.getAllDocument(documentType,documentConfidential,documentDept,fuzzySearch);
-        Borrowing borrowing;
+        List<Borrowing> borrowing;
         for (DocumentCustom documentCustom : list) {
             if (documentCustom.getDepartment().getDepartmentName() != departmentName) {
                 borrowing = borrowingMapper.borrowingState(documentCustom.getDocument().getDocumentId(), userId);
-                documentCustom.setBorrowing(borrowing);
+                if (borrowing.size()!=0){
+                    documentCustom.setBorrowing(borrowing.get(0));
+                }else {
+                    System.out.println("无借阅记录");
+                }
             }
         }
         QueryForPage queryForPage = new QueryForPage();

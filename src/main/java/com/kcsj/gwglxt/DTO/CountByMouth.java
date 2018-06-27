@@ -125,7 +125,22 @@ public class CountByMouth {
     public void setDec(int dec) {
         Dec = dec;
     }
-
+    public CountByMouth allZero(){
+        CountByMouth countByMouth = new CountByMouth();
+        countByMouth.setJan(0);
+        countByMouth.setFeb(0);
+        countByMouth.setMar(0);
+        countByMouth.setApr(0);
+        countByMouth.setMay(0);
+        countByMouth.setJun(0);
+        countByMouth.setJul(0);
+        countByMouth.setAug(0);
+        countByMouth.setSep(0);
+        countByMouth.setOct(0);
+        countByMouth.setNov(0);
+        countByMouth.setDec(0);
+        return countByMouth;
+    }
     @Override
     public String toString() {
         return "CountUserByMouth{" +

@@ -32,4 +32,5 @@ public interface ProcessMapper {
 
     List<Process> getAllProcess();
 
+    List<Process> getProcessByName(@Param("processName") String processName);
 }

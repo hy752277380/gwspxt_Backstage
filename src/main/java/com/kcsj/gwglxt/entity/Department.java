@@ -16,8 +16,11 @@ public class Department {
 
     private Integer departmentIsdelete;
 
+    private String departmentSuperior;
+
     private int memberCount;
 
+    private String siperiorName;
 
     public int getMemberCount() {
         return memberCount;
@@ -57,6 +60,22 @@ public class Department {
 
     public void setDepartmentIsdelete(Integer departmentIsdelete) {
         this.departmentIsdelete = departmentIsdelete;
+    }
+
+    public String getDepartmentSuperior() {
+        return departmentSuperior;
+    }
+
+    public void setDepartmentSuperior(String departmentSuperior) {
+        this.departmentSuperior = departmentSuperior;
+    }
+
+    public String getSiperiorName() {
+        return siperiorName;
+    }
+
+    public void setSiperiorName(String siperiorName) {
+        this.siperiorName = siperiorName;
     }
 
     @Override

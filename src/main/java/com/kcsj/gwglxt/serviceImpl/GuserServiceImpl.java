@@ -52,8 +52,11 @@ public class GuserServiceImpl implements GuserService {
     public int insertUser(Guser record,LoginCustom loginCustom) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         record.setUserId(TeamUtil.getUuid());
+        record.setUserPassword(md5.GetMD5Code("111111"));
         record.setCreationTime(df.format(new Date()));
         record.setUserIsdelete(0);
+        record.setUserPicture("1.gif");
+        int result = guserMapper.insert(record);
         //添加操作日志
         Log log = new Log();
         log.setLogId(TeamUtil.getUuid());
@@ -62,7 +65,7 @@ public class GuserServiceImpl implements GuserService {
         //根据职位id获取职位名称
         log.setLogContent("删除了"+record.getUserName()+"流程。");
         logMapper.insert(log);
-        return guserMapper.insert(record);
+        return result;
     }
 
     @Override
@@ -140,7 +143,6 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public CountByMouth countUserByMouth() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         return guserMapper.countUserByMouth(df.format(new Date()));
     }
     //计算总人数
@@ -159,14 +161,12 @@ public class GuserServiceImpl implements GuserService {
         String department = null;
         String userId = null;
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
     }
 
     @Override
     public CountByMouth countDptDocumentByMouth(String department) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         String userId = null;
         return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
     }
@@ -174,14 +174,13 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public CountByMouth countPersonalDocumentByMouth(String userId) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         String department = null;
         return documentMapper.countDocumentByMouth(df.format(new Date()),department,userId);
     }
 
     @Override
-    public QueryForPage getAllUser(int currentPage) {
-        List<LoginCustom>  users = guserMapper.getAllUser();
+    public QueryForPage getAllUser(int currentPage,String fuzzySearch,LoginCustom loginCustom) {
+        List<LoginCustom>  users = guserMapper.getAllUser(fuzzySearch,loginCustom.getGuser().getUserId());
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
         int allRow = users.size();//总记录数
@@ -253,8 +252,8 @@ public class GuserServiceImpl implements GuserService {
     }
 
     @Override
-    public QueryForPage getUserByDpt(String userDepartment,int currentPage) {
-        List<LoginCustom> loginCustoms = guserMapper.getUserByDpt(userDepartment);
+    public QueryForPage getUserByDpt(String userDepartment,int currentPage,String fuzzySearch,String  userId) {
+        List<LoginCustom> loginCustoms = guserMapper.getUserByDpt(userDepartment,fuzzySearch,userId);
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
         int allRow = loginCustoms.size();//总记录数
@@ -293,8 +292,18 @@ public class GuserServiceImpl implements GuserService {
         logMapper.insert(log);
         Guser guser = new Guser();
         guser.setUserId(loginCustom.getGuser().getUserId());
-        guser.setUserPassword(newPassword);
+        guser.setUserPassword(md5.GetMD5Code(newPassword));
         return guserMapper.updateByPrimaryKeySelective(guser);
+    }
+
+    @Override
+    public boolean getUserByAcc(String userAccount) {
+        List<Guser> user = guserMapper.getUserByAcc(userAccount);
+        if (user.size()==0){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 

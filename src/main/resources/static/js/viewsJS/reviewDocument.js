@@ -48,7 +48,9 @@ $(function () {
             documentConfidential: 0,
             documentState: 0,
             fuzzySearch: '',
-        }
+        },
+        applyReason: '',
+        applyIndex: 0
     }
 
     var reviewDocument = new Vue({
@@ -104,9 +106,14 @@ $(function () {
                     fuzzySearch: data.searchData.fuzzySearch
                 });
             },
+            applyBorrowingModal() {
+
+            },
             /*申请借阅事件*/
-            applyBorrowing(index) {
-                let documentCustom = this.$data.docData[index];
+            applyBorrowing() {
+                let that = this;
+                let documentCustom = this.$data.docData[data.applyIndex];
+                documentCustom.borrowing = {borrowingReason: data.applyReason};
                 $.ajax({
                     type: "post",
                     url: "/gwspxt/applyRead",
@@ -115,6 +122,7 @@ $(function () {
                     data: JSON.stringify(documentCustom),
                     success: function (response) {
                         if (response.msg == "updateSuccess") {
+                            that.getInfo({currentPage: 1})
                             spop({
                                 template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`,
                                 style: "success",
@@ -123,7 +131,6 @@ $(function () {
                         } else if (response.msg == "updateFailed") {
                             spop({template: `申请失败`, style: "error", autoclose: 2000});
                         }
-
                     }
                 })
                 /* let documentCustom = this.$data.docData[index];
@@ -157,6 +164,9 @@ $(function () {
         },
         mounted() {
             this.getInfo({currentPage: 1});
+            $('#ApplyReasonModal').on('hidden.bs.modal', function () {
+                data.applyReason = '';
+            });
         },
         components: {
             'asideComponent': Layout,

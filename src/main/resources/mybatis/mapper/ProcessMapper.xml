@@ -211,4 +211,7 @@
         select <include refid="Base_Column_List"/>
         from process where process_isdelete = '0'
     </select>
+    <select id="getProcessByName" parameterType="java.lang.String" resultType="com.kcsj.gwglxt.entity.Process">
+        select * from process where process_name = #{processName}
+    </select>
 </mapper>

@@ -11,7 +11,7 @@ import com.kcsj.gwglxt.vo.QueryForPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -132,10 +132,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //根据文档状态查询
     @Override
-    public QueryForPage getDocumentByState(String documentType,Integer documentConfidential,Integer documentState, String documentUser, int currentPage,String searchInfo) {
-        String documentNo = searchInfo;
-        String documentTitle = searchInfo;
-        List<DocumentCustom> list = documentMapper.getDocumentByState(documentType,documentConfidential,documentState, documentUser,documentNo,documentTitle);
+    public QueryForPage getDocumentByState(String documentType,Integer documentConfidential,Integer documentState, String documentUser, int currentPage,String fuzzySearch) {
+        List<DocumentCustom> list = documentMapper.getDocumentByState(documentType,documentConfidential,documentState, documentUser,fuzzySearch);
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
         int allRow = list.size();//总记录数
@@ -164,11 +162,8 @@ public class DocumentServiceImpl implements DocumentService {
 
     //按阅读权限整理出所有文档
     @Override
-    public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String searchInfo,String documentType,Integer documentConfidential,String documentDept) {
-        String documentNo = searchInfo;
-        String documentTitle = searchInfo;
-        String userName = searchInfo;
-        List<DocumentCustom> list = documentMapper.getAllDocument(documentType,documentConfidential,documentDept,documentNo,documentTitle,userName);
+    public QueryForPage getAllDocument(String departmentName, String userId, int currentPage, String fuzzySearch,String documentType,Integer documentConfidential,String documentDept) {
+        List<DocumentCustom> list = documentMapper.getAllDocument(documentType,documentConfidential,documentDept,fuzzySearch);
         Borrowing borrowing;
         for (DocumentCustom documentCustom : list) {
             if (documentCustom.getDepartment().getDepartmentName() != departmentName) {
@@ -203,10 +198,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     //查询本人需要审核的文档
     @Override
-    public QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String searchInfo,String documentType,Integer documentConfidential) {
-        String documentNo = searchInfo;
-        String documentTitle = searchInfo;
-        String userName = searchInfo;
+    public QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String fuzzySearch,String documentType,Integer documentConfidential) {
         List<ProcessNode> list = processNodeMapper.getProcessNodeByUser(loginCustom.getGuser().getUserDepartment(), loginCustom.getGuser().getUserPosition());
         System.out.println("我要执行的流程节点有"+list.size());
         //定义Documentcustom集合
@@ -214,7 +206,7 @@ public class DocumentServiceImpl implements DocumentService {
         //遍历该人员所需要任的所有流程子节点
         for (ProcessNode processNode : list) {
             //用每一个processNode里面的流程名和流程位置的前一位查询文档
-            List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(documentType,documentConfidential,processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,documentNo,documentTitle,userName);
+            List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(documentType,documentConfidential,processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,fuzzySearch);
             System.out.println("我要审核的"+documentCustoms.size());
             for (DocumentCustom documentCustom:documentCustoms){
                 list_doc.add(documentCustom);
@@ -249,7 +241,7 @@ public class DocumentServiceImpl implements DocumentService {
     public DocumentCustom insertBorrowing(@RequestBody DocumentCustom documentCustom, LoginCustom loginCustom) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         //从documentCustom对象中获得borrowing对象
-        Borrowing borrowing = new Borrowing();
+        Borrowing borrowing = documentCustom.getBorrowing();
         //获取该部门最高权限职称
         List<Position> positions = positionMapper.getDptManager(documentCustom.getDocument().getDocumentDept());
         //获取该职称对应的人
@@ -304,9 +296,9 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //获取需要本人同意的文档借阅申请
     @Override
-    public QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage,String documentType,Integer documentConfidential) {
+    public QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage,String documentType,Integer documentConfidential,String fuzzySearch) {
         //获得本人所在的部门，查看本部门的文档
-        List<DocumentCustom> documentCustoms = documentMapper.getDocumentByDpt(documentType,documentConfidential,loginCustom.getGuser().getUserDepartment());
+        List<DocumentCustom> documentCustoms = documentMapper.getDocumentByDpt(documentType,documentConfidential,loginCustom.getGuser().getUserDepartment(),fuzzySearch);
         //分页
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
@@ -331,7 +323,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //拒绝文档申请
     @Override
-    public void refuseDoc(LoginCustom loginCustom, String documentId) {
+    public int refuseDoc(LoginCustom loginCustom, String documentId,String refuseReason) {
         //根据id获取文档信息，目的是得到文档的流程开始时间
         Document document = documentMapper.selectByPrimaryKey(documentId);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -346,7 +338,7 @@ public class DocumentServiceImpl implements DocumentService {
             documentProcessBegin = document.getDocumentProcessBegin();
         }
         //将文档状态更改为退回状态
-        documentMapper.updateDocumentState(0,documentProcessBegin,documentProcessFinish,documentId);
+        int result = documentMapper.updateDocumentState(0,documentProcessBegin,documentProcessFinish,documentId);
         //生成审核人日志
         Log log = new Log();
         log.setLogId(TeamUtil.getUuid());
@@ -358,7 +350,7 @@ public class DocumentServiceImpl implements DocumentService {
         Message message = new Message();
         String messageId = TeamUtil.getUuid();
         message.setMessageId(messageId);
-        message.setMessageContent(loginCustom.getGuser().getUserName()+"拒绝了对你的"+document.getDocumentTitle()+"的申请");
+        message.setMessageContent(loginCustom.getGuser().getUserName()+"拒绝了对你的"+document.getDocumentTitle()+"的申请,拒绝理由："+refuseReason+"。");
         message.setMessageTime(df.format(new Date()));
         message.setMessageIsdelete(0);
         message.setMessageType(3);
@@ -369,6 +361,7 @@ public class DocumentServiceImpl implements DocumentService {
         mobject.setMobjectMessage(messageId);
         mobject.setMobjectIsread(0);
         mobjectMapper.insertMbj(mobject);
+        return result;
     }
     //同意借阅申请
     @Override
@@ -418,7 +411,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //拒绝批阅申请
     @Override
-    public int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom) {
+    public int refuseApply(DocumentCustom documentCustom, LoginCustom loginCustom,String refuseReason) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         //首先改变该文档及改人的借阅记录的借阅状态
         //获取该条documentCustom记录的borrowing的id
@@ -443,7 +436,7 @@ public class DocumentServiceImpl implements DocumentService {
             Message message = new Message();
             String messageId = TeamUtil.getUuid();
             message.setMessageId(messageId);
-            message.setMessageContent("您申请批阅的"+documentCustom.getDocument().getDocumentTitle()+"已被拒绝。");
+            message.setMessageContent("您申请批阅的"+documentCustom.getDocument().getDocumentTitle()+"已被拒绝，拒绝理由："+refuseReason+"。");
             message.setMessageTime(df.format(new Date()));
             message.setMessageIsdelete(0);
             message.setMessageType(1);

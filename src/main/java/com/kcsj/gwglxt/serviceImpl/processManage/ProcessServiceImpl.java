@@ -151,4 +151,14 @@ public class ProcessServiceImpl implements ProcessService {
         return processMapper.insert(process);
     }
 
+    @Override
+    public boolean getProcessByName(String processName) {
+        List<Process> process = processMapper.getProcessByName(processName);
+        if(process.size()==0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }

@@ -174,12 +174,14 @@ var Header = Vue.extend({
                                 <li>
                                     <!-- start message -->
                                     <a v-for="(msg,index) in message.msgContent" href="">
-                                        <div class="pull-left">
-                                            <img src="http://www.hywebsite.cn/static/gif/rabbit.gif" class="img-circle" alt="User Image"/>
+                                        <div class="pull-left" style="width: 100%;">
+                                            <img style="display: block;float: left" src="http://www.hywebsite.cn/static/gif/rabbit.gif" class="img-circle" alt="User Image"/>
+                                            <div style="width: 70%; float: left;">
+                                                <small style="float: right;" class="pull-right"><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                <a>{{msg.title}}</a>
+                                                <p style="white-space:normal">{{msg.content}}</p>
+                                            </div>
                                         </div>
-                                        <h4>{{msg.title}}</h4>
-                                        <p>{{msg.content}}</p>
-                                        <small class="pull-right"><i class="fa fa-clock-o"></i> 5 mins</small>
                                     </a>
                                 </li>
                                 <!-- end message -->
@@ -201,7 +203,7 @@ var Header = Vue.extend({
                             <a href="javascript:;">
                                 <i class="fa fa-user fa-fw pull-right"></i> 帐号
                             </a>
-                            <a data-toggle="modal" href="#modal-user-settings">
+                            <a href="javascript:;" @click="modifyPassword">
                                 <i class="fa fa-cog fa-fw pull-right"></i> 设置
                             </a>
                         </li>
@@ -258,7 +260,24 @@ var Header = Vue.extend({
                 style: 'error',
                 autoclose: 5000
             });
-        }
+        },
+        modifyPassword() {
+            spop({
+                template: `<div class="input-group input-group-sm">
+                           <span class="input-group-addon" id="basic-addon1">原密码</span>
+                           <input type="text" class="form-control" placeholder="Old Password" aria-describedby="basic-addon1">
+                           </div>
+                           <div class="input-group input-group-sm">
+                           <span class="input-group-addon" id="basic-addon1">新密码</span>
+                           <input type="text" class="form-control" placeholder="New Password" aria-describedby="basic-addon1">
+                           </div>
+                           <div class="input-group input-group-sm">
+                           <span class="input-group-addon" id="basic-addon1">确认新密码</span>
+                           <input type="text" class="form-control" placeholder="New Password" aria-describedby="basic-addon1">
+                           </div>`,
+                style: 'none',
+            });
+        },
     },
     mounted() {
         const that = this;

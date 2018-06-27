@@ -303,9 +303,9 @@
             borrowing_isdelete = #{borrowingIsdelete,jdbcType=INTEGER}
         where borrowing_id = #{borrowingId,jdbcType=CHAR}
     </update>
-    <select id="borrowingState" resultType="java.lang.Integer">
+    <select id="borrowingState" resultType="com.kcsj.gwglxt.entity.Borrowing">
         SELECT
-	borrowing.borrowing_state
+	*
 FROM
 	borrowing
 WHERE

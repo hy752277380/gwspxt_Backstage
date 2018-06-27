@@ -133,7 +133,7 @@ $(function () {
                     "doc_id": this.docData[index].document.documentId
                 }
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_check));
-                window.location.href = "/gwspxt/reviewDetailDocument";
+                window.location.href = "/gwspxt/reviewContent";
             },
         },
         mounted() {

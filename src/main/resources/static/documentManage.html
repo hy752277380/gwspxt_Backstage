@@ -195,8 +195,16 @@
                                         </tbody>
 
                                     </table>
+                                    <div>
                                     <div v-cloak style="float: left;">
                                         <page-util @change="change" :page="page"></page-util>
+                                    </div>
+                                        <div style="float: right;margin-right: 70px;margin-top: 20px">
+                                            <button type="button" class="btn btn-danger"
+                                                    @click="deleteChooseDocument"><i
+                                                    class="fa fa-trash-o fa-fw"></i> 批量删除
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

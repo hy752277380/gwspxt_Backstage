@@ -81,6 +81,17 @@ $(function () {
                     data.ready = true;
                 }, 'json');
             },
+            /* 页码改变时候触发的事件，不可缺少 */
+            change(pageIndex) {
+                this.$data.page.currentPage = pageIndex;
+                this.getInfo({
+                    currentPage: pageIndex,
+                    documentType: data.searchData.documentType,
+                    documentConfidential: data.searchData.documentConfidential,
+                    documentState: data.searchData.documentState,
+                    fuzzySearch: data.searchData.fuzzySearch
+                });
+            },
             replaceConfidential(documentConfidential) {
                 switch (documentConfidential) {
                     case 1:
@@ -98,7 +109,7 @@ $(function () {
                 $.post('/gwspxt/updateDocumentLocation', {documentId}, function (response) {
                     if (response.msg == "updateSuccess") {
                         spop({
-                            template: "审核失败！",
+                            template: `您已同意对${data.docData[index].document.documentTitle}的审核`,
                             style: "danger",
                             autoclose: 3000
                         })

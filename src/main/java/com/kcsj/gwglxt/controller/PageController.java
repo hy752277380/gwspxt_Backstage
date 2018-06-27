@@ -119,6 +119,7 @@ public class PageController {
     public String reviewContent() {
         return "reviewContent.html";
     }
+
     /*查看本人全部消息通知*/
     @RequestMapping("/messageManagement")
     public String messageManagement () {

@@ -42,9 +42,9 @@ $(function () {
                 {key: "4", value: "普通"},
             ],
         },
-        department:'',
+        department: '',
         docDepartment: {
-            name:"拟稿部门",
+            name: "拟稿部门",
             items: [
                 /*{key: "", value: ""},*/
             ],
@@ -55,7 +55,7 @@ $(function () {
             documentConfidential: 0,
             documentState: 0,
             fuzzySearch: '',
-            documentDepartment:''
+            documentDepartment: ''
         },
         applyReason: '',
         applyIndex: 0
@@ -88,6 +88,11 @@ $(function () {
                     reviewDocument.page.hasPreviousPage = response.hasPreviousPage;
                     reviewDocument.page.hasNextPage = response.hasNextPage;
                     reviewDocument.ready = true;
+                    for (let item in data.docData) {
+                        console.log(data.docData[item].document.documentDept )
+                        console.log(data.docData[item].document.documentDept == data.user.guser.userDepartment);
+                    }
+                    console.log(data.user.guser.userDepartment)
                 }, 'json');
             },
             /* 密级数字到标签的替换 */
@@ -126,14 +131,14 @@ $(function () {
                     contentType: 'application/json;charset=UTF-8',
                     data: JSON.stringify(documentCustom),
                     success: function (response) {
-                        if (response.msg == "updateSuccess") {
+                        if (response.msg == "applySuccess") {
                             that.getInfo({currentPage: 1})
                             spop({
                                 template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`,
                                 style: "success",
-                                autoclose: 2000
+                                autoclose: 5000
                             });
-                        } else if (response.msg == "updateFailed") {
+                        } else if (response.msg == "applyFailed") {
                             spop({template: `申请失败`, style: "error", autoclose: 2000});
                         }
                     }
@@ -156,11 +161,11 @@ $(function () {
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
                 location.href = "/gwspxt/reviewContent";
             },
-           /* getdepartment() {
-                $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
-                    data.department = response;
-                }, 'json');
-            },*/
+            /* getdepartment() {
+                 $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
+                     data.department = response;
+                 }, 'json');
+             },*/
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;
                 this.getInfo({
@@ -177,7 +182,7 @@ $(function () {
             $('#ApplyReasonModal').on('hidden.bs.modal', function () {
                 data.applyReason = '';
             });
-           /* this.getdepartment({});*/
+            /* this.getdepartment({});*/
         },
         components: {
             'asideComponent': Layout,

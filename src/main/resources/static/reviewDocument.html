@@ -38,17 +38,6 @@
             vertical-align: initial !important;
         }
 
-        /* 除去input为number时候的箭头*/
-
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none !important;
-            margin: 0;
-        }
-
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
     </style>
 </head>
 
@@ -128,21 +117,13 @@
                                             <td>{{doc.document.creationTime}}</td>
                                             <td>
                                                 <!-- 本部门文档 -->
-                                                <template
-                                                        v-if="user.department.departmentName==doc.department.departmentName">
+                                                <template v-if="user.department.departmentId==doc.document.documentDept">
                                                     <button @click="reviewDocument(index)" type="button"
                                                             class="btn btn-primary btn-sm">阅读
                                                     </button>
                                                 </template>
                                                 <!-- 非本部门未借阅文档 -->
                                                 <template v-else-if="doc.borrowing == null">
-                                                    <!--<sure-util :btn-class="'btn btn-primary btn-sm'"
-                                                               :i-class="''"
-                                                               :title="'确定执行操作?'"
-                                                               :btn-text="'申请查看'"
-                                                               :index="index"
-                                                               @action="applyBorrowing">
-                                                    </sure-util>-->
                                                     <button @click="applyIndex = index" type="button"
                                                             class="btn btn-primary btn-sm" data-toggle="modal"
                                                             data-target="#ApplyReasonModal">申请查看
@@ -157,7 +138,7 @@
                                                 <!-- 申请中状态 -->
                                                 <template v-else-if="doc.borrowing.borrowingState==1">
                                                     <button type="button" class="btn btn-primary btn-sm">
-                                                        <i class="fa fa-spinner fa-spin"></i>申请中
+                                                        申请中<i class="fa fa-spinner fa-spin"></i>
                                                     </button>
                                                 </template>
                                             </td>

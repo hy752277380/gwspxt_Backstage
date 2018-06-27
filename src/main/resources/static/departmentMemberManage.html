@@ -94,7 +94,7 @@
                                             <th>姓名</th>
                                             <th>性别</th>
                                             <th>部门</th>
-                                            <th>职称</th>
+                                            <th>职务</th>
                                             <th>手机号</th>
                                             <th>邮箱</th>
                                             <th>工作日志</th>
@@ -103,7 +103,7 @@
                                         </tr>
                                         <tbody v-cloak>
                                         <tr v-for="(person,index) in personData"
-                                            v-if="person.permission.permissionLevel!=5">
+                                            v-if="person.permission.permissionLevel<=user.permission.permissionLevel">
                                             <td>{{index+1}}</td>
                                             <td>{{person.guser.userAccount}}</td>
                                             <td>{{person.guser.userName}}</td>

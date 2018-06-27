@@ -252,7 +252,7 @@
                     }, response => {
                         if (response.msg == "updateSuccess") {
                             spop({template: `更改密码成功`, style: "success", autoclose: 2000});
-                            $('#ModifyPassword').modal('hidden');
+                            $('#ModifyPassword').modal('hide');
                         } else if (response.msg == "updateFailed") {
                             spop({template: `更改密码失败`, style: "error", autoclose: 2000});
                         } else if (response.msg == "oldPasswordError") {

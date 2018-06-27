@@ -110,7 +110,12 @@
                                                              :search-name="'documentConfidential'"
                                                              @search="search"></search-util>
                                             </th>
-                                            <th>拟稿部门<span class="caret"></span></th>
+                                            <th>
+                                                <search-util :query="docDepartment"
+                                                             :search-name="'documentDepartment'"
+                                                             @search="search"></search-util>
+                                            </th>
+                                          <!--  <th>拟稿部门<span class="caret"></span></th>-->
                                             <th>发布时间</th>
                                             <th>操作</th>
                                         </tr>

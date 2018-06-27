@@ -42,12 +42,19 @@ $(function () {
                 {key: "4", value: "普通"},
             ],
         },
-        docDepartment: 0,
+       /* docDepartment: {
+            name:"拟稿部门",
+            items: [
+                {key: "", value: ""},
+            ],
+
+        },*/
         searchData: {
             documentType: '',
             documentConfidential: 0,
             documentState: 0,
             fuzzySearch: '',
+            documentDepartment:''
         },
         applyReason: '',
         applyIndex: 0
@@ -151,6 +158,13 @@ $(function () {
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
                 location.href = "/gwspxt/reviewContent";
             },
+          /*  getdepartment() {
+                $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
+                    data.department = response;
+                    data.docDepartment.items.key=data.department.department;
+                    data.docDepartment.items.value=data.department.departmentName;
+                }, 'json');
+            },*/
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;
                 this.getInfo({
@@ -167,6 +181,7 @@ $(function () {
             $('#ApplyReasonModal').on('hidden.bs.modal', function () {
                 data.applyReason = '';
             });
+           /* this.getdepartment({});*/
         },
         components: {
             'asideComponent': Layout,

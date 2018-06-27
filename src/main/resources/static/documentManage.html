@@ -104,7 +104,6 @@
                                     </div>
                                     <table class="table table-hover">
                                         <tr>
-                                            <th><input @click="checkAll($event)" type="checkbox"></th>
                                             <th>文档编号</th>
                                             <th>文档标题</th>
                                             <th>
@@ -128,8 +127,6 @@
                                         </tr>
                                         <tbody v-cloak v-if="ready">
                                         <tr v-for="(doc,index) of docData">
-                                            <td><input name="checkID" check="self" :doc-id="doc.document.documentId" type="checkbox">
-                                            </td>
                                             <td>{{doc.document.documentNo}}</td>
                                             <td>{{doc.document.documentTitle}}</td>
                                             <td>{{doc.documenttype.documenttypeName}}</td>

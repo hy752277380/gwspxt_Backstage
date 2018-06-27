@@ -143,7 +143,6 @@ public class GuserServiceImpl implements GuserService {
     @Override
     public CountByMouth countUserByMouth() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
-        System.out.println(guserMapper.countUserByMouth(df.format(new Date())));
         return guserMapper.countUserByMouth(df.format(new Date()));
     }
     //计算总人数

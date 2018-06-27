@@ -162,6 +162,27 @@ $(function () {
                     $('#modalModify').modal('show');
                 }, 'json');
             },
+            deleteBatchAccount() {
+                let arrId = [];
+                $('input[name="checkId"]').each(function () {
+                    if ($(this).attr('checked')) {
+                        arrId.push($(this).attr('user-id'));
+                    }
+
+                });
+                $('input[checked="checked"]:checkbox').each(function () {
+                    $(this).removeAttr('checked');
+                });
+                $.post('/gwspxt/batchDelete', {userIds: arrId}, response => {
+                        if (response.msg == "updateSuccess") {
+                            this.getInfo({currentPage: 1});
+                            spop({template: `删除成功`, style: "success", autoclose: 2000});
+                        } else if (response.msg == "updateFailed") {
+                            spop({template: `删除失败`, style: "error", autoclose: 2000});
+                        }
+                    }, 'json');
+
+            },
             modalModify() {
                 this.errors = [];
                 if (!/^[0-9]{8}$/.test(data.modalModifyPersonData.userAccount)) this.errors.push("帐号信息错误");

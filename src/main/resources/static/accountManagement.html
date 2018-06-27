@@ -110,7 +110,9 @@
                                         </tr>
                                         <tbody v-cloak>
                                         <tr v-for="(person,index) in personData">
-                                            <td><input check="self" type="checkbox"></td>
+                                            <td><input name="checkId" check="self" :user-id="person.guser.userId"
+                                                       type="checkbox">
+                                            </td>
                                             <td>{{person.guser.userAccount}}</td>
                                             <td>{{person.guser.userName}}</td>
                                             <td>{{person.guser.userSex==0?"男":"女"}}</td>
@@ -153,8 +155,16 @@
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <div v-cloak style="float: left;">
-                                        <page-util @change="change" :page="page"></page-util>
+                                    <div>
+                                        <div v-cloak style="float: left;">
+                                            <page-util @change="change" :page="page"></page-util>
+                                        </div>
+                                        <div style="float: right;margin-right: 205px;margin-top: 20px">
+                                            <button type="button" class="btn btn-danger"
+                                                    @click="deleteBatchAccount"><i
+                                                    class="fa fa-trash-o fa-fw"></i> 批量删除
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

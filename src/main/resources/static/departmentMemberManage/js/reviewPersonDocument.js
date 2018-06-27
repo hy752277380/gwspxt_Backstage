@@ -55,7 +55,6 @@ $(function () {
 
             ],
         },
-        docDepartment: 0,
     }
 
     var documentManage = new Vue({
@@ -88,7 +87,7 @@ $(function () {
             /* 页码改变时候触发的事件，不可缺少 */
             change(pageIndex) {
                 this.$data.page.currentPage = pageIndex;
-                this.getInfo({currentPage: pageIndex, userId: data.user.userId});
+                this.getInfo({currentPage: pageIndex, userId: data.reviewPersonId});
             },
             replaceConfidential(documentConfidential) {
                 switch (documentConfidential) {

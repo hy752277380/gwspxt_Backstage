@@ -1043,7 +1043,7 @@ ul.activity-list > li {
       display: block;
       width: 100%;
       height: 100%;
-      background: rgba(99, 156, 185, 0.92); }
+      background: rgba(99, 156, 185, 0.52); }
   .auth-box .header {
     margin-bottom: 30px; }
   .auth-box .lead {

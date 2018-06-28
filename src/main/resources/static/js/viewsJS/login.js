@@ -37,5 +37,6 @@ $(function () {
             check();
         }
     }
+    $.post('/gwspxt/backtoLogin', {}, function (response) {}, 'json');
     sessionStorage.removeItem("loginUser");
 });

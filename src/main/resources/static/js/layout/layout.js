@@ -14,7 +14,7 @@ var Layout = Vue.extend({
         <!-- Sidebar user panel -->
     <div class="user-panel">
         <div class="pull-left image">
-        <!--用户头像图片位置----------->  <!--暂时不改动，使用固定头像-->
+        <!--用户头像图片位置----------->
         <img :src="'http://www.hywebsite.cn/static/gif/'+user.guser.userPicture" class="img-circle" alt="User Image"/>
         </div>
         <div class="pull-left info">
@@ -186,7 +186,7 @@ var Header = Vue.extend({
                         <li class="header">{{message.number}}条未读消息</li>
                         <li>
                             <!-- inner menu: contains the actual data -->
-                            <ul class="menu">
+                            <ul class="menu"  style="max-height: 300px; overflow-y:auto;">
                                 <li>
                                     <!-- start message -->
                                     <a v-for="(msg,index) in message.msg" href="">
@@ -216,10 +216,10 @@ var Header = Vue.extend({
                         <li class="dropdown-header text-center">帐号</li>
                         <li class="divider"></li>
                         <li>
-                            <a href="javascript:;">
+                            <a href="information">
                                 <i class="fa fa-user fa-fw pull-right"></i> 帐号
                             </a>
-                            <a href="javascript:;">
+                            <a href="information">
                                 <i class="fa fa-cog fa-fw pull-right"></i> 设置
                             </a>
                         </li>

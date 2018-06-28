@@ -15,7 +15,7 @@ var Layout = Vue.extend({
     <div class="user-panel">
         <div class="pull-left image">
         <!--用户头像图片位置----------->  <!--暂时不改动，使用固定头像-->
-        <img src="http://www.hywebsite.cn/static/gif/rabbit.gif" class="img-circle" alt="User Image"/>
+        <img :src="'http://www.hywebsite.cn/static/gif/'+user.guser.userPicture" class="img-circle" alt="User Image"/>
         </div>
         <div class="pull-left info">
         <!--用户名字位置--------------->
@@ -189,13 +189,13 @@ var Header = Vue.extend({
                             <ul class="menu">
                                 <li>
                                     <!-- start message -->
-                                    <a v-for="(msg,index) in message.msgContent" href="">
+                                    <a v-for="(msg,index) in message.msg" href="">
                                         <div class="pull-left" style="width: 100%;">
-                                            <img style="display: block;float: left" src="http://www.hywebsite.cn/static/gif/rabbit.gif" class="img-circle" alt="User Image"/>
+                                            <img style="display: block;float: left" :src="'http://www.hywebsite.cn/static/gif/'+(index+1)+'.gif'" class="img-circle" alt="User Image"/>
                                             <div style="width: 70%; float: left;">
-                                                <small style="float: right;" class="pull-right"><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                <a>{{msg.title}}</a>
-                                                <p style="white-space:normal">{{msg.content}}</p>
+                                                <small style="float: right;" class="pull-right"><i class="fa fa-clock-o"></i>{{GetDateDiff(msg.message.messageTime,'','minute')}}min</small>
+                                                <a v-html="repleace(msg.message.messageType)"></a>
+                                                <p style="white-space:normal">{{msg.message.messageContent}}</p>
                                             </div>
                                         </div>
                                     </a>
@@ -237,7 +237,7 @@ var Header = Vue.extend({
             user: JSON.parse(sessionStorage.getItem("loginUser")),
             message: {
                 number: 0,
-                msgContent: [],
+                msg: [],
             },
         }
     },
@@ -259,15 +259,7 @@ var Header = Vue.extend({
         getMessage(that) {
             $.post('/gwspxt/getUnReadMsg', {}, function (response) {
                 that.message.number = response.length;
-                let newMsgContent = [];
-                for (let item in response) {
-                    let newMsg = {
-                        title: that.repleace(response[item].message.messageType),
-                        content: response[item].message.messageContent,
-                    }
-                    newMsgContent.push(newMsg);
-                }
-                that.message.msgContent = newMsgContent;
+                that.message.msg = response;
             }, 'json');
         },
         showPop() {
@@ -276,6 +268,35 @@ var Header = Vue.extend({
                 style: 'error',
                 autoclose: 5000
             });
+        },
+        GetDateDiff(startTime, endTime, diffType) {
+            //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
+            startTime = startTime.replace(/-/g, "/");
+            endTime = endTime.replace(/-/g, "/");
+            //将计算间隔类性字符转换为小写
+            diffType = diffType.toLowerCase();
+            var sTime = new Date(startTime); //开始时间
+            //var eTime = new Date(endTime); //结束时间
+            var eTime = new Date(); //结束时间
+            //作为除数的数字
+            var divNum = 1;
+            switch (diffType) {
+                case "second":
+                    divNum = 1000;
+                    break;
+                case "minute":
+                    divNum = 1000 * 60;
+                    break;
+                case "hour":
+                    divNum = 1000 * 3600;
+                    break;
+                case "day":
+                    divNum = 1000 * 3600 * 24;
+                    break;
+                default:
+                    break;
+            }
+            return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum)); //17jquery.com
         }
     },
     mounted() {

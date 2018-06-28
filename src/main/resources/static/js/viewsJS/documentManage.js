@@ -58,14 +58,14 @@ $(function () {
             ],
         },
         docDepartment: 0,
-        department:[],
+       /* department:[],
         docDepartment: {
             name:"拟稿部门",
             items: [
-                /* {key: "", value: ""},*/
+                /!* {key: "", value: ""},*!/
             ],
 
-        },
+        },*/
         searchData: {
             documentType: '',
             documentConfidential: 0,
@@ -131,7 +131,16 @@ $(function () {
                 }
             },
             returnDocument(index){
-
+           /*callBack*/
+                let docId = data.docData[index].document.documentId;
+                $.post('/gwspxt/callBack', {documentId:docId}, response=>{
+                    if (response.msg == "updateSuccess") {
+                        this.getInfo({currentPage: 1});
+                        spop({template: `退回成功`, style: "success", autoclose: 2000});
+                    } else if (response.msg == "updateFailed") {
+                        spop({template: `退回失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json');
             },
             editDocument(index) {
                 var lhs_edit = {
@@ -162,7 +171,7 @@ $(function () {
                         }
                     }, 'json');
             },
-            getDepartment() {
+           /* getDepartment() {
                 $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
                     data.department=response;
                     let arr = [{key:'',value:'全部'}];
@@ -175,7 +184,7 @@ $(function () {
                     }
                     data.docDepartment.items = arr;
                 }, 'json');
-            },
+            },*/
           /*  deleteBatchDocument() {
                 let arrId = [];
                 $('input[name="checkID"]').each(function () {
@@ -228,7 +237,7 @@ $(function () {
         },
         mounted() {
             this.getInfo({currentPage: 1});
-            this.getDepartment();
+           /* this.getDepartment();*/
         },
         components: {
             'asideComponent': Layout,

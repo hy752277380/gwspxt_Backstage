@@ -3920,7 +3920,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
 }
 
 .panel {
-	border: none;
+	/*border: none;*/
 	/*box-shadow: none;*/
 	-webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
 	box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);

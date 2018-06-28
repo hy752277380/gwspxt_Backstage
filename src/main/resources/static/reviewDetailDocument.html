@@ -434,10 +434,8 @@
                                     documentId: documentId,
                                 },
                                 success: function (data) {
-                                    if (data.msg == 'updateSuccess') {
-                                        spop({template: `提交成功`, style: "success", autoclose: 2000});
                                         window.location.href = "/gwspxt/documentManage";
-                                    }
+                                        spop({template: `提交成功`, style: "success", autoclose: 2000});
                                 }
                             });
 

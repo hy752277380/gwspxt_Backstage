@@ -117,6 +117,7 @@
                                                              @search="search"></search-util>
                                             </th>
                                             <th>发布时间</th>
+                                            <th>文档</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
@@ -131,6 +132,9 @@
                                             <td v-html="replaceConfidential(doc.document.documentConfidential)"></td>
                                             <td>{{doc.department.departmentName}}</td>
                                             <td>{{doc.document.creationTime}}</td>
+                                            <td> <button @click="reviewDocument(index)" type="button"
+                                                         class="btn btn-default btn-sm"> 查看
+                                            </button></td>
                                             <td>
                                                 <!--<button @click="pass(index)" type="button"
                                                         class="btn btn-primary btn-sm">
@@ -138,7 +142,7 @@
                                                 </button>-->
                                                 <sure-util :btn-class="'btn btn-primary btn-sm'"
                                                            :i-class="'fa fa-repeat'"
-                                                           :title="'确定退回文档?'"
+                                                           :title="'确定同意文档?'"
                                                            :btn-text="'同意'"
                                                            :index="index"
                                                            @action="pass">

@@ -85,7 +85,8 @@ $(function () {
                 }, 'json');
             },
             saveModify() {
-                $.ajaxSetup({'Content-Type': 'application/json;charset=utf-8',});
+                //$.ajaxSetup({'Content-Type': 'application/json;charset=utf-8',});
+                let that = this;
                 $.ajax({
                     type: "POST",
                     url: '/gwspxt/updatePersonInfo',
@@ -95,6 +96,8 @@ $(function () {
                     success: function (response) {
                         if (response.msg == "updateSuccess") {
                             spop({template: `调配成功`, style: "success", autoclose: 2000});
+                            that.getInfo({currentPage: 1});
+                            $('#allocateModal').modal('hide');
                         } else if (response.msg == "updateFailed") {
                             spop({template: `调配失败`, style: "error", autoclose: 2000});
                         }

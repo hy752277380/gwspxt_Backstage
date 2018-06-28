@@ -31,6 +31,7 @@ $(function () {
         components: {
             'asideComponent': Layout,
             'page-util': pageUtil,
+            'sure-util': sureUtil,
             //'search-util': searchUtil
         },
         methods: {
@@ -68,7 +69,7 @@ $(function () {
                             spop({
                                 template: `已同意${documentCustom.guser.userName}对${documentCustom.document.documentTitle}的借阅`,
                                 style: "success",
-                                autoclose: 2000
+                                autoclose: 5000
                             });
                             this.getInfo({currentPage: 1, fuzzySearch: data.searchData.fuzzySearch})
                         } else if (response.msg == "updateFailed") {
@@ -105,7 +106,7 @@ $(function () {
                             spop({
                                 template: `已拒绝${documentCustom.guser.userName}对${documentCustom.document.documentTitle}的借阅`,
                                 style: "success",
-                                autoclose: 2000
+                                autoclose: 5000
                             });
                             this.getInfo({currentPage: 1, fuzzySearch: data.searchData.fuzzySearch})
                         } else if (response.msg == "updateFailed") {
@@ -129,6 +130,7 @@ $(function () {
                 return `<button type="button"
                                  class="btn btn-sm btn-default"
                                  data-toggle="popover"
+                                 data-trigger="focus"
                                  title="申请理由详情"
                                  data-content="${str}">查看</button>`;
             },

@@ -14,7 +14,7 @@ $(function () {
         },
         department:[],
         docDepartment: {
-            name:"拟稿部门",
+            name:"借阅人部门",
             items: [
                 /* {key: "", value: ""},*/
             ],

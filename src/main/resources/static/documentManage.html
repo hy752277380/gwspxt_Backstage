@@ -185,6 +185,10 @@
                                                         </button>
                                                 </template>
                                                 <template v-else-if="doc.document.documentState==1">
+                                                    <button type="button" class="btn btn-primary btn-sm"
+                                                            @click="editDocument(index)"><i
+                                                            class="fa fa-pencil fa-fw"></i> 编辑
+                                                    </button>
                                                     <sure-util :btn-class="'btn btn-danger btn-sm'"
                                                                :i-class="'fa fa-trash-o fa-fw'"
                                                                :title="'确定执行操作?'"

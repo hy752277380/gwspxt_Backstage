@@ -131,7 +131,16 @@ $(function () {
                 }
             },
             returnDocument(index){
-
+           /*callBack*/
+                let docId = data.docData[index].document.documentId;
+                $.post('/gwspxt/callBack', {documentId:docId}, response=>{
+                    if (response.msg == "updateSuccess") {
+                        this.getInfo({currentPage: 1});
+                        spop({template: `退回成功`, style: "success", autoclose: 2000});
+                    } else if (response.msg == "updateFailed") {
+                        spop({template: `退回失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json');
             },
             editDocument(index) {
                 var lhs_edit = {

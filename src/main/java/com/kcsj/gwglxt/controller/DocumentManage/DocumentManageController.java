@@ -239,7 +239,7 @@ public class DocumentManageController {
         }
         return "{\"msg\":\"" + result + "\"}";
     }
-    //申请人发起驳回
+    //申请人发起退回
     @RequestMapping("/callBack")
     public String callBack(String documentId,HttpSession httpSession){
         String result;

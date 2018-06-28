@@ -30,6 +30,7 @@ $(function () {
         }
     }
 
+
     var reviewDocument = new Vue({
         el: "#main",
         data: data,

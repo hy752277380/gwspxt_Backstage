@@ -22,7 +22,7 @@ $(function () {
         docDepartment: 0,
     }
 
-    var deptManage = new Vue({
+    var departmentManagement = new Vue({
         el: "#main",
         data: data,
         methods: {

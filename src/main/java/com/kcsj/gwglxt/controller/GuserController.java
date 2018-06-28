@@ -95,6 +95,12 @@ public class GuserController {
         String basePath = request.getScheme()+ "://"+request.getServerName()+":"+request.getServerPort()+path+"/";
         response.sendRedirect(basePath);
     }
+    //登出
+    @RequestMapping("/backtoLogin")
+    public void backtoLogin(HttpSession httpSession) throws Exception{
+        httpSession.removeAttribute("LoginInformation");
+        httpSession.invalidate();
+    }
     //更改密码
     @RequestMapping("/changePassword")
     public String changePassword(String password,String newPassword,HttpSession httpSession){

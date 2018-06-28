@@ -42,19 +42,11 @@ $(function () {
                 {key: "4", value: "普通"},
             ],
         },
-<<<<<<< HEAD
-        department: '',
-=======
         department:[],
->>>>>>> origin/LHS
         docDepartment: {
             name: "拟稿部门",
             items: [
-<<<<<<< HEAD
-                /*{key: "", value: ""},*/
-=======
                /* {key: "", value: ""},*/
->>>>>>> origin/LHS
             ],
 
         },
@@ -63,11 +55,7 @@ $(function () {
             documentConfidential: 0,
             documentState: 0,
             fuzzySearch: '',
-<<<<<<< HEAD
-            documentDepartment: ''
-=======
             documentDept:''
->>>>>>> origin/LHS
         },
         applyReason: '',
         applyIndex: 0
@@ -174,13 +162,6 @@ $(function () {
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
                 location.href = "/gwspxt/reviewContent";
             },
-<<<<<<< HEAD
-            /* getdepartment() {
-                 $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
-                     data.department = response;
-                 }, 'json');
-             },*/
-=======
             getDepartment() {
                 $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
                     data.department=response;
@@ -195,7 +176,6 @@ $(function () {
                     data.docDepartment.items = arr;
                 }, 'json');
             },
->>>>>>> origin/LHS
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;
                 this.getInfo({
@@ -213,11 +193,7 @@ $(function () {
             $('#ApplyReasonModal').on('hidden.bs.modal', function () {
                 data.applyReason = '';
             });
-<<<<<<< HEAD
-            /* this.getdepartment({});*/
-=======
             this.getDepartment();
->>>>>>> origin/LHS
         },
         components: {
             'asideComponent': Layout,

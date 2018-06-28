@@ -15,9 +15,9 @@ $(function () {
         },
         refuseReason: '',
         refuseIndex: '',
-        department:[],
+        department: [],
         docDepartment: {
-            name:"拟稿部门",
+            name: "拟稿部门",
             items: [
                 /* {key: "", value: ""},*/
             ],
@@ -28,7 +28,7 @@ $(function () {
             documentConfidential: 0,
             documentState: 0,
             fuzzySearch: '',
-            documentDept:''
+            documentDept: ''
         },
         docType: {
             name: "文档类型",
@@ -158,12 +158,12 @@ $(function () {
             },
             getDepartment() {
                 $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
-                    data.department=response;
-                    let arr = [{key:'',value:'全部'}];
-                    for(var dept in response){
+                    data.department = response;
+                    let arr = [{key: '', value: '全部'}];
+                    for (var dept in response) {
                         let lhs = {
-                            key:data.department[dept].departmentId,
-                            value:data.department[dept].departmentName
+                            key: data.department[dept].departmentId,
+                            value: data.department[dept].departmentName
                         };
                         arr.push(lhs);
                     }
@@ -198,6 +198,9 @@ $(function () {
                 documentDept: data.searchData.documentDept
             });
             this.getDepartment();
+            $('#refuseReasonModal').on('hidden.bs.modal', function () {
+                data.refuseReason = '';
+            });
         },
         watch: {},
         components: {

@@ -7,6 +7,7 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="description" content="Developed By M Abdur Rokib Promy">
     <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.ico">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -94,7 +95,11 @@
                                             <th>#</th>
                                             <th>员工编号</th>
                                             <th>借阅人姓名</th>
-                                            <th>部门</th>
+                                            <th>
+                                                <search-util :query="docDepartment"
+                                                             :search-name="'documentDept'"
+                                                             @search="search"></search-util>
+                                            </th>
                                             <th>职称</th>
                                             <th>申请文档</th>
                                             <th>申请理由</th>
@@ -109,13 +114,30 @@
                                             <td>{{doc.document.documentTitle}}</td>
                                             <td v-html="showReasonDetail(doc.borrowing.borrowingReason)"></td>
                                             <td>
-                                                <button type="button" @click="accept(index)"
+                                                <!--<button type="button" @click="accept(index)"
                                                         class="btn btn-primary btn-sm" style="margin-right: 10px;"><i
                                                         class="fa fa-check"></i> 同意
-                                                </button>
-                                                <button type="button" @click="refuse(index)"
-                                                        class="btn btn-danger btn-sm"><i class="fa fa-reply"></i> 拒绝
-                                                </button>
+                                                </button>-->
+
+                                                <sure-util :btn-class="'btn btn-primary btn-sm'"
+                                                           :i-class="'fa fa-check'"
+                                                           :title="'确定执行操作吗?'"
+                                                           :btn-text="'同意'"
+                                                           :index="index"
+                                                           @action="accept">
+                                                </sure-util>
+
+                                                <sure-util :btn-class="'btn btn-danger btn-sm'"
+                                                           :i-class="'fa fa-reply'"
+                                                           :title="'确定执行操作吗?'"
+                                                           :btn-text="'拒绝'"
+                                                           :index="index"
+                                                           @action="refuse">
+                                                </sure-util>
+
+                                                <!--<button type="button" @click="refuse(index)"
+                                                        class="btn btn-danger btn-sm"><i class="fa fa-reply"></i> 🙅拒绝
+                                                </button>-->
                                             </td>
                                         </tr>
                                     </table>

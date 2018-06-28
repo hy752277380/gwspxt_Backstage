@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>文档查看</title>
+    <title>审核文档</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.ico">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -110,7 +111,11 @@
                                                              @search="search"></search-util>
                                             </th>
                                             <!--<th>文档密级<span class="caret"></span></th>-->
-                                            <th>拟稿部门<span class="caret"></span></th>
+                                            <th>
+                                                <search-util :query="docDepartment"
+                                                             :search-name="'documentDept'"
+                                                             @search="search"></search-util>
+                                            </th>
                                             <th>发布时间</th>
                                             <th>操作</th>
                                         </tr>
@@ -133,7 +138,7 @@
                                                 </button>-->
                                                 <sure-util :btn-class="'btn btn-primary btn-sm'"
                                                            :i-class="'fa fa-repeat'"
-                                                           :title="'确定执行操作吗?'"
+                                                           :title="'确定退回文档?'"
                                                            :btn-text="'同意'"
                                                            :index="index"
                                                            @action="pass">

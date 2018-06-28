@@ -196,14 +196,14 @@ public class DocumentServiceImpl implements DocumentService {
 
     //查询本人需要审核的文档
     @Override
-    public QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String fuzzySearch,String documentType,Integer documentConfidential) {
+    public QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String fuzzySearch,String documentType,Integer documentConfidential,String documentDept) {
         List<ProcessNode> list = processNodeMapper.getProcessNodeByUser(loginCustom.getGuser().getUserDepartment(), loginCustom.getGuser().getUserPosition());
         //定义Documentcustom集合
         List<DocumentCustom> list_doc = new ArrayList<>();
         //遍历该人员所需要任的所有流程子节点
         for (ProcessNode processNode : list) {
             //用每一个processNode里面的流程名和流程位置的前一位查询文档
-            List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(documentType,documentConfidential,processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,fuzzySearch);
+            List<DocumentCustom> documentCustoms = documentMapper.findCheckingDoc(documentType,documentConfidential,documentDept,processNode.getProcessNodeProcess(), processNode.getProcessNodeStep() - 1,fuzzySearch);
             for (DocumentCustom documentCustom:documentCustoms){
                 list_doc.add(documentCustom);
             }
@@ -284,9 +284,9 @@ public class DocumentServiceImpl implements DocumentService {
     }
     //获取需要本人同意的文档借阅申请
     @Override
-    public QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage,String documentType,Integer documentConfidential,String fuzzySearch) {
+    public QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage,String documentType,Integer documentConfidential,String userDpt,String fuzzySearch) {
         //获得本人所在的部门，查看本部门的文档
-        List<DocumentCustom> documentCustoms = documentMapper.getDocumentByDpt(documentType,documentConfidential,loginCustom.getGuser().getUserDepartment(),fuzzySearch);
+        List<DocumentCustom> documentCustoms = documentMapper.getDocumentByDpt(documentType,documentConfidential,userDpt,loginCustom.getGuser().getUserDepartment(),fuzzySearch);
         //分页
         QueryForPage queryForPage = new QueryForPage();
         int pagesize = 10;//每页记录数
@@ -522,7 +522,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<com.kcsj.gwglxt.entity.Process> getAllProcessNoPage() {
-        return processMapper.getAllProcess();
+        return processMapper.getAllProcess(null);
     }
 
     @Override
@@ -565,6 +565,23 @@ public class DocumentServiceImpl implements DocumentService {
         log.setLogUser(loginCustom.getGuser().getUserId());
         //根据职位id获取职位名称
         log.setLogContent("删除了"+result+"篇草稿文档。");
+        logMapper.insert(log);
+        return result;
+    }
+
+    @Override
+    public int callBack(LoginCustom loginCustom, String documentId) {
+        //根据id获取文档信息
+        Document document = documentMapper.selectByPrimaryKey(documentId);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //更改项目状态
+        int result = documentMapper.updateDocumentState(1,null,null,documentId);
+        //生成审核人日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        log.setLogContent("撤回了对"+document.getDocumentTitle()+"的申请");
+        log.setCreationTime(df.format(new Date()));
         logMapper.insert(log);
         return result;
     }

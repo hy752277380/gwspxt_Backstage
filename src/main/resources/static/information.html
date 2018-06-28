@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>个人信息</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.ico">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -104,8 +105,9 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">电话:</label>
                                         <div class="col-md-5">
-                                            <input class="form-control" id="userPhonenumber" type="text"
-                                                   v-model="userData.userPhonenumber">
+                                            <input class="form-control" id="userPhonenumber"
+                                                   v-model="userData.userPhonenumber"
+                                                   type="text">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -224,6 +226,7 @@
             hasNextPage: false,
         },
     }
+
     var reviewDocument = new Vue({
         el: "#main",
         data: data,

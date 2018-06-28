@@ -17,18 +17,18 @@ $(function () {
             items: [
                 {key: "", value: "全部"},
                 {key: "1", value: "命令"},
-                {key: "2", value: "批复"},
-                {key: "3", value: "意见"},
-                {key: "4", value: "函"},
-                {key: "5", value: "会议纪要"},
-                {key: "6", value: "决定"},
-                {key: "7", value: "公告"},
-                {key: "8", value: "通告"},
-                {key: "9", value: "通知"},
-                {key: "10", value: "通报"},
-                {key: "11", value: "议案"},
-                {key: "12", value: "报告"},
-                {key: "13", value: "请示"},
+                {key: "2", value: "决定"},
+                {key: "3", value: "公告"},
+                {key: "4", value: "通告"},
+                {key: "5", value: "通知"},
+                {key: "6", value: "通报"},
+                {key: "7", value: "议案"},
+                {key: "8", value: "报告"},
+                {key: "9", value: "请示"},
+                {key: "10", value: "批复"},
+                {key: "11", value: "意见"},
+                {key: "12", value: "函"},
+                {key: "13", value: "会议纪要"},
                 {key: "14", value: "其他"},
             ],
         },
@@ -42,11 +42,19 @@ $(function () {
                 {key: "4", value: "普通"},
             ],
         },
-        department:'',
+<<<<<<< HEAD
+        department: '',
+=======
+        department:[],
+>>>>>>> origin/LHS
         docDepartment: {
-            name:"拟稿部门",
+            name: "拟稿部门",
             items: [
-                {key: "", value: ""},
+<<<<<<< HEAD
+                /*{key: "", value: ""},*/
+=======
+               /* {key: "", value: ""},*/
+>>>>>>> origin/LHS
             ],
 
         },
@@ -55,7 +63,11 @@ $(function () {
             documentConfidential: 0,
             documentState: 0,
             fuzzySearch: '',
-            documentDepartment:''
+<<<<<<< HEAD
+            documentDepartment: ''
+=======
+            documentDept:''
+>>>>>>> origin/LHS
         },
         applyReason: '',
         applyIndex: 0
@@ -88,6 +100,11 @@ $(function () {
                     reviewDocument.page.hasPreviousPage = response.hasPreviousPage;
                     reviewDocument.page.hasNextPage = response.hasNextPage;
                     reviewDocument.ready = true;
+                    for (let item in data.docData) {
+                        console.log(data.docData[item].document.documentDept )
+                        console.log(data.docData[item].document.documentDept == data.user.guser.userDepartment);
+                    }
+                    console.log(data.user.guser.userDepartment)
                 }, 'json');
             },
             /* 密级数字到标签的替换 */
@@ -111,7 +128,8 @@ $(function () {
                     documentType: data.searchData.documentType,
                     documentConfidential: data.searchData.documentConfidential,
                     documentState: data.searchData.documentState,
-                    fuzzySearch: data.searchData.fuzzySearch
+                    fuzzySearch: data.searchData.fuzzySearch,
+                    documentDept:data.searchData.documentDept
                 });
             },
             /*申请借阅事件*/
@@ -126,14 +144,14 @@ $(function () {
                     contentType: 'application/json;charset=UTF-8',
                     data: JSON.stringify(documentCustom),
                     success: function (response) {
-                        if (response.msg == "updateSuccess") {
+                        if (response.msg == "applySuccess") {
                             that.getInfo({currentPage: 1})
                             spop({
                                 template: `已发出您对${documentCustom.document.documentTitle}的借阅申请`,
                                 style: "success",
-                                autoclose: 2000
+                                autoclose: 5000
                             });
-                        } else if (response.msg == "updateFailed") {
+                        } else if (response.msg == "applyFailed") {
                             spop({template: `申请失败`, style: "error", autoclose: 2000});
                         }
                     }
@@ -156,11 +174,28 @@ $(function () {
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
                 location.href = "/gwspxt/reviewContent";
             },
-           /* getdepartment() {
+<<<<<<< HEAD
+            /* getdepartment() {
+                 $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
+                     data.department = response;
+                 }, 'json');
+             },*/
+=======
+            getDepartment() {
                 $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
-                    data.department = response;
+                    data.department=response;
+                    let arr = [{key:'',value:'全部'}];
+                    for(var dept in response){
+                        let lhs = {
+                            key:data.department[dept].departmentId,
+                            value:data.department[dept].departmentName
+                        };
+                        arr.push(lhs);
+                    }
+                    data.docDepartment.items = arr;
                 }, 'json');
-            },*/
+            },
+>>>>>>> origin/LHS
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;
                 this.getInfo({
@@ -168,7 +203,8 @@ $(function () {
                     documentType: data.searchData.documentType,
                     documentConfidential: data.searchData.documentConfidential,
                     documentState: data.searchData.documentState,
-                    fuzzySearch: data.searchData.fuzzySearch
+                    fuzzySearch: data.searchData.fuzzySearch,
+                    documentDept: data.searchData.documentDept
                 })
             },
         },
@@ -177,7 +213,11 @@ $(function () {
             $('#ApplyReasonModal').on('hidden.bs.modal', function () {
                 data.applyReason = '';
             });
-           /* this.getdepartment({});*/
+<<<<<<< HEAD
+            /* this.getdepartment({});*/
+=======
+            this.getDepartment();
+>>>>>>> origin/LHS
         },
         components: {
             'asideComponent': Layout,

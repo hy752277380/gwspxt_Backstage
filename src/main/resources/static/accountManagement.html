@@ -7,6 +7,7 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="description" content="Developed By M Abdur Rokib Promy">
     <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.ico">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -159,7 +160,7 @@
                                         <div v-cloak style="float: left;">
                                             <page-util @change="change" :page="page"></page-util>
                                         </div>
-                                        <div style="float: right;margin-right: 16.5%;margin-top: 20px">
+                                        <div style="float: right;margin-right: 17.5%;margin-top: 20px">
                                             <button type="button" class="btn btn-danger"
                                                     @click="deleteBatchAccount"><i
                                                     class="fa fa-trash-o fa-fw"></i> 批量删除
@@ -194,7 +195,7 @@
                         <tr>
                             <td><label>员工编号</label></td>
                             <td><input type="input" class="form-control" v-model="modalModifyPersonData.userAccount"
-                                       placeholder="员工编号" style="width: 80%"></td>
+                                       placeholder="员工编号" style="width: 80%" disabled></td>
                             <td><label>姓名</label></td>
                             <td><input type="input" class="form-control" v-model="modalModifyPersonData.userName"
                                        placeholder="姓名" style="width: 80%"></td>

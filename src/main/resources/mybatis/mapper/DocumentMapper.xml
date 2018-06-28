@@ -540,7 +540,7 @@ select
 	doc.document_title,
 	doc.document_no,
 	doc.document_confidential,
-	doc.creation_time,
+    DATE_FORMAT(doc.creation_time, '%Y-%m-%d') creation_time,
     doc.document_state,
 	gu.user_name,
 	dt.documenttype_name,
@@ -579,7 +579,7 @@ AND doc.document_process = pr.process_id
 	doc.document_no,
     doc.document_dept,
 	doc.document_confidential,
-	doc.creation_time,
+    DATE_FORMAT(doc.creation_time, '%Y-%m-%d') creation_time,
 	gu.user_name,
 	dt.documenttype_name,
 	de.department_name,
@@ -623,7 +623,7 @@ and doc.document_isdelete = '0'
     doc.document_process_finish,
     doc.document_state,
     doc.document_speed,
-	doc.creation_time,
+	DATE_FORMAT(doc.creation_time, '%Y-%m-%d') creation_time,
 	doc.document_dept,
 	doc.document_type,
 	doc.document_process,
@@ -651,7 +651,7 @@ and doc.document_isdelete = '0'
 	doc.document_title,
 	doc.document_no,
 	doc.document_confidential,
-	doc.creation_time,
+    DATE_FORMAT(doc.creation_time, '%Y-%m-%d') creation_time,
 	gu.user_name,
 	dt.documenttype_name,
 	de.department_name,
@@ -674,6 +674,9 @@ and doc.document_process = #{documentProcess} and doc.document_location =#{docum
         <if test="documentConfidential!=null and documentConfidential!=0">
             and doc.document_confidential = #{documentConfidential}
         </if>
+        <if test="documentDept!=null and documentDept!=''">
+            and doc.document_dept = #{documentDept}
+        </if>
         <if test="fuzzySearch!=null">
             and (doc.document_no like CONCAT('%',#{fuzzySearch},'%' ) or doc.document_title like CONCAT('%',#{fuzzySearch},'%' ) or gu.user_name like CONCAT('%',#{fuzzySearch},'%' ))
         </if>
@@ -691,7 +694,7 @@ doc.document_id,
     doc.document_process_finish,
     doc.document_state,
     doc.document_speed,
-	doc.creation_time,
+    DATE_FORMAT(doc.creation_time, '%Y-%m-%d') creation_time,
 	doc.document_dept,
 	doc.document_type,
 	doc.document_process,
@@ -723,6 +726,9 @@ and doc.document_isdelete = '0'
         </if>
         <if test="documentConfidential!=null and documentConfidential!=0">
             and doc.document_confidential = #{documentConfidential}
+        </if>
+        <if test="userDpt!=null and userDpt!=0">
+            and gu.user_department = #{userDpt}
         </if>
         <if test="fuzzySearch!=null">
             and (doc.document_no like CONCAT('%',#{fuzzySearch},'%' ) or doc.document_title like CONCAT('%',#{fuzzySearch},'%' ) or gu.user_name like CONCAT('%',#{fuzzySearch},'%' ))

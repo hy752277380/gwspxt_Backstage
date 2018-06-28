@@ -239,7 +239,25 @@ public class DocumentManageController {
         }
         return "{\"msg\":\"" + result + "\"}";
     }
-
+    //申请人发起驳回
+    @RequestMapping("/callBack")
+    public String callBack(String documentId,HttpSession httpSession){
+        String result;
+        int updayeResult = 0;
+        try {
+            //获取session内容
+            LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+            updayeResult = documentService.callBack(loginCustom, documentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (updayeResult == 0) {
+            result = "updateFailed";
+        } else {
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
+    }
     //文档审核选择拒绝
     @RequestMapping("/refuseDoc")
     public String refuseDoc(String documentId,String refuseReason, HttpSession httpSession) {

@@ -569,4 +569,21 @@ public class DocumentServiceImpl implements DocumentService {
         return result;
     }
 
+    @Override
+    public int callBack(LoginCustom loginCustom, String documentId) {
+        //根据id获取文档信息
+        Document document = documentMapper.selectByPrimaryKey(documentId);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //更改项目状态
+        int result = documentMapper.updateDocumentState(1,null,null,documentId);
+        //生成审核人日志
+        Log log = new Log();
+        log.setLogId(TeamUtil.getUuid());
+        log.setLogUser(loginCustom.getGuser().getUserId());
+        log.setLogContent("撤回了对"+document.getDocumentTitle()+"的申请");
+        log.setCreationTime(df.format(new Date()));
+        logMapper.insert(log);
+        return result;
+    }
+
 }

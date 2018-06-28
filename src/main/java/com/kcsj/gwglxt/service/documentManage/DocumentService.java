@@ -75,4 +75,6 @@ public interface DocumentService {
     int allAreRead(String userId);
 
     int deleteDoc(String[] ids, LoginCustom loginCustom);
+
+    int callBack(LoginCustom loginCustom, String documentId);
 }

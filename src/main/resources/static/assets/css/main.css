@@ -990,7 +990,7 @@ ul.activity-list > li {
     *vertical-align: auto;
     *zoom: 1;
     *display: inline;
-    width: 99%;
+    /*width: 99%;*/
     vertical-align: middle; }
   .auth-box .left {
     float: left;
@@ -1012,7 +1012,7 @@ ul.activity-list > li {
     width: 58%;
     height: 100%;
     position: relative;
-    background-image: url("../../assets/img/login-bg.jpg");
+    background-image: url("../../assets/img/login-bg2.jpg");
     background-repeat: no-repeat;
     background-size: cover; }
     .auth-box .right:before {

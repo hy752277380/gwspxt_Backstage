@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>文档查看</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.ico">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -127,6 +128,13 @@
                                                     <button @click="applyIndex = index" type="button"
                                                             class="btn btn-primary btn-sm" data-toggle="modal"
                                                             data-target="#ApplyReasonModal">申请查看
+                                                    </button>
+                                                </template>
+                                                <!-- 已拒绝文档重新申请 -->
+                                                <template v-else-if="doc.borrowing.borrowingState==4">
+                                                    <button @click="applyIndex = index" type="button"
+                                                            class="btn btn-primary btn-sm" data-toggle="modal"
+                                                            data-target="#ApplyReasonModal">重新申请
                                                     </button>
                                                 </template>
                                                 <!-- 非本部门已有借阅文档 -->

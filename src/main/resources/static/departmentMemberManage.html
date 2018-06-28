@@ -99,7 +99,7 @@
                                             <th>邮箱</th>
                                             <th>工作日志</th>
                                             <th>公文查看</th>
-                                            <th>操作</th>
+                                            <th v-if="user.permission.permissionLevel==4">操作</th>
                                         </tr>
                                         <tbody v-cloak>
                                         <tr v-for="(person,index) in personData">
@@ -121,7 +121,7 @@
                                                         class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> 查看
                                                 </button>
                                             </td>
-                                            <td>
+                                            <td v-if="user.permission.permissionLevel==4">
                                                 <button @click="allocate(index)" type="button"
                                                         class="btn btn-warning btn-sm"><i class="fa fa-wrench"></i> 调配
                                                 </button>

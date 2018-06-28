@@ -159,7 +159,7 @@
                                         <div v-cloak style="float: left;">
                                             <page-util @change="change" :page="page"></page-util>
                                         </div>
-                                        <div style="float: right;margin-right: 205px;margin-top: 20px">
+                                        <div style="float: right;margin-right: 17.5%;margin-top: 20px">
                                             <button type="button" class="btn btn-danger"
                                                     @click="deleteBatchAccount"><i
                                                     class="fa fa-trash-o fa-fw"></i> 批量删除
@@ -193,7 +193,7 @@
                     <table style="width: 100%;margin: auto;">
                         <tr>
                             <td><label>员工编号</label></td>
-                            <td><input type="input" class="form-control" v-model="modalModifyPersonData.userAccount"
+                            <td><input disabled type="input" class="form-control" v-model="modalModifyPersonData.userAccount"
                                        placeholder="员工编号" style="width: 80%"></td>
                             <td><label>姓名</label></td>
                             <td><input type="input" class="form-control" v-model="modalModifyPersonData.userName"

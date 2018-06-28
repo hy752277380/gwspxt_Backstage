@@ -172,13 +172,13 @@
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">部门名称</label>
                             <div class="col-lg-8">
-                                <input type="input" class="form-control" id="departmentName" placeholder="部门名称">
+                                <input maxlength="20" type="input" class="form-control" id="departmentName" placeholder="部门名称">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">部门号码</label>
                             <div class="col-lg-8">
-                                <input type="input" class="form-control" id="departmentPhone" placeholder="部门号码">
+                                <input type="input"  onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="20" class="form-control" id="departmentPhone" placeholder="部门号码">
                             </div>
                         </div>
                         <div class="form-group">
@@ -189,7 +189,7 @@
                                     <option v-for="(item,index) in departmentData" :value="item.departmentId">
                                         {{item.departmentName}}
                                     </option>
-                                </select
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -221,7 +221,7 @@
                             <label class="col-lg-2 col-sm-2 control-label">部门名称</label>
                             <div class="col-lg-8">
                                 <input type="input" class="form-control" id="editDeptName"
-                                       :value="modifyModalData.departmentName" placeholder="部门名称">
+                                      maxlength="20" :value="modifyModalData.departmentName" placeholder="部门名称">
                                 <input type="hidden" class="form-control" id="editDeptId"
                                        :value="modifyModalData.departmentId">
                             </div>
@@ -230,7 +230,7 @@
                             <label class="col-lg-2 col-sm-2 control-label">部门号码</label>
                             <div class="col-lg-8">
                                 <input type="input" class="form-control" id="editDeptPhone"
-                                       :value="modifyModalData.departmentPhone" placeholder="部门号码">
+                                       onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="20"  :value="modifyModalData.departmentPhone" placeholder="部门号码">
                             </div>
                         </div>
                         <div class="form-group">
@@ -302,7 +302,6 @@
         if (!departmentSuperior) {
             return false;
         }
-
 
         $.ajax({
             type: "post",

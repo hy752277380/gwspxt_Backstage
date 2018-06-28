@@ -94,7 +94,11 @@
                                             <th>#</th>
                                             <th>员工编号</th>
                                             <th>借阅人姓名</th>
-                                            <th>部门</th>
+                                            <th>
+                                                <search-util :query="docDepartment"
+                                                             :search-name="'documentDept'"
+                                                             @search="search"></search-util>
+                                            </th>
                                             <th>职称</th>
                                             <th>申请文档</th>
                                             <th>申请理由</th>

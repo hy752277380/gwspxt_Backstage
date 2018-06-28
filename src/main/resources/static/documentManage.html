@@ -116,7 +116,11 @@
                                                              :search-name="'documentConfidential'" @search="search">
                                                 </search-util>
                                             </th>
-                                            <th>拟稿部门</th>
+                                            <th>
+                                                <search-util :query="docDepartment"
+                                                             :search-name="'documentDept'"
+                                                             @search="search"></search-util>
+                                            </th>
                                             <th>
                                                 <search-util :query="docState" :search-name="'documentState'"
                                                              @search="search">
@@ -154,6 +158,13 @@
                                                             @click="checkDocument(index)"><i
                                                             class="fa fa-pencil fa-fw"></i> 查看
                                                     </button>
+                                                    <sure-util :btn-class="'btn btn-warning btn-sm'"
+                                                               :i-class="'fa fa-reply'"
+                                                               :title="'确定执行操作?'"
+                                                               :btn-text="'退回'"
+                                                               :index="index"
+                                                               @action="returnDocument">
+                                                    </sure-util>
                                                 </template>
                                                 <template v-else-if="doc.document.documentState==4">
                                                     <button type="button" class="btn btn-primary btn-sm"

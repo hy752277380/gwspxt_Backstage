@@ -58,14 +58,14 @@ $(function () {
             ],
         },
         docDepartment: 0,
-        department:[],
+       /* department:[],
         docDepartment: {
             name:"拟稿部门",
             items: [
-                /* {key: "", value: ""},*/
+                /!* {key: "", value: ""},*!/
             ],
 
-        },
+        },*/
         searchData: {
             documentType: '',
             documentConfidential: 0,
@@ -171,7 +171,7 @@ $(function () {
                         }
                     }, 'json');
             },
-            getDepartment() {
+           /* getDepartment() {
                 $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
                     data.department=response;
                     let arr = [{key:'',value:'全部'}];
@@ -184,7 +184,7 @@ $(function () {
                     }
                     data.docDepartment.items = arr;
                 }, 'json');
-            },
+            },*/
           /*  deleteBatchDocument() {
                 let arrId = [];
                 $('input[name="checkID"]').each(function () {
@@ -237,7 +237,7 @@ $(function () {
         },
         mounted() {
             this.getInfo({currentPage: 1});
-            this.getDepartment();
+           /* this.getDepartment();*/
         },
         components: {
             'asideComponent': Layout,

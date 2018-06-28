@@ -12,8 +12,17 @@ $(function () {
             hasPreviousPage: false,
             hasNextPage: false,
         },
+        department:[],
+        docDepartment: {
+            name:"借阅人部门",
+            items: [
+                /* {key: "", value: ""},*/
+            ],
+
+        },
         searchData: {
             fuzzySearch: '',
+            documentDept:''
         }
     }
     var reviewDocument = new Vue({
@@ -42,7 +51,8 @@ $(function () {
                 this.$data.page.currentPage = pageIndex;
                 this.getInfo({
                     currentPage: pageIndex,
-                    fuzzySearch: data.searchData.fuzzySearch
+                    fuzzySearch: data.searchData.fuzzySearch,
+                    documentDept: data.searchData.documentDept
                 });
             },
             accept(index) {
@@ -124,11 +134,26 @@ $(function () {
                                  title="申请理由详情"
                                  data-content="${str}">查看</button>`;
             },
+            getDepartment() {
+                $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
+                    data.department=response;
+                    let arr = [{key:'',value:'全部'}];
+                    for(var dept in response){
+                        let lhs = {
+                            key:data.department[dept].departmentId,
+                            value:data.department[dept].departmentName
+                        };
+                        arr.push(lhs);
+                    }
+                    data.docDepartment.items = arr;
+                }, 'json');
+            },
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;
                 this.getInfo({
                     currentPage: 1,
-                    fuzzySearch: data.searchData.fuzzySearch
+                    fuzzySearch: data.searchData.fuzzySearch,
+                    documentDept: data.searchData.documentDept
                 })
             },
         },
@@ -137,6 +162,13 @@ $(function () {
             setTimeout(function () {
                 $('[data-toggle="popover"]').popover();
             }, 200)
+            this.getDepartment();
         },
+        components: {
+            'asideComponent': Layout,
+            'page-util': pageUtil,
+            'search-util': searchUtil,
+            'sure-util': sureUtil
+        }
     });
 })

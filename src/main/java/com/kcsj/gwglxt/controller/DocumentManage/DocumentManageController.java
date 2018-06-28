@@ -239,7 +239,25 @@ public class DocumentManageController {
         }
         return "{\"msg\":\"" + result + "\"}";
     }
-
+    //申请人发起退回
+    @RequestMapping("/callBack")
+    public String callBack(String documentId,HttpSession httpSession){
+        String result;
+        int updayeResult = 0;
+        try {
+            //获取session内容
+            LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+            updayeResult = documentService.callBack(loginCustom, documentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (updayeResult == 0) {
+            result = "updateFailed";
+        } else {
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
+    }
     //文档审核选择拒绝
     @RequestMapping("/refuseDoc")
     public String refuseDoc(String documentId,String refuseReason, HttpSession httpSession) {
@@ -315,11 +333,11 @@ public class DocumentManageController {
 
     //查询本人需要审核的文档
     @RequestMapping("/findCheckDoc")
-    public QueryForPage findCheckDoc(String fuzzySearch,int currentPage,String documentType,Integer documentConfidential, HttpSession httpSession) {
+    public QueryForPage findCheckDoc(String fuzzySearch,int currentPage,String documentType,Integer documentConfidential,String documentDept, HttpSession httpSession) {
         QueryForPage queryForPage = null;
         try {
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            queryForPage = documentService.findCheckingDoc(currentPage, loginCustom,fuzzySearch,documentType,documentConfidential);
+            queryForPage = documentService.findCheckingDoc(currentPage, loginCustom,fuzzySearch,documentType,documentConfidential,documentDept);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -348,11 +366,11 @@ public class DocumentManageController {
 
     //列出待本人批准的借阅申请
     @RequestMapping("/getAllApplyRead")
-    public QueryForPage getAllApplyRead(String fuzzySearch,int currentPage,String documentType,Integer documentConfidential,HttpSession httpSession) {
+    public QueryForPage getAllApplyRead(String fuzzySearch,int currentPage,String documentType,Integer documentConfidential,String userDpt,HttpSession httpSession) {
         QueryForPage queryForPage = null;
         try {
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
-            queryForPage = documentService.getAllApplyRead(loginCustom,currentPage,documentType,documentConfidential,fuzzySearch);
+            queryForPage = documentService.getAllApplyRead(loginCustom,currentPage,documentType,documentConfidential,userDpt,fuzzySearch);
         } catch (Exception e) {
             e.printStackTrace();
         }

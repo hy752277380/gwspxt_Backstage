@@ -198,14 +198,14 @@
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">流程名称</label>
                             <div class="col-lg-8">
-                                <input type="input" class="form-control" name="processName" id="processName"
+                                <input type="input" class="form-control" maxlength="20" name="processName" id="processName"
                                        placeholder="流程名称">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">流程简介</label>
                             <div class="col-md-8">
-                                <input type="input" class="form-control" id="processIntroduction" placeholder="流程简介">
+                                <input type="input" class="form-control" maxlength="20" id="processIntroduction" placeholder="流程简介">
                             </div>
 
                         </div>
@@ -237,8 +237,8 @@
                         <div class="form-group">
                             <label class="col-lg-2 col-sm-2 control-label">流程名称</label>
                             <div class="col-lg-8">
-                                <input type="input" class="form-control" v-model="processModalData.processName"
-                                       id="editProcessName" placeholder="流程名称">
+                                <input type="input" class="form-control" :value="processModalData.processName"
+                                     maxlength="20"  id="editProcessName" placeholder="流程名称">
                                 <input type="hidden" class="form-control" v-model="processModalData.processId"
                                        id="editProcessId" placeholder="流程名称">
 
@@ -248,7 +248,7 @@
                             <label class="col-sm-2 control-label">流程简介</label>
                             <div class="col-md-8">
                                 <input type="input" class="form-control" :value="processModalData.processIntroduction"
-                                       id="editProcessIntroduction" placeholder="流程简介">
+                                     maxlength="20"  id="editProcessIntroduction" placeholder="流程简介">
                             </div>
 
                         </div>

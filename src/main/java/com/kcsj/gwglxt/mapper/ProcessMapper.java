@@ -30,7 +30,7 @@ public interface ProcessMapper {
 
     int updateByPrimaryKey(Process record);
 
-    List<Process> getAllProcess();
+    List<Process> getAllProcess(@Param("fuzzySearch") String fuzzySearch);
 
     List<Process> getProcessByName(@Param("processName") String processName);
 }

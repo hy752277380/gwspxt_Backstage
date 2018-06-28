@@ -115,9 +115,6 @@ $(function () {
                     documentDept:data.searchData.documentDept
                 });
             },
-            applyBorrowingModal() {
-
-            },
             /*申请借阅事件*/
             applyBorrowing() {
                 let that = this;

@@ -183,7 +183,6 @@ public class DocumentManageController {
             log1.setCreationTime(df.format(new Date()));
             documentService.insertLog(log1);
             int documentLocation = document.getDocumentLocation() + 1;
-            System.out.println(documentLocation);
             //获取当前所走流程的最大步骤
             int maxStep = documentService.getMaxStep(document.getDocumentProcess());
             String documentProcessBegin = null;
@@ -192,11 +191,9 @@ public class DocumentManageController {
             if (documentLocation == 1) {
                 documentProcessBegin = df.format(new Date());
                 documentService.updateDocumentState(4, documentProcessBegin, documentProcessFinish, documentId);
-                System.out.println("1111111111");
             } else if (documentLocation == maxStep) {
                 documentProcessFinish = df.format(new Date());
                 documentService.updateDocumentState(5, documentProcessBegin, documentProcessFinish, documentId);
-                System.out.println("2");
                 Message message = new Message();
                 String messageId = TeamUtil.getUuid();
                 message.setMessageId(messageId);
@@ -213,7 +210,6 @@ public class DocumentManageController {
                 documentService.insertMbj(mobject);
             }
             updateLocationResult = documentService.updateDocumentLocation(documentLocation, documentId);
-            System.out.println("3111");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -243,7 +239,25 @@ public class DocumentManageController {
         }
         return "{\"msg\":\"" + result + "\"}";
     }
-
+    //申请人发起驳回
+    @RequestMapping("/callBack")
+    public String callBack(String documentId,HttpSession httpSession){
+        String result;
+        int updayeResult = 0;
+        try {
+            //获取session内容
+            LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
+            updayeResult = documentService.callBack(loginCustom, documentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (updayeResult == 0) {
+            result = "updateFailed";
+        } else {
+            result = "updateSuccess";
+        }
+        return "{\"msg\":\"" + result + "\"}";
+    }
     //文档审核选择拒绝
     @RequestMapping("/refuseDoc")
     public String refuseDoc(String documentId,String refuseReason, HttpSession httpSession) {
@@ -369,7 +383,6 @@ public class DocumentManageController {
         String result;
         DocumentCustom documentCustomNew = null;
         try {
-            System.out.println("文档内容为："+documentCustom);
             LoginCustom loginCustom = (LoginCustom) httpSession.getAttribute("LoginInformation");
             documentCustomNew = documentService.insertBorrowing(documentCustom,loginCustom);
         } catch (Exception e) {
@@ -515,10 +528,10 @@ public class DocumentManageController {
 
     //获取所有流程
     @RequestMapping("/getAllProcess")
-    public QueryForPage getAllProcess(int currentPage) {
+    public QueryForPage getAllProcess(int currentPage,String fuzzySearch) {
         QueryForPage queryForPage = null;
         try {
-            queryForPage = documentService.getAllProcess(currentPage);
+            queryForPage = documentService.getAllProcess(currentPage,fuzzySearch);
         } catch (Exception e) {
             e.printStackTrace();
         }

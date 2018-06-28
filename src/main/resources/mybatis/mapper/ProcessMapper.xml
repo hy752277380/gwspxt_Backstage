@@ -210,6 +210,9 @@
     <select id="getAllProcess" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from process where process_isdelete = '0'
+        <if test="fuzzySearch!=null">
+            and (process_name like CONCAT('%',#{fuzzySearch},'%' ) or process_introduction like CONCAT('%',#{fuzzySearch},'%' ))
+        </if>
     </select>
     <select id="getProcessByName" parameterType="java.lang.String" resultType="com.kcsj.gwglxt.entity.Process">
         select * from process where process_name = #{processName} and process_isdelete = '0'

@@ -25,9 +25,9 @@ var Layout = Vue.extend({
     <!-- search form -->
     <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
-        <input type="text" name="q" class="form-control" placeholder="Search..."/>
+        <input type="text" name="q" @keyup="search" v-model="searchData" class="form-control" placeholder="Search..."/>
         <span class="input-group-btn">
-        <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+        <button type='button' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
     </span>
     </div>
     </form>
@@ -63,7 +63,8 @@ var Layout = Vue.extend({
     </aside>`,
     data() {
         return {
-            permissionLevel: this.user.permission.permissionLevel
+            permissionLevel: this.user.permission.permissionLevel,
+            searchData: ''
         }
     },
     mounted() {
@@ -73,6 +74,21 @@ var Layout = Vue.extend({
         permission(arr) {
             var that = this;
             return $.inArray(that.permissionLevel, arr) >= 0;
+        },
+        search() {
+            let that = this;
+            $('.sidebar-menu li a span').each(function () {
+                let text = $(this).text()
+                if (that.searchData) {
+                    if (text.search(that.searchData) != -1) {
+                        $(this).css('color', 'red');
+                    } else {
+                        $(this).css('color', '#eee')
+                    }
+                } else {
+                    $(this).css('color', '#eee')
+                }
+            })
         }
     },
     props: ['user', 'name']
@@ -203,7 +219,7 @@ var Header = Vue.extend({
                             <a href="javascript:;">
                                 <i class="fa fa-user fa-fw pull-right"></i> 帐号
                             </a>
-                            <a href="javascript:;" @click="modifyPassword">
+                            <a href="javascript:;">
                                 <i class="fa fa-cog fa-fw pull-right"></i> 设置
                             </a>
                         </li>
@@ -260,24 +276,7 @@ var Header = Vue.extend({
                 style: 'error',
                 autoclose: 5000
             });
-        },
-        modifyPassword() {
-            spop({
-                template: `<div class="input-group input-group-sm">
-                           <span class="input-group-addon" id="basic-addon1">原密码</span>
-                           <input type="text" class="form-control" placeholder="Old Password" aria-describedby="basic-addon1">
-                           </div>
-                           <div class="input-group input-group-sm">
-                           <span class="input-group-addon" id="basic-addon1">新密码</span>
-                           <input type="text" class="form-control" placeholder="New Password" aria-describedby="basic-addon1">
-                           </div>
-                           <div class="input-group input-group-sm">
-                           <span class="input-group-addon" id="basic-addon1">确认新密码</span>
-                           <input type="text" class="form-control" placeholder="New Password" aria-describedby="basic-addon1">
-                           </div>`,
-                style: 'none',
-            });
-        },
+        }
     },
     mounted() {
         const that = this;

@@ -50,7 +50,7 @@ public interface DocumentService {
 
     List<Documenttype> getAllDocType();
 
-    QueryForPage getAllProcess(int currentPage);
+    QueryForPage getAllProcess(int currentPage,String fuzzySearch);
 
     DocumentCustom insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
 
@@ -75,4 +75,6 @@ public interface DocumentService {
     int allAreRead(String userId);
 
     int deleteDoc(String[] ids, LoginCustom loginCustom);
+
+    int callBack(LoginCustom loginCustom, String documentId);
 }

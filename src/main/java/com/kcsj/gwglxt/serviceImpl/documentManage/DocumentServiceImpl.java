@@ -324,7 +324,13 @@ public class DocumentServiceImpl implements DocumentService {
             documentProcessBegin = document.getDocumentProcessBegin();
         }
         //将文档状态更改为退回状态
-        int result = documentMapper.updateDocumentState(1,documentProcessBegin,documentProcessFinish,documentId);
+        Document record = new Document();
+        record.setDocumentId(documentId);
+        record.setDocumentState(1);
+        record.setDocumentProcessBegin(documentProcessBegin);
+        record.setDocumentProcessFinish(documentProcessFinish);
+        record.setDocumentLocation(0);
+        int result = documentMapper.updateByPrimaryKeySelective(record);
         //生成审核人日志
         Log log = new Log();
         log.setLogId(TeamUtil.getUuid());

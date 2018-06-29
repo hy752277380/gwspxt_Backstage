@@ -63,16 +63,19 @@
                         <li>
                             <a href="#"><i class="fa fa-home"></i> 首页</a>
                         </li>
-                        <li>
-                            <a href="documentManage.html"><i class="fa fa-book fa-fw"></i> 文档管理</a>
-                        </li>
-                        <li v-if="lhs_edit.action==='edit'" class="active">编辑文档</li>
-                        <li v-else class="active">查看文档</li>
+                        <li v-if="lhs_edit.action==='review'">
+                            <a href="reviewDocument.html"><i class="fa fa-th-list fa-fw"></i> 文档查看</a></li>
+
+                        <li v-if="lhs_edit.action==='check'">
+                            <a href="checkDocument.html"><i class="fa fa-book fa-fw"></i> 审核文档</a></li>
+                        <li v-if="lhs_edit.action==='checkPerson'">
+                            <a href="/gwspxt/reviewPersonDocument"><i class="fa fa-male fa-fw"></i> 查看成员文档</a></li>
+                        <li class="active">查看文档</li>
                     </ul>
                     <!--breadcrumbs end -->
                 </div>
             </div>
-            <div  v-cloak class="row">
+            <div v-cloak class="row">
                 <div class="col-md-12">
                     <!--内容-->
                     <section class="panel">

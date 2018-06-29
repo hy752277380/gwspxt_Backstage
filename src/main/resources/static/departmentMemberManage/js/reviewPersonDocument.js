@@ -129,7 +129,7 @@ $(function () {
             },
             checkDocument(index) {
                 var lhs_check = {
-                    "action": "check",
+                    "action": "checkPerson",
                     "doc_id": this.docData[index].document.documentId
                 }
                 sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_check));

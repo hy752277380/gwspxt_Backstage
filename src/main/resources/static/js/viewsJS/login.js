@@ -1,9 +1,9 @@
 function check() {
     if (document.getElementById("userAccount").value == "") {
-        alert("用户名不能为空！");
+        spop({template: `账号不能为空`, style: "error", autoclose: 2000});
         return false;
     } else if (document.getElementById("userPassword").value == "") {
-        alert("密码不能为空！");
+        spop({template: `密码不能为空`, style: "error", autoclose: 2000});
         return false;
     } else {
         var user = $('#userAccount').val();
@@ -19,10 +19,11 @@ function check() {
                     //console.log(data.loginCustom);
                     sessionStorage.setItem("loginUser", JSON.stringify(data.loginCustom));
                     window.location.href = "/gwspxt/index";
+                   /* spop({template: `登录成功`, style: "success", autoclose: 2000});*/
                 } else if (data.code == "20001") {
-                    alert("没有该用户");
+                    spop({template: `账户或密码错误`, style: "error", autoclose: 2000});
                 } else {
-                    alert("密码错误，登录失败");
+                    spop({template: `账户或密码错误`, style: "error", autoclose: 2000});
                 }
             }
         });
@@ -36,5 +37,6 @@ $(function () {
             check();
         }
     }
+    $.post('/gwspxt/backtoLogin', {}, function (response) {}, 'json');
     sessionStorage.removeItem("loginUser");
 });

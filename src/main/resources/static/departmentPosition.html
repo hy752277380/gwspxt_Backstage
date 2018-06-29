@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>部门职称</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -162,7 +163,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">部门职称</label>
                                 <div class="col-lg-8 ">
-                                    <input type="input" class="form-control" id="positionName" placeholder="部门职称">
+                                    <input type="input" class="form-control" id="positionName" maxlength="20" placeholder="部门职称">
                                     <input type="hidden" class="form-control" id="positionDeptId"
                                            :value="into_position.dept_id">
                                 </div>
@@ -208,7 +209,7 @@
                                 <label class="col-lg-2 col-sm-2 control-label">部门职称</label>
                                 <div class="col-lg-8">
                                     <input type="input" class="form-control" id="editPositionName"
-                                           v-model="modifyPositionData.position.positionName" placeholder="部门职称">
+                                        maxlength="20"   v-model="modifyPositionData.position.positionName" placeholder="部门职称">
                                     <input type="hidden" class="form-control" id="positionId"
                                            :value="modifyPositionData.position.positionId">
                                 </div>

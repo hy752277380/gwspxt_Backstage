@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>流程节点管理</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -83,7 +84,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <!--内容-->
-                    <div class="row">
+                    <div v-cloak class="row">
                         <div class="col-xs-12">
                             <div class="panel">
 
@@ -116,10 +117,10 @@
                                                 <td>{{processNode.position.positionName}}</td>
                                                 <td>{{processNode.process_node.processNodeStep}}</td>
                                                 <td>
-                                                   <!-- <button type="button" class="btn btn-danger btn-sm"
-                                                            @click="deleteProcessNode(index)"><i
-                                                            class="fa fa-trash-o fa-fw"></i> 删除
-                                                    </button>-->
+                                                    <!-- <button type="button" class="btn btn-danger btn-sm"
+                                                             @click="deleteProcessNode(index)"><i
+                                                             class="fa fa-trash-o fa-fw"></i> 删除
+                                                     </button>-->
                                                     <sure-util :btn-class="'btn btn-danger btn-sm'"
                                                                :i-class="'fa fa-trash-o fa-fw'"
                                                                :title="'确定执行操作?'"
@@ -168,7 +169,7 @@
                             <label class="col-lg-2 col-sm-2 control-label">节点名称</label>
                             <div class="col-lg-8">
                                 <input type="input" class="form-control" v-model="processNode.processNodeName"
-                                       placeholder="节点名称">
+                                      maxlength="20" placeholder="节点名称">
                             </div>
                         </div>
                         <div class="form-group">
@@ -197,7 +198,7 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                             </button>
                             <button type="submit" class="btn btn-primary" @click="addProcessNode">
-                              添加
+                                添加
                             </button>
 
                         </div>

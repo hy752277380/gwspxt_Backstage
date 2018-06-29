@@ -2,10 +2,14 @@ $(function () {
 
     var data = {
         user: JSON.parse(sessionStorage.getItem("loginUser")),
+        reviewPersonId: sessionStorage.getItem("reviewPersonId"),
         name: 'departmentMemberManage',
         logData: [], //所有数据
-        reviewPersonId: sessionStorage.getItem("reviewPersonId"),
+        logMonthNumber: [],//画图使用的数组
         ready: false,
+        checkYearNum: 2018,
+        checkMonthNum: 0,
+        inCheckMonthNumAllLogs: [],
         page: {
             allRow: 1,
             totalPage: 1,
@@ -20,38 +24,62 @@ $(function () {
         el: "#main",
         data: data,
         methods: {
-            label($event) {
-                $('.event_year>li').removeClass('current');
-                $($event.target).parent('li').addClass('current');
-                var year = $($event.target).attr('for');
-                $('#' + year).parent().prevAll('div').slideUp(800);
-                $('#' + year).parent().slideDown(800).nextAll('div').slideDown(800);
-            },
             getInfo(params) {
-                $.post('/gwspxt/getAllLog', params, function (response) {
+                $.post('/gwspxt/getAllLog', params, response => {
                     data.logData = response;
                     data.ready = true;
+                    for (let item in response) {
+                        data.logMonthNumber.push(response[item].length);
+                    }
+                    this.renderChart();
                 }, 'json');
             },
-            format(fmt) {
-                if (fmt) {
-                    var date = new Date(Date.parse(fmt.replace(/-/g, "/")));
-                    return date.getMonth() + 1;
+            checkMonth(index) {
+                data.checkMonthNum = index;
+                data.inCheckMonthNumAllLogs = data.logData[index];
+            },
+            checkYear($event) {
+                data.checkYearNum = $event.target.value;
+                this.getInfo({userId: data.reviewPersonId, year: data.checkYearNum});
+            },
+            grepInLogs($event) {
+                let key = $event.target.value;
+                if (key) {
+                    let grepResult = $.grep(data.logData[data.checkMonthNum], (log, i) => {
+                        if (log.logContent.search(key) != -1 || log.creationTime.search(key) != -1) {
+                            return log;
+                        }
+                    }, false)
+                    data.inCheckMonthNumAllLogs = grepResult;
+                } else {
+                    data.inCheckMonthNumAllLogs = data.logData[data.checkMonthNum];
                 }
-                /*var o = {
-                    "M+": date.getMonth() + 1, //月份
-                    "d+": date.getDate(), //日
-                    "h+": date.getHours(), //小时
-                    "m+": date.getMinutes(), //分
-                    "s+": date.getSeconds(), //秒
-                    "q+": Math.floor((date.getMonth() + 3) / 3), //季度
-                    "S": date.getMilliseconds() //毫秒
-                };*/
+            },
+            renderChart() {
+                let that = this;
+                var ctx = document.getElementById("journalChart");
+                var myChart = new Chart(ctx, {
+                    type: 'polarArea',
+                    data: {
+                        datasets: [
+                            {data: data.logMonthNumber, backgroundColor: that.randomColor(),}
+                        ],
+                        labels: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'],
 
+                    },
+                    options: {}
+                });
+            },
+            randomColor() {
+                let color = [];
+                for (let i = 10; i--;) {
+                    color.push('#' + Math.floor(Math.random() * 0xffffff).toString(16));
+                }
+                return color;
             }
         },
         mounted() {
-            this.getInfo({userId: data.reviewPersonId, year: 2018});
+            this.getInfo({userId: data.reviewPersonId, year: data.checkYearNum});
         },
         components: {
             'asideComponent': Layout,

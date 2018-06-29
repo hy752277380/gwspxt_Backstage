@@ -27,7 +27,6 @@ $(function () {
             },
             isRead(index) {
                 var that = this;
-                console.log(index)
                 let id = data.allMessageData[index].mobject.mobjectMessage;
                 $.post('/gwspxt/isRead', {MobjectId: id}, function (response) {
                     if (response.msg == "updateSuccess") {
@@ -39,7 +38,7 @@ $(function () {
             allAreRead() {
                 let that = this;
                 $.post('/gwspxt/allAreRead', {}, function (response) {
-                    that.getInfo();
+                    that.getInfo({currentPage: 1});
                 }, 'json')
             },
             replaceMessageType(type) {

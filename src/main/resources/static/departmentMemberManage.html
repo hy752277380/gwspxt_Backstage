@@ -6,6 +6,7 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="description" content="Developed By M Abdur Rokib Promy">
     <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -94,15 +95,16 @@
                                             <th>姓名</th>
                                             <th>性别</th>
                                             <th>部门</th>
-                                            <th>职称</th>
+                                            <th>职务</th>
                                             <th>手机号</th>
                                             <th>邮箱</th>
                                             <th>工作日志</th>
                                             <th>公文查看</th>
-                                            <th>操作</th>
+                                            <th v-if="user.permission.permissionLevel==4">操作</th>
                                         </tr>
                                         <tbody v-cloak>
-                                        <tr v-for="(person,index) in personData">
+                                        <tr v-for="(person,index) in personData"
+                                            v-if="person.permission.permissionLevel<=user.permission.permissionLevel">
                                             <td>{{index+1}}</td>
                                             <td>{{person.guser.userAccount}}</td>
                                             <td>{{person.guser.userName}}</td>
@@ -121,7 +123,7 @@
                                                         class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> 查看
                                                 </button>
                                             </td>
-                                            <td>
+                                            <td v-if="user.permission.permissionLevel==4">
                                                 <button @click="allocate(index)" type="button"
                                                         class="btn btn-warning btn-sm"><i class="fa fa-wrench"></i> 调配
                                                 </button>
@@ -202,10 +204,11 @@
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <label>职称</label>
+                                    <label>职务</label>
                                     <select style="width: 200px;" type="password" v-model="allocatePerson.userPosition"
                                             class="form-control">
                                         <option v-for="position in allDepartmentOfPosition"
+                                                v-if="position.position.positionPermission<=user.permission.permissionLevel"
                                                 :value="position.position.positionId">{{position.position.positionName}}
                                         </option>
                                     </select>

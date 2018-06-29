@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>文档查看</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -38,17 +39,6 @@
             vertical-align: initial !important;
         }
 
-        /* 除去input为number时候的箭头*/
-
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none !important;
-            margin: 0;
-        }
-
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
     </style>
 </head>
 
@@ -112,10 +102,9 @@
                                             </th>
                                             <th>
                                                 <search-util :query="docDepartment"
-                                                             :search-name="'documentDepartment'"
+                                                             :search-name="'documentDept'"
                                                              @search="search"></search-util>
                                             </th>
-                                          <!--  <th>拟稿部门<span class="caret"></span></th>-->
                                             <th>发布时间</th>
                                             <th>操作</th>
                                         </tr>
@@ -133,24 +122,23 @@
                                             <td>{{doc.document.creationTime}}</td>
                                             <td>
                                                 <!-- 本部门文档 -->
-                                                <template
-                                                        v-if="user.department.departmentName==doc.department.departmentName">
+                                                <template v-if="user.department.departmentId==doc.document.documentDept">
                                                     <button @click="reviewDocument(index)" type="button"
                                                             class="btn btn-primary btn-sm">阅读
                                                     </button>
                                                 </template>
                                                 <!-- 非本部门未借阅文档 -->
                                                 <template v-else-if="doc.borrowing == null">
-                                                    <!--<sure-util :btn-class="'btn btn-primary btn-sm'"
-                                                               :i-class="''"
-                                                               :title="'确定执行操作?'"
-                                                               :btn-text="'申请查看'"
-                                                               :index="index"
-                                                               @action="applyBorrowing">
-                                                    </sure-util>-->
                                                     <button @click="applyIndex = index" type="button"
                                                             class="btn btn-primary btn-sm" data-toggle="modal"
                                                             data-target="#ApplyReasonModal">申请查看
+                                                    </button>
+                                                </template>
+                                                <!-- 已拒绝文档重新申请 -->
+                                                <template v-else-if="doc.borrowing.borrowingState==4">
+                                                    <button @click="applyIndex = index" type="button"
+                                                            class="btn btn-primary btn-sm" data-toggle="modal"
+                                                            data-target="#ApplyReasonModal">重新申请
                                                     </button>
                                                 </template>
                                                 <!-- 非本部门已有借阅文档 -->
@@ -162,7 +150,7 @@
                                                 <!-- 申请中状态 -->
                                                 <template v-else-if="doc.borrowing.borrowingState==1">
                                                     <button type="button" class="btn btn-primary btn-sm">
-                                                        <i class="fa fa-spinner fa-spin"></i>申请中
+                                                        申请中<i class="fa fa-spinner fa-spin"></i>
                                                     </button>
                                                 </template>
                                             </td>

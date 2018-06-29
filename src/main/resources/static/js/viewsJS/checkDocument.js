@@ -15,30 +15,39 @@ $(function () {
         },
         refuseReason: '',
         refuseIndex: '',
+        department: [],
+        docDepartment: {
+            name: "拟稿部门",
+            items: [
+                /* {key: "", value: ""},*/
+            ],
+
+        },
         searchData: {
             documentType: '',
             documentConfidential: 0,
             documentState: 0,
-            fuzzySearch: ''
+            fuzzySearch: '',
+            documentDept: ''
         },
         docType: {
             name: "文档类型",
             items: [
                 {key: "", value: "全部"},
                 {key: "1", value: "命令"},
-                {key: "2", value: "批复"},
-                {key: "3", value: "意见"},
-                {key: "4", value: "函"},
-                {key: "5", value: "会议纪要"},
-                {key: "6", value: "决定"},
-                {key: "7", value: "公告"},
-                {key: "8", value: "通告"},
-                {key: "9", value: "通知"},
-                {key: "10", value: "通报"},
-                {key: "11", value: "议案"},
-                {key: "12", value: "报告"},
-                {key: "13", value: "请示"},
-                {key: "14", value: "其他"}
+                {key: "2", value: "决定"},
+                {key: "3", value: "公告"},
+                {key: "4", value: "通告"},
+                {key: "5", value: "通知"},
+                {key: "6", value: "通报"},
+                {key: "7", value: "议案"},
+                {key: "8", value: "报告"},
+                {key: "9", value: "请示"},
+                {key: "10", value: "批复"},
+                {key: "11", value: "意见"},
+                {key: "12", value: "函"},
+                {key: "13", value: "会议纪要"},
+                {key: "14", value: "其他"},
             ],
         },
         docConfidential: {
@@ -89,7 +98,8 @@ $(function () {
                     documentType: data.searchData.documentType,
                     documentConfidential: data.searchData.documentConfidential,
                     documentState: data.searchData.documentState,
-                    fuzzySearch: data.searchData.fuzzySearch
+                    fuzzySearch: data.searchData.fuzzySearch,
+                    documentDept: data.searchData.documentDept
                 });
             },
             replaceConfidential(documentConfidential) {
@@ -146,6 +156,29 @@ $(function () {
                     }
                 }, 'json')
             },
+            getDepartment() {
+                $.post('/gwspxt/getAllDepartmentNoPage', {}, function (response) {
+                    data.department = response;
+                    let arr = [{key: '', value: '全部'}];
+                    for (var dept in response) {
+                        let lhs = {
+                            key: data.department[dept].departmentId,
+                            value: data.department[dept].departmentName
+                        };
+                        arr.push(lhs);
+                    }
+                    data.docDepartment.items = arr;
+                }, 'json');
+            },
+            reviewDocument(index) {
+                var lhs_edit =
+                    {
+                        "action":"check",
+                        "doc_id": this.docData[index].document.documentId
+                    }
+                sessionStorage.setItem('lhs_edit', JSON.stringify(lhs_edit));
+                location.href = "/gwspxt/reviewContent";
+            },
             search(msg) {
                 data.searchData[msg.searchName] = msg.key;
                 this.getInfo({
@@ -153,7 +186,8 @@ $(function () {
                     documentType: data.searchData.documentType,
                     documentConfidential: data.searchData.documentConfidential,
                     documentState: data.searchData.documentState,
-                    fuzzySearch: data.searchData.fuzzySearch
+                    fuzzySearch: data.searchData.fuzzySearch,
+                    documentDept: data.searchData.documentDept
                 })
             },
         },
@@ -163,7 +197,12 @@ $(function () {
                 documentType: data.searchData.documentType,
                 documentConfidential: data.searchData.documentConfidential,
                 documentState: data.searchData.documentState,
-                fuzzySearch: data.searchData.fuzzySearch
+                fuzzySearch: data.searchData.fuzzySearch,
+                documentDept: data.searchData.documentDept
+            });
+            this.getDepartment();
+            $('#refuseReasonModal').on('hidden.bs.modal', function () {
+                data.refuseReason = '';
             });
         },
         watch: {},

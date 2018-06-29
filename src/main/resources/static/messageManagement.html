@@ -6,6 +6,7 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="description" content="Developed By M Abdur Rokib Promy">
     <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
@@ -29,7 +30,8 @@
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <!-- Theme style -->
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
-
+    <!-- 消息通知css -->
+    <link href="css/spop.css" rel="stylesheet" type="text/css">
     <script src="js/vue.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -68,8 +70,7 @@
                                         <div class="task-checkbox">
                                             <!--<input type="checkbox" class="list-child" value=""  />-->
                                             <div :class="{'icheckbox_flat-grey':true,'checked':msg.mobject.mobjectIsread==1}"
-                                                 style="position: relative;"
-                                                 aria-checked="false" aria-disabled="false">
+                                                 style="position: relative;" aria-checked="false" aria-disabled="false">
                                                 <input class="flat-grey list-child"
                                                        style="position: absolute; opacity: 0;"
                                                        type="checkbox">
@@ -83,9 +84,9 @@
                                             <span v-html="replaceMessageType(msg.message.messageType)"></span>
                                             <div class="pull-right hidden-phone">
                                                 <span class="label label-success">{{msg.message.messageTime}}</span>
-                                                <button class="btn btn-default btn-xs" @click="isRead(index)"><i
+                                                <!--<button class="btn btn-default btn-xs" @click="isRead(index)"><i
                                                         class="fa fa-check"></i>
-                                                </button>
+                                                </button>-->
                                                 <!--<button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i>
                                                 </button>
                                                 <button class="btn btn-default btn-xs"><i class="fa fa-times"></i>
@@ -141,6 +142,8 @@
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <!--布局的组件-->
 <script src="js/layout/layout.js"></script>
+<!-- 消息通知js -->
+<script src="js/spop.js" type="text/javascript"></script>
 <!-- jQuery UI 1.10.3 -->
 <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap -->

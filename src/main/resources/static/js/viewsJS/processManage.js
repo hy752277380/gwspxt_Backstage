@@ -72,10 +72,30 @@ $(function () {
                 sessionStorage.setItem('into_processNode', JSON.stringify(into_processNode));
                 location.href = "/gwspxt/processNode";
             },
+            deleteBatchProcess() {
+                let arrId = [];
+                $('input[name="checkId"]').each(function () {
+                    if ($(this).attr('checked')) {
+                        arrId.push($(this).attr('process-id'));
+                    }
+
+                });
+                $('input[checked="checked"]:checkbox').each(function () {
+                    $(this).removeAttr('checked');
+                });
+                $.post('/gwspxt/deleteProcess', {ids: arrId}, response => {
+                    if (response.msg == "updateSuccess") {
+                        this.getProcessInfo({currentPage: 1});
+                        spop({template: `删除成功`, style: "success", autoclose: 2000});
+                    } else if (response.msg == "updateFailed") {
+                        spop({template: `删除失败`, style: "error", autoclose: 2000});
+                    }
+                }, 'json');
+
+            },
             deleteProcess(index) {
                 let processId = data.processData[index].processId;
                 let that = this;
-                console.log(processId);
                 $.post('/gwspxt/deleteProcess', {ids: [processId]}, function (response) {
                     if (response.msg == "updateSuccess") {
                         that.getProcessInfo({currentPage: 1});
@@ -84,7 +104,14 @@ $(function () {
                         spop({template: `删除失败`, style: "error", autoclose: 2000});
                     }
                 }, 'json');
-            }
+            },
+            search(msg) {
+                data.searchData[msg.searchName] = msg.key;
+                this.getProcessInfo({
+                    currentPage: 1,
+                    fuzzySearch: data.searchData.fuzzySearch
+                })
+            },
         },
         mounted() {
             this.getProcessInfo({

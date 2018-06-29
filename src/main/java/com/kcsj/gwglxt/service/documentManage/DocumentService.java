@@ -44,17 +44,17 @@ public interface DocumentService {
     DocumentCustom documentBaseInfo(String documentId);
 
 
-    QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String fuzzySearch,String documentType,Integer documentConfidential);
+    QueryForPage findCheckingDoc(int currentPage,LoginCustom loginCustom, String fuzzySearch,String documentType,Integer documentConfidential,String documentDept);
 
     QueryForPage getMyAllMessage(String userId,int currentPage);
 
     List<Documenttype> getAllDocType();
 
-    QueryForPage getAllProcess(int currentPage);
+    QueryForPage getAllProcess(int currentPage,String fuzzySearch);
 
     DocumentCustom insertBorrowing(DocumentCustom documentCustom, LoginCustom loginCustom);
 
-    QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage,String documentType,Integer documentConfidential,String fuzzySearch);
+    QueryForPage getAllApplyRead(LoginCustom loginCustom,int currentPage,String documentType,Integer documentConfidential,String userDpt,String fuzzySearch);
 
     int refuseDoc(LoginCustom loginCustom, String documentId,String refuseReason);
 
@@ -75,4 +75,6 @@ public interface DocumentService {
     int allAreRead(String userId);
 
     int deleteDoc(String[] ids, LoginCustom loginCustom);
+
+    int callBack(LoginCustom loginCustom, String documentId);
 }
